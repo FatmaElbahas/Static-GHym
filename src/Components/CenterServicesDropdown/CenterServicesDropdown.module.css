@@ -1,0 +1,51 @@
+.dropdownContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdownButton {
+  background: none;
+  border: none;
+  color: #000;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.arrow {
+  margin-left: 5px;
+}
+
+.dropdownBox {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff; /* اللون الأساسي */
+  color: #000 !important;
+  min-width: 200px;
+  border-radius: 4px;
+  padding: 10px 0;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.dropdownList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdownList li {
+  padding: 8px 20px;
+}
+
+.dropdownList li a {
+  color: #000;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdownList li:hover a {
+  background-color: #009aa1;
+  color: #fff !important;
+  /* نسخة أغمق قليلاً عند hover */
+}

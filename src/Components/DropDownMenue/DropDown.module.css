@@ -1,0 +1,57 @@
+.dropdownContainer {
+  position: relative;
+  width: 200px;
+  font-family: Arial, sans-serif;
+}
+
+.dropdownHeader {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arrow {
+  border: solid #00BDC3;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 4px;
+  transform: rotate(45deg);
+  margin-left: 10px;
+}
+
+.dropdownList {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  z-index: 1000;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdownItem {
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dropdownItem:hover {
+  background-color: rgba(0, 189, 195, 0.2); /* نفس اللون لكن خافت */
+  color: black;
+}
+
+/* الاختيار اللي اتعمل */
+.selected {
+  background-color: #00BDC3;
+  color: white;
+  font-weight: bold;
+}
