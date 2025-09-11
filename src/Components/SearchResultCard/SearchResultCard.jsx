@@ -28,11 +28,13 @@ const SearchResultCard = React.memo(({ result }) => {
   
   return (
     <div
-      className="card h-100 shadow-sm border-0"
+      className="card h-100 border-0"
       style={{
         borderRadius: '15px',
         transition: 'all 0.3s ease',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+        background: 'white'
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = 'translateY(-5px)';

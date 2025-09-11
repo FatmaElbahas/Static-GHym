@@ -39,7 +39,12 @@ export default function Offers() {
   const renderOffers = (filteredOffers) =>
     filteredOffers.map((offer) => (
       <div className="col-12 col-sm-6 col-md-3 d-flex justify-content-center" key={offer.id}>
-        <div className="card w-100 h-100 rounded-5 border-0 text-center" style={{ maxWidth: "250px", boxShadow: "0 2px 10px rgba(0,0,0,0.1)" }}>
+        <div className="card w-100 h-100 border-0 text-center" style={{ 
+          maxWidth: "250px", 
+          borderRadius: "10px",
+          boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+          background: "white"
+        }}>
           <img
             src={offer.img}
             alt={offer.title}

@@ -28,11 +28,13 @@ const DoctorCard = React.memo(({ doc }) => {
   
   return (
     <div
-      className="card h-100 shadow-lg border-0"
+      className="card1 h-100 shadow-lg bg-white border-0"
       style={{
-        borderRadius: '15px',
-        transition: 'all 0.3s ease',
-        overflow: 'hidden'
+        borderRadius: "15px !important",
+        overflow: "hidden !important",
+        cursor: "pointer !important",
+        transition: "all 0.3s ease !important",
+        boxShadow: "2px 2px 10px rgba(0,0,0,0.3) !important"
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = 'translateY(-5px)';
