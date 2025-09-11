@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./CenterServicesDropdown.module.css";
 
 export default function CenterServicesDropdown() {
@@ -19,8 +20,8 @@ export default function CenterServicesDropdown() {
       {isOpen && (
         <div className={styles.dropdownBox}>
           <ul className={styles.dropdownList}>
-            <li><a href="/join-center">الانضمام كمركز طبي</a></li>
-            <li><a href="/login-center">تسجيل الدخول كمركز طبي</a></li>
+            <li><Link to="/register">الانضمام كمركز طبي</Link></li>
+            <li><Link to="/login">تسجيل الدخول كمركز طبي</Link></li>
             <li><a href="/plusmi-services">الربط مع خدمات بلسمي</a></li>
           </ul>
         </div>

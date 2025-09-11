@@ -13,18 +13,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/tajawal": "^5.2.6",
     "@fortawesome/fontawesome-svg-core": "^7.0.1",
     "@fortawesome/free-brands-svg-icons": "^7.0.1",
     "@fortawesome/free-solid-svg-icons": "^7.0.1",
     "@fortawesome/react-fontawesome": "^3.0.2",
     "bootstrap": "^5.3.8",
+    "formik": "^2.4.6",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.10",
     "react-countup": "^6.5.3",
     "react-dom": "^18.3.1",
     "react-helmet-async": "^2.0.5",
+    "react-paginate": "^8.3.0",
     "react-router-dom": "^7.8.2",
-    "swiper": "^11.2.10"
+    "swiper": "^11.2.10",
+    "yup": "^1.7.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

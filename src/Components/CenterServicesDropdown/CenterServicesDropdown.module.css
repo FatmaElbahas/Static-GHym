@@ -7,7 +7,7 @@
   background: none;
   border: none;
   color: #000;
-  font-size: 12px;
+  font-size: 18px !important;
   cursor: pointer;
 }
 
@@ -35,17 +35,21 @@
 }
 
 .dropdownList li {
-  padding: 8px 20px;
+  padding: 0;
+  margin: 0;
 }
 
 .dropdownList li a {
   color: #000;
   text-decoration: none;
   display: block;
+  padding: 12px 20px;
+  width: 100%;
+  transition: all 0.3s ease;
 }
 
 .dropdownList li:hover a {
-  background-color: #009aa1;
+  background-color: #038FAD;
   color: #fff !important;
-  /* نسخة أغمق قليلاً عند hover */
+  width: 100%;
 }

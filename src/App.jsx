@@ -9,6 +9,11 @@ import PricingPage from './Pages/PricingPage/PricingPage';
 import ContactPage from './Pages/ContactPage/ContactPage';
 import ErrorPage from './Pages/ErrorPage/ErrorPage';
 import Footer from './Components/Footer/Footer';
+import Book from './Pages/Book/Book';
+import Dashboard from './Pages/Dashboard/Dashboard';
+import Register from './Pages/Auth/Register';
+import RegisterPage from './Pages/Auth/RegisterPage';
+import Login from './Pages/Auth/Login';
 
 function App() {
   return (
@@ -16,12 +21,16 @@ function App() {
       <MainNavbar />
       <div className="main-content">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Book/>} />
+          <Route path="/home" element={<Home />} />
           <Route path="/offers" element={<OffersPage />} />
           <Route path="/clinics" element={<ClinicsPage />} />
           <Route path="/jobs" element={<JobsPage />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/contact" element={<ContactPage />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/login" element={<Login />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
