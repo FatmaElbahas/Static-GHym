@@ -28,7 +28,7 @@ const DoctorCard = React.memo(({ doc }) => {
   
   return (
     <div
-      className="card h-100 shadow-sm border-0"
+      className="card h-100 shadow-lg border-0"
       style={{
         borderRadius: '15px',
         transition: 'all 0.3s ease',

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from 'react-helmet-async';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock } from "@fortawesome/free-solid-svg-icons";
+import { faClock, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Offer1 from '../../assets/images/Offer_1.png';
 import Offer2 from '../../assets/images/Offer_2.png';
 import Offer3 from '../../assets/images/Offer_3.png';
@@ -13,6 +13,8 @@ import Offer8 from '../../assets/images/Offer_8.png';
 import Offer9 from '../../assets/images/Offer_9.png';
 
 export default function Offers() {
+  const [isLoading, setIsLoading] = useState(true);
+
   const offers = [
     { id: 1, title: "باقات اليوم الوطني", desc: "95 ر.س", img: Offer1, category: "جلدية" },
     { id: 2, title: "فركشنال ليزر", desc: "295 ر.س", img: Offer2, category: "جلدية" },
@@ -25,10 +27,19 @@ export default function Offers() {
     { id: 9, title: "باقات اليوم الوطني", desc: "1495 ر.س", img: Offer9, category: "أخرى" },
   ];
 
+  // محاكاة تحميل البيانات
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500); // تحميل لمدة 1.5 ثانية
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const renderOffers = (filteredOffers) =>
     filteredOffers.map((offer) => (
       <div className="col-12 col-sm-6 col-md-3 d-flex justify-content-center" key={offer.id}>
-        <div className="card w-100 h-100 shadow-sm rounded-5 border-0 text-center" style={{ maxWidth: "250px" }}>
+        <div className="card w-100 h-100 rounded-5 border-0 text-center" style={{ maxWidth: "250px", boxShadow: "0 2px 10px rgba(0,0,0,0.1)" }}>
           <img
             src={offer.img}
             alt={offer.title}
@@ -47,6 +58,45 @@ export default function Offers() {
         </div>
       </div>
     ));
+
+  // مكون Loading
+  const LoadingComponent = () => (
+    <div className="offers d-flex align-items-center justify-content-center my-5">
+      <div className="container shadow custom-border rounded p-5 my-5">
+        <div className="text-center">
+          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '400px' }}>
+            <div>
+              <FontAwesomeIcon 
+                icon={faSpinner} 
+                spin 
+                size="3x" 
+                className="text-primary mb-3"
+                style={{ color: '#038FAD' }}
+              />
+              <h4 className="text-muted">جاري تحميل العروض...</h4>
+              <p className="text-muted">يرجى الانتظار قليلاً</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (isLoading) {
+    return (
+      <>
+        <Helmet>
+          <title>العروض والخدمات - مركز بلسمي الطبي</title>
+          <meta name="description" content="استفد من عروضنا المميزة على الخدمات الطبية والجلدية. احجز موعدك الآن واستثمر في صحتك مع باقاتنا الشاملة" />
+          <meta name="keywords" content="عروض طبية, خدمات جلدية, فحص الرخصة, فحص مدرسي, فركشنال ليزر, مركز بلسمي" />
+          <meta property="og:title" content="العروض والخدمات - مركز بلسمي الطبي" />
+          <meta property="og:description" content="استفد من عروضنا المميزة على الخدمات الطبية والجلدية" />
+          <meta property="og:type" content="website" />
+        </Helmet>
+        <LoadingComponent />
+      </>
+    );
+  }
 
   return (
     <>

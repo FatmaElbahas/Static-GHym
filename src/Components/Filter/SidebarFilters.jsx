@@ -14,12 +14,13 @@ export default function SidebarFilters() {
   return (
     <aside className="col-lg-3 col-md-4">
     <div
-      className="p-5 bg-white shadow-lg"
+      className="p-5 bg-white"
       style={{
         borderRadius: "15px",
         overflow: "hidden",
         cursor: "pointer",
         transition: "all 0.3s ease",
+        boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
       }}
     >
       <h5 className="fw-bold mb-4 main-color">تصفية النتائج</h5>
