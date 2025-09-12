@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faUser, 
@@ -20,8 +21,49 @@ import NewBooking from '../../Components/Dashboard/NewBooking';
 import DashboardHome from '../../Components/Dashboard/DashboardHome';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('home');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // التحقق من تسجيل الدخول
+  useEffect(() => {
+    const checkAuth = () => {
+      const user = localStorage.getItem('user');
+      const token = localStorage.getItem('token');
+      
+      if (!user || !token) {
+        // إذا لم يكن المستخدم مسجل دخول، إعادة توجيه إلى صفحة تسجيل الدخول
+        navigate('/login');
+        return;
+      }
+      
+      setIsLoading(false);
+    };
+
+    checkAuth();
+  }, [navigate]);
+
+  // إذا كان يتم التحميل، عرض شاشة تحميل
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{height: '100vh'}}>
+        <div className="text-center">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">جاري التحميل...</span>
+          </div>
+          <p className="mt-3 text-muted">جاري التحقق من تسجيل الدخول...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // دالة تسجيل الخروج
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
 
   const menuItems = [
     { id: 'home', label: 'الرئيسية', icon: faChartLine },
@@ -61,17 +103,67 @@ const Dashboard = () => {
               >
                 <FontAwesomeIcon icon={faBars} />
               </button>
-              <h4 className="mb-0 text-white">لوحة التحكم</h4>
+              <h4 className="mb-0 text-white d-none d-md-block">لوحة التحكم</h4>
             </div>
             <div className="d-flex align-items-center gap-3">
-              <a href="/" className="btn btn-outline-light btn-sm">
-                <FontAwesomeIcon icon={faHome} className="me-2" />
-                الرئيسية
-              </a>
-              <button className="btn btn-outline-light btn-sm">
-                <FontAwesomeIcon icon={faSignOutAlt} className="me-2" />
-                تسجيل الخروج
-              </button>
+              {/* Desktop Links */}
+              <div className="d-none d-md-flex align-items-center gap-3">
+                <a href="/" className="btn btn-outline-light btn-sm">
+                  <FontAwesomeIcon icon={faHome} className="me-2" />
+                  الرئيسية
+                </a>
+                <button className="btn btn-outline-light btn-sm" onClick={handleLogout}>
+                  <FontAwesomeIcon icon={faSignOutAlt} className="me-2" />
+                  تسجيل الخروج
+                </button>
+              </div>
+              
+              {/* Mobile Dropdown */}
+              <div className="d-md-none dropdown">
+                <button 
+                  className="btn btn-outline-light btn-sm dropdown-toggle" 
+                  type="button" 
+                  data-bs-toggle="dropdown" 
+                  aria-expanded="false"
+                >
+                  <FontAwesomeIcon icon={faBars} />
+                </button>
+                <ul className="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a 
+                      className="dropdown-item" 
+                      href="/"
+                      onClick={() => {
+                        // إغلاق الـ dropdown تلقائياً
+                        const dropdown = document.querySelector('.dropdown-toggle');
+                        if (dropdown) {
+                          dropdown.click();
+                        }
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faHome} className="me-2" />
+                      الرئيسية
+                    </a>
+                  </li>
+                  <li><hr className="dropdown-divider" /></li>
+                  <li>
+                    <button 
+                      className="dropdown-item" 
+                      onClick={() => {
+                        // إغلاق الـ dropdown تلقائياً
+                        const dropdown = document.querySelector('.dropdown-toggle');
+                        if (dropdown) {
+                          dropdown.click();
+                        }
+                        handleLogout();
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faSignOutAlt} className="me-2" />
+                      تسجيل الخروج
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

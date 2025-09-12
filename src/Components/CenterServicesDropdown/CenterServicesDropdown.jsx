@@ -20,9 +20,30 @@ export default function CenterServicesDropdown() {
       {isOpen && (
         <div className={styles.dropdownBox}>
           <ul className={styles.dropdownList}>
-            <li><Link to="/register">الانضمام كمركز طبي</Link></li>
-            <li><Link to="/login">تسجيل الدخول كمركز طبي</Link></li>
-            <li><a href="/plusmi-services">الربط مع خدمات بلسمي</a></li>
+            <li>
+              <Link 
+                to="/register"
+                onClick={() => setIsOpen(false)}
+              >
+                الانضمام كمركز طبي
+              </Link>
+            </li>
+            <li>
+              <Link 
+                to="/login"
+                onClick={() => setIsOpen(false)}
+              >
+                تسجيل الدخول كمركز طبي
+              </Link>
+            </li>
+            <li>
+              <a 
+                href="/plusmi-services"
+                onClick={() => setIsOpen(false)}
+              >
+                الربط مع خدمات بلسمي
+              </a>
+            </li>
           </ul>
         </div>
       )}

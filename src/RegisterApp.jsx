@@ -17,10 +17,11 @@ import Login from './Pages/Auth/Login';
 function RegisterApp() {
   const location = useLocation();
   const isRegisterPage = location.pathname === '/register';
+  const isDashboardPage = location.pathname === '/dashboard';
 
   return (
     <div className="App">
-      {!isRegisterPage && <MainNavbar />}
+      {!isRegisterPage && !isDashboardPage && <MainNavbar />}
       <div className="main-content">
         <Routes>
           <Route path="/" element={<Book/>} />
@@ -36,7 +37,7 @@ function RegisterApp() {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
-      {!isRegisterPage && <Footer />}
+      {!isRegisterPage && !isDashboardPage && <Footer />}
     </div>
   );
 }
