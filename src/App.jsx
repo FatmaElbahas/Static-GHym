@@ -1,6 +1,6 @@
 import React from 'react';
 import MainNavbar from './Components/Navbar/Navbar';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import OffersPage from './Pages/offers/OffersPage';
 import ClinicsPage from './Pages/Clinics/ClinicsPage';
@@ -16,9 +16,12 @@ import RegisterPage from './Pages/Auth/RegisterPage';
 import Login from './Pages/Auth/Login';
 
 function App() {
+  const location = useLocation();
+  const isDashboard = location.pathname === '/dashboard';
+
   return (
     <div className="App">
-      <MainNavbar />
+      {!isDashboard && <MainNavbar />}
       <div className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -35,7 +38,7 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
-      <Footer />
+      {!isDashboard && <Footer />}
     </div>
   );
 }

@@ -118,51 +118,22 @@ const Dashboard = () => {
                 </button>
               </div>
               
-              {/* Mobile Dropdown */}
-              <div className="d-md-none dropdown">
-                <button 
-                  className="btn btn-outline-light btn-sm dropdown-toggle" 
-                  type="button" 
-                  data-bs-toggle="dropdown" 
-                  aria-expanded="false"
+              {/* Mobile Icons */}
+              <div className="d-md-none d-flex align-items-center gap-2">
+                <a 
+                  href="/" 
+                  className="btn btn-outline-light btn-sm"
+                  title="الرئيسية"
                 >
-                  <FontAwesomeIcon icon={faBars} />
+                  <FontAwesomeIcon icon={faHome} />
+                </a>
+                <button 
+                  className="btn btn-outline-light btn-sm" 
+                  onClick={handleLogout}
+                  title="تسجيل الخروج"
+                >
+                  <FontAwesomeIcon icon={faSignOutAlt} />
                 </button>
-                <ul className="dropdown-menu dropdown-menu-end">
-                  <li>
-                    <a 
-                      className="dropdown-item" 
-                      href="/"
-                      onClick={() => {
-                        // إغلاق الـ dropdown تلقائياً
-                        const dropdown = document.querySelector('.dropdown-toggle');
-                        if (dropdown) {
-                          dropdown.click();
-                        }
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faHome} className="me-2" />
-                      الرئيسية
-                    </a>
-                  </li>
-                  <li><hr className="dropdown-divider" /></li>
-                  <li>
-                    <button 
-                      className="dropdown-item" 
-                      onClick={() => {
-                        // إغلاق الـ dropdown تلقائياً
-                        const dropdown = document.querySelector('.dropdown-toggle');
-                        if (dropdown) {
-                          dropdown.click();
-                        }
-                        handleLogout();
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faSignOutAlt} className="me-2" />
-                      تسجيل الخروج
-                    </button>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
