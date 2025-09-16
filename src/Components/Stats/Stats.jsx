@@ -40,31 +40,31 @@ export default function Stats() {
   return (
     <section className="stats-section py-5 ">
       <div className="container-fluid">
-        <div className="row g-3 g-lg-4 justify-content-center">
+        <div className="row g-2 g-md-3 g-lg-4 justify-content-center">
           {statsData.map((stat, index) => (
-            <div key={index} className="col-6 col-sm-6 col-md-4 col-lg-2">
-              <div className="stat-card bg-light rounded-4 p-3 p-lg-4 text-center h-100 d-flex flex-column justify-content-between">
-                <div className="stat-icon mb-3 mb-lg-4">
+            <div key={index} className="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+              <div className="text-center d-flex flex-column align-items-center h-100 p-2">
+                <div className="mb-2 mb-md-3 mb-lg-4">
                   <FontAwesomeIcon 
                     icon={stat.icon} 
-                    className="fs-1" 
-                    style={{color: '#008a91'}}
+                    className="stats-icon"
+                    style={{ color: '#008a91' }}
                   />
                 </div>
-                <div className="stat-number mb-3">
+                <div className="mb-1 mb-md-2">
                   <CountUp
                     end={stat.number}
                     duration={2.5}
-                    separator=","
-                    className="fs-2 fw-bold text-muted"
+                    separator="," 
+                    className="fw-bold text-muted stats-number"
                   />
-                  <span className="fs-2 fw-bold text-muted">{stat.suffix}</span>
+                  <span className="fw-bold stats-suffix" style={{color: '#008a91'}}>
+                    {stat.suffix}
+                  </span>
                 </div>
-                <div className="stat-text">
-                  <p className="mb-0 fs-4 fw-semibold" style={{color: '#008a91'}}>
-                    {stat.text}
-                  </p>
-                </div>
+                <p className="mb-0 fw-semibold stats-text" style={{color: '#008a91'}}>
+                  {stat.text}
+                </p>
               </div>
             </div>
           ))}

@@ -1,71 +1,66 @@
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAppleAlt } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import logo1 from "../../assets/images/logo-white.webp";
+import { faFacebookF, faTwitter, faInstagram, faTiktok, faSnapchatGhost } from "@fortawesome/free-brands-svg-icons";
+import { faCcMastercard, faCcVisa, faCcApplePay } from "@fortawesome/free-brands-svg-icons";
+
 const logo1 = "https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png";
 import sbc from "../../assets/images/sbc.png";
 import vat from "../../assets/images/vat.png";
-import { faFacebookF, faTwitter, faInstagram, faTiktok, faSnapchatGhost } from "@fortawesome/free-brands-svg-icons";
-import { faCcMastercard, faCcVisa, faCcApplePay } from "@fortawesome/free-brands-svg-icons";
-import React from 'react';
 
 export default function Footer() {
   return (
     <footer className="bg-main py-5 text-white">
       <div className="container">
-
         {/* التصميم الأصلي للشاشات الكبيرة */}
         <div className="d-none d-md-block">
-        {/* الجزء العلوي */}
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-start gap-4">
+          {/* الجزء العلوي */}
+          <div className="d-flex flex-column flex-md-row justify-content-between align-items-start gap-4">
+            
+            {/* تحميل التطبيق */}
+            <div className="text-center text-md-start" style={{ marginTop: '10px' }}>
+              <h5 className="fw-bold mb-3 footer-title">حمل تطبيق غنيم لحجز مواعيدك بسهولة</h5>
+              <div className="d-flex gap-3 justify-content-center justify-content-md-start flex-wrap mt-5">
+                {/* زر جوجل بلاي */}
+                <button className="d-flex align-items-center gap-2 rounded-pill px-5 py-3 bg-transparent text-white border border-white fw-bold">
+                  <i className="fab fa-google-play" style={{ fontSize: '1.5em' }}></i>
+                  جوجل بلاي
+                </button>
 
-          {/* تحميل التطبيق */}
-          <div className="text-center text-md-start" style={{ marginTop: '10px' }}>
-              <h5 className="fw-bold mb-3 footer-title">حمل تطبيق بلسمي لحجز مواعيدك بسهولة</h5>
-            <div className="d-flex gap-3 justify-content-center justify-content-md-start flex-wrap mt-5">
-    
-    {/* زر جوجل بلاي */}
-    <button className="d-flex align-items-center gap-2 rounded-pill px-5 py-3 bg-transparent text-white border border-white fw-bold">
-      <i className="fab fa-google-play" style={{ fontSize: '1.5em' }}></i>
-      جوجل بلاي
-    </button>
+                {/* زر ابل استور */}
+                <button className="d-flex align-items-center gap-2 rounded-pill px-5 py-3 bg-transparent text-white border border-white fw-bold">
+                  ابل استور <FontAwesomeIcon icon={faAppleAlt} style={{ fontSize: '1.5em' }} />
+                </button>
+              </div>
+            </div>
 
-    {/* زر ابل استور */}
-    <button className="d-flex align-items-center gap-2 rounded-pill px-5 py-3 bg-transparent text-white border border-white fw-bold">
-      ابل استور <FontAwesomeIcon icon={faAppleAlt} style={{ fontSize: '1.5em' }} />
-    </button>
+            {/* اللوجو + السوشيال + الدفع */}
+            <div className="text-center d-flex flex-column justify-content-center align-items-center">
+              <img src={logo1} alt="Logo" style={{ width: "100px" }} />
 
-  </div>
+              {/* أيقونات السوشيال */}
+              <ul className="list-unstyled d-flex gap-3 justify-content-center mt-3 mb-3">
+                <li><a href="#" className="text-white"><FontAwesomeIcon icon={faFacebookF} size="lg" /></a></li>
+                <li><a href="#" className="text-white"><FontAwesomeIcon icon={faTwitter} size="lg" /></a></li>
+                <li><a href="#" className="text-white"><FontAwesomeIcon icon={faInstagram} size="lg" /></a></li>
+                <li><a href="#" className="text-white"><FontAwesomeIcon icon={faTiktok} size="lg" /></a></li>
+                <li><a href="#" className="text-white"><FontAwesomeIcon icon={faSnapchatGhost} size="lg" /></a></li>
+              </ul>
+
+              {/* أيقونات الدفع */}
+              <ul className="list-unstyled d-flex gap-3 justify-content-center mb-0">
+                <li><FontAwesomeIcon icon={faCcMastercard} size="2x" style={{ color: '#FF5F00' }} /></li>
+                <li><FontAwesomeIcon icon={faCcVisa} size="2x" style={{ color: '#1A1F71' }} /></li>
+                <li><FontAwesomeIcon icon={faCcApplePay} size="2x" style={{ color: '#000' }} /></li>
+              </ul>
+            </div>
           </div>
 
-          {/* اللوجو + السوشيال + الدفع */}
-          <div className="text-center d-flex flex-column justify-content-center align-items-center">
-            <img src={logo1} alt="Logo" style={{ width: "100px" }} />
-
-            {/* أيقونات السوشيال */}
-            <ul className="list-unstyled d-flex gap-3 justify-content-center mt-3 mb-3">
-              <li><a href="#" className="text-white"><FontAwesomeIcon icon={faFacebookF} size="lg" /></a></li>
-              <li><a href="#" className="text-white"><FontAwesomeIcon icon={faTwitter} size="lg" /></a></li>
-              <li><a href="#" className="text-white"><FontAwesomeIcon icon={faInstagram} size="lg" /></a></li>
-              <li><a href="#" className="text-white"><FontAwesomeIcon icon={faTiktok} size="lg" /></a></li>
-              <li><a href="#" className="text-white"><FontAwesomeIcon icon={faSnapchatGhost} size="lg" /></a></li>
-            </ul>
-
-            {/* أيقونات الدفع */}
-            <ul className="list-unstyled d-flex gap-3 justify-content-center mb-0">
-              <li><FontAwesomeIcon icon={faCcMastercard} size="2x" style={{ color: '#FF5F00' }} /></li>
-              <li><FontAwesomeIcon icon={faCcVisa} size="2x" style={{ color: '#1A1F71' }} /></li>
-              <li><FontAwesomeIcon icon={faCcApplePay} size="2x" style={{ color: '#000' }} /></li>
-            </ul>
-          </div>
-
-        </div>
-
-        {/* الجزء السفلي */}
-        <div className="copyRight mt-4 pt-3 border-top border-light">
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-
-            {/* VAT + SBC */}
+          {/* الجزء السفلي */}
+          <div className="copyRight mt-4 pt-3 border-top border-light">
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+              {/* VAT + SBC */}
               <div className="d-flex align-items-center gap-3 footer-certificates">
                 <div className="d-flex align-items-center gap-2 footer-vat-section">
                   <img src={vat} alt="VAT" className="footer-vat-img" style={{ width: "40px" }} />
@@ -93,7 +88,7 @@ export default function Footer() {
             {/* اللوجو مع النص */}
             <div className="d-flex justify-content-center align-items-center gap-3 mb-4">
               <img src={logo1} alt="Logo" className="footer-logo" style={{ width: "60px", height: "60px" }} />
-              <h5 className="fw-bold mb-0 footer-title">حمل تطبيق بلسمي لحجز مواعيدك بسهولة</h5>
+              <h5 className="fw-bold mb-0 footer-title">حمل تطبيق غنيم لحجز مواعيدك بسهولة</h5>
             </div>
             
             {/* أزرار التحميل */}

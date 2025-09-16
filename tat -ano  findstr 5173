@@ -1,0 +1,10 @@
+[33m7586257[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Update navbar and dashboard improvements
+[33m3a5d43d[m Update shadow styles for doctor cards and offers page cards
+[33mf83ffcc[m Add loading state to offers page and update shadow styles for consistency
+[33mccc2f83[m Add vercel.json configuration for proper build output
+[33mdb2872d[m Initial commit
+[33m8ef2665[m Add vercel.json for proper build
+[33mdbc150c[m Applied fixes for Windows build and updated dependencies
+[33mf3c1edb[m Fix Vercel build issue
+[33ma71da54[m Production build ready
+[33mf8302aa[m Clean project for deployment

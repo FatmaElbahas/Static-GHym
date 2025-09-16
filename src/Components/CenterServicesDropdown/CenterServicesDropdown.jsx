@@ -41,7 +41,7 @@ export default function CenterServicesDropdown() {
                 href="/plusmi-services"
                 onClick={() => setIsOpen(false)}
               >
-                الربط مع خدمات بلسمي
+                الربط مع خدمات غنيم
               </a>
             </li>
           </ul>

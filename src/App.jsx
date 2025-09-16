@@ -21,8 +21,8 @@ function App() {
       <MainNavbar />
       <div className="main-content">
         <Routes>
-          <Route path="/" element={<Book/>} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/book" element={<Book/>} />
           <Route path="/offers" element={<OffersPage />} />
           <Route path="/clinics" element={<ClinicsPage />} />
           <Route path="/jobs" element={<JobsPage />} />
@@ -31,6 +31,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Home />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>

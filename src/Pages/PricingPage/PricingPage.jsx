@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
 import { Helmet } from 'react-helmet-async'
 export default function PricingPage() {
   const [isMonthly, setIsMonthly] = useState(true)
 
-  const plans = [
+  // Memoize plans data to prevent unnecessary re-renders
+  const plans = useMemo(() => [
     {
       name: "البداية",
       monthlyPrice: "حتى 30 حجز شهرياً",
@@ -81,21 +82,35 @@ export default function PricingPage() {
         { name: "تطوير تطبيق خاص", included: true, note: "4 أشهر مقدماً" }
       ]
     }
-  ]
+  ], []) // Empty dependency array since plans data is static
+
+  // Memoize toggle handlers to prevent unnecessary re-renders
+  const handleMonthlyToggle = useCallback(() => setIsMonthly(true), [])
+  const handleAnnualToggle = useCallback(() => setIsMonthly(false), [])
 
   return (
     <>
       <Helmet>
-        <title>خطط التسعير - مركز بلسمي الطبي</title>
+        <title>خطط التسعير - مركز غنيم الطبي</title>
         <meta name="description" content="اختر الخطة المناسبة لمركزك الطبي. باقات متنوعة تبدأ من البداية حتى الاحترافية" />
-        <meta name="keywords" content="تسعير, باقات, اشتراك, مركز طبي, بلسمي" />
-        <meta property="og:title" content="خطط التسعير - مركز بلسمي الطبي" />
+        <meta name="keywords" content="تسعير, باقات, اشتراك, مركز طبي, غنيم" />
+        <meta property="og:title" content="خطط التسعير - مركز غنيم الطبي" />
         <meta property="og:description" content="اختر الخطة المناسبة لمركزك الطبي" />
         <meta property="og:type" content="website" />
       </Helmet>
       <div className="pricing-page py-5">
       <div className="container">
         <div className="text-center mb-5">
+          <div className="mb-4">
+            <img 
+              src="https://www.w3schools.com/howto/img_avatar.png" 
+              alt="صورة تعبيرية" 
+              className="rounded-circle"
+              style={{ width: '120px', height: '120px', objectFit: 'cover' }}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
           <h1 className="display-4 fw-bold color-main mb-3">خطط التسعير</h1>
           <p className="lead text-muted">اختر الخطة المناسبة لمركزك الطبي</p>
         </div>
@@ -104,13 +119,13 @@ export default function PricingPage() {
           <div className="pricing-toggle">
             <button 
               className={`toggle-btn ${isMonthly ? 'active' : ''}`}
-              onClick={() => setIsMonthly(true)}
+              onClick={handleMonthlyToggle}
             >
               شهرياً
             </button>
             <button 
               className={`toggle-btn ${!isMonthly ? 'active' : ''}`}
-              onClick={() => setIsMonthly(false)}
+              onClick={handleAnnualToggle}
             >
               سنوياً (خصم 20%)
             </button>

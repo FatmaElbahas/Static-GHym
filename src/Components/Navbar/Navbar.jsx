@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import DropdownWithState from "../DropDownMenue/DropDownMenue";
 import CenterServicesDropdown from "../CenterServicesDropdown/CenterServicesDropdown";
 
@@ -7,9 +7,48 @@ const logo = "https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDA
 
 function MainNavbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // يقفل المنيو بعد ما اختار لينك
   const handleClose = () => setIsOpen(false);
+
+  // تحقق من حالة تسجيل الدخول
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    setIsLoggedIn(!!token);
+
+    // استمع لتغييرات في localStorage
+    const handleStorageChange = () => {
+      const token = localStorage.getItem('authToken');
+      setIsLoggedIn(!!token);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    // استمع لتسجيل الدخول من نفس التبويب
+    window.addEventListener('loginSuccess', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('loginSuccess', handleStorageChange);
+    };
+  }, []);
+
+  // تسجيل الخروج
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    setIsLoggedIn(false);
+    navigate('/');
+    handleClose();
+  };
+
+  // الذهاب للداشبورد
+  const handleDashboard = () => {
+    navigate('/dashboard');
+    handleClose();
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm mb-5">
@@ -28,11 +67,19 @@ function MainNavbar() {
           >
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
-                <CenterServicesDropdown />
+                <NavLink
+                  to="/"
+                  onClick={handleClose}
+                  className={({ isActive }) =>
+                    isActive ? "activeLink nav-link" : "nav-link"
+                  }
+                >
+                  الرئيسية
+                </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink
-                  to="/"
+                  to="/book"
                   onClick={handleClose}
                   className={({ isActive }) =>
                     isActive ? "activeLink nav-link" : "nav-link"
@@ -74,7 +121,84 @@ function MainNavbar() {
                   تواصل معنا
                 </NavLink>
               </li>
+              {/* أزرار تسجيل الدخول/الداشبورد للموبايل */}
+              {isLoggedIn ? (
+                <>
+                  <li className="nav-item d-lg-none">
+                    <button
+                      onClick={handleDashboard}
+                      className={location.pathname === '/dashboard' ? "activeLink nav-link" : "nav-link"}
+                      style={{ border: 'none', background: 'none', cursor: 'pointer' }}
+                    >
+                      لوحة التحكم
+                    </button>
+                  </li>
+                  <li className="nav-item d-lg-none">
+                    <NavLink
+                      to="/logout"
+                      onClick={handleLogout}
+                      className={({ isActive }) =>
+                        isActive ? "activeLink nav-link logout-btn" : "nav-link logout-btn"
+                      }
+                    >
+                      تسجيل الخروج
+                    </NavLink>
+                  </li>
+                </>
+              ) : (
+                <li className="nav-item d-lg-none">
+                  <NavLink
+                    to="/login"
+                    onClick={handleClose}
+                    className={({ isActive }) =>
+                      isActive ? "activeLink nav-link" : "nav-link"
+                    }
+                  >
+                    تسجيل الدخول
+                  </NavLink>
+                </li>
+              )}
             </ul>
+          </div>
+
+          {/* أزرار تسجيل الدخول/الداشبورد */}
+          <div className="d-flex align-items-center gap-2">
+            {isLoggedIn ? (
+              <>
+                <li className="nav-item">
+                  <button
+                    onClick={handleDashboard}
+                    className={location.pathname === '/dashboard' ? "activeLink nav-link" : "nav-link"}
+                    style={{ border: 'none', background: 'none', cursor: 'pointer' }}
+                  >
+                    لوحة التحكم
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    to="/logout"
+                    onClick={handleLogout}
+                    className={({ isActive }) =>
+                      isActive ? "activeLink nav-link logout-btn" : "nav-link logout-btn"
+                    }
+                  >
+                    تسجيل الخروج
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <li className="nav-item">
+                <NavLink
+                  to="/login"
+                  onClick={handleClose}
+                  className={({ isActive }) =>
+                    isActive ? "activeLink nav-link" : "nav-link"
+                  }
+                >
+                  تسجيل الدخول
+                </NavLink>
+              </li>
+            )}
           </div>
 
           {/* زر الهامبرجر للموبايل */}

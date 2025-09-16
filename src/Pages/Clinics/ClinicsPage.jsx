@@ -102,11 +102,11 @@ export default function Clinics() {
   return (
     <>
       <Helmet>
-        <title>المراكز الطبية - مركز بلسمي الطبي</title>
-        <meta name="description" content="اكتشف أفضل المراكز الطبية الشريكة مع مركز بلسمي. عيادات متخصصة في مختلف التخصصات الطبية" />
-        <meta name="keywords" content="مراكز طبية, عيادات, أطباء, تخصصات طبية, بلسمي" />
-        <meta property="og:title" content="المراكز الطبية - مركز بلسمي الطبي" />
-        <meta property="og:description" content="اكتشف أفضل المراكز الطبية الشريكة مع مركز بلسمي" />
+        <title>المراكز الطبية - مركز غنيم الطبي</title>
+        <meta name="description" content="اكتشف أفضل المراكز الطبية الشريكة مع مركز غنيم. عيادات متخصصة في مختلف التخصصات الطبية" />
+        <meta name="keywords" content="مراكز طبية, عيادات, أطباء, تخصصات طبية, غنيم" />
+        <meta property="og:title" content="المراكز الطبية - مركز غنيم الطبي" />
+        <meta property="og:description" content="اكتشف أفضل المراكز الطبية الشريكة مع مركز غنيم" />
         <meta property="og:type" content="website" />
       </Helmet>
       <div className='my-5'>

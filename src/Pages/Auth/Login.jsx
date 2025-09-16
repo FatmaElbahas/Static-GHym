@@ -119,7 +119,11 @@ const Login = () => {
         // حفظ التوكن إذا كان موجود
         if (result.data && result.data.token) {
           localStorage.setItem('token', result.data.token);
+          localStorage.setItem('authToken', result.data.token);
         }
+        
+        // إرسال event لتحديث النافبار
+        window.dispatchEvent(new Event('loginSuccess'));
         
         alert('تم تسجيل الدخول بنجاح!');
         // إعادة توجيه إلى الداشبورد
@@ -167,7 +171,7 @@ const Login = () => {
                 <div className="mb-2">
                   <img 
                     src={logo}
-                    alt="بلسمي" 
+                    alt="غنيم" 
                     className="img-fluid"
                     style={{width: '80px', height: '80px'}}
                   />

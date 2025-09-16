@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <RegisterApp />
+        <App />
       </BrowserRouter>
     </HelmetProvider>
   </StrictMode>

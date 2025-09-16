@@ -11,6 +11,82 @@
   border-radius: 25px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
+/* Responsive Stats Styles */
+.stats-icon {
+  font-size: 2.5rem;
+}
+
+.stats-number, .stats-suffix {
+  font-size: 1.2rem;
+}
+
+.stats-text {
+  font-size: 0.8rem;
+}
+
+@media (min-width: 768px) {
+  .stats-icon {
+    font-size: 3rem;
+  }
+  
+  .stats-number, .stats-suffix {
+    font-size: 1.5rem;
+  }
+  
+  .stats-text {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .stats-icon {
+    font-size: 4rem;
+  }
+  
+  .stats-number, .stats-suffix {
+    font-size: 2rem;
+  }
+  
+  .stats-text {
+    font-size: 1.25rem;
+  }
+}
+
+
+/* تنسيق خاص لزر تسجيل الخروج النشط */
+.navbar .logout-btn.activeLink {
+  background-color: #008a91 !important;
+  color: white !important;
+  font-weight: 600;
+}
+
+/* تحسين المسافات في النافبار */
+.navbar .d-flex.align-items-center.gap-2 {
+  gap: 0.75rem;
+}
+
+/* تنسيقات الروابط النشطة */
+.navbar .activeLink {
+  color: #008a91 !important;
+  font-weight: 600;
+  position: relative;
+}
+
+
+/* تحسين مظهر الروابط */
+.navbar .nav-link {
+  color: #333;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+  border-radius: 20px;
+}
+
+.navbar .nav-link:hover {
+  color: #008a91;
+  background-color: rgba(0, 138, 145, 0.1);
+}
+
 /* أنماط النافبار الأساسية */
 .navbar {
   height: 80px !important;
@@ -574,6 +650,15 @@
 .services-section {
   background: #fff;
 }
+/* Extra space below services title divider */
+.services-section .section-title-divider {
+  margin-bottom: 2rem;
+}
+@media (min-width: 1200px) {
+  .services-section .section-title-divider {
+    margin-bottom: 7rem;
+  }
+}
 .service-card {
   transition: transform .25s ease, box-shadow .25s ease;
   border-radius: 14px;
@@ -593,8 +678,34 @@
 }
 
 .services-container {
-  max-width: 1100px;
+  max-width: 950px;
 }
+
+/* 7-column grid for services rest rows on large screens */
+.services-grid-7 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+@media (min-width: 576px) {
+  .services-grid-7 { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 768px) {
+  .services-grid-7 { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 992px) {
+  .services-grid-7 { grid-template-columns: repeat(5, 1fr); }
+}
+
+@media (min-width: 1200px) {
+  .services-grid-7 { grid-template-columns: repeat(7, 1fr); }
+}
+
+.services-grid-item { display: flex; margin-left: 0; margin-right: 0; }
 
 .section-title-divider {
   position: relative;
@@ -1815,6 +1926,43 @@ width: 10%;
   background: linear-gradient(135deg, #f8fffe 0%, #e8f8f5 100%);
   margin-top: -220px;
   padding-top: 30px;
+}
+
+/* Fix spacing on Home page: keep distance from hero */
+.home-page .stats-section {
+  margin-top: 140px !important;
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+}
+
+/* Make stats container full width */
+.home-page .stats-section .container,
+.home-page .stats-section .container-fluid {
+  width: 100% !important;
+}
+
+/* Home booking card should match navbar container width and be centered */
+.home-page .booking-card {
+  position: relative !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: 80% !important;        /* match navbar container on desktop */
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: -40px !important; /* lift slightly over the next section */
+}
+
+@media (max-width: 1200px) {
+  .home-page .booking-card { width: 85% !important; margin-top: -32px !important; }
+}
+
+@media (max-width: 992px) {
+  .home-page .booking-card { width: 95% !important; margin-top: -24px !important; }
+}
+
+@media (max-width: 576px) {
+  .home-page .booking-card { width: 98% !important; margin-top: 0 !important; }
 }
 
 .stat-card {
@@ -3678,6 +3826,280 @@ width: 10%;
   .register-logo .logo-img {
     width: 60px;
     height: 60px;
+  }
+}
+
+/* Services title spacing overrides (placed after global .section-title-divider to win cascade) */
+.services-section .section-title-divider { margin-bottom: 2rem !important; }
+@media (min-width: 1200px) { .services-section .section-title-divider { margin-bottom: 5rem !important; } }
+
+/* Services title typography override */
+.services-section .section-title-divider .title-pill { font-size: 34px !important; font-weight: 700 !important; }
+
+/* Services container width adjustments for better 7-col fit */
+.services-section .services-container { max-width: 950px; }
+@media (min-width: 1200px) { .services-section .services-container { max-width: 1100px; } }
+@media (min-width: 1400px) { .services-section .services-container { max-width: 1200px; } }
+
+/* Services last row responsive layout - use CSS Grid for stable wrapping */
+.services-last-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+@media (min-width: 768px) { .services-last-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* Match upper rows spacing on laptop and remove extra centering */
+@media (min-width: 992px) { .services-last-row { gap: 1.5rem; justify-content: normal; } }
+/* End services last row layout (grid) */
+
+/* Partners Section */
+.partners-section {
+  background: #fff;
+}
+
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1200px) {
+  .partners-grid { max-width: 1100px; }
+}
+
+@media (min-width: 1400px) {
+  .partners-grid { max-width: 1200px; }
+}
+
+@media (min-width: 576px) {
+  .partners-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 768px) {
+  .partners-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 992px) {
+  .partners-grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+@media (min-width: 1200px) {
+  .partners-grid { grid-template-columns: repeat(6, 1fr); }
+}
+
+.partner-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  overflow: hidden;
+}
+
+.partner-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.partner-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-height: 100px;
+}
+
+/* Partners title styling */
+.partners-section .section-title-divider .title-pill {
+  font-size: 34px !important;
+  font-weight: 700 !important;
+}
+
+.partners-section .section-title-divider {
+  margin-bottom: 2rem !important;
+}
+
+@media (min-width: 1200px) {
+  .partners-section .section-title-divider {
+    margin-bottom: 5rem !important;
+  }
+}
+
+/* Partners Swiper Section */
+.partners-swiper-section {
+  background: #f8f9fa;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  position: relative;
+}
+
+.partners-swiper-section .container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.swiper-container-wrapper {
+  position: relative;
+}
+
+.partners-swiper {
+  padding: 2rem 0;
+  margin: 0;
+}
+
+.partner-slide-card {
+  background: white;
+  border-radius: 12px;
+  padding: 0;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  min-height: 160px;
+  overflow: hidden;
+}
+
+/* Taller card for doctors */
+.doctor-slide-card { min-height: 380px; }
+.doctor-logo { height: 220px; width: 100%; margin-bottom: 0; }
+.doctor-image-wrap { width: 100%; height: 260px; margin: 0; }
+.doctor-image-wrap img { width: 100%; height: 100%; object-fit: cover; display:block; }
+.doctor-info { width: 100%; padding: 0 0.75rem; }
+.doctor-info p { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 900; font-size: 16px; }
+.doctor-info small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 700; font-size: 13px; }
+/* Force UI override for doctors block */
+.partners-swiper-section .doctor-info p { font-weight: 900 !important; font-size: 16px !important; line-height: 1.3 !important; margin: 0 !important; }
+.partners-swiper-section .doctor-info small { font-weight: 700 !important; font-size: 13px !important; line-height: 1.3 !important; margin: 0 !important; color: #333 !important; }
+.doctor-logo img { width: 100%; height: 100%; object-fit: cover; }
+
+.partner-slide-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.partner-slide-card .partner-logo {
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 90px;
+}
+
+.partner-slide-card .partner-logo img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.partner-slide-card .partner-name { width: 100%; text-align: center; }
+.partner-slide-card .partner-name p {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.partner-slide-card .partner-name small {
+  font-size: 0.75rem;
+  color: #999;
+  display: block;
+  margin-top: 0.25rem;
+}
+
+/* Custom Navigation Buttons */
+.swiper-button-prev-custom,
+.swiper-button-next-custom {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  border: none;
+  outline: none;
+}
+
+.swiper-button-prev-custom:hover,
+.swiper-button-next-custom:hover {
+  background: transparent;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.swiper-button-prev-custom {
+  left: 20px;
+}
+
+.swiper-button-next-custom {
+  right: 20px;
+}
+
+.swiper-button-prev-custom span,
+.swiper-button-next-custom span {
+  color: #008a91;
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Partners Grid */
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 576px) {
+  .partners-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 768px) {
+  .partners-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 992px) {
+  .partners-grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+@media (min-width: 1200px) {
+  .partners-grid { grid-template-columns: repeat(6, 1fr); }
+}
+
+/* Partners swiper title styling */
+.partners-swiper-section .section-title-divider .title-pill {
+  font-size: 34px !important;
+  font-weight: 700 !important;
+}
+
+.partners-swiper-section .section-title-divider {
+  margin-bottom: 2rem !important;
+}
+
+@media (min-width: 1200px) {
+  .partners-swiper-section .section-title-divider {
+    margin-bottom: 5rem !important;
   }
 }
 

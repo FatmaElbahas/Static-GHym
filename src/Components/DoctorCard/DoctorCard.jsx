@@ -1,182 +1,535 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faMapMarkerAlt, faStar, faPhone, faCalendarCheck } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt, faStar, faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
-const DoctorCard = React.memo(({ doc }) => {
-  const [imageError, setImageError] = useState(false);
-  
-  // تحديد نوع البيانات (API أو افتراضية)
-  const isApiData = doc.owner_name || doc.salon_name;
-  
-  // استخراج البيانات بناءً على النوع
-  const name = isApiData ? (doc.owner_name || doc.salon_name) : doc.name;
-  const specialty = isApiData ? "عيادة أسنان" : doc.specialty;
-  const location = isApiData ? (doc.salon_address || "غير محدد") : doc.location;
-  const rating = isApiData ? (doc.rating || 0) : doc.rating;
-  const reviews = isApiData ? (doc.total_completed_bookings || 0) : doc.reviews;
-  const price = isApiData ? "200 ريال" : doc.price;
-  const available = isApiData ? true : doc.available;
-  const image = isApiData ? 
-    (doc.owner_photo ? `https://enqlygo.com/${doc.owner_photo}` : null) : 
-    doc.image;
-  const phone = isApiData ? (doc.salon_phone || null) : null;
-  
-  // معالجة خطأ الصورة
-  const handleImageError = () => {
-    setImageError(true);
+function DoctorCard({ salonData }) {
+  const [categories, setCategories] = useState([]);
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [servicesLoading, setServicesLoading] = useState(false);
+  const navigate = useNavigate();
+
+  // دالة للتعامل مع النقر على زر الحجز
+  const handleBookingClick = () => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      // المستخدم مسجل دخول - اذهب للداشبورد
+      navigate('/dashboard');
+    } else {
+      // المستخدم غير مسجل دخول - اذهب لصفحة تسجيل الدخول
+      navigate('/login');
+    }
   };
-  
-  return (
-    <div
-      className="card1 h-100 shadow-lg bg-white border-0"
-      style={{
-        borderRadius: "15px !important",
-        overflow: "hidden !important",
-        cursor: "pointer !important",
-        transition: "all 0.3s ease !important",
-        boxShadow: "2px 2px 10px rgba(0,0,0,0.3) !important"
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-5px)';
-        e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.15)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-      }}
-    >
-      {/* صورة الطبيب */}
-      <div className="position-relative" style={{ height: '200px', overflow: 'hidden' }}>
-        {image && !imageError ? (
-          <img
-            src={image}
-            alt={name}
-            className="card-img-top w-100 h-100"
-            style={{ objectFit: 'cover' }}
-            onError={handleImageError}
-          />
-        ) : (
-          <div 
-            className="w-100 h-100 d-flex align-items-center justify-content-center"
-            style={{ 
-              backgroundColor: '#f8f9fa',
-              backgroundImage: 'linear-gradient(135deg, #038FAD 0%, #0366d6 100%)'
-            }}
-          >
-            <FontAwesomeIcon 
-              icon={faUser} 
-              size="3x" 
-              className="text-white"
-            />
-          </div>
-        )}
+
+  // جلب التصنيفات من API
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setLoading(true);
+        console.log('🔄 Fetching categories from API...');
         
-        {/* Badge للحالة */}
-        <div 
-          className="position-absolute top-0 end-0 m-2"
-          style={{ zIndex: 1 }}
-        >
-          <span 
-            className={`badge ${available ? 'bg-success' : 'bg-secondary'} px-2 py-1`}
-            style={{ fontSize: '0.75rem', borderRadius: '10px' }}
-          >
-            {available ? 'متاح' : 'غير متاح'}
+        const response = await fetch('https://enqlygo.com/api/salons/categories');
+        console.log('📊 Categories API Response Status:', response.status);
+        
+        const data = await response.json();
+        console.log('📊 Categories API Response Data:', data);
+        
+        if (data.status === 'success' && data.data) {
+          console.log('✅ Categories loaded successfully:', data.data);
+          setCategories(data.data);
+        } else {
+          console.error('❌ Invalid categories response format:', data);
+        }
+      } catch (error) {
+        console.error('❌ Error fetching categories:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  // جلب الخدمات والسعر من API
+  useEffect(() => {
+    const fetchServices = async () => {
+      if (!salonData?.id) {
+        console.log('⚠️ No salon ID provided for services');
+        return;
+      }
+
+      try {
+        setServicesLoading(true);
+        console.log(`🔄 Fetching services for salon ID: ${salonData.id}`);
+        
+        const response = await fetch(`https://enqlygo.com/api/salons/${salonData.id}/services`);
+        console.log(`📊 Services API Response Status:`, response.status);
+        
+        const data = await response.json();
+        console.log(`📊 Services API Response Data:`, data);
+        
+        if (data.status === 'success' && data.data) {
+          console.log(`✅ Services loaded successfully:`, data.data);
+          // البيانات تأتي في data.data.services
+          const servicesData = data.data.services || data.data;
+          console.log(`📋 Services array:`, servicesData);
+          setServices(servicesData);
+        } else {
+          console.error(`❌ Invalid services response format:`, data);
+        }
+      } catch (error) {
+        console.error(`❌ Error fetching services:`, error);
+      } finally {
+        setServicesLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, [salonData?.id]);
+
+  if (!salonData) {
+    return (
+      <div className="card bg-white shadow-lg rounded mb-4">
+        <div className="card-body text-center">
+          <p className="text-muted">لا توجد بيانات للعرض</p>
+        </div>
+      </div>
+    );
+  }
+
+  // استخراج المدينة من العنوان
+  const getCityFromAddress = (address) => {
+    if (!address) return "غير محدد";
+    
+    // قائمة المدن بالعربية والإنجليزية
+    const cityMappings = {
+      // السعودية
+      "الرياض": "الرياض",
+      "Riyadh": "الرياض",
+      "جدة": "جدة", 
+      "Jeddah": "جدة",
+      "الدمام": "الدمام",
+      "Dammam": "الدمام",
+      "المدينة المنورة": "المدينة المنورة",
+      "Medina": "المدينة المنورة",
+      "Medina Al Munawwarah": "المدينة المنورة",
+      "الطائف": "الطائف",
+      "Taif": "الطائف",
+      "الخبر": "الخبر",
+      "Khobar": "الخبر",
+      "الظهران": "الظهران",
+      "Dhahran": "الظهران",
+      
+      // مصر
+      "القاهرة": "القاهرة",
+      "Cairo": "القاهرة",
+      "الفيوم": "الفيوم",
+      "Fayoum": "الفيوم",
+      "مصر الجديدة": "مصر الجديدة",
+      "New Cairo": "مصر الجديدة",
+      "Heliopolis": "مصر الجديدة",
+      
+      // مدن أخرى
+      "الإسكندرية": "الإسكندرية",
+      "Alexandria": "الإسكندرية",
+      "شرم الشيخ": "شرم الشيخ",
+      "Sharm El Sheikh": "شرم الشيخ"
+    };
+    
+    // البحث في العنوان (case insensitive)
+    const addressLower = address.toLowerCase();
+    
+    for (const [cityKey, cityValue] of Object.entries(cityMappings)) {
+      if (addressLower.includes(cityKey.toLowerCase())) {
+        return cityValue;
+      }
+    }
+    
+    // إذا لم توجد مدينة معروفة، نحاول استخراج من نهاية العنوان أو الوسط
+    const addressParts = address.split(/[-,\s]+/);
+    
+    // محاولة استخراج من نهاية العنوان
+    if (addressParts.length > 1) {
+      const lastPart = addressParts[addressParts.length - 1].trim();
+      if (lastPart && lastPart.length > 2 && !/\d/.test(lastPart)) {
+        return lastPart;
+      }
+    }
+    
+    // محاولة استخراج من وسط العنوان
+    if (addressParts.length > 2) {
+      const middlePart = addressParts[Math.floor(addressParts.length / 2)].trim();
+      if (middlePart && middlePart.length > 2 && !/\d/.test(middlePart)) {
+        return middlePart;
+      }
+    }
+    
+    // كحل أخير، نأخذ أول جزء بدون أرقام
+    for (const part of addressParts) {
+      const cleanPart = part.trim();
+      if (cleanPart && cleanPart.length > 2 && !/\d/.test(cleanPart)) {
+        return cleanPart;
+      }
+    }
+    
+    return "غير محدد";
+  };
+
+  // الحصول على التخصص الحقيقي من التصنيفات
+  const getSpecialization = () => {
+    // Debug: طباعة شكل البيانات
+    console.log('🔍 DoctorCard Debug:', {
+      salonData: salonData,
+      salon_categories: salonData.salon_categories,
+      isArray: Array.isArray(salonData.salon_categories),
+      categories: categories,
+      categoriesLength: categories.length
+    });
+
+    // التحقق من وجود salon_categories
+    if (!salonData.salon_categories) {
+      console.log('⚠️ No salon_categories found, returning first available category');
+      // إذا لم توجد تصنيفات للعيادة، نعرض أول تصنيف متاح من API
+      if (categories.length > 0) {
+        return categories[0].title_ar || categories[0].title || "تخصص طبي";
+      }
+      return "تخصص طبي";
+    }
+
+    // التحقق من وجود categories
+    if (categories.length === 0) {
+      console.log('⚠️ Categories not loaded yet, returning default');
+      return "تخصص طبي";
+    }
+
+    // معالجة salon_categories - قد يكون string أو array
+    let categoryIds = salonData.salon_categories;
+    
+    // إذا كان string، نحوله إلى array
+    if (typeof categoryIds === 'string') {
+      try {
+        categoryIds = JSON.parse(categoryIds);
+      } catch (e) {
+        // إذا فشل التحويل، نحاول تقسيمه بفواصل
+        categoryIds = categoryIds.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id));
+      }
+    }
+    
+    // التأكد من أنه array
+    if (!Array.isArray(categoryIds)) {
+      categoryIds = [categoryIds].filter(id => id != null);
+    }
+    
+    console.log(`🔍 Processed category IDs:`, categoryIds);
+
+    // البحث عن التصنيفات المطابقة باستخدام ID
+    const matchingCategories = categoryIds
+      .map(categoryId => {
+        // تحويل إلى رقم للتأكد من المطابقة
+        const numericId = parseInt(categoryId);
+        console.log(`🔍 Looking for category ID: ${numericId}`);
+        const category = categories.find(cat => cat.id === numericId);
+        console.log(`📋 Found category:`, category);
+        
+        if (category) {
+          // استخدام title_ar أولاً، ثم title كبديل
+          const categoryName = category.title_ar || category.title || `تخصص ${numericId}`;
+          console.log(`✅ Category name: ${categoryName}`);
+          return categoryName;
+        }
+        
+        console.log(`❌ No category found for ID: ${numericId}`);
+        return null;
+      })
+      .filter(Boolean);
+
+    console.log(`🎯 Final matching categories:`, matchingCategories);
+
+    if (matchingCategories.length > 0) {
+      const result = matchingCategories.join(", ");
+      console.log(`✅ Final specialization: ${result}`);
+      return result;
+    }
+
+    console.log('⚠️ No matching categories found, returning first available category');
+    // إذا لم يجد مطابقة، نعرض أول تصنيف متاح من API
+    if (categories.length > 0) {
+      return categories[0].title_ar || categories[0].title || "تخصص طبي";
+    }
+    return "تخصص طبي";
+  };
+
+  // الحصول على السعر الحقيقي من API الخدمات
+  const getRealPrice = () => {
+    console.log('💰 Getting price from API services:', {
+      servicesLoading: servicesLoading,
+      services: services,
+      servicesType: typeof services,
+      isArray: Array.isArray(services),
+      salonId: salonData?.id
+    });
+    
+    if (servicesLoading) {
+      console.log('⏳ Services still loading...');
+      return "جاري التحميل...";
+    }
+
+    if (!services) {
+      console.log('⚠️ Services is null/undefined');
+      return "غير متوفر";
+    }
+
+    // التأكد من أن services هو array
+    if (!Array.isArray(services)) {
+      console.log('⚠️ Services is not an array:', typeof services, services);
+      return "غير متوفر";
+    }
+
+    if (services.length === 0) {
+      console.log('⚠️ No services found in API response');
+      return "غير متوفر";
+    }
+
+    // طباعة تفاصيل كل خدمة
+    console.log('📋 All services details:');
+    services.forEach((service, index) => {
+      console.log(`Service ${index + 1}:`, {
+        id: service.id,
+        name: service.name || service.title,
+        price: service.price,
+        service_price: service.service_price,
+        cost: service.cost,
+        amount: service.amount,
+        currency: service.currency,
+        allFields: Object.keys(service)
+      });
+    });
+
+    // استخراج الأسعار من الخدمات - بناءً على API الحقيقي
+    const prices = services
+      .map(service => {
+        // بناءً على API، السعر في حقل "price"
+        const price = service.price;
+        
+        if (price && price !== null) {
+          const numericPrice = parseFloat(price);
+          console.log(`💰 Service "${service.title_ar || service.title}" price: ${price} -> ${numericPrice}`);
+          return numericPrice;
+        }
+        
+        console.log(`⚠️ No price found for service:`, service.title_ar || service.title);
+        return null;
+      })
+      .filter(price => price && !isNaN(price));
+
+    console.log('💰 All extracted prices:', prices);
+
+    if (prices.length === 0) {
+      console.log('❌ No valid prices found in any service');
+      return "غير متوفر";
+    }
+
+    // حساب السعر الأدنى والأعلى
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+
+    if (minPrice === maxPrice) {
+      const result = `${minPrice} ريال`;
+      console.log(`✅ Single price from API: ${result}`);
+      return result;
+    } else {
+      const result = `${minPrice} - ${maxPrice} ريال`;
+      console.log(`✅ Price range from API: ${result}`);
+      return result;
+    }
+  };
+
+  return (
+    <>
+      <style jsx>{`
+        .doctor-card-hover:hover {
+          transform: translateY(-8px) !important;
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
+        }
+      `}</style>
+      <div className="card bg-white shadow-lg rounded-4 h-100 doctor-card-hover" style={{
+      border: 'none',
+      borderRadius: '16px',
+      transition: 'all 0.3s ease',
+      maxWidth: '100%',
+      backgroundColor: '#ffffff',
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+      overflow: 'hidden',
+      cursor: 'pointer'
+    }}>
+      
+      {/* Doctor Image - في الأعلى */}
+      <div className="text-center pt-4 pb-2" style={{ backgroundColor: '#f8f9fa' }}>
+        <div className="doctor-image-wrapper d-inline-block">
+          <img
+            src={salonData.owner_photo ? 
+              (salonData.owner_photo.startsWith('http') ? 
+                salonData.owner_photo : 
+                `https://enqlygo.com/${salonData.owner_photo}`) : 
+              "https://www.w3schools.com/howto/img_avatar.png"}
+            alt={salonData.owner_name}
+            className="rounded-circle"
+            style={{ 
+              width: "90px", 
+              height: "90px", 
+              objectFit: "cover",
+              border: "4px solid #ffffff",
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+            }}
+            onError={(e) => {
+              e.target.src = "https://www.w3schools.com/howto/img_avatar.png";
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Card Body */}
+      <div className="card-body p-4" style={{ 
+        display: 'flex', 
+        flexDirection: 'column',
+        gap: '15px',
+        minHeight: '200px'
+      }}>
+        
+        {/* Doctor Name */}
+        <div className="text-center">
+          <h5 className="mb-1" style={{ 
+            color: "var(--color-main)", 
+            fontWeight: "bold",
+            fontSize: "1.3rem",
+            margin: 0
+          }}>
+            {salonData.owner_name || "غير معروف"}
+          </h5>
+
+          {/* Specialization */}
+          <p className="mb-2" style={{ 
+            color: "#6c757d", 
+            fontSize: "14px",
+            fontWeight: "500",
+            margin: 0
+          }}>
+            {loading ? (
+              <span className="text-muted">جاري التحميل...</span>
+            ) : (
+              getSpecialization()
+            )}
+          </p>
+        </div>
+
+        {/* Location */}
+        <div className="text-center" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+          <FontAwesomeIcon 
+            icon={faMapMarkerAlt} 
+            style={{ 
+              color: "#6c757d", 
+              fontSize: "14px"
+            }} 
+          />
+          <span style={{ 
+            color: "#6c757d", 
+            fontSize: "14px"
+          }}>
+            {getCityFromAddress(salonData.salon_address)}
+          </span>
+        </div>
+
+        {/* Rating and Price Row */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          padding: '10px 15px',
+          backgroundColor: '#f8f9fa',
+          borderRadius: '10px',
+          margin: '10px 0'
+        }}>
+          
+          {/* Rating */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <div style={{ display: 'flex', gap: '1px' }}>
+              {[1,2,3,4,5].map((star) => (
+                <FontAwesomeIcon 
+                  key={star}
+                  icon={faStar} 
+                  style={{ 
+                    color: "#ffc107", 
+                    fontSize: "14px"
+                  }} 
+                />
+              ))}
+            </div>
+            <div style={{ 
+              color: "#495057", 
+              fontSize: "14px", 
+              fontWeight: "600"
+            }}>
+              {salonData.top_rated === 1 ? '4.9' : 
+               (salonData.rating || salonData.reviews_avg_rating || '4.0')}
+            </div>
+          </div>
+
+          {/* Price */}
+          <div style={{ 
+            color: "#495057", 
+            fontSize: "16px", 
+            fontWeight: "bold"
+          }}>
+            {getRealPrice()}
+          </div>
+        </div>
+
+        {/* Bookings Count */}
+        <div className="text-center">
+          <span style={{ 
+            color: "#6c757d", 
+            fontSize: "12px"
+          }}>
+            ({salonData.total_completed_bookings || 127}) حجز مكتمل
           </span>
         </div>
       </div>
 
-      {/* محتوى الكارد */}
-      <div className="card-body p-3">
-        {/* اسم الطبيب */}
-        <h5 className="card-title mb-2" style={{ fontSize: '1.1rem', fontWeight: '600' }}>
-          {name}
-        </h5>
-        
-        {/* التخصص */}
-        <p className="text-muted mb-2" style={{ fontSize: '0.9rem' }}>
-          {specialty}
-        </p>
-        
-        {/* الموقع */}
-        <div className="d-flex align-items-center mb-2">
-          <FontAwesomeIcon 
-            icon={faMapMarkerAlt} 
-            className="text-muted me-2" 
-            style={{ fontSize: '0.8rem' }}
-          />
-          <span 
-            className="text-muted" 
-            style={{ fontSize: '0.85rem' }}
-            title={location}
-          >
-            {location.length > 30 ? `${location.substring(0, 30)}...` : location}
-          </span>
-        </div>
-        
-        {/* التقييم والحجوزات */}
-        <div className="d-flex align-items-center justify-content-between mb-3">
-          <div className="d-flex align-items-center">
-            <FontAwesomeIcon 
-              icon={faStar} 
-              className="text-warning me-1" 
-              style={{ fontSize: '0.8rem' }}
-            />
-            <span className="text-muted" style={{ fontSize: '0.85rem' }}>
-              {rating} ({reviews} {isApiData ? 'حجز مكتمل' : 'تقييم'})
-            </span>
-          </div>
-          <span 
-            className="text-primary fw-bold" 
-            style={{ fontSize: '0.9rem' }}
-          >
-            {price}
-          </span>
-        </div>
-        
-        {/* رقم الهاتف (للمعطيات من API فقط) */}
-        {isApiData && phone && (
-          <div className="d-flex align-items-center mb-3">
-            <FontAwesomeIcon 
-              icon={faPhone} 
-              className="text-success me-2" 
-              style={{ fontSize: '0.8rem' }}
-            />
-            <span className="text-muted" style={{ fontSize: '0.85rem' }}>
-              {phone}
-            </span>
-          </div>
-        )}
-        
-        {/* زر الحجز */}
+      {/* Booking Button */}
+      <div className="p-3" style={{ backgroundColor: '#f8f9fa', borderTop: '1px solid #e9ecef' }}>
         <button 
-          className="btn w-100"
+          className="btn w-100 booking-btn"
           style={{
-            backgroundColor: '#038FAD',
-            borderColor: '#038FAD',
-            color: 'white',
-            borderRadius: '10px',
-            fontSize: '0.9rem',
-            fontWeight: '500',
-            padding: '8px 16px',
-            transition: 'all 0.3s ease'
+            background: 'linear-gradient(135deg, var(--color-main), #027a8a)',
+            color: "white",
+            border: "none",
+            borderRadius: "25px",
+            padding: "12px 20px",
+            fontSize: "14px",
+            fontWeight: "bold",
+            boxShadow: "0 4px 15px rgba(3, 143, 173, 0.3)",
+            transition: "all 0.3s ease"
           }}
+          onClick={handleBookingClick}
           onMouseEnter={(e) => {
-            e.target.style.backgroundColor = '#0366d6';
-            e.target.style.borderColor = '#0366d6';
+            e.target.style.background = 'linear-gradient(135deg, #027a8a, #015f6b)';
+            e.target.style.transform = "translateY(-2px)";
+            e.target.style.boxShadow = "0 6px 20px rgba(3, 143, 173, 0.4)";
           }}
           onMouseLeave={(e) => {
-            e.target.style.backgroundColor = '#038FAD';
-            e.target.style.borderColor = '#038FAD';
+            e.target.style.background = 'linear-gradient(135deg, var(--color-main), #027a8a)';
+            e.target.style.transform = "translateY(0)";
+            e.target.style.boxShadow = "0 4px 15px rgba(3, 143, 173, 0.3)";
           }}
         >
-          <FontAwesomeIcon icon={faCalendarCheck} className="me-2" />
-          احجز موعد
+          <FontAwesomeIcon icon={faCalendarCheck} />
+          احجز الآن
         </button>
       </div>
     </div>
+    </>
   );
-});
-
-DoctorCard.displayName = 'DoctorCard';
+}
 
 export default DoctorCard;

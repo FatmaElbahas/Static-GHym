@@ -22,7 +22,7 @@ const Services = () => {
       icon: faStethoscope,
       price: '150 ريال',
       duration: '30 دقيقة',
-      location: 'مستشفى بلسمي - الرياض',
+      location: 'مستشفى غنيم - الرياض',
       rating: 4.8,
       available: true,
       category: 'الطب العام'

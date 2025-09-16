@@ -6,7 +6,7 @@ export default function ErrorPage() {
   return (
     <>
       <Helmet>
-        <title>404 - الصفحة غير موجودة | مركز بلسمي الطبي</title>
+        <title>404 - الصفحة غير موجودة | مركز غنيم الطبي</title>
         <meta name="description" content="الصفحة التي تبحث عنها غير موجودة. عد إلى الصفحة الرئيسية أو تصفح خدماتنا" />
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
