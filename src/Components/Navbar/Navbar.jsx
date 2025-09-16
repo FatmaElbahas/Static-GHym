@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import DropdownWithState from "../DropDownMenue/DropDownMenue";
 import CenterServicesDropdown from "../CenterServicesDropdown/CenterServicesDropdown";
 
@@ -140,8 +142,9 @@ function MainNavbar() {
                       className={({ isActive }) =>
                         isActive ? "activeLink nav-link logout-btn" : "nav-link logout-btn"
                       }
+                      title="تسجيل الخروج"
                     >
-                      تسجيل الخروج
+                      <FontAwesomeIcon icon={faSignOutAlt} />
                     </NavLink>
                   </li>
                 </>
@@ -181,8 +184,9 @@ function MainNavbar() {
                     className={({ isActive }) =>
                       isActive ? "activeLink nav-link logout-btn" : "nav-link logout-btn"
                     }
+                    title="تسجيل الخروج"
                   >
-                    تسجيل الخروج
+                    <FontAwesomeIcon icon={faSignOutAlt} />
                   </NavLink>
                 </li>
               </>
