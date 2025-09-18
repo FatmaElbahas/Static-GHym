@@ -93,7 +93,7 @@ const EnhancedSalonDashboard = () => {
         }
 
         .page-header {
-          background: linear-gradient(135deg, var(--bs-primary) 0%, #0d6efd 100%);
+          background: linear-gradient(135deg, var(--color-main) 0%, #026a7a 100%);
           position: relative;
           overflow: hidden;
         }

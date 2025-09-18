@@ -3,6 +3,7 @@ import MainNavbar from './Components/Navbar/Navbar';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import OffersPage from './Pages/offers/OffersPage';
+import Services from './Components/Services/Services';
 import ClinicsPage from './Pages/Clinics/ClinicsPage';
 import JobsPage from './Pages/Jobs/JobsPage';
 import PricingPage from './Pages/PricingPage/PricingPage';
@@ -27,6 +28,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/book" element={<Book/>} />
           <Route path="/offers" element={<OffersPage />} />
+          <Route path="/services" element={<Services />} />
           <Route path="/clinics" element={<ClinicsPage />} />
           <Route path="/jobs" element={<JobsPage />} />
           <Route path="/pricing" element={<PricingPage />} />

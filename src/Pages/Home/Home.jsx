@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Stats from '../../Components/Stats/Stats';
 import Services from '../../Components/Services/Services';
 import Partners from '../../Components/Partners/Partners';
@@ -11,6 +11,20 @@ import Logo from '../../assets/images/Logo.png';
 import HeroBg from '../../assets/images/hero-bg.ab3138f8.webp';
 
 export default function Home() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const el = document.getElementById(id);
+      if (el) {
+        // تأخير بسيط حتى يتأكد من رسم العناصر
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+    }
+  }, [location]);
   return (
     <>
       <Helmet>
@@ -126,7 +140,9 @@ export default function Home() {
           </div>
         </div>
       <Stats />
-      <Services />
+      <div id="services-section" style={{ scrollMarginTop: '100px' }}>
+        <Services />
+      </div>
       <Partners />
       <MostBookedClinics />
       <MostBookedDoctors />

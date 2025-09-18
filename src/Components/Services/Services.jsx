@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 // Import service images
 import bookReservations from '../../assets/images/bookReservations.svg';
@@ -21,42 +23,61 @@ import joinBlsmyApp from '../../assets/images/joinBlsmyApp.png';
 import jobsSystem from '../../assets/images/jobsSystem.png';
 import labResults from '../../assets/images/labResults.svg';
 import medInsurance from '../../assets/images/medInsurance.svg';
+import toothPlaceholder from '../../assets/images/الاسنان.png';
 
-const allFeatures = [
-  // First row (ordered as requested): حجز، تقييم، خدمة ذاتية، جوال
-  { image: bookReservations, title: 'حجز المواعيد', desc: 'نظام حجز مواعيد متطور لتسهيل إدارة مواعيد عملائك وتنظيمها بخطوات بسيطة ودقيقة' },
-  { image: ratingsSystem, title: 'نظام التقييمات', desc: 'إمكانية تقييم الخدمة بعد كل حجز لمعرفة نقاط القوة والتحسينات' },
-  { image: جهازالخدمةالذاتية, title: 'جهاز الخدمة الذاتية', desc: 'حلول خدمة ذاتية متقدمة لتسريع الإجراءات وتحسين تجربة العملاء' },
-  { image: تطبيقجوالالخاص, title: 'تطبيق جوال خاص', desc: 'تطبيق جوال لإدارة وحجز المواعيد بسهولة' },
+const SERVICES_URL = 'https://enqlygo.com/api/salons/services';
 
-  // Rest - second row desired order (7 items)
-  { image: تسجيلDخولDاتي, title: 'تسجيل الدخول الذاتي', desc: 'دخول ذاتي آمن وسريع لعملائك' },
-  { image: الربطالبرمجي, title: 'الربط البرمجي', desc: 'تكامل مرن مع أنظمتك الحالية' },
-  { image: eStore, title: 'السداد الإلكتروني', desc: 'مدفوعات إلكترونية آمنة وسلسة' },
-  { image: notifySystem, title: 'نظام التذكيرات', desc: 'تذكيرات آلية عبر قنوات متعددة' },
-  { image: موقعتعريفي, title: 'موقع تعريفي', desc: 'موقع احترافي لتعريف خدماتك' },
-  { image: eStore, title: 'متجر الكتروني', desc: 'حل متجر إلكتروني لعرض وبيع المنتجات' },
-  { image: promoCode, title: 'الأكواد الترويجية', desc: 'أكواد خصم وعروض مخصصة' },
-
-  // Rest - third row desired order (7 items)
-  { image: homeVisits, title: 'الزيارات المنزلية', desc: 'دعم زيارات منزلية آمنة' },
-  { image: joinBlsmyApp, title: 'الانضمام لتطبيق غنيم', desc: 'انضم إلى تطبيق غنيم لزيادة وصولك' },
-  { image: jobsSystem, title: 'نظام التوظيف', desc: 'إدارة عمليات التوظيف بكل سهولة' },
-  { image: الوصوللعملاءاكتر, title: 'الوصول إلى عملاء أكثر', desc: 'نشر أوسع وجذب عملاء جدد' },
-  { image: نطاقالحجوزات, title: 'نطاق الحجوزات', desc: 'إدارة الفروع والمواقع' },
-  { image: labResults, title: 'نتائج المختبر و الوصفات و تقارير الأشعة', desc: 'إدارة نتائج التحاليل والتقارير الطبية' },
-  { image: medInsurance, title: 'التأمين الطبي', desc: 'دعم التأمين الطبي للعملاء' },
-
-  // Remaining
-  { image: دعمفنيمتقدم, title: 'دعم فني 24/7', desc: 'دعم متواصل على مدار الساعة' },
-  { image: نقاطالولاء, title: 'نقاط الولاء والمكافآت', desc: 'بناء ولاء مع عملائك عبر نقاط ومكافآت' },
-  { image: استشاراتعنبعد, title: 'استشارات عن بعد', desc: 'تقديم الاستشارات الطبية عن بُعد بسهولة وأمان' }
-];
-
-const featured = allFeatures.slice(0, 4);
-const rest = allFeatures.slice(4);
+const buildImageUrl = (path) => {
+  if (!path || typeof path !== 'string') return null;
+  if (path.startsWith('http')) return path;
+  return `https://enqlygo.com/${path.replace(/^\/+/, '')}`;
+};
 
 export default function Services() {
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    const load = async () => {
+      try {
+        if (!isMounted) return;
+        setLoading(true);
+        setError(null);
+        const res = await fetch(SERVICES_URL);
+        const json = await res.json();
+        if (!res.ok || json?.status === 'error') {
+          throw new Error(json?.message || `HTTP ${res.status}`);
+        }
+        const list = Array.isArray(json?.data) ? json.data : [];
+        const formatted = list
+          .filter(s => s.status === 1)
+          .map(s => ({
+            id: s.id,
+            title: s.title_ar || s.title || s.title_en,
+            desc: s.about_ar || s.about || s.about_en || '',
+            img: buildImageUrl(s.images && s.images[0] && s.images[0].image),
+            price: s.price,
+            duration: s.service_time,
+            discount: s.discount,
+          }));
+        if (!isMounted) return;
+        setServices(formatted);
+      } catch (e) {
+        if (!isMounted) return;
+        setError(e.message || 'حدث خطأ أثناء جلب الخدمات');
+      } finally {
+        if (!isMounted) return;
+        setLoading(false);
+      }
+    };
+    load();
+    return () => { isMounted = false; };
+  }, []);
+
+  const featured = services.slice(0, 4);
+  const rest = services.slice(4);
   return (
     <section className="services-section py-5">
       <div className="container">
@@ -65,20 +86,54 @@ export default function Services() {
           <span className="title-pill">خدمات غنيم</span>
         </div>
         <div className="services-container mx-auto">
+          {loading && (
+            <div className="d-flex align-items-center justify-content-center py-5">
+              <div className="text-center p-4 rounded-3 shadow-sm" style={{ background:'#fff', minWidth:'280px' }}>
+                <FontAwesomeIcon icon={faSpinner} spin size="3x" style={{ color:'var(--color-main)' }} />
+                <div className="mt-3 fw-semibold" style={{ color:'var(--color-main)' }}>جاري تحميل الخدمات...</div>
+              </div>
+            </div>
+          )}
+          {error && (
+            <div className="alert alert-danger text-center" role="alert">{error}</div>
+          )}
+          {!loading && !error && (
+          <>
           {/* الصف الأول: 4 عناصر باستخدام صف Bootstrap */}
           <div className="row g-4 justify-content-center mb-2">
             {featured.map((f, idx) => (
               <div key={`f-${idx}`} className="col-6 col-md-6 col-lg-3 col-xl-3">
                 <div className="d-flex flex-column align-items-center text-center px-2">
                   <div className="mb-5" style={{ padding: 0 }}>
-                    <img
-                      src={f.image}
-                      alt={f.title}
-                      style={{ width: '79px', height: '79px', objectFit: 'contain' }}
+                    <img 
+                      src={f.img || toothPlaceholder} 
+                      alt={f.title} 
+                      style={{ width: '79px', height: '79px', objectFit: f.img ? 'cover' : 'contain', borderRadius: f.img ? '10px' : '0' }}
+                      onError={(e) => {
+                        console.log('Image failed to load:', f.img, 'falling back to placeholder');
+                        e.target.src = toothPlaceholder;
+                        e.target.style.objectFit = 'contain';
+                        e.target.style.borderRadius = '0';
+                      }}
                     />
                   </div>
                   <h5 className="mt-1 mb-2" style={{ fontSize: '20px', fontWeight: 600 }}>{f.title}</h5>
                   <p className="text-muted mt-1 mb-0" style={{ fontSize: '16px', fontWeight: 600 }}>{f.desc}</p>
+                  <div className="mt-2 small" style={{ color:'var(--color-main)', fontWeight:700 }}>
+                    {typeof f.price === 'number' && (
+                      <>
+                        {f.discount ? (
+                          <>
+                            <span className="text-muted text-decoration-line-through me-2">{f.price} ر.س</span>
+                            <span>{Math.round(f.price * (1 - f.discount/100))} ر.س</span>
+                          </>
+                        ) : (
+                          <span>{f.price} ر.س</span>
+                        )}
+                        <span className="ms-2 text-muted">• {f.duration} دقيقة</span>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
@@ -90,10 +145,16 @@ export default function Services() {
               <div key={`r-${idx}`} className="services-grid-item text-center">
                 <div className="d-flex flex-column align-items-center text-center px-2">
                   <div className="mb-4" style={{ padding: 0 }}>
-                    <img
-                      src={f.image}
-                      alt={f.title}
-                      style={{ width: '60px', height: '60px', objectFit: 'contain' }}
+                    <img 
+                      src={f.img || toothPlaceholder} 
+                      alt={f.title} 
+                      style={{ width: '60px', height: '60px', objectFit: f.img ? 'cover' : 'contain', borderRadius: f.img ? '8px' : '0' }}
+                      onError={(e) => {
+                        console.log('Image failed to load:', f.img, 'falling back to placeholder');
+                        e.target.src = toothPlaceholder;
+                        e.target.style.objectFit = 'contain';
+                        e.target.style.borderRadius = '0';
+                      }}
                     />
                   </div>
                   <p className="mt-1 mb-0" style={{ fontSize: '14px' }}>{f.title}</p>
@@ -101,6 +162,8 @@ export default function Services() {
               </div>
             ))}
           </div>
+          </>
+          )}
         </div>
       </div>
     </section>

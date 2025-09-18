@@ -4,14 +4,10 @@ import { Autoplay, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-const API_URL = 'https://enqlygo.com/api/salons/most_booking_salons';
-const CATEGORY_MAP = {
-  '1': 'الأسنان',
-  '2': 'الجلدية',
-  '3': 'الجراحة',
-  '4': 'النساء والولادة',
-  '5': 'الليزر',
-};
+const API_URL = 'https://enqlygo.com/api/salons/most_booking_staff';
+const ADDRESSES_URL = 'https://enqlygo.com/api/salons/addresses';
+const CATEGORIES_URL = 'https://enqlygo.com/api/salons/categories';
+
 
 const MostBookedDoctorsSlides = memo(({ doctors }) => {
   const slides = useMemo(() => doctors.map((d) => (
@@ -38,7 +34,10 @@ const MostBookedDoctorsSlides = memo(({ doctors }) => {
         ) : null}
         <div className="partner-name doctor-info mt-1 text-center">
           <p className="mb-1 main-color fw-500">{d.name}</p>
-          <small className="text-muted d-block">{d.specialty || d.clinic}</small>
+          <small className="text-muted d-block">{d.clinic}</small>
+          {d.specialty ? (
+            <small className="text-muted d-block">{d.specialty}</small>
+          ) : null}
           <small className="text-muted d-block">{d.address}</small>
         </div>
       </div>
@@ -83,57 +82,132 @@ const MostBookedDoctors = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Helper: build absolute image URL safely
+    const toAbsoluteImageUrl = (path) => {
+      if (!path) return 'https://www.w3schools.com/howto/img_avatar.png';
+      if (typeof path !== 'string') return 'https://www.w3schools.com/howto/img_avatar.png';
+      if (path.startsWith('http')) return path;
+      // common API patterns
+      if (path.startsWith('storage/')) return `https://enqlygo.com/${path}`;
+      return `https://enqlygo.com/${path.replace(/^\/+/, '')}`;
+    };
+
+    // Helper: normalize various API response shapes into a salons array
+    const normalizeSalons = (json) => {
+      if (!json) return [];
+      if (Array.isArray(json)) return json;
+      if (Array.isArray(json?.data)) return json.data;
+      if (Array.isArray(json?.data?.data)) return json.data.data;
+      if (Array.isArray(json?.payload)) return json.payload; // fallback
+      return [];
+    };
+
+    const controller = new AbortController();
     const fetchDoctors = async () => {
       try {
         setLoading(true);
         setError(null);
-        const res = await fetch(API_URL);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const json = await res.json();
-        const salons = (json && json.data && json.data.data) || [];
-        const list = [];
-        salons.forEach((s) => {
-          const clinicName = s.salon_name || '';
-          const address = s.salon_address || '';
-          const rating = s.rating || 0;
+        const [staffRes, addressesRes, categoriesRes] = await Promise.all([
+          fetch(API_URL, { signal: controller.signal }),
+          fetch(ADDRESSES_URL, { signal: controller.signal }),
+          fetch(CATEGORIES_URL, { signal: controller.signal })
+        ]);
+        if (!staffRes.ok) throw new Error(`HTTP ${staffRes.status}`);
+        const json = await staffRes.json();
+        const salons = normalizeSalons(json);
+        let addresses = [];
+        let categoriesMap = {};
+        try {
+          if (addressesRes.ok) {
+            const addrJson = await addressesRes.json();
+            const list = Array.isArray(addrJson?.data) ? addrJson.data : [];
+            addresses = list.filter((x) => typeof x === 'string');
+          }
+        } catch (_) { /* ignore address fallback errors */ }
+        try {
+          if (categoriesRes.ok) {
+            const catJson = await categoriesRes.json();
+            const cats = Array.isArray(catJson?.data) ? catJson.data : [];
+            categoriesMap = cats.reduce((map, c) => {
+              const title = c.title_ar || c.title || '';
+              map[String(c.id)] = title;
+              return map;
+            }, {});
+          }
+        } catch (_) { /* ignore categories errors */ }
+
+        const list = salons.reduce((acc, s) => {
+          // Case A: endpoint returns staff items with nested salon
+          if (s && s.salon && s.name) {
+            const clinicName = s.salon.salon_name || s.salon.owner_name || '';
+            const address = s.salon.salon_address || addresses[0] || '';
+            const rating = s.rating || s.salon.rating || 0;
+            const specialty = (() => {
+              const cats = s.salon.salon_categories || '';
+              if (!cats) return '';
+              const first = String(cats).split(',')[0]?.trim();
+              return categoriesMap[first] || '';
+            })();
+
+            acc.push({
+              id: String(s.id ?? `${clinicName}-${s.name}`),
+              name: s.name || 'طبيب', // doctor's name
+              clinic: clinicName,     // clinic name
+              address,                // clinic address
+              rating,
+              specialty,
+              photo: toAbsoluteImageUrl(s.photo) || toAbsoluteImageUrl(s.salon.owner_photo),
+            });
+            return acc;
+          }
+
+          // Case B: fallback – array of salons, derive doctors from staff/owner
+          const clinicName = s.salon_name || s.name || '';
+          const address = s.salon_address || s.address || s.city_name || addresses[0] || '';
+          const rating = s.reviews_avg_rating || s.rating || 0;
           const specialty = (() => {
-            if (!s.salon_categories) return '';
-            const first = String(s.salon_categories).split(',')[0]?.trim();
-            return CATEGORY_MAP[first] || '';
+            const cats = s.salon_categories || s.category_id || '';
+            if (!cats) return '';
+            const first = String(cats).split(',')[0]?.trim();
+            return categoriesMap[first] || '';
           })();
+
           if (Array.isArray(s.staff) && s.staff.length > 0) {
             s.staff.forEach((st, idx) => {
-              const photoPath = st.photo ? `https://enqlygo.com/storage/${st.photo}` : (s.owner_photo || 'https://www.w3schools.com/howto/img_avatar.png');
-              list.push({
+              acc.push({
                 id: `${s.id}-${idx}`,
                 name: st.name || 'طبيب',
                 clinic: clinicName,
                 address,
                 rating,
                 specialty,
-                photo: photoPath || 'https://www.w3schools.com/howto/img_avatar.png',
+                photo: toAbsoluteImageUrl(st.photo) || toAbsoluteImageUrl(s.owner_photo),
               });
             });
           } else {
-            list.push({
+            acc.push({
               id: `${s.id}`,
               name: s.owner_name || clinicName,
               clinic: clinicName,
               address,
               rating,
               specialty,
-              photo: s.owner_photo || 'https://www.w3schools.com/howto/img_avatar.png',
+              photo: toAbsoluteImageUrl(s.owner_photo),
             });
           }
-        });
+          return acc;
+        }, []);
+
         setDoctors(list);
       } catch (e) {
-        setError(e.message);
+        if (e.name === 'AbortError') return;
+        setError(e.message || 'خطأ غير متوقع');
       } finally {
         setLoading(false);
       }
     };
     fetchDoctors();
+    return () => controller.abort();
   }, []);
 
   if (loading) {

@@ -15,6 +15,7 @@ import {
   faHospital
 } from '@fortawesome/free-solid-svg-icons';
 import Profile from '../../Components/Dashboard/Profile';
+import Footer from '../../Components/Footer/Footer';
 import Bookings from '../../Components/Dashboard/Bookings';
 import Services from '../../Components/Dashboard/Services';
 import NewBooking from '../../Components/Dashboard/NewBooking';
@@ -140,7 +141,7 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <div className="dashboard-body">
+      <div className="dashboard-body" style={{ marginTop: '80px', marginBottom: '50px' }}>
         <div className="container-fluid">
           <div className="row">
             {/* Sidebar */}
@@ -180,6 +181,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

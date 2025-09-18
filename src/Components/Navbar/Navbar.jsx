@@ -10,6 +10,7 @@ const logo = "https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDA
 function MainNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [inServicesSection, setInServicesSection] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -37,6 +38,40 @@ function MainNavbar() {
       window.removeEventListener('loginSuccess', handleStorageChange);
     };
   }, []);
+
+  // تحديد التبويب النشط داخل الصفحة الرئيسية عند التمرير
+  useEffect(() => {
+    const checkInServices = () => {
+      // مفعّل فقط في الصفحة الرئيسية
+      if (location.pathname !== '/') {
+        setInServicesSection(false);
+        return;
+      }
+      const section = document.getElementById('services-section');
+      const navbar = document.querySelector('.navbar');
+      if (!section || !navbar) {
+        setInServicesSection(false);
+        return;
+      }
+      const rect = section.getBoundingClientRect();
+      const navH = navbar.offsetHeight || 0;
+      // اعتبر القسم نشِط إذا كان أعلاه صعد تحت النافبار وأسفله مازال ظاهر
+      const thresholdTop = navH + 10;
+      const isActive = rect.top <= thresholdTop && rect.bottom > thresholdTop;
+      setInServicesSection(isActive);
+    };
+
+    // افحص عند التحميل والتمرير وتغيير الحجم وتغيير العنوان
+    checkInServices();
+    window.addEventListener('scroll', checkInServices, { passive: true });
+    window.addEventListener('resize', checkInServices);
+    window.addEventListener('hashchange', checkInServices);
+    return () => {
+      window.removeEventListener('scroll', checkInServices);
+      window.removeEventListener('resize', checkInServices);
+      window.removeEventListener('hashchange', checkInServices);
+    };
+  }, [location]);
 
   // تسجيل الخروج
   const handleLogout = () => {
@@ -72,8 +107,8 @@ function MainNavbar() {
                 <NavLink
                   to="/"
                   onClick={handleClose}
-                  className={({ isActive }) =>
-                    isActive ? "activeLink nav-link" : "nav-link"
+                  className={() =>
+                    location.pathname === '/' && !(inServicesSection || location.hash === '#services-section') ? "activeLink nav-link" : "nav-link"
                   }
                 >
                   الرئيسية
@@ -92,10 +127,10 @@ function MainNavbar() {
               </li>
               <li className="nav-item">
                 <NavLink
-                  to="/offers"
+                  to="/#services-section"
                   onClick={handleClose}
-                  className={({ isActive }) =>
-                    isActive ? "activeLink nav-link" : "nav-link"
+                  className={() =>
+                    location.pathname === '/' && (inServicesSection || location.hash === '#services-section') ? "activeLink nav-link" : "nav-link"
                   }
                 >
                   الخدمات
@@ -103,7 +138,7 @@ function MainNavbar() {
               </li>
               <li className="nav-item">
                 <NavLink
-                  to="/error"
+                  to="/offers"
                   onClick={handleClose}
                   className={({ isActive }) =>
                     isActive ? "activeLink nav-link" : "nav-link"

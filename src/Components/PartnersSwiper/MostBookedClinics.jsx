@@ -4,55 +4,15 @@ import { Autoplay, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-// Always use local static images (no API)
-const USE_MOCK = true;
+const API_URL = 'https://enqlygo.com/api/salons/most_booking_salons';
 
-// Build static list from local images dynamically (no API)
-const buildLocalSalons = () => {
-  const images = import.meta.glob('/src/assets/images/*.{png,jpg,jpeg}', { eager: true, as: 'url' });
-  const preferredFiles = [
-    'الاسنان.png',
-    'الجراحه التجميليه.png',
-    'الجلديه.png',
-    'النساء والولاده.png',
-    'طب عام.png',
-    'جراحه.png',
-    'عنايه بالبشره.png',
-    'ليزر شعر.png',
-  ];
-
-  // Pick preferred images in the specified order if they exist
-  const preferred = preferredFiles
-    .map((file) => Object.entries(images).find(([path]) => path.endsWith(`/assets/images/${file}`)))
-    .filter(Boolean)
-    .map(([, url], idx) => ({
-      id: idx + 1,
-      salon_name: preferredFiles[idx].replace(/\.[^.]+$/, '').trim(),
-      owner_name: '',
-      owner_photo: url,
-    }));
-
-  if (preferred.length > 0) return preferred;
-
-  // Fallback: previous behavior (exclude non-relevant assets)
-  const excludedPatterns = [/hero/i, /logo/i, /register/i, /offer/i, /card\d*/i, /sbc/i, /vat/i];
-  const entries = Object.entries(images)
-    .filter(([path]) => !excludedPatterns.some((re) => re.test(path)));
-
-  return entries.map(([path, url], index) => {
-    const fileName = path.split('/').pop() || '';
-    const nameRaw = fileName.replace(/\.[^.]+$/, '');
-    const salonName = nameRaw
-      .replace(/[_-]+/g, ' ')
-      .replace(/\s{2,}/g, ' ')
-      .trim();
-    return {
-      id: index + 1,
-      salon_name: salonName,
-      owner_name: '',
-      owner_photo: url,
-    };
-  });
+const toAbsoluteImageUrl = (path) => {
+  if (!path || typeof path !== 'string') {
+    return 'https://placehold.co/600x400/cccccc/ffffff/png?text=Clinic+Image+Placeholder';
+  }
+  if (path.startsWith('http')) return path;
+  if (path.startsWith('storage/')) return `https://enqlygo.com/${path}`;
+  return `https://enqlygo.com/${path.replace(/^\/+/, '')}`;
 };
 
 // Pure Swiper Component
@@ -63,7 +23,7 @@ const MostBookedClinicsSlides = memo(({ salons }) => {
         <div className="partner-slide-card">
           <div className="partner-logo">
             <img
-              src={salon.owner_photo || 'https://placehold.co/600x400/cccccc/ffffff/png?text=Clinic+Image+Placeholder'}
+              src={toAbsoluteImageUrl(salon.owner_photo)}
               alt={salon.salon_name}
               className="img-fluid"
               loading="lazy"
@@ -77,9 +37,6 @@ const MostBookedClinicsSlides = memo(({ salons }) => {
           </div>
           <div className="partner-name">
             <p className="mb-0 main-color">{salon.salon_name}</p>
-            {salon.owner_name ? (
-              <small className="text-muted">د. {salon.owner_name}</small>
-            ) : null}
           </div>
         </div>
       </SwiperSlide>
@@ -121,11 +78,55 @@ const MostBookedClinicsSlides = memo(({ salons }) => {
 // Parent Component
 const MostBookedClinics = () => {
   const [salons, setSalons] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const locals = buildLocalSalons();
-    setSalons(locals);
+    const controller = new AbortController();
+    const load = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const res = await fetch(API_URL, { signal: controller.signal });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+        const data = Array.isArray(json?.data?.data) ? json.data.data : (Array.isArray(json?.data) ? json.data : []);
+        const normalized = data.map((s) => ({
+          id: s.id,
+          salon_name: s.salon_name || s.owner_name || '',
+          owner_name: s.owner_name || '',
+          owner_photo: toAbsoluteImageUrl(s.owner_photo),
+          salon_address: s.salon_address || '',
+          rating: s.rating || 0,
+          bookings_count: s.bookings_count || 0,
+        }));
+        setSalons(normalized);
+      } catch (e) {
+        if (e.name === 'AbortError') return;
+        setError(e.message || 'خطأ غير متوقع');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+    return () => controller.abort();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="text-center py-5 w-100">
+        <div className="spinner-border text-primary" role="status"><span className="visually-hidden">تحميل...</span></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-5 w-100">
+        <p className="text-danger">تعذر جلب البيانات</p>
+      </div>
+    );
+  }
 
   if (salons.length === 0) {
     return (

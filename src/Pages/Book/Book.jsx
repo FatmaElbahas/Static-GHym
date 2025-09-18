@@ -128,12 +128,12 @@ function SearchResults() {
 
 // مكون الصفحة الداخلية الذي يستخدم الفلتر
 function BookContent() {
-  const { updateAllData, filters, updateFilters } = useFilter();
+  const { updateAllData, filters, updateFilters, resetFilters } = useFilter();
   const [activeTab, setActiveTab] = useState("doctor");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [selectedCity, setSelectedCity] = useState("الرياض");
+  const [selectedCity, setSelectedCity] = useState("الكل");
   const [cities, setCities] = useState([]);
   const [citiesLoading, setCitiesLoading] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
@@ -199,7 +199,7 @@ function BookContent() {
           
           // تعيين أول مدينة كقيمة افتراضية
           if (uniqueCities.length > 0) {
-            setSelectedCity(uniqueCities[0]);
+            setSelectedCity("الكل");
           }
         }
       } catch (error) {
@@ -230,7 +230,8 @@ function BookContent() {
       
       if (searchQuery.trim()) {
         // البحث في اسم الطبيب واسم العيادة معاً
-        apiUrl += `owner_name=${encodeURIComponent(searchQuery)}&salon_name=${encodeURIComponent(searchQuery)}`;
+        const encodedQuery = encodeURIComponent(searchQuery);
+        apiUrl += `owner_name=${encodedQuery}&salon_name=${encodedQuery}`;
       }
       
       // إضافة المدينة للبحث إذا لم تكن "الكل"
@@ -247,16 +248,30 @@ function BookContent() {
       const result = await response.json();
       
       if (result.status === "success" && result.data && result.data.length > 0) {
-        console.log('✅ Search results count:', result.data.length);
-        console.log('📊 Search results sample:', result.data.slice(0, 2).map(item => ({
+        let finalResults = result.data;
+        
+        // فلترة محلية بالمدينة كـ fallback
+        if (selectedCity && selectedCity !== "الكل") {
+          finalResults = finalResults.filter(item => {
+            const address = item.salon_address || item.address || '';
+            return address.toLowerCase().includes(selectedCity.toLowerCase());
+          });
+        }
+        
+        console.log('✅ API Search results count:', finalResults.length);
+        console.log('📊 API Search results sample:', finalResults.slice(0, 2).map(item => ({
           id: item.id,
           name: item.salon_name || item.owner_name,
           category: item.salon_categories || item.category_id
         })));
         
-        setSearchResults(result.data);
-        // تحديث البيانات في الفلتر
-        updateAllData(result.data);
+        if (finalResults.length > 0) {
+          setSearchResults(finalResults);
+          updateAllData(finalResults);
+        } else {
+          // إذا لم توجد نتائج بعد الفلترة، جرب البحث المحلي
+          throw new Error('No results after filtering');
+        }
         
         // تطبيق فلاتر إضافية من الـ form
         const newFilters = {
@@ -269,6 +284,61 @@ function BookContent() {
         console.log('🔍 Applying form filters:', newFilters);
         updateFilters(newFilters);
       } else {
+        // إذا لم توجد نتائج، جرب البحث المحلي كـ fallback
+        if (searchQuery.trim()) {
+          try {
+            console.log('🔄 Trying fallback search...');
+            const fallbackResponse = await fetch("https://enqlygo.com/api/salons");
+            const fallbackResult = await fallbackResponse.json();
+            
+            if (fallbackResult.status === "success" && fallbackResult.data?.length > 0) {
+              const searchTerm = searchQuery.trim().toLowerCase();
+              console.log('🔍 Searching for:', searchTerm);
+              
+              const filteredResults = fallbackResult.data.filter(item => {
+                const ownerName = (item.owner_name || '').toLowerCase();
+                const salonName = (item.salon_name || '').toLowerCase();
+                const doctorName = (item.doctor_name || '').toLowerCase();
+                const name = (item.name || '').toLowerCase();
+                
+                const matches = ownerName.includes(searchTerm) || 
+                               salonName.includes(searchTerm) || 
+                               doctorName.includes(searchTerm) || 
+                               name.includes(searchTerm);
+                
+                if (matches) {
+                  console.log('✅ Found match:', {
+                    id: item.id,
+                    owner_name: item.owner_name,
+                    salon_name: item.salon_name,
+                    doctor_name: item.doctor_name
+                  });
+                }
+                
+                return matches;
+              });
+              
+              console.log('📊 Fallback search results:', filteredResults.length);
+              
+              if (filteredResults.length > 0) {
+                setSearchResults(filteredResults);
+                updateAllData(filteredResults);
+                
+                const newFilters = {
+                  ...filters,
+                  owner_name: searchQuery.trim() ? searchQuery : '',
+                  salon_name: searchQuery.trim() ? searchQuery : '',
+                  city: selectedCity && selectedCity !== 'الكل' ? selectedCity : ''
+                };
+                updateFilters(newFilters);
+                return;
+              }
+            }
+          } catch (fallbackError) {
+            console.error("Fallback search failed:", fallbackError);
+          }
+        }
+        
         console.log('❌ No search results found');
         setSearchResults([]);
         updateAllData([]);
@@ -276,6 +346,62 @@ function BookContent() {
       }
     } catch (error) {
       console.error("❌ خطأ في البحث:", error);
+      
+      // إذا كان الخطأ بسبب عدم وجود نتائج، جرب البحث المحلي
+      if (searchQuery.trim() && (error.message === 'No results after filtering' || error.message.includes('No results'))) {
+        try {
+          console.log('🔄 Trying fallback search due to no results...');
+          const fallbackResponse = await fetch("https://enqlygo.com/api/salons");
+          const fallbackResult = await fallbackResponse.json();
+          
+          if (fallbackResult.status === "success" && fallbackResult.data?.length > 0) {
+            const searchTerm = searchQuery.trim().toLowerCase();
+            console.log('🔍 Fallback searching for:', searchTerm);
+            
+            const filteredResults = fallbackResult.data.filter(item => {
+              const ownerName = (item.owner_name || '').toLowerCase();
+              const salonName = (item.salon_name || '').toLowerCase();
+              const doctorName = (item.doctor_name || '').toLowerCase();
+              const name = (item.name || '').toLowerCase();
+              
+              const matches = ownerName.includes(searchTerm) || 
+                             salonName.includes(searchTerm) || 
+                             doctorName.includes(searchTerm) || 
+                             name.includes(searchTerm);
+              
+              if (matches) {
+                console.log('✅ Fallback found match:', {
+                  id: item.id,
+                  owner_name: item.owner_name,
+                  salon_name: item.salon_name,
+                  doctor_name: item.doctor_name
+                });
+              }
+              
+              return matches;
+            });
+            
+            console.log('📊 Fallback search results:', filteredResults.length);
+            
+            if (filteredResults.length > 0) {
+              setSearchResults(filteredResults);
+              updateAllData(filteredResults);
+              
+              const newFilters = {
+                ...filters,
+                owner_name: searchQuery.trim() ? searchQuery : '',
+                salon_name: searchQuery.trim() ? searchQuery : '',
+                city: selectedCity && selectedCity !== 'الكل' ? selectedCity : ''
+              };
+              updateFilters(newFilters);
+              return;
+            }
+          }
+        } catch (fallbackError) {
+          console.error("Fallback search failed:", fallbackError);
+        }
+      }
+      
       alert("حدث خطأ أثناء البحث");
     } finally {
       setIsSearching(false);
@@ -323,14 +449,86 @@ function BookContent() {
   }, [updateAllData]);
 
   // دالة إعادة تعيين البحث
-  const resetSearch = useCallback(() => {
+  const resetSearch = useCallback(async () => {
     console.log('🔄 Resetting search...');
     setSearchQuery("");
+    setSelectedCity("الكل");
     setSearchResults([]);
-    setPage(1);
-    hasLoadedRef.current = false; // إعادة تعيين للسماح بالتحميل مرة أخرى
-    console.log('✅ Search reset completed');
-  }, []);
+    hasLoadedRef.current = false; // عشان يسمح بجلب البيانات تاني
+    
+    try {
+      setIsLoading(true);
+      console.log('🔄 Fetching all doctors again from API...');
+      const response = await fetch("https://enqlygo.com/api/salons");
+      const result = await response.json();
+      
+      if (result.status === "success" && result.data && result.data.length > 0) {
+        console.log('✅ Doctors reset - count:', result.data.length);
+        setSearchResults(result.data);
+        updateAllData(result.data);
+        
+        // إعادة تعيين الفلاتر
+        updateFilters({
+          owner_name: '',
+          salon_name: '',
+          city: ''
+        });
+      } else {
+        console.log('❌ No doctors found in reset');
+        setSearchResults([]);
+        updateAllData([]);
+      }
+    } catch (error) {
+      console.error('❌ Error resetting search:', error);
+      alert("حدث خطأ أثناء إعادة تحميل الأطباء");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [updateAllData, updateFilters]);
+
+  // دالة عرض جميع الأطباء
+  const showAllDoctors = useCallback(async () => {
+    console.log('🔄 Showing all doctors...');
+    setSearchQuery("");
+    setSelectedCity("الكل");
+    setError(null);
+    
+    // إعادة تعيين searchResults لعرض جميع البيانات
+    setSearchResults([]);
+    
+    // إعادة تعيين hasLoadedRef للسماح بإعادة جلب البيانات
+    hasLoadedRef.current = false;
+    
+    try {
+      setIsLoading(true);
+      console.log('🔄 Fetching all doctors from API...');
+      const response = await fetch("https://enqlygo.com/api/salons");
+      const result = await response.json();
+      
+      if (result.status === "success" && result.data && result.data.length > 0) {
+        console.log('✅ All doctors count:', result.data.length);
+        
+        // تحديث البيانات في الفلتر مباشرة
+        updateAllData(result.data);
+        
+        // إعادة تعيين جميع الفلاتر
+        resetFilters();
+        
+        // تعيين hasLoadedRef
+        hasLoadedRef.current = true;
+        
+        console.log('✅ All doctors displayed successfully');
+      } else {
+        console.log('❌ No doctors found in API response');
+        setError('لم يتم العثور على أطباء');
+      }
+    } catch (error) {
+      console.error('❌ Error fetching all doctors:', error);
+      setError('حدث خطأ في جلب البيانات');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [updateAllData, resetFilters]);
 
 
   // جلب الأطباء من API عند تحميل الصفحة (مرة واحدة فقط)
@@ -562,10 +760,7 @@ function BookContent() {
                   {/* Show All Doctors Button */}
                     <button 
                       className="btn btn-outline-primary"
-                      onClick={() => {
-                        hasLoadedRef.current = false;
-                        fetchAllDoctors();
-                      }}
+                      onClick={showAllDoctors}
                       disabled={isLoading}
                     title="عرض جميع الأطباء"
                       style={{ 

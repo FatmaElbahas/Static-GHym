@@ -169,7 +169,7 @@ const CompleteSalonDashboard = () => {
         }
 
         .dashboard-header {
-          background: linear-gradient(135deg, var(--bs-primary) 0%, #0d6efd 100%);
+          background: linear-gradient(135deg, var(--color-main) 0%, #026a7a 100%);
           position: relative;
           overflow: hidden;
         }
@@ -220,13 +220,13 @@ const CompleteSalonDashboard = () => {
 
         @keyframes pulse {
           0% {
-            box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.7);
+            box-shadow: 0 0 0 0 rgba(3, 130, 151, 0.7);
           }
           70% {
-            box-shadow: 0 0 0 10px rgba(13, 110, 253, 0);
+            box-shadow: 0 0 0 10px rgba(3, 130, 151, 0);
           }
           100% {
-            box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+            box-shadow: 0 0 0 0 rgba(3, 130, 151, 0);
           }
         }
 
