@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faCalendarPlus, 
@@ -9,11 +10,13 @@ import {
   faMapMarkerAlt,
   faCheckCircle,
   faArrowLeft,
-  faArrowRight
+  faArrowRight,
+  faEye
 } from '@fortawesome/free-solid-svg-icons';
 import './NewBooking.css';
 
 const NewBooking = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     salon_id: '',
     service: '',
@@ -28,6 +31,7 @@ const NewBooking = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [conflictModal, setConflictModal] = useState(null); // { date, timeDisplay }
   const [doctors, setDoctors] = useState([]);
   const [doctorsLoading, setDoctorsLoading] = useState(false);
   const [services, setServices] = useState([]);
@@ -46,6 +50,7 @@ const NewBooking = () => {
   const ADDRESSES_URL = 'https://enqlygo.com/api/user/addresses';
   const CATEGORIES_URL = 'https://enqlygo.com/api/salons/categories';
   const AVAILABLE_TIMES_URL = 'https://enqlygo.com/api/salons/available_times';
+  const USER_BOOKINGS_URL = 'https://enqlygo.com/api/user/bookings';
 
   // Load salons
   useEffect(() => {
@@ -92,7 +97,7 @@ const NewBooking = () => {
         const salonData = json?.data || {};
         const formatted = (salonData.services || []).map(s => ({
           id: s.id,
-          name: s.title_ar || s.title,
+          name: s.title_ar || s.title || s.name || 'خدمة غير محددة',
           price: `${s.price} ريال`,
           duration: `${s.service_time} دقيقة`
         }));
@@ -117,33 +122,46 @@ const NewBooking = () => {
         const salonData = json?.data || {};
         const catById = new Map((categories || []).map(c => [String(c.id), c]));
         const formatted = (salonData.staff || []).map((d, index) => {
-          // Try multiple ways to resolve specialty
+          // Try multiple ways to resolve specialty - prioritize Arabic
           let specialty = 'طبيب عام';
+          
           // 1) category_id numeric/string
           const possibleCategoryId = d.category_id ?? d.specialty_id ?? d.categoryId ?? d.salon_category_id ?? (d.category && d.category.id) ?? null;
           if (possibleCategoryId != null) {
             const cat = catById.get(String(possibleCategoryId));
-            if (cat) specialty = cat.title_ar || cat.title || specialty;
+            if (cat) {
+              specialty = cat.title_ar || cat.title || cat.title_en || specialty;
+            }
           }
+          
           // 2) Direct specialty text from doctor
           if ((!specialty || specialty === 'طبيب عام') && d.specialty) {
             // If specialty exactly matches a category title, prefer category title_ar
-            const catByTitle = (categories || []).find(c => c.title_ar === d.specialty || c.title === d.specialty || c.title_en === d.specialty);
-            specialty = catByTitle ? (catByTitle.title_ar || catByTitle.title) : d.specialty;
+            const catByTitle = (categories || []).find(c => 
+              c.title_ar === d.specialty || c.title === d.specialty || c.title_en === d.specialty
+            );
+            if (catByTitle) {
+              specialty = catByTitle.title_ar || catByTitle.title || catByTitle.title_en;
+            } else {
+              specialty = d.specialty;
+            }
           }
+          
           // 3) Embedded category object with title fields
           if ((!specialty || specialty === 'طبيب عام') && d.category && (d.category.title_ar || d.category.title || d.category.title_en)) {
             specialty = d.category.title_ar || d.category.title || d.category.title_en;
           }
-            return {
+          
+          return {
             id: d.id,
             name: d.name,
             specialty: specialty || 'طبيب عام',
             available: d.available !== false
-            };
-          });
+          };
+        });
         setDoctors(formatted);
-      } catch {
+      } catch (error) {
+        console.error('Error loading doctors:', error);
         setDoctors([]);
       } finally {
         setDoctorsLoading(false);
@@ -276,6 +294,38 @@ const NewBooking = () => {
         return;
       }
 
+      // تحقق من وجود حجز سابق بنفس التاريخ والوقت
+      try {
+        const bookingsRes = await fetch(USER_BOOKINGS_URL, {
+          headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/json' }
+        });
+        if (bookingsRes.ok) {
+          const bookingsJson = await bookingsRes.json();
+          let bookingsList = [];
+          if (Array.isArray(bookingsJson)) bookingsList = bookingsJson;
+          else if (Array.isArray(bookingsJson?.data?.bookings?.data)) bookingsList = bookingsJson.data.bookings.data;
+          else if (Array.isArray(bookingsJson?.data?.bookings)) bookingsList = bookingsJson.data.bookings;
+          else if (Array.isArray(bookingsJson?.data)) bookingsList = bookingsJson.data;
+
+          const timeDigits = String(formData.time).replace(/[^\d]/g, '');
+          const hasConflict = bookingsList.some(b => {
+            const bDate = b.date || b.booking_date || '';
+            const bTimeDigits = String(b.time || b.booking_time || '').replace(/[^\d]/g, '');
+            return String(bDate) === String(formData.date) && bTimeDigits === timeDigits;
+          });
+
+          if (hasConflict) {
+            const [h, m] = [timeDigits.slice(0,2), timeDigits.slice(2)];
+            const timeDisplay = `${h}:${m}`;
+            setConflictModal({ date: formData.date, timeDisplay });
+            setIsSubmitting(false);
+            return;
+          }
+        }
+      } catch (confErr) {
+        console.warn('Failed to check conflicts:', confErr);
+      }
+
       const formattedTime = formData.time.replace(/[^\d]/g, '');
       const bookingData = {
         salon_id: parseInt(formData.salon_id),
@@ -285,6 +335,8 @@ const NewBooking = () => {
         date: formData.date,
         time: formattedTime
       };
+      
+      console.log('📤 Sending booking data:', bookingData);
 
       const res = await fetch(BOOKING_URL, {
         method: 'POST',
@@ -296,9 +348,24 @@ const NewBooking = () => {
       });
 
       const result = await res.json();
+      console.log('📋 Booking API Response:', result);
+      
       if (res.ok && result.status === 'success') {
         const bookedSalonId = result.data?.salon_id;
         const bookedStaffId = result.data?.staff_id;
+        
+        console.log('✅ Booking successful:', {
+          salon_id: bookedSalonId,
+          staff_id: bookedStaffId,
+          booking_id: result.data.id, // ✅ تخزين booking ID
+          booking_data: result.data
+        });
+        
+        // تخزين booking ID في localStorage للرجوع إليه لاحقاً
+        if (result.data.id) {
+          localStorage.setItem('lastBookingId', result.data.id);
+          console.log('💾 Booking ID saved to localStorage:', result.data.id);
+        }
 
         // استدعاء API للحصول على اسم الدكتور
         try {
@@ -319,7 +386,7 @@ const NewBooking = () => {
     } catch (err) {
       setError(err.message || 'حدث خطأ أثناء إرسال الحجز');
     } finally {
-      setIsSubmitting(false);
+    setIsSubmitting(false);
     }
   }, [formData, timeSlots]);
 
@@ -341,7 +408,8 @@ const NewBooking = () => {
 
   const handleTimeSelect = useCallback((time) => {
     setFormData(prev => ({ ...prev, time }));
-  }, []);
+    if (conflictModal) setConflictModal(null);
+  }, [conflictModal]);
 
   return (
     <div className="new-booking-section">
@@ -357,6 +425,31 @@ const NewBooking = () => {
             onClick={() => setError(null)}
             aria-label="Close"
           ></button>
+        </div>
+      )}
+
+      {/* Conflict Modal */}
+      {conflictModal && (
+        <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">تعارض في الموعد</h5>
+                <button type="button" className="btn-close" onClick={() => setConflictModal(null)}></button>
+              </div>
+              <div className="modal-body">
+                <p className="mb-2">لديك حجز سابق في نفس التاريخ والوقت:</p>
+                <ul className="mb-0">
+                  <li><strong>التاريخ:</strong> {conflictModal.date}</li>
+                  <li><strong>الوقت:</strong> {conflictModal.timeDisplay}</li>
+                </ul>
+                <p className="mt-3 mb-0 text-danger">يرجى اختيار موعد مختلف لإكمال الحجز.</p>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={() => setConflictModal(null)}>حسناً</button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
@@ -698,12 +791,24 @@ const NewBooking = () => {
           </div>
         )}
 
+
         {/* Step 6: Confirmation */}
         {step === 6 && success && (
           <div className="step-content text-center">
             <FontAwesomeIcon icon={faCheckCircle} className="text-success" size="2x" />
             <h4>تم الحجز بنجاح!</h4>
             {doctorName && <p>مع {doctorName}</p>}
+            
+            {/* عرض Booking ID */}
+            {localStorage.getItem('lastBookingId') && (
+              <div className="mt-3 p-3 bg-primary bg-opacity-10 rounded">
+                <p className="mb-1 fw-bold text-white">
+                  <FontAwesomeIcon icon={faCheckCircle} className="me-2" />
+                  رقم الحجز: #{localStorage.getItem('lastBookingId')}
+                </p>
+              </div>
+            )}
+            
             </div>
           )}
 

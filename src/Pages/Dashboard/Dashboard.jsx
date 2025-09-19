@@ -40,6 +40,12 @@ const Dashboard = () => {
       }
       
       setIsLoading(false);
+      // تفعيل تبويب مفضل إذا تم ضبطه مسبقاً (مثل حجوزاتي بعد إنشاء حجز)
+      const preferredTab = localStorage.getItem('dashboardActiveTab');
+      if (preferredTab) {
+        setActiveTab(preferredTab);
+        localStorage.removeItem('dashboardActiveTab');
+      }
     };
 
     checkAuth();
