@@ -12,7 +12,10 @@ import {
   faExclamationCircle,
   faSpinner,
   faArrowRight,
-  faTrash
+  faTrash,
+  faStethoscope,
+  faHospital,
+  faInfoCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 const Bookings = () => {
@@ -34,7 +37,7 @@ const Bookings = () => {
     try {
       console.log('🔄 Starting to load bookings...');
       if (showLoading) {
-        setIsLoading(true);
+      setIsLoading(true);
       }
       setError(null);
 
@@ -351,7 +354,7 @@ const Bookings = () => {
     } finally {
       // لا تُخفي شاشة التحميل حتى تكتمل معالجة البيانات وتعيينها
       if (showLoading) {
-        setIsLoading(false);
+      setIsLoading(false);
       }
     }
   }, []);
@@ -489,19 +492,21 @@ const Bookings = () => {
   return (
     <div className="bookings-section container mt-5" style={{ position: 'relative' }}>
       {/* Header */}
-      <div className="d-flex align-items-center justify-content-between mb-3">
-        <h3 className="section-title m-0">
+      <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between mb-3 gap-3">
+        <h3 className="section-title m-0 fs-4 fs-md-3 order-0 order-md-0 d-flex align-items-center">
           <FontAwesomeIcon icon={faCalendarAlt} className="me-2" /> حجوزاتي
         </h3>
-        <div className="d-flex gap-2">
+        <div className="d-flex flex-column flex-sm-row gap-2 w-100 w-md-auto order-1 order-md-1">
           <button 
-            className="btn btn-outline-secondary d-flex align-items-center gap-2" 
+            className="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2 flex-grow-1 flex-sm-grow-0" 
             onClick={() => loadBookings(true)}
             style={{
               borderColor: '#6c757d',
               color: '#6c757d',
               transition: 'all 0.3s ease',
-              fontWeight: '500'
+              fontWeight: '500',
+              fontSize: window.innerWidth < 768 ? '0.9rem' : '1rem',
+              padding: window.innerWidth < 768 ? '8px 16px' : '10px 20px'
             }}
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = '#6c757d';
@@ -516,17 +521,20 @@ const Bookings = () => {
               e.target.style.boxShadow = 'none';
             }}
           >
-            <FontAwesomeIcon icon={faSpinner} />
-            تحديث
+            <FontAwesomeIcon icon={faSpinner} style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }} />
+            <span className="d-none d-sm-inline">تحديث</span>
+            <span className="d-sm-none">تحديث</span>
           </button>
           <button 
-            className="btn btn-outline-primary d-flex align-items-center gap-2" 
+            className="btn btn-outline-primary d-flex align-items-center justify-content-center gap-2 flex-grow-1 flex-sm-grow-0" 
             onClick={() => navigate('/book')}
             style={{
               borderColor: 'var(--color-main)',
               color: 'var(--color-main)',
               transition: 'all 0.3s ease',
-              fontWeight: '500'
+              fontWeight: '500',
+              fontSize: window.innerWidth < 768 ? '0.9rem' : '1rem',
+              padding: window.innerWidth < 768 ? '8px 16px' : '10px 20px'
             }}
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = 'var(--color-main)';
@@ -541,8 +549,9 @@ const Bookings = () => {
               e.target.style.boxShadow = 'none';
             }}
           >
-            <FontAwesomeIcon icon={faArrowRight} />
-            البحث عن أطباء
+            <FontAwesomeIcon icon={faArrowRight} style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }} />
+            <span className="d-none d-sm-inline">البحث عن أطباء</span>
+            <span className="d-sm-none">بحث أطباء</span>
           </button>
         </div>
       </div>
@@ -579,101 +588,171 @@ const Bookings = () => {
             <div className="row g-3">
               {processedBookings.map(booking => (
                 <div key={booking.displayId} className="col-12">
-                  <div className="card shadow-sm border-0" style={{ 
+                  <div className="card shadow-sm border-0 hover-lift" style={{ 
                     borderRadius: '12px',
                     transition: 'all 0.3s ease',
                     background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
                   }}>
-                    <div className="card-body p-4">
-                      <div className="row align-items-center">
-                        <div className="col-md-6">
-                          <div className="d-flex align-items-center mb-2">
-                            <div className="me-3">
-                              <FontAwesomeIcon 
-                                icon={faUserMd} 
-                                className="text-primary" 
-                                style={{ fontSize: '1.2rem' }}
-                              />
+                    <div className="card-body p-3 p-md-4">
+                      {/* Desktop Layout */}
+                      <div className="d-none d-md-block">
+                        <div className="row align-items-center">
+                          <div className="col-md-6">
+                            <div className="d-flex align-items-center mb-2">
+                              <div className="me-3">
+                                <FontAwesomeIcon 
+                                  icon={faUserMd} 
+                                  className="text-primary" 
+                                  style={{ fontSize: '1.2rem' }}
+                                />
+                              </div>
+                              <div>
+                                <h6 className="mb-1 fw-bold text-dark" style={{ fontSize: '1rem' }}>
+                                  {booking.salon_name}
+                                </h6>
+                                <p className="mb-0 text-muted small" title={booking.service_display}>
+                                  {booking.shortServiceName}
+                                </p>
+                              </div>
                             </div>
-                            <div>
-                              <h6 className="mb-1 fw-bold text-dark" style={{ fontSize: '1rem' }}>
-                                {booking.salon_name}
-                              </h6>
-                              <p className="mb-0 text-muted small" title={booking.service_display}>
-                                {booking.shortServiceName}
-                              </p>
+                          </div>
+                          
+                          <div className="col-md-3">
+                            <div className="d-flex align-items-center mb-2">
+                              <FontAwesomeIcon 
+                                icon={faCalendarAlt} 
+                                className="text-success me-2" 
+                                style={{ fontSize: '0.9rem' }}
+                              />
+                              <div>
+                                <div className="fw-semibold text-dark small">{booking.date}</div>
+                                <div className="text-muted small">
+                                  <FontAwesomeIcon icon={faClock} className="me-1" />
+                                  {booking.time_display}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div className="col-md-3">
+                            <div className="d-flex gap-2 justify-content-end">
+                              <button 
+                                className="btn btn-outline-primary btn-sm d-flex align-items-center gap-1" 
+                                onClick={() => setSelectedBooking(booking)}
+                                style={{
+                                  borderRadius: '8px',
+                                  fontSize: '0.85rem',
+                                  padding: '6px 12px',
+                                  borderWidth: '1.5px',
+                                  fontWeight: '500'
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faEye} style={{ fontSize: '0.8rem' }} />
+                                عرض
+                              </button>
+                              <button 
+                                className="btn btn-outline-danger btn-sm d-flex align-items-center gap-1" 
+                                onClick={() => deleteBooking(booking)}
+                                disabled={deletingBookingId === booking.displayId}
+                                style={{
+                                  borderRadius: '8px',
+                                  fontSize: '0.85rem',
+                                  padding: '6px 12px',
+                                  borderWidth: '1.5px',
+                                  fontWeight: '500'
+                                }}
+                              >
+                                {deletingBookingId === booking.displayId ? (
+                                  <FontAwesomeIcon icon={faSpinner} spin style={{ fontSize: '0.8rem' }} />
+                                ) : (
+                                  <FontAwesomeIcon icon={faTrash} style={{ fontSize: '0.8rem' }} />
+                                )}
+                                حذف
+                              </button>
                             </div>
                           </div>
                         </div>
+                      </div>
+
+                      {/* Mobile Layout */}
+                      <div className="d-md-none">
+                        <div className="d-flex align-items-start justify-content-between mb-3">
+                          <div className="flex-grow-1">
+                            <div className="d-flex align-items-center mb-2">
+                              <FontAwesomeIcon 
+                                icon={faUserMd} 
+                                className="text-primary me-2" 
+                                style={{ fontSize: '1rem' }}
+                              />
+                              <h6 className="mb-0 fw-bold text-dark" style={{ fontSize: '0.95rem' }}>
+                                {booking.salon_name}
+                              </h6>
+                            </div>
+                            <p className="mb-0 text-muted small" style={{ fontSize: '0.8rem' }}>
+                              {booking.shortServiceName}
+                            </p>
+                </div>
+                          <div className="d-flex gap-1">
+                  <button 
+                    className="btn btn-outline-primary btn-sm" 
+                    onClick={() => setSelectedBooking(booking)}
+                              style={{
+                                borderRadius: '6px',
+                                fontSize: '0.75rem',
+                                padding: '4px 8px',
+                                borderWidth: '1px'
+                              }}
+                            >
+                              <FontAwesomeIcon icon={faEye} style={{ fontSize: '0.7rem' }} />
+                  </button>
+                   <button 
+                     className="btn btn-outline-danger btn-sm" 
+                     onClick={() => deleteBooking(booking)}
+                              disabled={deletingBookingId === booking.displayId}
+                              style={{
+                                borderRadius: '6px',
+                                fontSize: '0.75rem',
+                                padding: '4px 8px',
+                                borderWidth: '1px'
+                              }}
+                            >
+                              {deletingBookingId === booking.displayId ? (
+                                <FontAwesomeIcon icon={faSpinner} spin style={{ fontSize: '0.7rem' }} />
+                              ) : (
+                                <FontAwesomeIcon icon={faTrash} style={{ fontSize: '0.7rem' }} />
+                              )}
+                   </button>
+                          </div>
+                        </div>
                         
-                        <div className="col-md-3">
-                          <div className="d-flex align-items-center mb-2">
+                        <div className="d-flex align-items-center justify-content-between">
+                          <div className="d-flex align-items-center">
                             <FontAwesomeIcon 
                               icon={faCalendarAlt} 
                               className="text-success me-2" 
-                              style={{ fontSize: '0.9rem' }}
+                              style={{ fontSize: '0.8rem' }}
                             />
                             <div>
-                              <div className="fw-semibold text-dark small">{booking.date}</div>
-                              <div className="text-muted small">
+                              <div className="fw-semibold text-dark small" style={{ fontSize: '0.8rem' }}>
+                                {booking.date}
+                              </div>
+                              <div className="text-muted small" style={{ fontSize: '0.75rem' }}>
                                 <FontAwesomeIcon icon={faClock} className="me-1" />
                                 {booking.time_display}
                               </div>
                             </div>
                           </div>
-                        </div>
-                        
-                        <div className="col-md-3">
-                          <div className="d-flex gap-2 justify-content-end">
-                            <button 
-                              className="btn btn-outline-primary btn-sm d-flex align-items-center gap-1" 
-                              onClick={() => setSelectedBooking(booking)}
-                              style={{
-                                borderRadius: '8px',
-                                fontSize: '0.85rem',
-                                padding: '6px 12px',
-                                borderWidth: '1.5px',
-                                fontWeight: '500'
-                              }}
-                            >
-                              <FontAwesomeIcon icon={faEye} style={{ fontSize: '0.8rem' }} />
-                              عرض
-                            </button>
-                            <button 
-                              className="btn btn-outline-danger btn-sm d-flex align-items-center gap-1" 
-                              onClick={() => deleteBooking(booking)}
-                              disabled={deletingBookingId === booking.displayId}
-                              style={{
-                                borderRadius: '8px',
-                                fontSize: '0.85rem',
-                                padding: '6px 12px',
-                                borderWidth: '1.5px',
-                                fontWeight: '500'
-                              }}
-                            >
-                              {deletingBookingId === booking.displayId ? (
-                                <FontAwesomeIcon icon={faSpinner} spin style={{ fontSize: '0.8rem' }} />
-                              ) : (
-                                <FontAwesomeIcon icon={faTrash} style={{ fontSize: '0.8rem' }} />
-                              )}
-                              حذف
-                            </button>
-                          </div>
+                          <span className={`badge bg-${booking.statusColor} bg-opacity-10 text-${booking.statusColor} px-2 py-1`} 
+                                style={{ fontSize: '0.7rem' }}>
+                            {booking.status}
+                          </span>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
           ) : (
              (!isLoading && processedBookings.length === 0 ? (
                <div className="text-center py-5">
@@ -684,7 +763,7 @@ const Bookings = () => {
                             style={{ width: '80px', height: '80px' }}>
                          <FontAwesomeIcon icon={faCalendarAlt} size="2x" className="text-muted" />
                        </div>
-                     </div>
+                 </div>
                      <h4 className="fw-bold text-dark mb-3">لا توجد حجوزات حالياً</h4>
                      <p className="text-muted mb-4">
                        يمكنك إضافة حجز جديد من خلال البحث عن الأطباء المتاحين
@@ -695,11 +774,11 @@ const Bookings = () => {
                      }}>
                        <small className="d-flex align-items-center">
                          <FontAwesomeIcon icon={faSpinner} className="me-2 text-primary" />
-                         إذا كنت قد أضفت حجزاً جديداً، قد يحتاج بضع دقائق ليظهر هنا
-                       </small>
-                     </div>
+                     إذا كنت قد أضفت حجزاً جديداً، قد يحتاج بضع دقائق ليظهر هنا
+                   </small>
+                 </div>
                      <div className="d-flex gap-3 justify-content-center">
-                       <button 
+                   <button 
                          className="btn btn-outline-secondary d-flex align-items-center gap-2"
                          onClick={() => loadBookings(true)}
                          style={{
@@ -709,11 +788,11 @@ const Bookings = () => {
                          }}
                        >
                          <FontAwesomeIcon icon={faSpinner} />
-                         تحديث
-                       </button>
-                       <button 
+                     تحديث
+                   </button>
+                   <button 
                          className="btn btn-primary d-flex align-items-center gap-2"
-                         onClick={() => navigate('/book')}
+                     onClick={() => navigate('/book')}
                          style={{
                            borderRadius: '10px',
                            padding: '10px 20px',
@@ -723,8 +802,8 @@ const Bookings = () => {
                          }}
                        >
                          <FontAwesomeIcon icon={faArrowRight} />
-                         البحث عن أطباء
-                       </button>
+                     البحث عن أطباء
+                   </button>
                      </div>
                    </div>
                  </div>
@@ -736,55 +815,99 @@ const Bookings = () => {
 
       {/* Booking Details Modal */}
       {selectedBooking && (
-        <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">تفاصيل الحجز</h5>
-                <button 
-                  type="button" 
-                  className="btn-close"
-                  onClick={() => setSelectedBooking(null)}
-                ></button>
+        <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.6)' }}>
+          <div className="modal-dialog modal-dialog-centered modal-lg">
+            <div className="modal-content border-0 shadow-lg">
+              <div className="modal-header bg-primary text-white border-0">
+                <h5 className="modal-title fw-bold">
+                  <FontAwesomeIcon icon={faCalendarAlt} className="me-2" />
+                  تفاصيل الحجز
+                </h5>
               </div>
-              <div className="modal-body">
-                <div className="row">
-                  <div className="col-6">
-                    <strong>الخدمة:</strong>
-                    <p>{selectedBooking.service_display}</p>
+              <div className="modal-body p-4">
+                <div className="row g-4">
+                  {/* Service & Doctor */}
+                  <div className="col-md-6">
+                    <div className="bg-light rounded-3 p-3 h-100">
+                      <div className="d-flex align-items-center mb-3">
+                        <FontAwesomeIcon icon={faStethoscope} className="text-primary me-2 fs-5" />
+                        <h6 className="mb-0 fw-bold text-dark">الخدمة</h6>
+                      </div>
+                      <p className="mb-0 text-muted">{selectedBooking.service_display}</p>
+                    </div>
                   </div>
-                  <div className="col-6">
-                    <strong>الطبيب:</strong>
-                    <p>{selectedBooking.doctor_name} • {selectedBooking.specialty_title}</p>
+                  <div className="col-md-6">
+                    <div className="bg-light rounded-3 p-3 h-100">
+                      <div className="d-flex align-items-center mb-3">
+                        <FontAwesomeIcon icon={faUserMd} className="text-primary me-2 fs-5" />
+                        <h6 className="mb-0 fw-bold text-dark">الطبيب</h6>
+                      </div>
+                      <p className="mb-0 fw-medium">{selectedBooking.doctor_name}</p>
+                      <small className="text-muted">{selectedBooking.specialty_title}</small>
+                    </div>
                   </div>
+                  
+                  {/* Salon */}
                   <div className="col-12">
-                    <strong>العيادة:</strong>
-                    <p>{selectedBooking.salon_name}</p>
+                    <div className="bg-light rounded-3 p-3">
+                      <div className="d-flex align-items-center mb-3">
+                        <FontAwesomeIcon icon={faHospital} className="text-primary me-2 fs-5" />
+                        <h6 className="mb-0 fw-bold text-dark">العيادة</h6>
+                      </div>
+                      <p className="mb-0 fw-medium">{selectedBooking.salon_name}</p>
+                    </div>
                   </div>
-                  <div className="col-6">
-                    <strong>التاريخ:</strong>
-                    <p>{selectedBooking.date}</p>
+                  
+                  {/* Date & Time */}
+                  <div className="col-md-6">
+                    <div className="bg-light rounded-3 p-3 h-100">
+                      <div className="d-flex align-items-center mb-3">
+                        <FontAwesomeIcon icon={faCalendarAlt} className="text-primary me-2 fs-5" />
+                        <h6 className="mb-0 fw-bold text-dark">التاريخ</h6>
+                      </div>
+                      <p className="mb-0 fw-medium">{selectedBooking.date}</p>
+                    </div>
                   </div>
-                  <div className="col-6">
-                    <strong>الوقت:</strong>
-                    <p>{selectedBooking.time_display}</p>
+                  <div className="col-md-6">
+                    <div className="bg-light rounded-3 p-3 h-100">
+                      <div className="d-flex align-items-center mb-3">
+                        <FontAwesomeIcon icon={faClock} className="text-primary me-2 fs-5" />
+                        <h6 className="mb-0 fw-bold text-dark">الوقت</h6>
+                      </div>
+                      <p className="mb-0 fw-medium">{selectedBooking.time_display}</p>
+                    </div>
                   </div>
+                  
+                  {/* Address */}
                   <div className="col-12">
-                    <strong>الموقع:</strong>
-                    <p>{selectedBooking.user_address}</p>
+                    <div className="bg-light rounded-3 p-3">
+                      <div className="d-flex align-items-center mb-3">
+                        <FontAwesomeIcon icon={faMapMarkerAlt} className="text-primary me-2 fs-5" />
+                        <h6 className="mb-0 fw-bold text-dark">الموقع</h6>
+                      </div>
+                      <p className="mb-0 fw-medium">{selectedBooking.user_address}</p>
+                    </div>
                   </div>
+                  
+                  {/* Notes */}
                   {selectedBooking.notes && (
                     <div className="col-12">
-                      <strong>ملاحظات:</strong>
-                      <p>{selectedBooking.notes}</p>
+                      <div className="bg-light rounded-3 p-3">
+                        <div className="d-flex align-items-center mb-3">
+                          <FontAwesomeIcon icon={faInfoCircle} className="text-primary me-2 fs-5" />
+                          <h6 className="mb-0 fw-bold text-dark">ملاحظات</h6>
+                        </div>
+                        <p className="mb-0 fw-medium">{selectedBooking.notes}</p>
+                      </div>
                     </div>
                   )}
                 </div>
               </div>
-              <div className="modal-footer">
+              <div className="modal-footer p-4 border-0">
+                <div className="d-flex flex-column flex-sm-row gap-2 w-100">
                  <button 
                    type="button" 
-                   className="btn btn-outline-danger"
+                    className="btn btn-outline-danger flex-grow-1"
                    onClick={() => {
                      deleteBooking(selectedBooking);
                      setSelectedBooking(null);
@@ -792,19 +915,26 @@ const Bookings = () => {
                    disabled={deletingBookingId === (selectedBooking.booking_id || selectedBooking.id)}
                  >
                    {deletingBookingId === (selectedBooking.booking_id || selectedBooking.id) ? (
-                     <FontAwesomeIcon icon={faSpinner} spin className="me-2" />
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        جاري الحذف...
+                      </>
                    ) : (
+                      <>
                      <FontAwesomeIcon icon={faTrash} className="me-2" />
+                        حذف الحجز
+                      </>
                    )}
-                   حذف الحجز
                  </button>
                 <button 
                   type="button" 
-                  className="btn btn-secondary"
+                    className="btn btn-secondary flex-grow-1"
                   onClick={() => setSelectedBooking(null)}
                 >
+                    <FontAwesomeIcon icon={faTimes} className="me-2" />
                   إغلاق
                 </button>
+                </div>
               </div>
             </div>
           </div>

@@ -274,7 +274,8 @@ function BookContent() {
         }
         
         // تطبيق فلاتر إضافية من الـ form
-        const newFilters = {
+        const newFilte
+         = {
           ...filters,
           // البحث في النص إذا كان موجود
           owner_name: searchQuery.trim() ? searchQuery : '',

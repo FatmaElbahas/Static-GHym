@@ -454,41 +454,105 @@ const NewBooking = () => {
       )}
 
       {/* Steps indicator */}
-      <div className="mb-4">
-        <div className="d-flex align-items-center justify-content-between mb-3">
-          <small className="text-muted">الخطوة {step} من 6</small>
-          <div className="d-flex gap-2">
-            {[1,2,3,4,5,6].map(n => {
-              const isActive = step === n;
-              return (
-                <span
-                  key={n}
-                  className={`rounded-pill px-3 py-1 border`}
-                  style={{
-                    borderColor: isActive ? 'var(--color-main)' : '#e9ecef',
-                    color: isActive ? '#fff' : '#6c757d',
-                    background: isActive ? 'var(--color-main)' : '#f8f9fa',
-                    fontWeight: 600
-                  }}
-                  title={
-                    n === 1 ? 'اختيار العيادة' :
-                    n === 2 ? 'اختيار الخدمة' :
-                    n === 3 ? 'اختيار الطبيب' :
-                    n === 4 ? 'اختيار العنوان' :
-                    n === 5 ? 'اختيار التاريخ والوقت' :
-                    'تأكيد الحجز'
-                  }
-                >
-                  {n}
-                </span>
-              );
-            })}
+      <div className="mb-5">
+        <div className="bg-gradient bg-opacity-5 rounded-4 p-3 p-md-4 border border-primary border-opacity-10">
+          {/* Header */}
+          <div className="text-center mb-3 mb-md-4">
+            <h5 className="fw-bold text-dark mb-2 fs-6 fs-md-5">
+              <FontAwesomeIcon icon={faCalendarPlus} className="text-primary me-2" />
+              تقدم الحجز
+            </h5>
+            <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center gap-2 gap-sm-3">
+              <span className="badge bg-primary bg-opacity-10 text-white px-3 py-2 rounded-pill small">
+                الخطوة {step} من 6
+              </span>
+              <span className="text-muted small">
+                {Math.round((step/6)*100)}% مكتمل
+              </span>
+            </div>
+          </div>
+
+          {/* Steps */}
+          <div className="position-relative">
+            {/* Progress Line - Hidden on mobile */}
+            <div 
+              className="position-absolute top-50 start-0 w-100 h-2 rounded-pill d-none d-md-block"
+              style={{
+                background: 'linear-gradient(90deg, #e9ecef 0%, #e9ecef 100%)',
+                transform: 'translateY(-50%)',
+                zIndex: 1
+              }}
+            />
+            <div 
+              className="position-absolute top-50 start-0 h-2 rounded-pill d-none d-md-block"
+              style={{
+                width: `${((step-1)/5)*100}%`,
+                background: 'linear-gradient(90deg, var(--color-main) 0%, #007bff 100%)',
+                transform: 'translateY(-50%)',
+                zIndex: 2,
+                transition: 'width 0.5s ease'
+              }}
+            />
+
+            {/* Step Circles */}
+            <div className="d-flex justify-content-between align-items-center position-relative" style={{ zIndex: 3 }}>
+              {[1,2,3,4,5,6].map(n => {
+                const isActive = step === n;
+                const isCompleted = step > n;
+                const stepNames = [
+                  'العيادة', 'الخدمة', 'الطبيب', 'العنوان', 'الموعد', 'التأكيد'
+                ];
+                const stepIcons = [
+                  faStethoscope, faStethoscope, faUserMd, faMapMarkerAlt, faCalendarAlt, faCheckCircle
+                ];
+                
+                return (
+                  <div key={n} className="d-flex flex-column align-items-center">
+                    {/* Step Circle */}
+                    <div
+                      className={`rounded-circle d-flex align-items-center justify-content-center shadow-sm`}
+                      style={{
+                        width: window.innerWidth < 768 ? '28px' : '55px',
+                        height: window.innerWidth < 768 ? '28px' : '55px',
+                        background: isActive 
+                          ? 'linear-gradient(135deg, var(--color-main) 0%, #007bff 100%)' 
+                          : isCompleted 
+                            ? 'linear-gradient(135deg, #28a745 0%, #20c997 100%)'
+                            : '#fff',
+                        border: `2px solid ${isActive ? 'var(--color-main)' : isCompleted ? '#28a745' : '#e9ecef'}`,
+                        color: isActive || isCompleted ? '#fff' : '#6c757d',
+                        fontWeight: 600,
+                        fontSize: window.innerWidth < 768 ? '12px' : '18px',
+                        transition: 'all 0.3s ease',
+                        transform: isActive ? 'scale(1.1)' : 'scale(1)'
+                      }}
+                      title={stepNames[n-1]}
+                    >
+                      {isCompleted ? (
+                        <FontAwesomeIcon icon={faCheckCircle} className={window.innerWidth < 768 ? "fs-8" : "fs-2"} />
+                      ) : (
+                        <FontAwesomeIcon icon={stepIcons[n-1]} className={window.innerWidth < 768 ? "fs-9" : "fs-3"} />
+                      )}
+                    </div>
+                    
+                    {/* Step Name - Hidden on small screens */}
+                    <small 
+                      className={`mt-2 text-center fw-medium d-none d-md-block ${isActive ? 'text-primary' : isCompleted ? 'text-success' : 'text-muted'}`}
+                      style={{ 
+                        fontSize: '12px', 
+                        maxWidth: '70px',
+                        lineHeight: '1.2'
+                      }}
+                    >
+                      {stepNames[n-1]}
+                    </small>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
-        <div className="progress rounded-pill" role="progressbar" aria-label="Progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={(step/6)*100} style={{height:'10px', background:'#eef2f4'}}>
-          <div className="progress-bar" style={{ width: `${(step/6)*100}%`, background: 'var(--color-main)'}}></div>
-          </div>
-        </div>
+      </div>
 
         <form onSubmit={handleSubmit}>
         {/* Step 1: Salon */}

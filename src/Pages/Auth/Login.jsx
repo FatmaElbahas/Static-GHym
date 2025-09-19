@@ -7,7 +7,8 @@ import {
   faEnvelope,
   faLock,
   faTimes,
-  faSignInAlt
+  faSignInAlt,
+  faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 const logo = "https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png";
@@ -18,19 +19,15 @@ const validationSchema = Yup.object({
     .required('البريد الإلكتروني مطلوب')
     .email('البريد الإلكتروني غير صحيح')
     .max(100, 'البريد الإلكتروني طويل جداً')
-    .test('email-format', 'البريد الإلكتروني غير صحيح', function(value) {
-      if (!value) return true;
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailRegex.test(value);
-    }),
+    .matches(
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      'البريد الإلكتروني غير صحيح'
+    ),
   
   password: Yup.string()
     .required('كلمة المرور مطلوبة')
     .min(6, 'كلمة المرور يجب أن تكون 6 أحرف على الأقل')
-    .test('password-required', 'كلمة المرور مطلوبة', function(value) {
-      if (!value) return false;
-      return value.length >= 6;
-    })
+    .max(50, 'كلمة المرور طويلة جداً')
 });
 
 const Login = () => {
@@ -47,56 +44,20 @@ const Login = () => {
     try {
       setStatus(''); // مسح الرسائل السابقة
       
-      // إرسال البيانات إلى API
-      const requestData = {
-        email: values.email,
-        password: values.password,
-      };
-      
-      // التأكد من أن جميع الحقول المطلوبة موجودة
-      if (!requestData.email || !requestData.password) {
+      // التحقق من صحة البيانات قبل الإرسال
+      if (!values.email || !values.password) {
         setStatus('جميع الحقول مطلوبة');
         setSubmitting(false);
         return;
       }
       
-      // التأكد من أن البريد الإلكتروني صحيح
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(requestData.email)) {
-        setFieldError('email', 'البريد الإلكتروني غير صحيح');
-        setSubmitting(false);
-        return;
-      }
+      // إرسال البيانات إلى API
+      const requestData = {
+        email: values.email.trim().toLowerCase(),
+        password: values.password,
+      };
       
-      // التأكد من أن كلمة المرور موجودة
-      if (!requestData.password || requestData.password.length < 6) {
-        setFieldError('password', 'كلمة المرور يجب أن تكون 6 أحرف على الأقل');
-        setSubmitting(false);
-        return;
-      }
-      
-      console.log('Sending login data to API:', requestData); // للتشخيص
-      console.log('Request body JSON:', JSON.stringify(requestData)); // للتشخيص
-      console.log('All required fields present:', {
-        email: !!requestData.email,
-        password: !!requestData.password
-      }); // للتشخيص
-      console.log('Request body type:', typeof requestData); // للتشخيص
-      console.log('Request body keys:', Object.keys(requestData)); // للتشخيص
-      console.log('Request body values:', Object.values(requestData)); // للتشخيص
-      console.log('Request body entries:', Object.entries(requestData)); // للتشخيص
-      console.log('Request body stringified length:', JSON.stringify(requestData).length); // للتشخيص
-      console.log('Request body stringified preview:', JSON.stringify(requestData).substring(0, 100)); // للتشخيص
-      console.log('Request body stringified full:', JSON.stringify(requestData, null, 2)); // للتشخيص
-      console.log('Request body stringified full with spaces:', JSON.stringify(requestData, null, 4)); // للتشخيص
-      console.log('Request body stringified full with tabs:', JSON.stringify(requestData, null, '\t')); // للتشخيص
-      console.log('Request body stringified full with newlines:', JSON.stringify(requestData, null, '\n')); // للتشخيص
-      console.log('Request body stringified full with custom:', JSON.stringify(requestData, null, '  ')); // للتشخيص
-      console.log('Request body stringified full with custom2:', JSON.stringify(requestData, null, '    ')); // للتشخيص
-      console.log('Request body stringified full with custom3:', JSON.stringify(requestData, null, '      ')); // للتشخيص
-      console.log('Request body stringified full with custom4:', JSON.stringify(requestData, null, '        ')); // للتشخيص
-      console.log('Request body stringified full with custom5:', JSON.stringify(requestData, null, '          ')); // للتشخيص
-      console.log('Request body stringified full with custom6:', JSON.stringify(requestData, null, '            ')); // للتشخيص
+      console.log('Sending login data to API:', requestData);
       
       const response = await fetch('https://enqlygo.com/api/user/login', {
         method: 'POST',
@@ -108,16 +69,16 @@ const Login = () => {
       });
 
       const result = await response.json();
-      console.log('Login API Response:', result); // للتشخيص
+      console.log('Login API Response:', result);
       
       if (response.ok && result.status === 'success') {
         // حفظ بيانات المستخدم في localStorage
-        if (result.data && result.data.user) {
+        if (result.data?.user) {
           localStorage.setItem('user', JSON.stringify(result.data.user));
         }
         
         // حفظ التوكن إذا كان موجود
-        if (result.data && result.data.token) {
+        if (result.data?.token) {
           localStorage.setItem('token', result.data.token);
           localStorage.setItem('authToken', result.data.token);
         }
@@ -125,9 +86,13 @@ const Login = () => {
         // إرسال event لتحديث النافبار
         window.dispatchEvent(new Event('loginSuccess'));
         
-        alert('تم تسجيل الدخول بنجاح!');
-        // إعادة توجيه إلى الداشبورد
-        navigate('/dashboard');
+        // إظهار رسالة نجاح جميلة
+        setStatus('success');
+        
+        // إعادة توجيه إلى الداشبورد بعد ثانيتين
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 2000);
       } else {
         // معالجة أخطاء API
         if (result.errors) {
@@ -136,8 +101,30 @@ const Login = () => {
             setFieldError(key, result.errors[key][0]);
           });
         } else {
-          // تعيين رسالة خطأ عامة
-          setStatus(result.message || result.error || 'حدث خطأ أثناء تسجيل الدخول');
+          // معالجة أخطاء محددة
+          let errorMessage = 'حدث خطأ أثناء تسجيل الدخول';
+          
+          if (result.message) {
+            // معالجة رسائل الخطأ المحددة
+            if (result.message.includes('createToken() on null') || 
+                result.message.includes('Call to a member function createToken()')) {
+              errorMessage = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+            } else if (result.message.includes('Unauthorized') || 
+                       result.message.includes('Invalid credentials')) {
+              errorMessage = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+            } else if (result.message.includes('User not found')) {
+              errorMessage = 'المستخدم غير موجود';
+            } else if (result.message.includes('Account disabled') || 
+                       result.message.includes('Account suspended')) {
+              errorMessage = 'الحساب معطل، يرجى التواصل مع الدعم الفني';
+            } else {
+              errorMessage = result.message;
+            }
+          } else if (result.error) {
+            errorMessage = result.error;
+          }
+          
+          setStatus(errorMessage);
         }
       }
       
@@ -151,6 +138,8 @@ const Login = () => {
         errorMessage = 'خطأ في الاتصال بالخادم. تحقق من اتصال الإنترنت.';
       } else if (error.name === 'SyntaxError') {
         errorMessage = 'خطأ في استجابة الخادم. يرجى المحاولة مرة أخرى.';
+      } else if (error.message && error.message.includes('createToken() on null')) {
+        errorMessage = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
       }
       
       setStatus(errorMessage);
@@ -187,8 +176,35 @@ const Login = () => {
               >
                 {({ isSubmitting, status, setFieldValue }) => (
                   <Form>
+                    {/* رسالة النجاح */}
+                    {status === 'success' && (
+                      <div className="alert alert-success mb-3 border-0 shadow-sm" role="alert" style={{
+                        background: 'linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%)',
+                        border: '1px solid #28a745',
+                        borderRadius: '10px'
+                      }}>
+                        <div className="d-flex align-items-center">
+                          <div className="me-3">
+                            <FontAwesomeIcon 
+                              icon={faCheckCircle} 
+                              className="text-success" 
+                              style={{ fontSize: '1.5rem' }}
+                            />
+                          </div>
+                          <div>
+                            <div className="fw-bold text-success mb-1">
+                              🎉 تم تسجيل الدخول بنجاح!
+                            </div>
+                            <div className="small text-success opacity-75">
+                              جاري التوجيه إلى لوحة التحكم...
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                     {/* رسالة الخطأ العامة */}
-                    {status && (
+                    {status && status !== 'success' && (
                       <div className="alert alert-danger mb-3" role="alert">
                         <FontAwesomeIcon icon={faTimes} className="me-2" />
                         {status}
@@ -266,12 +282,18 @@ const Login = () => {
                       style={{
                         borderRadius: '10px', 
                         fontSize: '0.9rem', 
-                        backgroundColor: '#038FAD', 
-                        borderColor: '#038FAD'
+                        backgroundColor: status === 'success' ? '#28a745' : '#038FAD', 
+                        borderColor: status === 'success' ? '#28a745' : '#038FAD',
+                        transition: 'all 0.3s ease'
                       }}
-                      disabled={isSubmitting}
+                      disabled={isSubmitting || status === 'success'}
                     >
-                      {isSubmitting ? (
+                      {status === 'success' ? (
+                        <>
+                          <FontAwesomeIcon icon={faCheckCircle} className="me-2" />
+                          تم تسجيل الدخول بنجاح!
+                        </>
+                      ) : isSubmitting ? (
                         <>
                           <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                           جاري تسجيل الدخول...
