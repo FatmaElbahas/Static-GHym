@@ -318,7 +318,7 @@ const DashboardHome = () => {
       </div>
 
       {/* Statistics Cards */}
-      <div className="row g-3 g-md-4 mb-4">
+      <div className="row g-2 g-md-4 mb-4">
         {isLoading ? (
           <div className="col-12 text-center py-5">
             <div className="spinner-border text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
@@ -330,15 +330,23 @@ const DashboardHome = () => {
           stats.map((stat, index) => (
             <div key={index} className="col-6 col-md-6 col-lg-3">
               <div className="card border-0 shadow-sm h-100 hover-lift">
-                <div className="card-body p-3 p-md-4">
+                <div className="card-body p-2 p-md-4">
                   <div className="d-flex align-items-center">
-                    <div className="me-3">
-                      <FontAwesomeIcon icon={stat.icon} className="text-primary fs-4" />
+                    <div className="me-2 me-md-3">
+                      <FontAwesomeIcon 
+                        icon={stat.icon} 
+                        className="text-primary" 
+                        style={{ fontSize: window.innerWidth < 768 ? '1.2rem' : '1.5rem' }}
+                      />
                     </div>
                     <div className="flex-grow-1">
-                      <h3 className="stat-value mb-1 fw-bold fs-4 fs-md-3">{stat.value}</h3>
-                      <p className="stat-title mb-2 text-muted small lh-1">{stat.title}</p>
-                      <span className={`text-${stat.color} small fw-medium`}>
+                      <h3 className="stat-value mb-1 fw-bold" style={{ fontSize: window.innerWidth < 768 ? '1.1rem' : '1.5rem' }}>
+                        {stat.value}
+                      </h3>
+                      <p className="stat-title mb-1 text-muted" style={{ fontSize: window.innerWidth < 768 ? '0.7rem' : '0.9rem', lineHeight: '1.2' }}>
+                        {stat.title}
+                      </p>
+                      <span className={`text-${stat.color} fw-medium`} style={{ fontSize: window.innerWidth < 768 ? '0.65rem' : '0.8rem' }}>
                         {stat.change}
                       </span>
                     </div>
@@ -354,13 +362,13 @@ const DashboardHome = () => {
         {/* Recent Bookings */}
         <div className="col-lg-8 mb-4">
           <div className="card border-0 shadow-sm">
-            <div className="card-header bg-white border-bottom-0 py-3">
+            <div className="card-header bg-white border-bottom-0 py-2 py-md-3">
               <div className="d-flex justify-content-between align-items-center">
-                <h5 className="card-title mb-0">
+                <h5 className="card-title mb-0" style={{ fontSize: window.innerWidth < 768 ? '1rem' : '1.25rem' }}>
                   <FontAwesomeIcon icon={faCalendarAlt} className="me-2 text-primary" />
                   الحجوزات الأخيرة
                 </h5>
-                <span className="text-primary fw-medium">
+                <span className="text-primary fw-medium" style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}>
                   {recentBookings.length} حجز
                 </span>
               </div>
@@ -384,46 +392,74 @@ const DashboardHome = () => {
                   <table className="table table-hover mb-0">
                     <thead className="table-light sticky-top">
                       <tr>
-                        <th className="border-0 py-3">الخدمة</th>
-                        <th className="border-0 py-3">الطبيب</th>
-                        <th className="border-0 py-3">التاريخ</th>
-                        <th className="border-0 py-3">الوقت</th>
-                        <th className="border-0 py-3">الحالة</th>
-                        <th className="border-0 py-3 text-center">الإجراءات</th>
+                        <th className="border-0 py-2 py-md-3" style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}>الخدمة</th>
+                        <th className="border-0 py-2 py-md-3 d-none d-md-table-cell" style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}>الطبيب</th>
+                        <th className="border-0 py-2 py-md-3" style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}>التاريخ</th>
+                        <th className="border-0 py-2 py-md-3 d-none d-md-table-cell" style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}>الوقت</th>
+                        <th className="border-0 py-2 py-md-3 d-none d-md-table-cell" style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}>الحالة</th>
+                        <th className="border-0 py-2 py-md-3 text-center" style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}>الإجراءات</th>
                       </tr>
                     </thead>
                     <tbody>
                       {recentBookings.map((booking) => (
                         <tr key={booking.id} className="align-middle">
-                          <td className="py-3">
+                          <td className="py-2 py-md-3">
                             <div className="d-flex align-items-center">
-                              <FontAwesomeIcon icon={faStethoscope} className="text-primary me-2" />
-                              <span className="fw-medium">{booking.service}</span>
+                              <FontAwesomeIcon 
+                                icon={faStethoscope} 
+                                className="text-primary me-2" 
+                                style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}
+                              />
+                              <span className="fw-medium" style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}>
+                                {booking.service}
+                              </span>
                             </div>
                           </td>
-                          <td className="py-3">
+                          <td className="py-2 py-md-3 d-none d-md-table-cell">
                             <div className="d-flex align-items-center">
                               <FontAwesomeIcon icon={faUserMd} className="text-primary me-2" />
                               <span>{booking.doctor}</span>
                             </div>
                           </td>
-                          <td className="py-3">
-                            <FontAwesomeIcon icon={faCalendarAlt} className="text-primary me-2" />
-                            {booking.date}
+                          <td className="py-2 py-md-3">
+                            <div className="d-flex align-items-center">
+                              <FontAwesomeIcon 
+                                icon={faCalendarAlt} 
+                                className="text-primary me-2" 
+                                style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}
+                              />
+                              <span style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}>
+                                {booking.date}
+                              </span>
+                            </div>
+                            {window.innerWidth < 768 && (
+                              <div className="d-flex align-items-center mt-1">
+                                <FontAwesomeIcon 
+                                  icon={faClock} 
+                                  className="text-primary me-2" 
+                                  style={{ fontSize: '0.7rem' }}
+                                />
+                                <span style={{ fontSize: '0.7rem' }}>{booking.time}</span>
+                              </div>
+                            )}
                           </td>
-                          <td className="py-3">
+                          <td className="py-2 py-md-3 d-none d-md-table-cell">
                             <FontAwesomeIcon icon={faClock} className="text-primary me-2" />
                             {booking.time}
                           </td>
-                          <td className="py-3">
-                            <span className={`text-${booking.statusColor} fw-medium`}>
+                          <td className="py-2 py-md-3 d-none d-md-table-cell">
+                            <span className={`text-${booking.statusColor} fw-medium`} style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}>
                               {booking.status}
                             </span>
                           </td>
-                          <td className="py-3 text-center">
+                          <td className="py-2 py-md-3 text-center">
                             {booking.status === 'معلق' && (
                               <button 
-                                className="btn btn-sm btn-success rounded-pill px-3"
+                                className="btn btn-sm btn-success rounded-pill"
+                                style={{ 
+                                  fontSize: window.innerWidth < 768 ? '0.7rem' : '0.8rem',
+                                  padding: window.innerWidth < 768 ? '0.25rem 0.5rem' : '0.375rem 0.75rem'
+                                }}
                                 onClick={() => {
                                   console.log('Booking data for OTP:', booking);
                                   setOtpModal({
@@ -436,7 +472,7 @@ const DashboardHome = () => {
                                 }}
                               >
                                 <FontAwesomeIcon icon={faCheckCircle} className="me-1" />
-                                تأكيد
+                                {window.innerWidth < 768 ? 'تأكيد' : 'تأكيد'}
                               </button>
                             )}
                           </td>

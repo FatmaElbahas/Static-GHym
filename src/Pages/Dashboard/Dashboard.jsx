@@ -101,7 +101,7 @@ const Dashboard = () => {
     <div className="dashboard-container">
       {/* Header */}
       <header className="dashboard-header">
-        <div className="container-fluid px-3 px-md-4">
+        <div className="container-fluid px-1 px-md-4">
           <div className="d-flex justify-content-between align-items-center py-2">
             <div className="d-flex align-items-center">
               <button 
@@ -152,11 +152,11 @@ const Dashboard = () => {
       </header>
 
       <div className="dashboard-body" style={{ marginTop: '80px', marginBottom: '50px' }}>
-        <div className="container-fluid px-3 px-md-4">
+        <div className="container-fluid px-1 px-md-4" style={{ maxWidth: '100%' }}>
           <div className="row g-0">
             {/* Sidebar */}
             <aside className={`dashboard-sidebar ${sidebarOpen ? 'sidebar-open' : ''}`}>
-              <div className="sidebar-header d-flex justify-content-between align-items-center p-3 d-md-none">
+              <div className="sidebar-header d-flex justify-content-between align-items-center p-4 d-md-none">
                 <h6 className="mb-0 text-dark fw-bold">القائمة</h6>
                 <button 
                   className="btn btn-link p-2"
@@ -167,11 +167,11 @@ const Dashboard = () => {
                 </button>
               </div>
               
-              <nav className="sidebar-nav p-3 p-md-4">
+              <nav className="sidebar-nav p-4 p-md-4">
                 {menuItems.map((item) => (
                   <button
                     key={item.id}
-                    className={`nav-item d-flex align-items-center w-100 text-end py-3 py-md-3 px-3 px-md-4 border-0 rounded-3 mb-2 transition-all ${
+                    className={`nav-item d-flex align-items-center w-100 text-end py-3 py-md-3 px-4 px-md-4 border-0 rounded-3 mb-2 transition-all ${
                       activeTab === item.id 
                         ? 'bg-primary text-white shadow-sm' 
                         : 'bg-transparent text-dark hover-bg-light'
@@ -199,7 +199,7 @@ const Dashboard = () => {
 
             {/* Main Content */}
             <main className="dashboard-main">
-              <div className="dashboard-content p-3 p-md-4">
+              <div className="dashboard-content p-1 p-md-4">
                 {renderContent()}
               </div>
             </main>
