@@ -547,11 +547,11 @@ function BookContent() {
   return (
     <>
       <Helmet>
-        <title>بلسمي | blsmy</title>
-        <meta name="description" content="مركز بلسمي الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة. احجز موعدك الآن واستفد من خدماتنا المتميزة" />
-        <meta name="keywords" content="مركز طبي, خدمات جلدية, علاجات طبية, حجز موعد, بلسمي, صحة" />
-        <meta property="og:title" content="بلسمي | blsmy" />
-        <meta property="og:description" content="مركز بلسمي الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة" />
+        <title>غنيم | ghanim</title>
+        <meta name="description" content="مركز غنيم الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة. احجز موعدك الآن واستفد من خدماتنا المتميزة" />
+        <meta name="keywords" content="مركز طبي, خدمات جلدية, علاجات طبية, حجز موعد, غنيم, صحة" />
+        <meta property="og:title" content="غنيم | ghanim" />
+        <meta property="og:description" content="مركز غنيم الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة" />
         <meta property="og:type" content="website" />
       </Helmet>
       

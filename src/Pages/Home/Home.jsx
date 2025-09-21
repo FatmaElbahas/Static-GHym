@@ -7,7 +7,6 @@ import Partners from '../../Components/Partners/Partners';
 import MostBookedClinics from '../../Components/PartnersSwiper/MostBookedClinics';
 import MostBookedDoctors from '../../Components/PartnersSwiper/MostBookedDoctors';
 import Testimonials from '../../Components/Testimonials/Testimonials';
-import Logo from '../../assets/images/Logo.png';
 import HeroBg from '../../assets/images/hero-bg.ab3138f8.webp';
 
 export default function Home() {
@@ -27,14 +26,20 @@ export default function Home() {
   }, [location]);
   return (
     <>
-      <Helmet>
-        <title>بلسمي | blsmy</title>
-        <meta name="description" content="مركز بلسمي الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة. احجز موعدك الآن واستفد من خدماتنا المتميزة" />
-        <meta name="keywords" content="مركز طبي, خدمات جلدية, علاجات طبية, حجز موعد, بلسمي, صحة" />
-        <meta property="og:title" content="بلسمي | blsmy" />
-        <meta property="og:description" content="مركز بلسمي الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة" />
-        <meta property="og:type" content="website" />
-      </Helmet>
+ <Helmet>
+  <title>غنيم | ghanim</title>
+  <meta name="description" content="مركز غنيم الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة. احجز موعدك الآن واستفد من خدماتنا المتميزة" />
+  <meta name="keywords" content="مركز طبي, خدمات جلدية, علاجات طبية, حجز موعد, غنيم, صحة" />
+
+  {/* OG tags */}
+  <meta property="og:title" content="غنيم | ghanim" />
+  <meta property="og:description" content="مركز غنيم الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png" />
+
+  {/* Favicon */}
+  <link rel="icon" type="image/png" href="https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png" />
+</Helmet>
       <div className="home-page book-page " style={{ paddingTop: '0' }}>
       <section className="hero-section position-relative mb-0" style={{height: '60vh'}} dir="rtl">
           <div id="heroCarousel" className="carousel slide h-100" data-bs-ride="carousel" data-bs-interval="5000">
