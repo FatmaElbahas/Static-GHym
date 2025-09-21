@@ -14,8 +14,10 @@ import {
   faUser,
   faSpinner,
   faKey,
-  faInfoCircle
+  faInfoCircle,
+  faShieldAlt
 } from '@fortawesome/free-solid-svg-icons';
+import OTPVerification from '../OTPVerification/OTPVerification';
 
 const DashboardHome = () => {
   const [stats, setStats] = useState([
@@ -54,13 +56,12 @@ const DashboardHome = () => {
   ]);
   const [isLoading, setIsLoading] = useState(true);
   const [recentBookings, setRecentBookings] = useState([]);
-  const [otpModal, setOtpModal] = useState(null);
-  const [otpValue, setOtpValue] = useState('');
-  const [isCompleting, setIsCompleting] = useState(false);
+  const [upcomingBookings, setUpcomingBookings] = useState([]);
+  const [otpModal, setOtpModal] = useState({ isVisible: false, bookingId: null });
 
   const BOOKINGS_URL = 'https://enqlygo.com/api/user/bookings';
+  const UPCOMING_BOOKINGS_URL = 'https://enqlygo.com/api/user/bookings/close';
   const SALONS_URL = 'https://enqlygo.com/api/salons';
-  const COMPLETE_BOOKING_URL = 'https://enqlygo.com/api/user/bookings/complete';
 
   // جلب بيانات الحجوزات
   useEffect(() => {
@@ -209,6 +210,9 @@ const DashboardHome = () => {
 
         setRecentBookings(recentBookingsData);
 
+        // جلب المواعيد القادمة المؤكدة
+        await loadUpcomingBookings(token, salonsMap, staffByIdMap);
+
       } catch (error) {
         console.error('Error loading bookings data:', error);
       } finally {
@@ -219,70 +223,154 @@ const DashboardHome = () => {
     loadBookingsData();
   }, []);
 
-  // وظيفة تأكيد الحجز
-  const handleCompleteBooking = async () => {
-    if (!otpModal || !otpValue.trim()) {
-      alert('يرجى إدخال رمز التأكيد');
-      return;
-    }
-
+  // دالة جلب المواعيد القادمة المؤكدة
+  const loadUpcomingBookings = async (token, salonsMap, staffByIdMap) => {
     try {
-      setIsCompleting(true);
-      const token = localStorage.getItem('token');
+      console.log('🔄 Loading upcoming bookings...');
       
-      const requestBody = {
-        booking_id: parseInt(otpModal.booking_id),
-        otp: otpValue.trim()
-      };
-      
-      console.log('Sending complete booking request:', requestBody);
-      console.log('OTP Modal data:', otpModal);
-      
-      const response = await fetch(COMPLETE_BOOKING_URL, {
-        method: 'DELETE',
+      const response = await fetch(UPCOMING_BOOKINGS_URL, {
+        method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(requestBody)
       });
 
-      const data = await response.json();
-      console.log('Complete booking response:', data);
-
-      if (response.ok && (data.status === 'success' || data.success === true)) {
-        alert('تم تأكيد الحجز بنجاح!');
-        setOtpModal(null);
-        setOtpValue('');
-        // إعادة تحميل البيانات
-        window.location.reload();
-      } else {
-        alert(data.message || 'حدث خطأ في تأكيد الحجز');
+      if (!response.ok) {
+        console.log('⚠ Upcoming bookings API failed:', response.status);
+        return;
       }
+
+      const data = await response.json();
+      console.log('📅 Upcoming bookings data:', data);
+
+      // استخراج البيانات من الاستجابة
+      let upcomingList = [];
+      if (Array.isArray(data)) {
+        upcomingList = data;
+      } else if (Array.isArray(data?.data)) {
+        upcomingList = data.data;
+      } else if (Array.isArray(data?.data?.bookings)) {
+        upcomingList = data.data.bookings;
+      }
+
+      // تصفية المواعيد المؤكدة فقط (status = 1) والمواعيد القادمة
+      const today = new Date().toISOString().split('T')[0];
+      const confirmedBookings = upcomingList.filter(booking => {
+        const isConfirmed = booking.status === 1;
+        const isUpcoming = booking.date >= today;
+        return isConfirmed && isUpcoming;
+      });
+      console.log('✅ Confirmed upcoming bookings:', confirmedBookings);
+
+      // معالجة البيانات مع أسماء الأطباء
+      const upcomingBookingsData = confirmedBookings.map(booking => {
+        const salon = salonsMap.get(booking.salon_id) || {};
+        const staffList = Array.isArray(salon.staff) ? salon.staff : [];
+        const doctorFromSalon = staffList.find(d => String(d.id) === String(booking.staff_id));
+        const doctorFromAPI = staffByIdMap.get(String(booking.staff_id));
+
+        // تحديد اسم الطبيب
+        let doctorName = `د. طبيب #${booking.staff_id}`;
+        
+        if (doctorFromSalon && doctorFromSalon.name) {
+          doctorName = doctorFromSalon.name;
+        } else if (doctorFromAPI && typeof doctorFromAPI === 'object' && doctorFromAPI.name) {
+          doctorName = doctorFromAPI.name;
+        } else if (salon.owner_name) {
+          doctorName = salon.owner_name;
+        }
+
+        return {
+          id: booking.id,
+          service: booking.services || 'خدمة غير محددة',
+          doctor: doctorName,
+          date: booking.date || 'غير محدد',
+          time: booking.time ? `${booking.time.slice(0,2)}:${booking.time.slice(2)}` : 'غير محدد',
+          status: 'مؤكد',
+          statusColor: 'success'
+        };
+      });
+
+      // ترتيب المواعيد حسب التاريخ (الأقرب أولاً)
+      const sortedBookings = upcomingBookingsData.sort((a, b) => {
+        if (a.date === b.date) {
+          return a.time.localeCompare(b.time);
+        }
+        return a.date.localeCompare(b.date);
+      });
+
+      setUpcomingBookings(sortedBookings);
+      console.log('📅 Processed upcoming bookings:', sortedBookings);
+
     } catch (error) {
-      console.error('Error completing booking:', error);
-      alert('حدث خطأ في تأكيد الحجز');
-    } finally {
-      setIsCompleting(false);
+      console.error('❌ Error loading upcoming bookings:', error);
+    }
+  };
+
+  // دالة فتح نافذة OTP
+  const handleOTPVerification = (booking) => {
+    const bookingId = booking.booking_id || booking.id;
+    if (bookingId) {
+      setOtpModal({ isVisible: true, bookingId });
+    }
+  };
+
+  // دالة إغلاق نافذة OTP
+  const handleOTPCancel = () => {
+    setOtpModal({ isVisible: false, bookingId: null });
+  };
+
+  // دالة نجاح التحقق
+  const handleOTPSuccess = (result) => {
+    setOtpModal({ isVisible: false, bookingId: null });
+    alert('تم التحقق من الحجز بنجاح!');
+    // إعادة تحميل البيانات
+    window.location.reload();
+  };
+
+  // دالة إعادة تحميل المواعيد القادمة
+  const refreshUpcomingBookings = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+      // جلب بيانات الصالونات والأطباء
+      const salonsMap = new Map();
+      const staffByIdMap = new Map();
+      
+      // جلب بيانات الصالونات
+      const uniqueSalonIds = [...new Set(upcomingBookings.map(b => b.salon_id))];
+      await Promise.all(uniqueSalonIds.map(async (sid) => {
+        try {
+          const sr = await fetch(`${SALONS_URL}/${sid}`, { 
+            headers: { 'Accept': 'application/json' } 
+          });
+          if (sr.ok) {
+            const sj = await sr.json();
+            const salonData = sj?.data || {};
+            salonsMap.set(sid, salonData);
+            
+            if (Array.isArray(salonData.staff)) {
+              salonData.staff.forEach(staff => {
+                if (staff.id && staff.name) {
+                  staffByIdMap.set(String(staff.id), staff);
+                }
+              });
+            }
+          }
+        } catch (error) {
+          console.log('Salon fetch error:', error.message);
+        }
+      }));
+
+      await loadUpcomingBookings(token, salonsMap, staffByIdMap);
+    } catch (error) {
+      console.error('Error refreshing upcoming bookings:', error);
     }
   };
 
 
-  const upcomingAppointments = [
-    {
-      service: 'فحص دوري',
-      doctor: 'د. سارة أحمد',
-      date: '2024-01-25',
-      time: '9:00 ص'
-    },
-    {
-      service: 'استشارة نفسية',
-      doctor: 'د. محمد حسن',
-      date: '2024-01-28',
-      time: '3:00 م'
-    }
-  ];
 
   return (
     <div className="dashboard-home">
@@ -470,19 +558,10 @@ const DashboardHome = () => {
                                   fontSize: window.innerWidth < 768 ? '0.6rem' : '0.8rem',
                                   padding: window.innerWidth < 768 ? '0.2rem 0.4rem' : '0.375rem 0.75rem'
                                 }}
-                                onClick={() => {
-                                  console.log('Booking data for OTP:', booking);
-                                  setOtpModal({
-                                    booking_id: booking.booking_id || booking.id,
-                                    service: booking.service,
-                                    doctor: booking.doctor,
-                                    date: booking.date,
-                                    time: booking.time
-                                  });
-                                }}
+                                onClick={() => handleOTPVerification(booking)}
                               >
-                                <FontAwesomeIcon icon={faCheckCircle} className="me-1" />
-                                {window.innerWidth < 768 ? 'تأكيد' : 'تأكيد'}
+                                <FontAwesomeIcon icon={faShieldAlt} className="me-1" />
+                                {window.innerWidth < 768 ? 'تحقق' : 'تحقق'}
                               </button>
                             )}
                           </td>
@@ -506,31 +585,62 @@ const DashboardHome = () => {
         <div className="col-lg-4 mb-4">
           <div className="card border-0 shadow-sm h-100">
             <div className="card-header bg-white border-bottom-0 py-3">
-              <h5 className="card-title mb-0">
-                <FontAwesomeIcon icon={faClock} className="me-2 text-warning" />
-                المواعيد القادمة
-              </h5>
+              <div className="d-flex justify-content-between align-items-center">
+                <h5 className="card-title mb-0">
+                  <FontAwesomeIcon icon={faClock} className="me-2 text-success" />
+                  المواعيد المؤكدة القادمة
+                </h5>
+                <button 
+                  className="btn btn-outline-success btn-sm"
+                  onClick={refreshUpcomingBookings}
+                  style={{ 
+                    fontSize: window.innerWidth < 768 ? '0.6rem' : '0.75rem',
+                    padding: window.innerWidth < 768 ? '0.2rem 0.4rem' : '0.375rem 0.75rem'
+                  }}
+                >
+                  <FontAwesomeIcon icon={faSpinner} className="me-1" />
+                  تحديث
+                </button>
+              </div>
             </div>
             <div className="card-body p-3">
-              {upcomingAppointments.length > 0 ? (
-                upcomingAppointments.map((appointment, index) => (
-                  <div key={index} className="appointment-item p-3 mb-3 bg-light rounded-3 border-start border-warning border-3">
+              {isLoading ? (
+                <div className="text-center py-4">
+                  <div className="spinner-border text-primary" role="status" style={{ width: '2rem', height: '2rem' }}>
+                    <span className="visually-hidden">جاري التحميل...</span>
+                  </div>
+                  <p className="mt-3 text-muted small">جاري تحميل المواعيد...</p>
+                </div>
+              ) : upcomingBookings.length > 0 ? (
+                upcomingBookings.map((appointment, index) => (
+                  <div key={appointment.id || index} className="appointment-item p-3 mb-3 bg-light rounded-3 border-start border-success border-3">
                     <div className="d-flex align-items-start">
                       <div className="me-3">
-                        <FontAwesomeIcon icon={faCalendarAlt} className="text-warning" />
+                        <FontAwesomeIcon icon={faCalendarAlt} className="text-success" />
                       </div>
                       <div className="flex-grow-1">
                         <div className="d-flex justify-content-between align-items-start mb-2">
-                          <h6 className="mb-1 fw-semibold">{appointment.service}</h6>
-                          <small className="text-muted">{appointment.date}</small>
+                          <h6 className="mb-1 fw-semibold" style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}>
+                            {appointment.service}
+                          </h6>
+                          <small className="text-muted" style={{ fontSize: window.innerWidth < 768 ? '0.7rem' : '0.875rem' }}>
+                            {appointment.date}
+                          </small>
                         </div>
-                        <p className="text-muted mb-2 small">
+                        <p className="text-muted mb-2 small" style={{ fontSize: window.innerWidth < 768 ? '0.7rem' : '0.875rem' }}>
                           <FontAwesomeIcon icon={faUserMd} className="me-1" />
                           {appointment.doctor}
                         </p>
-                        <div className="d-flex align-items-center">
-                          <FontAwesomeIcon icon={faClock} className="text-warning me-1 small" />
-                          <span className="text-warning fw-medium small">{appointment.time}</span>
+                        <div className="d-flex align-items-center justify-content-between">
+                          <div className="d-flex align-items-center">
+                            <FontAwesomeIcon icon={faClock} className="text-success me-1 small" />
+                            <span className="text-success fw-medium small" style={{ fontSize: window.innerWidth < 768 ? '0.7rem' : '0.875rem' }}>
+                              {appointment.time}
+                            </span>
+                          </div>
+                          <span className="badge bg-success bg-opacity-10 text-success px-2 py-1" style={{ fontSize: window.innerWidth < 768 ? '0.6rem' : '0.75rem' }}>
+                            مؤكد
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -539,8 +649,12 @@ const DashboardHome = () => {
               ) : (
                 <div className="text-center py-4">
                   <FontAwesomeIcon icon={faClock} size="2x" className="text-muted mb-3 opacity-50" />
-                  <h6 className="text-muted">لا توجد مواعيد قادمة</h6>
-                  <p className="text-muted small">ستظهر مواعيدك القادمة هنا</p>
+                  <h6 className="text-muted" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1rem' }}>
+                    لا توجد مواعيد قادمة
+                  </h6>
+                  <p className="text-muted small" style={{ fontSize: window.innerWidth < 768 ? '0.7rem' : '0.875rem' }}>
+                    ستظهر مواعيدك المؤكدة القادمة هنا
+                  </p>
                 </div>
               )}
             </div>
@@ -549,108 +663,13 @@ const DashboardHome = () => {
       </div>
 
 
-      {/* OTP Modal */}
-      {otpModal && (
-        <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.6)' }}>
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content border-0 shadow-lg">
-              <div className="modal-header bg-primary text-white border-0">
-                <h5 className="modal-title">
-                  <FontAwesomeIcon icon={faCheckCircle} className="me-2" />
-                  تأكيد الحجز
-                </h5>
-                <button 
-                  type="button" 
-                  className="btn-close btn-close-white" 
-                  onClick={() => {
-                    setOtpModal(null);
-                    setOtpValue('');
-                  }}
-                ></button>
-              </div>
-              <div className="modal-body p-4">
-                <div className="mb-4">
-                  <h6 className="text-primary mb-3">
-                    <FontAwesomeIcon icon={faCalendarAlt} className="me-2" />
-                    تفاصيل الحجز
-                  </h6>
-                  <div className="bg-light rounded-3 p-3">
-                    <div className="row g-2">
-                      <div className="col-6">
-                        <small className="text-muted">الخدمة</small>
-                        <div className="fw-semibold">{otpModal.service}</div>
-                      </div>
-                      <div className="col-6">
-                        <small className="text-muted">الطبيب</small>
-                        <div className="fw-semibold">{otpModal.doctor}</div>
-                      </div>
-                      <div className="col-6">
-                        <small className="text-muted">التاريخ</small>
-                        <div className="fw-semibold">{otpModal.date}</div>
-                      </div>
-                      <div className="col-6">
-                        <small className="text-muted">الوقت</small>
-                        <div className="fw-semibold">{otpModal.time}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="otpInput" className="form-label fw-semibold">
-                    <FontAwesomeIcon icon={faKey} className="me-2 text-warning" />
-                    رمز التأكيد (OTP)
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control form-control-lg text-center"
-                    id="otpInput"
-                    placeholder="000000"
-                    value={otpValue}
-                    onChange={(e) => setOtpValue(e.target.value)}
-                    maxLength="6"
-                    style={{ letterSpacing: '0.5em', fontSize: '1.2rem' }}
-                  />
-                  <div className="form-text text-center">
-                    <FontAwesomeIcon icon={faInfoCircle} className="me-1" />
-                    أدخل الرمز المكون من 6 أرقام
-                  </div>
-                </div>
-              </div>
-              <div className="modal-footer border-0 p-4">
-                <button 
-                  type="button" 
-                  className="btn btn-outline-secondary px-4" 
-                  onClick={() => {
-                    setOtpModal(null);
-                    setOtpValue('');
-                  }}
-                  disabled={isCompleting}
-                >
-                  إلغاء
-                </button>
-                <button 
-                  type="button" 
-                  className="btn btn-success px-4" 
-                  onClick={handleCompleteBooking}
-                  disabled={isCompleting || !otpValue.trim()}
-                >
-                  {isCompleting ? (
-                    <>
-                      <FontAwesomeIcon icon={faSpinner} spin className="me-2" />
-                      جاري التأكيد...
-                    </>
-                  ) : (
-                    <>
-                      <FontAwesomeIcon icon={faCheckCircle} className="me-2" />
-                      تأكيد الحجز
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* OTP Verification Modal */}
+      <OTPVerification
+        bookingId={otpModal.bookingId}
+        isVisible={otpModal.isVisible}
+        onSuccess={handleOTPSuccess}
+        onCancel={handleOTPCancel}
+      />
     </div>
   );
 };

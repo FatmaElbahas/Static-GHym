@@ -35,7 +35,7 @@ export default function Home() {
         <meta property="og:description" content="مركز بلسمي الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة" />
         <meta property="og:type" content="website" />
       </Helmet>
-      <div className="home-page book-page ">
+      <div className="home-page book-page " style={{ paddingTop: '0' }}>
       <section className="hero-section position-relative mb-0" style={{height: '60vh'}} dir="rtl">
           <div id="heroCarousel" className="carousel slide h-100" data-bs-ride="carousel" data-bs-interval="5000">
             <div className="carousel-inner h-100">
@@ -119,14 +119,14 @@ export default function Home() {
           </div>
         </div> */}
         </section>
-        <div className="booking-card bg-white rounded-5 shadow-lg p-5 px-4" style={{marginBottom: '-80px' ,width: '80%',minHeight: '120px'}}>
+        <div className="booking-card bg-white rounded-5 shadow-lg p-5 px-4 d-flex justify-content-between align-items-center" style={{marginBottom: '-100px' ,width: '80%',minHeight: '120px', borderRadius: '50px'}}>
           <div className="container-fluid">
             <div className="booking-content d-flex align-items-center gap-4">
               <div className="booking-icon flex-shrink-0">
                 <i className="fas fa-calendar-alt fs-1 color-main"></i>
               </div>
               <div className="booking-text flex-grow-1 text-end">
-                <div className="question-container bg-light rounded-3 p-3 mb-2">
+                <div className="question-container rounded-3 p-3 mb-2">
                   <h3 className="booking-question fw-bold mb-0" style={{
                     color: 'var(--color-main)',
                     fontSize: window.innerWidth < 768 ? '1.1rem' : '1.75rem'

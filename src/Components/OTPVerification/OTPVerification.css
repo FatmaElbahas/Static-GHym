@@ -1,0 +1,80 @@
+/* OTP Verification Styles */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.otp-input {
+  transition: all 0.3s ease;
+}
+
+.otp-input:focus {
+  border-color: var(--color-main) !important;
+  box-shadow: 0 0 0 0.2rem rgba(3, 143, 173, 0.25) !important;
+  transform: scale(1.05);
+}
+
+.otp-input:hover {
+  border-color: var(--color-main);
+}
+
+/* Success animation */
+@keyframes successPulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success-icon {
+  animation: successPulse 1s infinite;
+}
+
+/* Timer animation */
+@keyframes timerPulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.timer-warning {
+  animation: timerPulse 2s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .otp-input {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1.2rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .otp-input {
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 1rem !important;
+  }
+}

@@ -32,11 +32,11 @@ const MostBookedDoctorsSlides = memo(({ doctors }) => {
             <span className="ms-1 text-muted">{Number(d.rating).toFixed(1)}</span>
           </div>
         ) : null}
-        <div className="partner-name doctor-info mt-1 text-center">
-          <p className="mb-1 main-color fw-500">{d.name}</p>
-          <small className="text-muted d-block">{d.clinic}</small>
+        <div className="partner-name doctor-info mt-1 text-center ">
+          <p className="mb-2 main-color fw-500">{d.name}</p>
+          <small className="text-muted d-block mb-1">{d.clinic}</small>
           {d.specialty ? (
-            <small className="text-muted d-block">{d.specialty}</small>
+            <small className="text-muted d-block mb-1">{d.specialty}</small>
           ) : null}
           <small className="text-muted d-block">{d.address}</small>
         </div>

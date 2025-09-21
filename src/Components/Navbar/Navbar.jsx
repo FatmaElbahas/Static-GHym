@@ -88,8 +88,7 @@ function MainNavbar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm mb-5">
-      <div className="container-fluid d-flex justify-content-between align-items-center">
+<nav className="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm mb-0 mb-md-0 mb-lg-0">      <div className="container-fluid d-flex justify-content-between align-items-center">
         {/* Logo */}
         <NavLink to="/" className="navbar-brand">
           <img src={logo} alt="Logo" className="img-fluid navbar-logo" />

@@ -3,15 +3,26 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import toothPlaceholder from '../../assets/images/الاسنان.png';
 
 const API_URL = 'https://enqlygo.com/api/salons/most_booking_salons';
 
 const toAbsoluteImageUrl = (path) => {
-  if (!path || typeof path !== 'string') {
-    return 'https://placehold.co/600x400/cccccc/ffffff/png?text=Clinic+Image+Placeholder';
+  // إذا لم تكن هناك صورة، استخدم الصورة المحلية الافتراضية
+  if (!path || typeof path !== 'string' || path.trim() === '' || path === 'null' || path === 'undefined') {
+    return toothPlaceholder;
   }
+  
+  // إذا كانت الصورة URL كامل
   if (path.startsWith('http')) return path;
+  
+  // إذا كانت الصورة تبدأ بـ storage/
   if (path.startsWith('storage/')) return `https://enqlygo.com/${path}`;
+  
+  // إذا كانت الصورة تبدأ بـ /
+  if (path.startsWith('/')) return `https://enqlygo.com${path}`;
+  
+  // في جميع الحالات الأخرى
   return `https://enqlygo.com/${path.replace(/^\/+/, '')}`;
 };
 
@@ -21,21 +32,30 @@ const MostBookedClinicsSlides = memo(({ salons }) => {
     return salons.map((salon) => (
       <SwiperSlide key={salon.id}>
         <div className="partner-slide-card">
-          <div className="partner-logo">
+          <div className="partner-logo" style={{ marginTop: '25px' }}>
             <img
               src={toAbsoluteImageUrl(salon.owner_photo)}
               alt={salon.salon_name}
               className="img-fluid"
               loading="lazy"
+              style={{ 
+                width: '80px', 
+                height: '80px', 
+                objectFit: 'cover',
+                backgroundColor: '#f8f9fa'
+              }}
               onError={(e) => {
-                const placeholder = 'https://placehold.co/600x400/cccccc/ffffff/png?text=Clinic+Image+Placeholder';
-                if (e && e.target && e.target.src !== placeholder) {
-                  e.target.src = placeholder;
+                if (e && e.target && e.target.src !== toothPlaceholder) {
+                  e.target.src = toothPlaceholder;
+                  e.target.alt = 'صورة افتراضية للعيادة';
                 }
+              }}
+              onLoad={(e) => {
+                e.target.style.display = 'block';
               }}
             />
           </div>
-          <div className="partner-name">
+          <div className="partner-name" style={{ marginBottom: '20px', paddingBottom: '15px' }}>
             <p className="mb-0 main-color">{salon.salon_name}</p>
           </div>
         </div>
@@ -95,7 +115,7 @@ const MostBookedClinics = () => {
           id: s.id,
           salon_name: s.salon_name || s.owner_name || '',
           owner_name: s.owner_name || '',
-          owner_photo: toAbsoluteImageUrl(s.owner_photo),
+          owner_photo: s.owner_photo || s.salon_photo || '',
           salon_address: s.salon_address || '',
           rating: s.rating || 0,
           bookings_count: s.bookings_count || 0,

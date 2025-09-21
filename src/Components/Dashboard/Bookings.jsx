@@ -15,8 +15,10 @@ import {
   faTrash,
   faStethoscope,
   faHospital,
-  faInfoCircle
+  faInfoCircle,
+  faShieldAlt
 } from '@fortawesome/free-solid-svg-icons';
+import OTPVerification from '../OTPVerification/OTPVerification';
 
 const Bookings = () => {
   const navigate = useNavigate();
@@ -25,6 +27,7 @@ const Bookings = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [deletingBookingId, setDeletingBookingId] = useState(null);
+  const [otpModal, setOtpModal] = useState({ isVisible: false, bookingId: null });
 
   const BOOKINGS_URL = 'https://enqlygo.com/api/user/bookings';
   const SALONS_URL = 'https://enqlygo.com/api/salons';
@@ -475,6 +478,27 @@ const Bookings = () => {
     }
   }, [selectedBooking]); // إزالة loadBookings من dependencies
 
+  // دالة فتح نافذة OTP
+  const handleOTPVerification = useCallback((booking) => {
+    const bookingId = booking.booking_id || booking.id;
+    if (bookingId) {
+      setOtpModal({ isVisible: true, bookingId });
+    }
+  }, []);
+
+  // دالة إغلاق نافذة OTP
+  const handleOTPCancel = useCallback(() => {
+    setOtpModal({ isVisible: false, bookingId: null });
+  }, []);
+
+  // دالة نجاح التحقق
+  const handleOTPSuccess = useCallback((result) => {
+    setOtpModal({ isVisible: false, bookingId: null });
+    alert('تم التحقق من الحجز بنجاح!');
+    // إعادة تحميل الحجوزات
+    loadBookings(false);
+  }, []);
+
   // تحسين الأداء: معالجة البيانات مرة واحدة فقط
   const processedBookings = useMemo(() => {
     if (!Array.isArray(bookings)) return [];
@@ -651,6 +675,22 @@ const Bookings = () => {
                                 عرض
                               </button>
                               <button 
+                                className="btn btn-outline-success btn-sm d-flex align-items-center gap-1" 
+                                onClick={() => handleOTPVerification(booking)}
+                                style={{
+                                  borderRadius: '8px',
+                                  fontSize: '0.85rem',
+                                  padding: '6px 12px',
+                                  borderWidth: '1.5px',
+                                  fontWeight: '500',
+                                  borderColor: '#28a745',
+                                  color: '#28a745'
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faShieldAlt} style={{ fontSize: '0.8rem' }} />
+                                تحقق
+                              </button>
+                              <button 
                                 className="btn btn-outline-danger btn-sm d-flex align-items-center gap-1" 
                                 onClick={() => deleteBooking(booking)}
                                 disabled={deletingBookingId === booking.displayId}
@@ -704,6 +744,20 @@ const Bookings = () => {
                               }}
                             >
                               <FontAwesomeIcon icon={faEye} style={{ fontSize: '0.7rem' }} />
+                  </button>
+                  <button 
+                    className="btn btn-outline-success btn-sm" 
+                    onClick={() => handleOTPVerification(booking)}
+                              style={{
+                                borderRadius: '6px',
+                                fontSize: '0.75rem',
+                                padding: '4px 8px',
+                                borderWidth: '1px',
+                                borderColor: '#28a745',
+                                color: '#28a745'
+                              }}
+                            >
+                              <FontAwesomeIcon icon={faShieldAlt} style={{ fontSize: '0.7rem' }} />
                   </button>
                    <button 
                      className="btn btn-outline-danger btn-sm" 
@@ -940,6 +994,14 @@ const Bookings = () => {
           </div>
         </div>
       )}
+
+      {/* OTP Verification Modal */}
+      <OTPVerification
+        bookingId={otpModal.bookingId}
+        isVisible={otpModal.isVisible}
+        onSuccess={handleOTPSuccess}
+        onCancel={handleOTPCancel}
+      />
     </div>
   );
 };

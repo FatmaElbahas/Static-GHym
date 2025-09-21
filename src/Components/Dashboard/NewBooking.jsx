@@ -18,6 +18,18 @@ import './NewBooking.css';
 
 const NewBooking = () => {
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  
+  // Track screen size changes
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
   const [formData, setFormData] = useState({
     salon_id: '',
     service: '',
@@ -50,7 +62,7 @@ const NewBooking = () => {
   const SALONS_URL = 'https://enqlygo.com/api/salons';
   const ADDRESSES_URL = 'https://enqlygo.com/api/user/addresses';
   const CATEGORIES_URL = 'https://enqlygo.com/api/salons/categories';
-  const AVAILABLE_TIMES_URL = 'https://enqlygo.com/api/salons/available_times';
+  const AVAILABLE_TIMES_URL = 'https://enqlygo.com/api/salons/available_times/5';
   const USER_BOOKINGS_URL = 'https://enqlygo.com/api/user/bookings';
 
   // Load salons
@@ -194,21 +206,29 @@ const NewBooking = () => {
 
   // Load available times
   useEffect(() => {
-    if (!formData.date || !formData.doctor || !formData.salon_id) return;
+    if (!formData.date || !formData.doctor || !formData.salon_id || !formData.service) return;
     const loadTimes = async () => {
       try {
         setTimesLoading(true);
-        const res = await fetch(`${AVAILABLE_TIMES_URL}/${formData.salon_id}?staff_id=${formData.doctor}&date=${formData.date}`);
+        // Convert date to different formats for API compatibility
+        const dateObj = new Date(formData.date);
+        const dateFormatted = dateObj.toISOString().split('T')[0]; // YYYY-MM-DD
+        const url = `${AVAILABLE_TIMES_URL}?staff_id=${formData.doctor}&date=${dateFormatted}&service_id=${formData.service}`;
+        console.log('Loading times with URL:', url);
+        console.log('Form data:', { date: formData.date, doctor: formData.doctor, service_id: formData.service });
+        const res = await fetch(url);
         const json = await res.json();
+        console.log('API Response:', json);
         setAvailableTimes(json?.data || {});
-      } catch {
+      } catch (error) {
+        console.error('Error loading times:', error);
         setAvailableTimes({});
       } finally {
         setTimesLoading(false);
       }
     };
     loadTimes();
-  }, [formData.date, formData.doctor, formData.salon_id]);
+  }, [formData.date, formData.doctor, formData.salon_id, formData.service]);
 
   const timeSlots = useMemo(() => {
     if (!availableTimes || Object.keys(availableTimes).length === 0) return [];
@@ -587,7 +607,10 @@ const NewBooking = () => {
             />
 
             {/* Step Circles */}
-            <div className="d-flex justify-content-between align-items-center position-relative" style={{ zIndex: 3 }}>
+            <div className="d-flex justify-content-between align-items-center position-relative" style={{ 
+              zIndex: 3,
+              gap: isMobile ? '0.5rem' : '0.25rem'
+            }}>
               {[1,2,3,4,5,6].map(n => {
                 const isActive = step === n;
                 const isCompleted = step > n;
@@ -604,8 +627,8 @@ const NewBooking = () => {
                     <div
                       className={`rounded-circle d-flex align-items-center justify-content-center shadow-sm`}
                       style={{
-                        width: window.innerWidth < 768 ? '28px' : '55px',
-                        height: window.innerWidth < 768 ? '28px' : '55px',
+                        width: isMobile ? '24px' : '55px',
+                        height: isMobile ? '24px' : '55px',
                         background: isActive 
                           ? 'linear-gradient(135deg, var(--color-main) 0%, #007bff 100%)' 
                           : isCompleted 
@@ -616,14 +639,30 @@ const NewBooking = () => {
                         fontWeight: 600,
                         fontSize: window.innerWidth < 768 ? '12px' : '18px',
                         transition: 'all 0.3s ease',
-                        transform: isActive ? 'scale(1.1)' : 'scale(1)'
+                        transform: isActive ? 'scale(1.05)' : 'scale(1)',
+                        boxShadow: isActive ? '0 4px 12px rgba(0,0,0,0.15)' : '0 2px 8px rgba(0,0,0,0.1)',
+                        borderRadius: '50%'
                       }}
                       title={stepNames[n-1]}
                     >
                       {isCompleted ? (
-                        <FontAwesomeIcon icon={faCheckCircle} className={window.innerWidth < 768 ? "fs-8" : "fs-2"} />
+                        <FontAwesomeIcon 
+                          icon={faCheckCircle} 
+                          style={{ 
+                            fontSize: isMobile ? '14px' : '32px',
+                            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+                            transition: 'all 0.3s ease'
+                          }} 
+                        />
                       ) : (
-                        <FontAwesomeIcon icon={stepIcons[n-1]} className={window.innerWidth < 768 ? "fs-9" : "fs-3"} />
+                        <FontAwesomeIcon 
+                          icon={stepIcons[n-1]} 
+                          style={{ 
+                            fontSize: isMobile ? '12px' : '30px',
+                            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+                            transition: 'all 0.3s ease'
+                          }} 
+                        />
                       )}
                     </div>
                     
@@ -991,11 +1030,17 @@ const NewBooking = () => {
                           <button
                             key={t.value}
                             type="button"
-                            className={`btn ${formData.time === t.value ? 'btn-primary' : 'btn-outline-secondary'}`}
+                            className={`btn ${formData.time === t.value ? 'btn-primary' : isAvailable ? 'btn-outline-secondary' : 'btn-outline-secondary'}`}
                               style={{
-                                ...(formData.time === t.value ? {} : { color: 'var(--color-main)', borderColor:'var(--color-main)' }),
-                                opacity: isAvailable ? 1 : 0.3,
-                                cursor: isAvailable ? 'pointer' : 'not-allowed'
+                                ...(formData.time === t.value ? {} : isAvailable ? { color: 'var(--color-main)', borderColor:'var(--color-main)' } : { 
+                                  color: '#999', 
+                                  borderColor: '#ddd',
+                                  backgroundColor: '#f8f9fa'
+                                }),
+                                opacity: isAvailable ? 1 : 0.4,
+                                cursor: isAvailable ? 'pointer' : 'not-allowed',
+                                fontSize: window.innerWidth < 768 ? '0.7rem' : '0.8rem',
+                                padding: window.innerWidth < 768 ? '0.25rem 0.5rem' : '0.375rem 0.75rem'
                               }}
                               onClick={() => isAvailable && handleTimeSelect(t.value)}
                               disabled={!isAvailable}
