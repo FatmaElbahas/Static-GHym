@@ -11,7 +11,8 @@ import {
   faCheckCircle,
   faArrowLeft,
   faArrowRight,
-  faEye
+  faEye,
+  faExclamationTriangle
 } from '@fortawesome/free-solid-svg-icons';
 import './NewBooking.css';
 
@@ -228,18 +229,50 @@ const NewBooking = () => {
     return new Date(base.getFullYear(), base.getMonth(), 1);
   });
 
+  // Simple and reliable calendar matrix generation with Friday-first week order
   const getMonthMatrix = useCallback((refDate) => {
     const year = refDate.getFullYear();
     const month = refDate.getMonth();
     const firstDay = new Date(year, month, 1);
-    const startDayOfWeek = (firstDay.getDay() + 6) % 7; // make Monday=0
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const days = [];
-    for (let i = 0; i < startDayOfWeek; i++) days.push(null);
-    for (let d = 1; d <= daysInMonth; d++) days.push(new Date(year, month, d));
-    while (days.length % 7 !== 0) days.push(null);
+    const lastDay = new Date(year, month + 1, 0);
+    
+    // Map JavaScript getDay() to Friday-first week order: Friday=0, Thursday=1, Wednesday=2, etc.
+    // JavaScript: 0=Sunday, 1=Monday, 2=Tuesday, 3=Wednesday, 4=Thursday, 5=Friday, 6=Saturday
+    // Our order: Friday=0, Thursday=1, Wednesday=2, Tuesday=3, Monday=4, Sunday=5, Saturday=6
+    const fridayFirstMapping = [5, 4, 3, 2, 1, 0, 6]; // Sunday=0->5, Monday=1->4, etc.
+    const startDayOfWeek = fridayFirstMapping[firstDay.getDay()];
+    const daysInMonth = lastDay.getDate();
+    
+    // Create calendar grid
     const weeks = [];
-    for (let i = 0; i < days.length; i += 7) weeks.push(days.slice(i, i + 7));
+    let currentWeek = [];
+    
+    // Add empty cells for days before the first day of the month
+    for (let i = 0; i < startDayOfWeek; i++) {
+      currentWeek.push(null);
+    }
+    
+    // Add all days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      currentWeek.push(new Date(year, month, day));
+      
+      // If we have 7 days in the current week, start a new week
+      if (currentWeek.length === 7) {
+        weeks.push(currentWeek);
+        currentWeek = [];
+      }
+    }
+    
+    // Add remaining empty cells to complete the last week
+    while (currentWeek.length > 0 && currentWeek.length < 7) {
+      currentWeek.push(null);
+    }
+    
+    // Add the last week if it has any days
+    if (currentWeek.length > 0) {
+      weeks.push(currentWeek);
+    }
+    
     return weeks;
   }, []);
 
@@ -417,14 +450,73 @@ const NewBooking = () => {
       
       {/* Error Display */}
       {error && (
-        <div className="alert alert-danger alert-dismissible fade show" role="alert">
-          <strong>خطأ:</strong> {error}
+        <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}>
+          <div className="modal-dialog modal-dialog-centered mx-auto" style={{ maxWidth: window.innerWidth < 768 ? '90%' : '500px' }}>
+            <div className="modal-content" style={{
+              border: 'none',
+              borderRadius: window.innerWidth < 768 ? '15px' : '20px',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+              overflow: 'hidden'
+            }}>
+              <div className="modal-header" style={{
+                backgroundColor: '#fff5f5',
+                border: 'none',
+                padding: window.innerWidth < 768 ? '1rem 1.5rem 0.5rem 1.5rem' : '1.5rem 2rem 1rem 2rem'
+              }}>
+                <div className="d-flex align-items-center w-100">
+                  <div className="rounded-circle d-flex align-items-center justify-content-center me-3" style={{
+                    width: window.innerWidth < 768 ? '40px' : '50px',
+                    height: window.innerWidth < 768 ? '40px' : '50px',
+                    backgroundColor: '#fecaca'
+                  }}>
+                    <FontAwesomeIcon icon={faExclamationTriangle} style={{ color: '#dc2626', fontSize: window.innerWidth < 768 ? '1.2rem' : '1.5rem' }} />
+                  </div>
+                  <div>
+                    <h5 className="modal-title mb-0" style={{ color: 'var(--color-main)', fontSize: window.innerWidth < 768 ? '1rem' : '1.2rem', fontWeight: '600' }}>
+                      تنبيه مهم
+                    </h5>
+                  </div>
+                </div>
+              </div>
+              <div className="modal-body" style={{ padding: window.innerWidth < 768 ? '0.5rem 1.5rem 1rem 1.5rem' : '1rem 2rem 2rem 2rem' }}>
+                <p className="mb-0" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1rem', lineHeight: '1.6', color: '#374151' }}>
+                  {error}
+                </p>
+              </div>
+              <div className="modal-footer" style={{
+                border: 'none',
+                padding: window.innerWidth < 768 ? '0 1.5rem 1.5rem 1.5rem' : '0 2rem 2rem 2rem',
+                justifyContent: 'center'
+              }}>
           <button 
             type="button" 
-            className="btn-close" 
+                  className="btn rounded-pill px-4 py-2"
             onClick={() => setError(null)}
-            aria-label="Close"
-          ></button>
+                  style={{
+                    backgroundColor: 'var(--color-main)',
+                    color: '#fff',
+                    border: 'none',
+                    fontSize: window.innerWidth < 768 ? '0.8rem' : '0.9rem',
+                    fontWeight: '500',
+                    minWidth: window.innerWidth < 768 ? '100px' : '120px',
+                    padding: window.innerWidth < 768 ? '0.5rem 1rem' : '0.5rem 1.5rem'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = '#fff';
+                    e.target.style.color = 'var(--color-main)';
+                    e.target.style.borderColor = 'var(--color-main)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = 'var(--color-main)';
+                    e.target.style.color = '#fff';
+                    e.target.style.borderColor = 'var(--color-main)';
+                  }}
+                >
+                  فهمت
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
@@ -569,10 +661,14 @@ const NewBooking = () => {
                       <div className={`card shadow-sm p-3 border-2 ${isSelected ? 'border-primary' : 'border-light'}`}>
                             <label htmlFor={`salon-${s.id}`} className="d-flex align-items-start justify-content-between w-100" style={{cursor:'pointer'}}>
                           <div className="d-flex align-items-start">
-                            <FontAwesomeIcon icon={faMapMarkerAlt} className="me-3" style={{ color: 'var(--color-main)' }} />
+                            <FontAwesomeIcon icon={faMapMarkerAlt} className="me-3" style={{ color: 'var(--color-main)', backgroundColor: 'transparent !important', background: 'none !important', fontSize: window.innerWidth < 768 ? '0.7rem' : '0.9rem' }} />
                             <div>
-                              <div className="fw-semibold">{s.salon_name}</div>
-                              {s.salon_address && <div className="text-muted small">{s.salon_address}</div>}
+                              <div className="fw-semibold text-nowrap" style={{fontSize: window.innerWidth < 768 ? '0.6rem' : '0.8rem'}}>
+                                {s.salon_name.split(' ').slice(0, 3).join(' ')}
+                              </div>
+                              {s.salon_address && <div className="text-muted small text-nowrap" style={{fontSize: window.innerWidth < 768 ? '0.7rem' : '0.875rem'}}>
+                                {window.innerWidth < 768 ? s.salon_address.split(' ').slice(0, 2).join(' ') : s.salon_address.length > 30 ? `${s.salon_address.substring(0, 30)}...` : s.salon_address}
+                              </div>}
                   </div>
                 </div>
                           <div className="form-check">
@@ -624,10 +720,10 @@ const NewBooking = () => {
                       <div className={`card shadow-sm p-3 border-2 ${isSelected ? 'border-primary' : 'border-light'}`}>
                         <label htmlFor={`service-${s.id}`} className="d-flex align-items-start justify-content-between w-100" style={{cursor:'pointer'}}>
                           <div className="d-flex align-items-start">
-                            <FontAwesomeIcon icon={faStethoscope} className="me-3" style={{ color: 'var(--color-main)' }} />
+                            <FontAwesomeIcon icon={faStethoscope} className="me-3" style={{ color: 'var(--color-main)', backgroundColor: 'transparent !important', background: 'none !important' }} />
                             <div>
-                              <div className="fw-semibold">{s.name}</div>
-                              <div className="text-muted small">{s.price} • {s.duration}</div>
+                              <div className="fw-semibold text-nowrap" style={{fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem'}}>{s.name}</div>
+                              <div className="text-muted small text-nowrap" style={{fontSize: window.innerWidth < 768 ? '0.7rem' : '0.875rem'}}>{s.price} • {s.duration}</div>
                   </div>
                 </div>
                           <div className="form-check">
@@ -679,10 +775,10 @@ const NewBooking = () => {
                       <div className={`card shadow-sm p-3 border-2 ${isSelected ? 'border-primary' : 'border-light'} ${!d.available ? 'opacity-75' : ''}`}>
                         <label htmlFor={`doctor-${d.id}`} className="d-flex align-items-start justify-content-between w-100" style={{cursor:'pointer'}}>
                           <div className="d-flex align-items-start">
-                            <FontAwesomeIcon icon={faUserMd} className="me-3" style={{ color: 'var(--color-main)' }} />
+                            <FontAwesomeIcon icon={faUserMd} className="me-3" style={{ color: 'var(--color-main)', backgroundColor: 'transparent !important', background: 'none !important' }} />
                             <div>
-                              <div className="fw-semibold">{d.name}</div>
-                              {!d.available && <small className="text-danger">غير متاح حالياً</small>}
+                              <div className="fw-semibold text-nowrap" style={{fontSize: window.innerWidth < 768 ? '0.7rem' : '1rem'}}>{d.name}</div>
+                              {!d.available && <small className="text-danger text-nowrap" style={{fontSize: window.innerWidth < 768 ? '0.7rem' : '0.875rem'}}>غير متاح حالياً</small>}
                   </div>
                 </div>
                           <div className="form-check">
@@ -732,12 +828,12 @@ const NewBooking = () => {
                     <div key={a.id} className="col-12">
                       <div className={`card shadow-sm p-3 border-2 ${isSelected ? 'border-primary' : 'border-light'}`}>
                         <label htmlFor={`address-${a.id}`} className="d-flex align-items-start justify-content-between w-100" style={{cursor:'pointer'}}>
-                          <div className="d-flex align-items-start">
-                            <span className="badge bg-primary me-3" style={{minWidth: '36px'}}>
-                              <FontAwesomeIcon icon={faMapMarkerAlt} />
-                            </span>
+                          <div className="d-flex align-items-center">
+                            <FontAwesomeIcon icon={faMapMarkerAlt} style={{ color: 'var(--color-main)', backgroundColor: 'transparent !important', background: 'none !important', fontSize: window.innerWidth < 768 ? '0.7rem' : '0.9rem' }} />
                             <div>
-                              <div className="fw-semibold">{a.address}</div>
+                              <div className="fw-semibold text-nowrap" style={{fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem'}}>
+                                {window.innerWidth < 768 ? a.address.split(' ').slice(0, 2).join(' ') : a.address.length > 30 ? `${a.address.substring(0, 30)}...` : a.address}
+                              </div>
                             </div>
                           </div>
                           <div className="form-check">
@@ -764,23 +860,47 @@ const NewBooking = () => {
         {/* Step 5: Date & Time */}
         {step === 5 && (
             <div className="step-content">
-            <h5 className="mb-3">اختر التاريخ والوقت</h5>
+            <h5 className="mb-2" style={{
+              fontSize: window.innerWidth < 768 ? '1rem' : '1.25rem'
+            }}>اختر التاريخ والوقت</h5>
             <div className="row g-4 align-items-stretch">
               <div className="col-lg-7 col-md-12">
                 <div className="card shadow-sm p-3 h-100">
-                  <div className="d-flex align-items-center justify-content-between mb-3">
+                  <div className="d-flex align-items-center justify-content-between" style={{
+                    marginBottom: window.innerWidth < 768 ? '0.5rem' : '1rem'
+                  }}>
                     <button type="button" className="btn btn-sm" style={{color:'var(--color-main)'}} onClick={handlePrevMonth}>‹</button>
-                    <div className="fw-semibold" style={{color:'var(--color-main)'}}>
+                    <div className="fw-semibold text-nowrap" style={{
+                      color:'var(--color-main)',
+                      fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem'
+                    }}>
                       {calendarRefDate.toLocaleString('ar', { month: 'long', year: 'numeric' })}
                     </div>
                     <button type="button" className="btn btn-sm" style={{color:'var(--color-main)'}} onClick={handleNextMonth}>›</button>
                 </div>
-                  <div className="table-responsive">
-                    <table className="table table-borderless mb-0" style={{userSelect:'none'}}>
+                  <div className="table-responsive" style={{
+                    fontSize: window.innerWidth < 768 ? '0.9rem' : '1rem',
+                    width: '100%',
+                    maxWidth: window.innerWidth < 768 ? '100%' : 'auto'
+                  }}>
+                    <table className="table table-borderless mb-0" style={{
+                      userSelect:'none', 
+                      width: '100%',
+                      tableLayout: 'fixed'
+                    }}>
                       <thead>
                         <tr className="text-muted">
-                          {['الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت','الأحد'].map(h => (
-                            <th key={h} className="text-center small">{h}</th>
+                            {['Fr','Th','We','Tu','Mo','Su','Sa'].map((h, index) => (
+                              <th key={h} className="text-center" style={{ 
+                                fontSize: window.innerWidth < 768 ? '0.65rem' : '0.875rem',
+                                color: '#555',
+                                fontWeight: 600,
+                                padding: window.innerWidth < 768 ? '0.4rem 0.1rem' : '0.5rem 0',
+                                backgroundColor: 'rgba(3, 130, 151, 0.08)',
+                                borderBottom: '2px solid rgba(3, 130, 151, 0.15)',
+                                width: window.innerWidth < 768 ? '14.28%' : 'auto',
+                                minWidth: window.innerWidth < 768 ? '40px' : 'auto'
+                              }}>{h}</th>
                           ))}
                         </tr>
                       </thead>
@@ -791,20 +911,57 @@ const NewBooking = () => {
                               const isToday = day && fmt(day) === fmt(new Date());
                               const isSelected = day && formData.date && fmt(day) === formData.date;
                               const isPast = day && fmt(day) < new Date().toISOString().split('T')[0];
+                              const isCurrentMonth = day && day.getMonth() === calendarRefDate.getMonth();
                               return (
-                                <td key={di} className="text-center p-1">
+                                <td key={di} className="text-center" style={{
+                                  padding: window.innerWidth < 768 ? '0.15rem 0.05rem' : '0.5rem',
+                                  width: window.innerWidth < 768 ? '14.28%' : 'auto',
+                                  minWidth: window.innerWidth < 768 ? '40px' : 'auto'
+                                }}>
                                   {day ? (
                                     <button
                                       type="button"
-                                      className={`btn w-100 ${isSelected ? 'btn-primary' : 'btn-outline-light'}`}
-                                      style={{ color: isSelected ? '#fff' : 'var(--color-main)', borderColor: 'var(--color-main)' }}
+                                      className="btn rounded-circle"
+                                      style={{ 
+                                        color: isSelected ? '#fff' : (isCurrentMonth ? '#333' : '#999'), 
+                                        width: window.innerWidth < 768 ? '1.3rem' : '2.5rem',
+                                        height: window.innerWidth < 768 ? '1.3rem' : '2.5rem',
+                                        fontSize: window.innerWidth < 768 ? '0.7rem' : '0.875rem',
+                                        fontWeight: isToday ? 700 : 600,
+                                        backgroundColor: isSelected ? 'var(--color-main)' : (isToday ? 'rgba(3, 130, 151, 0.15)' : 'transparent'),
+                                        border: isToday && !isSelected ? '2px solid var(--color-main)' : '1px solid transparent',
+                                        padding: 0,
+                                        lineHeight: 1,
+                                        opacity: isPast ? 0.4 : 1,
+                                        transition: 'all 0.2s ease',
+                                        boxShadow: isSelected ? '0 2px 8px rgba(3, 130, 151, 0.3)' : 'none',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        margin: '0 auto'
+                                      }}
                                       onClick={() => !isPast && handleDateSelect(day)}
                                       disabled={!!isPast}
+                                      onMouseEnter={(e) => {
+                                        if (!isPast && !isSelected) {
+                                          e.target.style.backgroundColor = 'rgba(3, 130, 151, 0.1)';
+                                          e.target.style.transform = 'scale(1.05)';
+                                        }
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        if (!isPast && !isSelected) {
+                                          e.target.style.backgroundColor = isToday ? 'rgba(3, 130, 151, 0.15)' : 'transparent';
+                                          e.target.style.transform = 'scale(1)';
+                                        }
+                                      }}
                                     >
-                                      <span style={{fontWeight: isToday ? 700 : 500}}>{day.getDate()}</span>
+                                      {day.getDate()}
                                     </button>
                                   ) : (
-                                    <span className="d-inline-block" style={{width:'100%', height:'38px'}}></span>
+                                    <span className="d-inline-block" style={{
+                                      width: window.innerWidth < 768 ? '1.3rem' : '2.5rem', 
+                                      height: window.innerWidth < 768 ? '1.3rem' : '2.5rem'
+                                    }}></span>
                                   )}
                                 </td>
                               );
@@ -819,28 +976,43 @@ const NewBooking = () => {
 
               <div className="col-lg-5 col-md-12">
                 <div className="card shadow-sm p-3 h-100">
-                  <h6 className="mb-2" style={{color:'var(--color-main)'}}><FontAwesomeIcon icon={faClock} className="me-2" />المواعيد المتاحة</h6>
+                  <h6 className="mb-2 text-nowrap" style={{color:'var(--color-main)', fontSize: window.innerWidth < 768 ? '0.9rem' : '1rem'}}>
+                    <FontAwesomeIcon icon={faClock} className="me-2" style={{fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem'}} />
+                    المواعيد المتاحة
+                  </h6>
                   {timesLoading ? (
                     <p className="text-muted">جاري تحميل المواعيد...</p>
                   ) : (
-                    <div className="d-flex flex-wrap gap-2 mt-1" style={{maxHeight:'320px', overflowY:'auto'}}>
+                    <div className="d-flex flex-wrap gap-2 mt-1" style={{maxHeight:'320px', overflowY:'auto', marginRight: window.innerWidth < 768 ? '1rem' : '0'}}>
                       {timeSlots.length > 0 ? (
-                        timeSlots.map(t => (
+                        timeSlots.map(t => {
+                          const isAvailable = availableTimes[t.value] && availableTimes[t.value] > 0;
+                          return (
                           <button
                             key={t.value}
                             type="button"
                             className={`btn ${formData.time === t.value ? 'btn-primary' : 'btn-outline-secondary'}`}
-                            style={formData.time === t.value ? {} : { color: 'var(--color-main)', borderColor:'var(--color-main)' }}
-                            onClick={() => handleTimeSelect(t.value)}
+                              style={{
+                                ...(formData.time === t.value ? {} : { color: 'var(--color-main)', borderColor:'var(--color-main)' }),
+                                opacity: isAvailable ? 1 : 0.3,
+                                cursor: isAvailable ? 'pointer' : 'not-allowed'
+                              }}
+                              onClick={() => isAvailable && handleTimeSelect(t.value)}
+                              disabled={!isAvailable}
                           >
                             {t.display}
                           </button>
-                        ))
+                          );
+                        })
                       ) : (
                         <div className="text-center py-4">
                           <FontAwesomeIcon icon={faClock} className="text-muted mb-2" size="2x" />
-                          <p className="text-muted mb-2">لا توجد مواعيد متاحة</p>
-                          <small className="text-muted">
+                          <p className="text-muted mb-2 text-nowrap" style={{
+                            fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem'
+                          }}>لا توجد مواعيد متاحة</p>
+                          <small className="text-muted text-nowrap" style={{
+                            fontSize: window.innerWidth < 768 ? '0.7rem' : '0.875rem'
+                          }}>
                             {!formData.date ? 'يرجى اختيار تاريخ أولاً' : 
                              !formData.doctor ? 'يرجى اختيار طبيب أولاً' :
                              'لا توجد مواعيد متاحة في هذا التاريخ للطبيب المحدد'}
@@ -884,12 +1056,14 @@ const NewBooking = () => {
                 <button
                   type="button"
                   onClick={handlePrevious}
-                className="btn rounded-pill px-4 py-3"
+                className="btn rounded-pill"
                 style={{
                   color: 'var(--color-main)',
                   borderColor: 'var(--color-main)',
                   background: '#fff',
-                  borderWidth: '2px'
+                  borderWidth: '2px',
+                  padding: window.innerWidth < 768 ? '0.3rem 0.6rem' : '0.75rem 1.5rem',
+                  fontSize: window.innerWidth < 768 ? '0.7rem' : '1rem'
                 }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = 'var(--color-main)'; e.currentTarget.style.boxShadow = '0 6px 16px rgba(3,130,151,0.25)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = 'var(--color-main)'; e.currentTarget.style.boxShadow = 'none'; }}
@@ -905,12 +1079,14 @@ const NewBooking = () => {
                   <button
                     type="button"
                     onClick={handleNext}
-                className="btn rounded-pill px-4 py-3"
+                className="btn rounded-pill"
                 style={{
                   background: 'var(--color-main)',
                   borderColor: 'var(--color-main)',
                   color: '#fff',
-                  borderWidth: '2px'
+                  borderWidth: '2px',
+                  padding: window.innerWidth < 768 ? '0.3rem 0.6rem' : '0.75rem 1.5rem',
+                  fontSize: window.innerWidth < 768 ? '0.7rem' : '1rem'
                 }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = 'var(--color-main)'; e.currentTarget.style.borderColor = 'var(--color-main)'; e.currentTarget.style.boxShadow = '0 6px 16px rgba(3,130,151,0.25)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-main)'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'var(--color-main)'; e.currentTarget.style.boxShadow = 'none'; }}
@@ -924,12 +1100,14 @@ const NewBooking = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                className="btn rounded-pill px-4 py-3"
+                className="btn rounded-pill"
                 style={{
                   background: 'var(--color-main)',
                   borderColor: 'var(--color-main)',
                   color: '#fff',
-                  borderWidth: '2px'
+                  borderWidth: '2px',
+                  padding: window.innerWidth < 768 ? '0.3rem 0.6rem' : '0.75rem 1.5rem',
+                  fontSize: window.innerWidth < 768 ? '0.7rem' : '1rem'
                 }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = 'var(--color-main)'; e.currentTarget.style.borderColor = 'var(--color-main)'; e.currentTarget.style.boxShadow = '0 6px 16px rgba(3,130,151,0.25)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-main)'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'var(--color-main)'; e.currentTarget.style.boxShadow = 'none'; }}

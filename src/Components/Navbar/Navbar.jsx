@@ -138,17 +138,6 @@ function MainNavbar() {
               </li>
               <li className="nav-item">
                 <NavLink
-                  to="/offers"
-                  onClick={handleClose}
-                  className={({ isActive }) =>
-                    isActive ? "activeLink nav-link" : "nav-link"
-                  }
-                >
-                  العروض
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
                   to="/contact"
                   onClick={handleClose}
                   className={({ isActive }) =>

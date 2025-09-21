@@ -404,13 +404,13 @@ const DashboardHome = () => {
                       {recentBookings.map((booking) => (
                         <tr key={booking.id} className="align-middle">
                           <td className="py-2 py-md-3">
-                            <div className="d-flex align-items-center">
+                            <div className="d-flex align-items-center text-nowrap">
                               <FontAwesomeIcon 
                                 icon={faStethoscope} 
-                                className="text-primary me-2" 
-                                style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}
+                                className="text-primary me-1" 
+                                style={{ fontSize: window.innerWidth < 768 ? '0.7rem' : '1rem' }}
                               />
-                              <span className="fw-medium" style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}>
+                              <span className="fw-medium" style={{ fontSize: window.innerWidth < 768 ? '0.7rem' : '1rem' }}>
                                 {booking.service}
                               </span>
                             </div>
@@ -422,13 +422,18 @@ const DashboardHome = () => {
                             </div>
                           </td>
                           <td className="py-2 py-md-3">
-                            <div className="d-flex align-items-center">
+                            <div className="d-flex align-items-center text-nowrap">
                               <FontAwesomeIcon 
                                 icon={faCalendarAlt} 
-                                className="text-primary me-2" 
-                                style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}
+                                className="text-primary me-1"
+                                style={{ fontSize: window.innerWidth < 768 ? '0.7rem' : '1rem' }}
                               />
-                              <span style={{ fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem' }}>
+                              <span 
+                                style={{ 
+                                  fontSize: window.innerWidth < 768 ? '0.65rem' : '1rem',
+                                  lineHeight: '1.2'
+                                }}
+                              >
                                 {booking.date}
                               </span>
                             </div>
@@ -436,10 +441,15 @@ const DashboardHome = () => {
                               <div className="d-flex align-items-center mt-1">
                                 <FontAwesomeIcon 
                                   icon={faClock} 
-                                  className="text-primary me-2" 
-                                  style={{ fontSize: '0.7rem' }}
+                                  className="text-primary me-1" 
+                                  style={{ fontSize: '0.6rem' }}
                                 />
-                                <span style={{ fontSize: '0.7rem' }}>{booking.time}</span>
+                                <span 
+                                  className="text-nowrap"
+                                  style={{ fontSize: '0.6rem' }}
+                                >
+                                  {booking.time}
+                                </span>
                               </div>
                             )}
                           </td>
@@ -457,8 +467,8 @@ const DashboardHome = () => {
                               <button 
                                 className="btn btn-sm btn-success rounded-pill"
                                 style={{ 
-                                  fontSize: window.innerWidth < 768 ? '0.7rem' : '0.8rem',
-                                  padding: window.innerWidth < 768 ? '0.25rem 0.5rem' : '0.375rem 0.75rem'
+                                  fontSize: window.innerWidth < 768 ? '0.6rem' : '0.8rem',
+                                  padding: window.innerWidth < 768 ? '0.2rem 0.4rem' : '0.375rem 0.75rem'
                                 }}
                                 onClick={() => {
                                   console.log('Booking data for OTP:', booking);

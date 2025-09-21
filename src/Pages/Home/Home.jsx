@@ -28,11 +28,11 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>غنيم | ghanim</title>
-        <meta name="description" content="مركز غنيم الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة. احجز موعدك الآن واستفد من خدماتنا المتميزة" />
-        <meta name="keywords" content="مركز طبي, خدمات جلدية, علاجات طبية, حجز موعد, غنيم, صحة" />
-        <meta property="og:title" content="غنيم | ghanim" />
-        <meta property="og:description" content="مركز غنيم الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة" />
+        <title>بلسمي | blsmy</title>
+        <meta name="description" content="مركز بلسمي الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة. احجز موعدك الآن واستفد من خدماتنا المتميزة" />
+        <meta name="keywords" content="مركز طبي, خدمات جلدية, علاجات طبية, حجز موعد, بلسمي, صحة" />
+        <meta property="og:title" content="بلسمي | blsmy" />
+        <meta property="og:description" content="مركز بلسمي الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة" />
         <meta property="og:type" content="website" />
       </Helmet>
       <div className="home-page book-page ">
@@ -119,7 +119,7 @@ export default function Home() {
           </div>
         </div> */}
         </section>
-        <div className="booking-card bg-white rounded-5 shadow-lg p-5" style={{marginBottom: '-80px' ,width: '80%',minHeight: '120px'}}>
+        <div className="booking-card bg-white rounded-5 shadow-lg p-5 px-4" style={{marginBottom: '-80px' ,width: '80%',minHeight: '120px'}}>
           <div className="container-fluid">
             <div className="booking-content d-flex align-items-center gap-4">
               <div className="booking-icon flex-shrink-0">
@@ -127,12 +127,23 @@ export default function Home() {
               </div>
               <div className="booking-text flex-grow-1 text-end">
                 <div className="question-container bg-light rounded-3 p-3 mb-2">
-                  <h3 className="booking-question fs-3 fw-bold mb-0" style={{color: '#00a8b0'}}>هل ترغب بحجز موعد ؟</h3>
+                  <h3 className="booking-question fw-bold mb-0" style={{
+                    color: 'var(--color-main)',
+                    fontSize: window.innerWidth < 768 ? '1.1rem' : '1.75rem'
+                  }}>هل ترغب بحجز موعد ؟</h3>
                 </div>
-                <p className="booking-description fs-5 text-muted fw-bold mb-0">احجز موعدك لدى إحدى المراكز بخطوات بسيطة....</p>
+                <p className="booking-description text-muted fw-bold mb-0 text-nowrap" style={{
+                  fontSize: window.innerWidth < 768 ? '0.9rem' : '1.25rem'
+                }}>احجز موعدك لدى إحدى المراكز بخطوات بسيطة....</p>
               </div>
               <div className="booking-button flex-shrink-0">
-                <Link to="/offers" className="btn btn-lg px-4 py-2 rounded-pill fw-bold" style={{backgroundColor: 'var(--color-main)', borderColor: 'var(--color-main)', color: 'white'}}>
+                <Link to="/offers" className="btn rounded-pill fw-bold" style={{
+                  backgroundColor: 'var(--color-main)', 
+                  borderColor: 'var(--color-main)', 
+                  color: 'white',
+                  fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem',
+                  padding: window.innerWidth < 768 ? '0.4rem 1rem' : '0.5rem 1.5rem'
+                }}>
                   احجز الآن
                 </Link>
               </div>

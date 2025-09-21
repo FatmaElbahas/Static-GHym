@@ -527,6 +527,15 @@
   margin: 0;
 }
 
+/* Remove background from FontAwesome icons */
+.step-content .fa-map-marker-alt,
+.step-content .fa-stethoscope,
+.step-content .fa-user-md {
+  background: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
 .step-content .col-lg-6,
 .step-content .col-md-12 {
   padding: 1rem;

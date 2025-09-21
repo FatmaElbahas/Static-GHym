@@ -48,7 +48,7 @@ export default function Stats() {
                   <FontAwesomeIcon 
                     icon={stat.icon} 
                     className="stats-icon"
-                    style={{ color: '#008a91' }}
+                    style={{ color: 'var(--color-main)' }}
                   />
                 </div>
                 <div className="mb-1 mb-md-2">
@@ -58,11 +58,11 @@ export default function Stats() {
                     separator="," 
                     className="fw-bold text-muted stats-number"
                   />
-                  <span className="fw-bold stats-suffix" style={{color: '#008a91'}}>
+                  <span className="fw-bold stats-suffix" style={{color: 'var(--color-main)'}}>
                     {stat.suffix}
                   </span>
                 </div>
-                <p className="mb-0 fw-semibold stats-text" style={{color: '#008a91'}}>
+                <p className="mb-0 fw-semibold stats-text" style={{color: 'var(--color-main)'}}>
                   {stat.text}
                 </p>
               </div>
