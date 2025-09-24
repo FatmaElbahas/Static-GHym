@@ -547,11 +547,11 @@ function BookContent() {
   return (
     <>
       <Helmet>
-        <title>غنيم | ghanim</title>
-        <meta name="description" content="مركز غنيم الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة. احجز موعدك الآن واستفد من خدماتنا المتميزة" />
-        <meta name="keywords" content="مركز طبي, خدمات جلدية, علاجات طبية, حجز موعد, غنيم, صحة" />
-        <meta property="og:title" content="غنيم | ghanim" />
-        <meta property="og:description" content="مركز غنيم الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة" />
+        <title>غيم | ghaim</title>
+        <meta name="description" content="مركز غيم الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة. احجز موعدك الآن واستفد من خدماتنا المتميزة" />
+        <meta name="keywords" content="مركز طبي, خدمات جلدية, علاجات طبية, حجز موعد, غيم, صحة" />
+        <meta property="og:title" content="غيم | ghaim" />
+        <meta property="og:description" content="مركز غيم الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة" />
         <meta property="og:type" content="website" />
       </Helmet>
       
@@ -571,9 +571,9 @@ function BookContent() {
                     backgroundPosition: 'center center',
                   }}
                 >
-                  <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end">
+                  <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.48) 45%, rgba(0,0,0,0.32) 100%)' }}>
                     <div className="hero-text " style={{ paddingTop: '8%', paddingRight:'15%' }}>
-                      <h1 className="brand-name color-main fw-bold mb-3" style={{ fontSize: '3.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
+                      <h1 className="brand-name  fw-bold mb-3" style={{ fontSize: '3.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.2)', color: 'var(--color-main)' }}>
                         احجز موعدك بسهولة
                       </h1>
                       <p className="text-white fs-5 fw-medium pe-0" style={{ maxWidth: '500px' }}>
@@ -595,9 +595,9 @@ function BookContent() {
                     backgroundPosition: 'center center',
                   }}
                 >
-                  <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end">
+                  <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.48) 45%, rgba(0,0,0,0.32) 100%)' }}>
                     <div className="hero-text " style={{ paddingTop: '8%',  paddingRight:'15%'  }}>
-                      <h1 className="brand-name color-main fw-bold mb-3" style={{ fontSize: '3.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
+                      <h1 className="brand-name color-main fw-bold mb-3" style={{ fontSize: '3.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.2)', color: 'var(--color-main)' }}>
                         دكاتره متميزة ورائدة
                       </h1>
                       <p className="text-white fs-5 fw-medium pe-0" style={{ maxWidth: '500px' }}>

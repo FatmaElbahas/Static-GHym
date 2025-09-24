@@ -126,13 +126,25 @@ function MainNavbar() {
               </li>
               <li className="nav-item">
                 <NavLink
-                  to="/#services-section"
+                  to="/#services-title"
                   onClick={handleClose}
                   className={() =>
-                    location.pathname === '/' && (inServicesSection || location.hash === '#services-section') ? "activeLink nav-link" : "nav-link"
+                    location.pathname === '/' && (inServicesSection || location.hash === '#services-title' || location.hash === '#services-title') ? "activeLink nav-link" : "nav-link"
                   }
                 >
                   الخدمات
+                </NavLink>
+              </li>
+              {/* عروض → توجيه إلى قسم الخدمات */}
+              <li className="nav-item">
+                <NavLink
+                  to="/#services-cards"
+                  onClick={handleClose}
+                  className={() =>
+                    location.pathname === '/' && (location.hash === '#services-cards') ? "activeLink nav-link" : "nav-link"
+                  }
+                >
+                  العروض
                 </NavLink>
               </li>
               <li className="nav-item">

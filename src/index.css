@@ -794,7 +794,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
-  --color-main: #038FAD;
+  --color-main: #016e84;
   --bg-main: #038FAD;
 }
 .main-color{
@@ -2019,7 +2019,7 @@ width: 10%;
 
 /* Fix spacing on Home page: keep distance from hero */
 .home-page .stats-section {
-  margin-top: 140px !important;
+  margin-top: 40px !important;
   padding-top: 40px !important;
   padding-bottom: 40px !important;
 }

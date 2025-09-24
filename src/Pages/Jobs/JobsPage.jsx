@@ -50,11 +50,11 @@ export default function JobApplicationForm() {
   return (
     <>
       <Helmet>
-        <title>الوظائف المتاحة - مركز غنيم الطبي</title>
-        <meta name="description" content="انضم إلى فريق عمل مركز غنيم الطبي. وظائف متاحة في مختلف التخصصات" />
-        <meta name="keywords" content="وظائف طبية, توظيف, مدير نمو, مركز غنيم" />
-        <meta property="og:title" content="الوظائف المتاحة - مركز غنيم الطبي" />
-        <meta property="og:description" content="انضم إلى فريق عمل مركز غنيم الطبي" />
+        <title>الوظائف المتاحة - مركز غيم الطبي</title>
+        <meta name="description" content="انضم إلى فريق عمل مركز غيم الطبي. وظائف متاحة في مختلف التخصصات" />
+        <meta name="keywords" content="وظائف طبية, توظيف, مدير نمو, مركز غيم" />
+        <meta property="og:title" content="الوظائف المتاحة - مركز غيم الطبي" />
+        <meta property="og:description" content="انضم إلى فريق عمل مركز غيم الطبي" />
         <meta property="og:type" content="website" />
       </Helmet>
       <div className="my-5">

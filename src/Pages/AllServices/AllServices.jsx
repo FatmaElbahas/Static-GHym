@@ -25,7 +25,7 @@ import labResults from '../../assets/images/labResults.svg';
 import medInsurance from '../../assets/images/medInsurance.svg';
 import toothPlaceholder from '../../assets/images/الاسنان.png';
 
-const SERVICES_URL = 'https://enqlygo.com/api/salons/most_booking_services';
+const SERVICES_URL = 'https://enqlygo.com/api/offers';
 
 const buildImageUrl = (path) => {
   if (!path || typeof path !== 'string') return null;
@@ -33,7 +33,7 @@ const buildImageUrl = (path) => {
   return `https://enqlygo.com/${path.replace(/^\/+/, '')}`;
 };
 
-export default function Services() {
+export default function AllServices() {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -51,17 +51,21 @@ export default function Services() {
           throw new Error(json?.message || `HTTP ${res.status}`);
         }
         const list = Array.isArray(json?.data) ? json.data : [];
-        const formatted = list
-          .filter(s => s.status === 1)
-          .map(s => ({
-            id: s.id,
-            title: s.title_ar || s.title || s.title_en,
-            desc: s.about_ar || s.about || s.about_en || '',
-            img: buildImageUrl(s.images && s.images[0] && s.images[0].image),
-            price: s.price,
-            duration: s.service_time,
-            discount: s.discount,
-          }));
+        // Flatten salons -> services. Each item becomes a service card with image, name, description, price
+        const formatted = list.flatMap((salon) => {
+          const servicesArr = Array.isArray(salon?.services) ? salon.services : [];
+          return servicesArr
+            .filter((srv) => srv?.status === 1)
+            .map((srv) => ({
+              id: `${salon.id}-${srv.id}`,
+              title: srv.title_ar || srv.title || srv.title_en,
+              desc: srv.about_ar || srv.about || srv.about_en || '',
+              img: buildImageUrl(salon?.owner_photo) || toothPlaceholder,
+              price: srv.price,
+              duration: srv.service_time,
+              discount: srv.discount,
+            }));
+        });
         if (!isMounted) return;
         setServices(formatted);
       } catch (e) {
@@ -76,16 +80,16 @@ export default function Services() {
     return () => { isMounted = false; };
   }, []);
 
-  const featured = services.slice(0, 4);
-  const rest = services.slice(4);
+  const featured = services.slice(0, 8);
+  const rest = services.slice(8);
   return (
-    <section className="services-section py-5">
+    <section className="services-section py-5 mt-5">
       <div className="container">
-        <div id="services-title" className="section-title-divider my-3">
+        <div className="section-title-divider my-3">
           <hr />
-          <span className="title-pill">ابرز خدمات غيم</span>
+          <span className="title-pill">خدمات غيم</span>
         </div>
-        <div id="services-cards" className="services-container mx-auto">
+        <div className="services-container mx-auto">
           {loading && (
             <div className="d-flex align-items-center justify-content-center py-5">
               <div className="text-center p-4 rounded-3 shadow-sm" style={{ background:'#fff', minWidth:'280px' }}>
@@ -117,22 +121,23 @@ export default function Services() {
                       }}
                     />
                   </div>
-                  <h5 className="mt-1 mb-2" style={{ fontSize: '20px', fontWeight: 600 }}>{f.title}</h5>
-                  <p className="text-muted mt-1 mb-0" style={{ fontSize: '16px', fontWeight: 600 }}>{f.desc}</p>
-                  <div className="mt-2 small" style={{ color:'var(--color-main)', fontWeight:700 }}>
-                    {typeof f.price === 'number' && (
-                      <>
-                        {f.discount ? (
-                          <>
-                            <span className="text-muted text-decoration-line-through me-2">{f.price} ر.س</span>
-                            <span>{Math.round(f.price * (1 - f.discount/100))} ر.س</span>
-                          </>
-                        ) : (
-                          <span>{f.price} ر.س</span>
-                        )}
-                        <span className="ms-2 text-muted">• {f.duration} دقيقة</span>
-                      </>
-                    )}
+                  <h5 className="mt-1 mb-2" style={{ fontSize: '20px', fontWeight: 700 }}>{f.title}</h5>
+                  {f.desc && (
+                    <p className="text-muted mt-1 mb-0" style={{ fontSize: '15px' }}>
+                      {f.desc.length > 120 ? f.desc.slice(0, 120) + '…' : f.desc}
+                    </p>
+                  )}
+                  <div className="mt-2" style={{ color:'var(--color-main)', fontWeight:700, fontSize:'0.95rem' }}>
+                    {typeof f.price === 'number' ? (
+                      f.discount ? (
+                        <>
+                          <span className="text-muted text-decoration-line-through me-2">{f.price} ر.س</span>
+                          <span>{Math.round(f.price * (1 - f.discount/100))} ر.س</span>
+                        </>
+                      ) : (
+                        <span>{f.price} ر.س</span>
+                      )
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -157,7 +162,22 @@ export default function Services() {
                       }}
                     />
                   </div>
-                  <p className="mt-1 mb-0" style={{ fontSize: '14px' }}>{f.title}</p>
+                  <p className="mt-1 mb-1 fw-semibold" style={{ fontSize: '15px' }}>{f.title}</p>
+                  <div className="small text-muted" style={{ minHeight: '18px' }}>
+                    {f.desc ? (f.desc.length > 80 ? f.desc.slice(0, 80) + '…' : f.desc) : ''}
+                  </div>
+                  <div className="mt-1" style={{ color:'var(--color-main)', fontWeight:700, fontSize:'0.9rem' }}>
+                    {typeof f.price === 'number' ? (
+                      f.discount ? (
+                        <>
+                          <span className="text-muted text-decoration-line-through me-2">{f.price} ر.س</span>
+                          <span>{Math.round(f.price * (1 - f.discount/100))} ر.س</span>
+                        </>
+                      ) : (
+                        <span>{f.price} ر.س</span>
+                      )
+                    ) : null}
+                  </div>
                 </div>
               </div>
             ))}
@@ -166,35 +186,7 @@ export default function Services() {
           )}
         </div>
       </div>
-      {/* Section CTA at bottom */}
-      <div className="text-center mt-4">
-        <a
-          href="/all-services"
-          className="btn fw-semibold rounded-pill services-more-btn"
-          style={{
-            backgroundColor: 'transparent',
-            color: 'var(--color-main)',
-            padding: '0.8rem 1.6rem',
-            border: '2px solid var(--color-main)',
-            fontSize: '1.05rem',
-            letterSpacing: '0.3px',
-            boxShadow: '0 8px 20px rgba(3,143,173,0.12)'
-          }}
-        >
-          المزيد
-        </a>
-      </div>
-      <style>{`
-        .services-more-btn:hover { 
-          color: #ffffff !important; 
-          background-color: var(--color-main) !important;
-          transform: translateY(-2px);
-          box-shadow: 0 12px 26px rgba(3,143,173,0.25);
-        }
-        @media (max-width: 576px) {
-          .services-more-btn { width: 100%; max-width: 360px; }
-        }
-      `}</style>
+      
     </section>
   );
 }

@@ -160,7 +160,7 @@ const Login = () => {
                 <div className="mb-2">
                   <img 
                     src={logo}
-                    alt="غنيم" 
+                    alt="غيم" 
                     className="img-fluid"
                     style={{width: '80px', height: '80px'}}
                   />

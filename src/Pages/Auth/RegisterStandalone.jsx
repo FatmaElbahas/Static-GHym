@@ -127,7 +127,7 @@ const RegisterStandalone = () => {
                 <div className="register-logo">
                   <img 
                     src="https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png" 
-                    alt="غنيم" 
+                    alt="غيم" 
                     className="logo-img"
                   />
                 </div>

@@ -10,11 +10,13 @@ import PricingPage from './Pages/PricingPage/PricingPage';
 import ContactPage from './Pages/ContactPage/ContactPage';
 import ErrorPage from './Pages/ErrorPage/ErrorPage';
 import Footer from './Components/Footer/Footer';
+import MapSection from './Components/MapSection/MapSection';
 import Book from './Pages/Book/Book';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import Register from './Pages/Auth/Register';
 import RegisterPage from './Pages/Auth/RegisterPage';
 import Login from './Pages/Auth/Login';
+import AllServices from './Pages/AllServices/AllServices';
 
 function App() {
   const location = useLocation();
@@ -28,6 +30,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/book" element={<Book/>} />
           <Route path="/offers" element={<OffersPage />} />
+          <Route path="/all-services" element={<AllServices />} />
           <Route path="/services" element={<Services />} />
           <Route path="/clinics" element={<ClinicsPage />} />
           <Route path="/jobs" element={<JobsPage />} />
@@ -40,7 +43,10 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
-      {!isDashboard && <Footer />}
+      {!isDashboard && <>
+        <MapSection />
+        <Footer />
+      </>}
     </div>
   );
 }

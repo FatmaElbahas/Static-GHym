@@ -8,6 +8,7 @@ import MostBookedClinics from '../../Components/PartnersSwiper/MostBookedClinics
 import MostBookedDoctors from '../../Components/PartnersSwiper/MostBookedDoctors';
 import Testimonials from '../../Components/Testimonials/Testimonials';
 import HeroBg from '../../assets/images/hero-bg.ab3138f8.webp';
+import AboutUs from '../../Components/AboutUs/AboutUs';
 
 export default function Home() {
   const location = useLocation();
@@ -27,13 +28,13 @@ export default function Home() {
   return (
     <>
  <Helmet>
-  <title>غنيم | ghanim</title>
-  <meta name="description" content="مركز غنيم الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة. احجز موعدك الآن واستفد من خدماتنا المتميزة" />
-  <meta name="keywords" content="مركز طبي, خدمات جلدية, علاجات طبية, حجز موعد, غنيم, صحة" />
+ <title>غيم | ghaim</title>
+  <meta name="description" content="مركز غيم الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة. احجز موعدك الآن واستفد من خدماتنا المتميزة" />
+  <meta name="keywords" content="مركز طبي, خدمات جلدية, علاجات طبية, حجز موعد, غيم, صحة" />
 
   {/* OG tags */}
-  <meta property="og:title" content="غنيم | ghanim" />
-  <meta property="og:description" content="مركز غنيم الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة" />
+  <meta property="og:title" content="غيم | ghaim" />
+  <meta property="og:description" content="مركز غيم الطبي يقدم خدمات طبية متطورة وعلاجات جلدية متخصصة" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png" />
 
@@ -56,9 +57,9 @@ export default function Home() {
                     backgroundPosition: 'center center',
                   }}
                 >
-                  <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end">
+                  <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.48) 45%, rgba(0,0,0,0.32) 100%)' }}>
                     <div className="hero-text " style={{ paddingTop: '8%', paddingRight:'15%' }}>
-                      <h1 className="brand-name color-main fw-bold mb-3" style={{ fontSize: '3.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
+                      <h1 className="brand-name  fw-bold mb-3" style={{ fontSize: '3.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.2)', color: 'var(--color-main)' }}>
                         احجز موعدك بسهولة
                       </h1>
                       <p className="text-white fs-5 fw-medium pe-0" style={{ maxWidth: '500px' }}>
@@ -80,9 +81,9 @@ export default function Home() {
                     backgroundPosition: 'center center',
                   }}
                 >
-                  <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end">
+                  <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.48) 45%, rgba(0,0,0,0.32) 100%)' }}>
                     <div className="hero-text " style={{ paddingTop: '8%',  paddingRight:'15%'  }}>
-                      <h1 className="brand-name color-main fw-bold mb-3" style={{ fontSize: '3.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
+                      <h1 className="brand-name color-main fw-bold mb-3" style={{ fontSize: '3.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.2)', color: 'var(--color-main)' }}>
                         دكاتره متميزة ورائدة
                       </h1>
                       <p className="text-white fs-5 fw-medium pe-0" style={{ maxWidth: '500px' }}>
@@ -155,6 +156,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <AboutUs />
       <Stats />
       <div id="services-section" style={{ scrollMarginTop: '100px' }}>
         <Services />

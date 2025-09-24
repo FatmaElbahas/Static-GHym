@@ -91,10 +91,10 @@ export default function PricingPage() {
   return (
     <>
       <Helmet>
-        <title>خطط التسعير - مركز غنيم الطبي</title>
+        <title>خطط التسعير - مركز غيم الطبي</title>
         <meta name="description" content="اختر الخطة المناسبة لمركزك الطبي. باقات متنوعة تبدأ من البداية حتى الاحترافية" />
-        <meta name="keywords" content="تسعير, باقات, اشتراك, مركز طبي, غنيم" />
-        <meta property="og:title" content="خطط التسعير - مركز غنيم الطبي" />
+        <meta name="keywords" content="تسعير, باقات, اشتراك, مركز طبي, غيم" />
+        <meta property="og:title" content="خطط التسعير - مركز غيم الطبي" />
         <meta property="og:description" content="اختر الخطة المناسبة لمركزك الطبي" />
         <meta property="og:type" content="website" />
       </Helmet>

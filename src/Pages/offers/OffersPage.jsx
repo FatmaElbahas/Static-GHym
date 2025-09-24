@@ -91,10 +91,10 @@ export default function Offers() {
     return (
       <>
         <Helmet>
-          <title>العروض والخدمات - مركز غنيم الطبي</title>
+          <title>العروض والخدمات - مركز غيم الطبي</title>
           <meta name="description" content="استفد من عروضنا المميزة على الخدمات الطبية والجلدية. احجز موعدك الآن واستثمر في صحتك مع باقاتنا الشاملة" />
-          <meta name="keywords" content="عروض طبية, خدمات جلدية, فحص الرخصة, فحص مدرسي, فركشنال ليزر, مركز غنيم" />
-          <meta property="og:title" content="العروض والخدمات - مركز غنيم الطبي" />
+          <meta name="keywords" content="عروض طبية, خدمات جلدية, فحص الرخصة, فحص مدرسي, فركشنال ليزر, مركز غيم" />
+          <meta property="og:title" content="العروض والخدمات - مركز غيم الطبي" />
           <meta property="og:description" content="استفد من عروضنا المميزة على الخدمات الطبية والجلدية" />
           <meta property="og:type" content="website" />
         </Helmet>
@@ -106,10 +106,10 @@ export default function Offers() {
   return (
     <>
       <Helmet>
-        <title>العروض والخدمات - مركز غنيم الطبي</title>
+        <title>العروض والخدمات - مركز غيم الطبي</title>
         <meta name="description" content="استفد من عروضنا المميزة على الخدمات الطبية والجلدية. احجز موعدك الآن واستثمر في صحتك مع باقاتنا الشاملة" />
-        <meta name="keywords" content="عروض طبية, خدمات جلدية, فحص الرخصة, فحص مدرسي, فركشنال ليزر, مركز غنيم" />
-        <meta property="og:title" content="العروض والخدمات - مركز غنيم الطبي" />
+        <meta name="keywords" content="عروض طبية, خدمات جلدية, فحص الرخصة, فحص مدرسي, فركشنال ليزر, مركز غيم" />
+        <meta property="og:title" content="العروض والخدمات - مركز غيم الطبي" />
         <meta property="og:description" content="استفد من عروضنا المميزة على الخدمات الطبية والجلدية" />
         <meta property="og:type" content="website" />
       </Helmet>

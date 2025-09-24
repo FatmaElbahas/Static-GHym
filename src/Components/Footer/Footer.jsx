@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAppleAlt } from '@fortawesome/free-solid-svg-icons';
+import { faAppleAlt, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { faFacebookF, faTwitter, faInstagram, faTiktok, faSnapchatGhost } from "@fortawesome/free-brands-svg-icons";
 import { faCcMastercard, faCcVisa, faCcApplePay } from "@fortawesome/free-brands-svg-icons";
@@ -10,6 +10,7 @@ import sbc from "../../assets/images/sbc.png";
 import vat from "../../assets/images/vat.png";
 
 export default function Footer() {
+  const mapLink = "https://maps.google.com/?q=Ghaim%20Medical%20Center";
   return (
     <footer className="bg-main py-5 text-white">
       <div className="container">
@@ -20,7 +21,7 @@ export default function Footer() {
             
             {/* تحميل التطبيق */}
             <div className="text-center text-md-start" style={{ marginTop: '10px' }}>
-              <h5 className="fw-bold mb-3 footer-title">حمل تطبيق غنيم لحجز مواعيدك بسهولة</h5>
+              <h5 className="fw-bold mb-3 footer-title">حمل تطبيق غيم لحجز مواعيدك بسهولة</h5>
               <div className="d-flex gap-3 justify-content-center justify-content-md-start flex-wrap mt-5">
                 {/* زر جوجل بلاي */}
                 <button className="d-flex align-items-center gap-2 rounded-pill px-5 py-3 bg-transparent text-white border border-white fw-bold">
@@ -32,6 +33,12 @@ export default function Footer() {
                 <button className="d-flex align-items-center gap-2 rounded-pill px-5 py-3 bg-transparent text-white border border-white fw-bold">
                   ابل استور <FontAwesomeIcon icon={faAppleAlt} style={{ fontSize: '1.5em' }} />
                 </button>
+
+                {/* زر الموقع على الخريطة */}
+                <a href={mapLink} target="_blank" rel="noopener noreferrer" className="d-flex align-items-center gap-2 rounded-pill px-5 py-3 bg-white text-main fw-bold" style={{ color: '#0b3b3f', textDecoration: 'none' }}>
+                  <FontAwesomeIcon icon={faLocationDot} style={{ fontSize: '1.3em', color: 'var(--color-main)' }} />
+                  موقعنا على الخريطة
+                </a>
               </div>
             </div>
 
@@ -88,7 +95,7 @@ export default function Footer() {
             {/* اللوجو مع النص */}
             <div className="d-flex justify-content-center align-items-center gap-3 mb-4">
               <img src={logo1} alt="Logo" className="footer-logo" style={{ width: "60px", height: "60px" }} />
-              <h5 className="fw-bold mb-0 footer-title">حمل تطبيق غنيم لحجز مواعيدك بسهولة</h5>
+              <h5 className="fw-bold mb-0 footer-title">حمل تطبيق غيم لحجز مواعيدك بسهولة</h5>
             </div>
             
             {/* أزرار التحميل */}
@@ -103,6 +110,12 @@ export default function Footer() {
               <button className="d-flex align-items-center gap-2 rounded-pill px-4 py-2 bg-transparent text-white border border-white fw-bold download-btn">
                 ابل استور <FontAwesomeIcon icon={faAppleAlt} style={{ fontSize: '1.2em' }} />
               </button>
+
+              {/* زر الموقع على الخريطة */}
+              <a href={mapLink} target="_blank" rel="noopener noreferrer" className="d-flex align-items-center gap-2 rounded-pill px-4 py-2 bg-white text-main fw-bold download-btn" style={{ color: 'var(--color-main)', textDecoration: 'none' }}>
+                <FontAwesomeIcon icon={faLocationDot} style={{ fontSize: '1.1em', color: 'var(--color-main)' }} />
+                موقعنا على الخريطة
+              </a>
             </div>
 
             {/* تابعنا */}

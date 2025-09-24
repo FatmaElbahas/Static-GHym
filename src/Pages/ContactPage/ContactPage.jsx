@@ -71,11 +71,11 @@ export default function ContactForm() {
   return (
     <>
       <Helmet>
-        <title>تواصل معنا - مركز غنيم الطبي</title>
-        <meta name="description" content="تواصل مع مركز غنيم الطبي للاستفسارات والحجز. نحن هنا لخدمتك في أي وقت" />
-        <meta name="keywords" content="تواصل, اتصل بنا, مركز غنيم, استفسارات طبية, حجز موعد" />
-        <meta property="og:title" content="تواصل معنا - مركز غنيم الطبي" />
-        <meta property="og:description" content="تواصل مع مركز غنيم الطبي للاستفسارات والحجز" />
+        <title>تواصل معنا - مركز غيم الطبي</title>
+        <meta name="description" content="تواصل مع مركز غيم الطبي للاستفسارات والحجز. نحن هنا لخدمتك في أي وقت" />
+        <meta name="keywords" content="تواصل, اتصل بنا, مركز غيم, استفسارات طبية, حجز موعد" />
+        <meta property="og:title" content="تواصل معنا - مركز غيم الطبي" />
+        <meta property="og:description" content="تواصل مع مركز غيم الطبي للاستفسارات والحجز" />
         <meta property="og:type" content="website" />
       </Helmet>
       <div className="" style={{ marginTop: '120px' ,marginBottom: '100px' }}> 

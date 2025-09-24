@@ -38,7 +38,7 @@ export default function Stats() {
   ];
 
   return (
-    <section className="stats-section py-5 ">
+    <section className="stats-section py-0" style={{ marginTop: '-48px' }}>
       <div className="container-fluid">
         <div className="row g-2 g-md-3 g-lg-4 justify-content-center">
           {statsData.map((stat, index) => (
@@ -70,6 +70,11 @@ export default function Stats() {
           ))}
         </div>
       </div>
+      <style>{`
+        @media (min-width: 992px) {
+          .stats-section { margin-top: -72px !important; }
+        }
+      `}</style>
     </section>
   );
 }

@@ -124,7 +124,7 @@ const Register = () => {
                 <div className="mb-3">
                   <img 
                     src="https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png" 
-                    alt="غنيم" 
+                    alt="غيم" 
                     className="img-fluid"
                     style={{width: '80px', height: '80px'}}
                   />
