@@ -801,7 +801,7 @@ html {
   color: #038FAD !important;
 }
 .bg-main{
-  background-color: #038FAD !important;
+  background-color: var(--color-main) !important;
 }
 
 /* Unify Bootstrap primary palette with site main color */
@@ -945,10 +945,13 @@ button:focus-visible {
   }
 }
 .bg-main{
-    background-color: #038FAD !important;
+    background-color: var(--color-main) !important;
 }
 .color-main{
-  color: #038FAD;
+  color: var(--color-main) !important;
+}
+footer.bg-main{
+  background-color: var(--color-main) !important;
 }
 .nav-pills .nav-link {
   color: #808080;
