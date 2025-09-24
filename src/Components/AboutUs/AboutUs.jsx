@@ -115,6 +115,14 @@ const AboutUs = () => {
 
       {/* Small responsive tweaks without extra css files */}
       <style>{`
+        /* Slightly increase About section title size */
+        #about-title .title-pill {
+          font-size: 1.65rem !important;
+        }
+        @media (min-width: 992px) {
+          #about-title .title-pill { font-size: 1.85rem !important; }
+        }
+
         /* Buttons styling */
         #about .about-btn-primary {
           background-color: var(--color-main, #00a8b0);
