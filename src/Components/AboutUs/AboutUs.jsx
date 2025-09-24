@@ -38,11 +38,9 @@ const AboutUs = () => {
   return (
     <section id="about" className='my-5' dir="rtl" style={{ background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 45%)', marginBottom: 0 }}>
       <div className="container py-5">
-        <div className="text-center mb-5">
-          <div style={{ display: 'inline-block', textAlign: 'center' }}>
-            <h2 className="fw-medium mb-2" style={{ color: '#000000', fontSize: '3rem', lineHeight: 1.1, margin: 0 }}>من نحن</h2>
-            <div style={{ width: '100%', height: 4, background: 'var(--color-main, #00a8b0)', borderRadius: 8, marginTop: 8 }} />
-          </div>
+        <div id="about-title" className="section-title-divider my-3 text-center">
+          <hr />
+          <span className="title-pill">من نحن</span>
         </div>
         <div className="row g-4 align-items-center">
               {/* Text area */}

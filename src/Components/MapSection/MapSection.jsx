@@ -8,11 +8,9 @@ const MapSection = () => {
   return (
     <section dir="rtl" style={{ background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)' }}>
       <div className="container py-5">
-        <div className="text-center mb-4">
-          <div style={{ display: 'inline-block', textAlign: 'center' }}>
-            <h2 className="fw-semibold mb-2" style={{ color: '#0f172a', fontSize: '2rem', lineHeight: 1.2, margin: 0 }}>موقعنا على الخريطة</h2>
-            <div style={{ width: '100%', height: 4, background: 'var(--color-main, #00a8b0)', borderRadius: 8, margin: '8px auto 0' }} />
-          </div>
+        <div id="map-title" className="section-title-divider my-3 text-center">
+          <hr />
+          <span className="title-pill">موقعنا على الخريطة</span>
         </div>
 
         <div className="position-relative" style={{ borderRadius: 20, overflow: 'hidden', boxShadow: '0 20px 40px rgba(15,23,42,0.12), 0 6px 14px rgba(15,23,42,0.06)' }}>
