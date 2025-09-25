@@ -62,7 +62,7 @@ const NewBooking = () => {
   const SALONS_URL = 'https://enqlygo.com/api/salons';
   const ADDRESSES_URL = 'https://enqlygo.com/api/user/addresses';
   const CATEGORIES_URL = 'https://enqlygo.com/api/salons/categories';
-  const AVAILABLE_TIMES_URL = 'https://enqlygo.com/api/salons/available_times/5';
+  const AVAILABLE_TIMES_URL = 'https://enqlygo.com/api/salons/available_times';
   const USER_BOOKINGS_URL = 'https://enqlygo.com/api/user/bookings';
 
   // Load salons
@@ -213,9 +213,14 @@ const NewBooking = () => {
         // Convert date to different formats for API compatibility
         const dateObj = new Date(formData.date);
         const dateFormatted = dateObj.toISOString().split('T')[0]; // YYYY-MM-DD
-        const url = `${AVAILABLE_TIMES_URL}?staff_id=${formData.doctor}&date=${dateFormatted}&service_id=${formData.service}`;
+        const params = new URLSearchParams({
+          staff_id: String(formData.doctor),
+          date: dateFormatted,
+          service_id: String(formData.service)
+        });
+        const url = `${AVAILABLE_TIMES_URL}/${formData.salon_id}?${params.toString()}`;
         console.log('Loading times with URL:', url);
-        console.log('Form data:', { date: formData.date, doctor: formData.doctor, service_id: formData.service });
+        console.log('Form data:', { date: formData.date, doctor: formData.doctor, salon_id: formData.salon_id, service_id: formData.service });
         const res = await fetch(url);
         const json = await res.json();
         console.log('API Response:', json);
