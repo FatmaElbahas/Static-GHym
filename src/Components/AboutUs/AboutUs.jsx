@@ -103,7 +103,7 @@ const AboutUs = () => {
         
         </div>
         {/* Section actions moved below content */}
-        <div className="text-center mt-4">
+        <div className="text-center mt-4 about-actions">
           <a href="/all-services" className="btn fw-semibold rounded-pill shadow-sm mx-2 about-btn-primary">
             استكشف خدماتنا
           </a>
@@ -171,6 +171,21 @@ const AboutUs = () => {
         @media (min-width: 992px) {
           #about h2 { font-size: 3.5rem; }
           #about .container { padding-top: 3.25rem !important; padding-bottom: 3.25rem !important; }
+        }
+
+        /* Mobile spacing for action buttons */
+        @media (max-width: 576px) {
+          #about .about-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+          }
+          #about .about-btn-primary,
+          #about .about-btn-outline {
+            width: 100%;
+            max-width: 360px;
+          }
         }
       `}</style>
     </section>
