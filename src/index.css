@@ -650,15 +650,23 @@ html {
 /* Swiper Navigation Buttons */
 .swiper-button-next,
 .swiper-button-prev {
-  color: #038FAD !important;
+  color: #0d78c0 !important;
   background: #ffffff !important;
-  border: 2px solid #038FAD !important;
+  border: 2px solid #0d78c0 !important;
   border-radius: 50%;
   width: 45px !important;
   height: 45px !important;
   margin-top: -22px !important;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   z-index: 10 !important;
+  transition: all 0.3s ease !important;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: #ffffff !important;
+  color: #0d78c0 !important;
+  transform: scale(1.1) !important;
 }
 
 /* إخفاء أزرار الكاروسيل في الموبايل */
@@ -676,11 +684,22 @@ html {
   }
 }
 
+/* Swiper Pagination Indicators */
+.swiper-pagination-bullet {
+  background: #0d78c0 !important;
+  opacity: 0.3 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #0d78c0 !important;
+  opacity: 1 !important;
+}
+
 .swiper-button-next:after,
 .swiper-button-prev:after {
   font-size: 16px !important;
   font-weight: bold !important;
-  color: #038FAD !important;
+  color: #0d78c0 !important;
 }
 
 .swiper-button-next {
@@ -795,7 +814,7 @@ html {
   position: relative;
   top: -14px;
   display: inline-block;
-  background: rgba(255, 255, 255, 0.8);
+  background: #f8f9fa;
   padding: 0.45rem 1.3rem;
   font-weight: 700;
   color: #000000;
@@ -2476,6 +2495,11 @@ width: 10%;
   
   h2 {
     font-size: 1.75rem !important;
+  }
+  
+  /* AboutUs title override for mobile */
+  .about-section h2 {
+    font-size: 1.4rem !important;
   }
   
   h3 {
@@ -4243,9 +4267,23 @@ width: 10%;
   right: 20px;
 }
 
+/* Custom Swiper Navigation Buttons */
+.swiper-button-prev-custom,
+.swiper-button-next-custom {
+  color: #0d78c0 !important;
+  background: #ffffff !important;
+  border: 2px solid #0d78c0 !important;
+}
+
+.swiper-button-prev-custom:hover,
+.swiper-button-next-custom:hover {
+  background: #ffffff !important;
+  color: #0d78c0 !important;
+}
+
 .swiper-button-prev-custom span,
 .swiper-button-next-custom span {
-  color: #008a91;
+  color: #0d78c0;
   font-size: 36px;
   font-weight: 900;
   line-height: 1;

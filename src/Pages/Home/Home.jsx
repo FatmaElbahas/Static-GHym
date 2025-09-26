@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Stats from '../../Components/Stats/Stats';
 import Services from '../../Components/Services/Services';
 import Partners from '../../Components/Partners/Partners';
@@ -14,6 +14,24 @@ import HeroBg2 from '../../assets/images/attractive hero.png';
 
 export default function Home() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // دالة للتحقق من حالة تسجيل الدخول
+  const handleBookingClick = (e) => {
+    e.preventDefault();
+    
+    // التحقق من وجود token في localStorage
+    const token = localStorage.getItem('token') || localStorage.getItem('authToken');
+    const user = localStorage.getItem('user');
+    
+    if (token && user) {
+      // المستخدم مسجل دخول - التوجيه للداشبورد
+      navigate('/dashboard');
+    } else {
+      // المستخدم غير مسجل دخول - التوجيه لصفحة تسجيل الدخول
+      navigate('/login');
+    }
+  };
 
   useEffect(() => {
     if (location.hash) {
@@ -159,27 +177,30 @@ export default function Home() {
                 }}>احجز موعدك لدى <span style={{color: '#0d78c0', fontWeight: '900'}}>خدمات غيم</span> بخطوات بسيطة....</p>
               </div>
               <div className="booking-button flex-shrink-0">
-                <Link to="/offers" className="btn rounded-pill fw-bold" style={{
-                  backgroundColor: '#0d78c0', 
-                  borderColor: '#0d78c0', 
-                  color: 'white',
-                  fontSize: window.innerWidth < 768 ? '1.1rem' : '1.4rem',
-                  padding: window.innerWidth < 768 ? '0.6rem 1.5rem' : '0.8rem 2.5rem',
-                  fontWeight: '900',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = 'white';
-                  e.target.style.color = '#0d78c0';
-                  e.target.style.borderColor = '#0d78c0';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = '#0d78c0';
-                  e.target.style.color = 'white';
-                  e.target.style.borderColor = '#0d78c0';
-                }}>
+                <button 
+                  onClick={handleBookingClick}
+                  className="btn rounded-pill fw-bold" 
+                  style={{
+                    backgroundColor: '#0d78c0', 
+                    borderColor: '#0d78c0', 
+                    color: 'white',
+                    fontSize: window.innerWidth < 768 ? '1.1rem' : '1.4rem',
+                    padding: window.innerWidth < 768 ? '0.6rem 1.5rem' : '0.8rem 2.5rem',
+                    fontWeight: '900',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = 'white';
+                    e.target.style.color = '#0d78c0';
+                    e.target.style.borderColor = '#0d78c0';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = '#0d78c0';
+                    e.target.style.color = 'white';
+                    e.target.style.borderColor = '#0d78c0';
+                  }}>
                   احجز الآن
-                </Link>
+                </button>
               </div>
             </div>
           </div>
