@@ -56,7 +56,20 @@ const MapSection = () => {
                 </div>
                 <div className="contact-details">
                   <h6 className="fw-bold mb-1" style={{ color: '#333', fontSize: '1.1rem' }}>الهاتف</h6>
-                  <p className="mb-0" style={{ color: '#666', fontSize: '1rem' }}>+966 11 123 4567</p>
+                  <a 
+                    href="tel:+966111234567" 
+                    className="mb-0 text-decoration-none" 
+                    style={{ 
+                      color: '#0d78c0', 
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      transition: 'color 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.color = '#027a8a'}
+                    onMouseLeave={(e) => e.target.style.color = '#0d78c0'}
+                  >
+                    +966 11 123 4567
+                  </a>
                 </div>
               </div>
 
@@ -76,7 +89,20 @@ const MapSection = () => {
                 </div>
                 <div className="contact-details">
                   <h6 className="fw-bold mb-1" style={{ color: '#333', fontSize: '1.1rem' }}>البريد الإلكتروني</h6>
-                  <p className="mb-0" style={{ color: '#666', fontSize: '1rem' }}>info@blsmy-medical.com</p>
+                  <a 
+                    href="mailto:info@blsmy-medical.com" 
+                    className="mb-0 text-decoration-none" 
+                    style={{ 
+                      color: '#0d78c0', 
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      transition: 'color 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.color = '#027a8a'}
+                    onMouseLeave={(e) => e.target.style.color = '#0d78c0'}
+                  >
+                    info@blsmy-medical.com
+                  </a>
                 </div>
               </div>
 

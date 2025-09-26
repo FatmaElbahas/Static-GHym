@@ -102,7 +102,7 @@ export default function Services() {
   // Memoized services for better performance
   const displayedServices = useMemo(() => services.slice(0, 6), [services]);
   return (
-    <section className="services-section py-1" style={{ marginTop: '80px', marginBottom: '40px' }}>
+    <section className="services-section py-1" style={{ marginTop: '40px', marginBottom: '40px' }}>
       <div className="container">
         <div className="section-title-divider mt-0 mb-5" style={{ marginTop: '20px' }}>
           <hr />
