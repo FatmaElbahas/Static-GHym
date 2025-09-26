@@ -9,8 +9,8 @@ import MostBookedDoctors from '../../Components/PartnersSwiper/MostBookedDoctors
 import Testimonials from '../../Components/Testimonials/Testimonials';
 import AboutUs from '../../Components/AboutUs/AboutUs';
 import MapSection from '../../Components/MapSection/MapSection';
-import HeroBg from '../../Assets/images/heropage.png';
-import HeroBg2 from '../../Assets/images/attractive hero.png';
+import HeroBg from '../../assets/images/heropage.png';
+import HeroBg2 from '../../assets/images/attractive hero.png';
 
 export default function Home() {
   const location = useLocation();
@@ -184,6 +184,8 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <AboutUs />
+
         <div id="services-section" style={{ scrollMarginTop: '150px', marginTop: '48px' }}>
         <Services />
       </div>
