@@ -207,6 +207,26 @@ export default function Services() {
         </a>
       </div>
       <style>{`
+        /* Override global margin-top for services section */
+        .services-section {
+          margin-top: 40px !important;
+        }
+        
+        /* Force override for mobile devices */
+        @media (max-width: 767.98px) {
+          .services-section {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+          }
+        }
+        
+        @media (max-width: 576px) {
+          .services-section {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+          }
+        }
+        
         .services-more-btn:hover { 
           background-color: #0b5a7a !important;
           border-color: #0b5a7a !important;
