@@ -2461,6 +2461,37 @@ width: 10%;
   }
 }
 
+/* ===== Mobile Font Size Adjustments ===== */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.5rem !important;
+  }
+  
+  .section-title-divider .title-pill {
+    font-size: 1rem !important;
+  }
+  
+  h1 {
+    font-size: 2rem !important;
+  }
+  
+  h2 {
+    font-size: 1.75rem !important;
+  }
+  
+  h3 {
+    font-size: 1.5rem !important;
+  }
+  
+  h4 {
+    font-size: 1.25rem !important;
+  }
+  
+  h5 {
+    font-size: 1.1rem !important;
+  }
+}
+
 /* ===== Dashboard Styles ===== */
 .dashboard-container {
   min-height: 100vh;

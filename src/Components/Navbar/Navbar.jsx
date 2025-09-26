@@ -284,6 +284,27 @@ function MainNavbar() {
           padding: 0.6rem 1.5rem !important;
         }
         
+        /* تصغير الخط واللوجو على الموبايل */
+        @media (max-width: 768px) {
+          .navbar-brand img {
+            max-height: 45px !important;
+          }
+          
+          .navbar .nav-link {
+            font-size: 0.85rem !important;
+          }
+          
+          .navbar .btn {
+            font-size: 0.8rem !important;
+            padding: 0.4rem 0.8rem !important;
+          }
+          
+          .navbar .btn-outline-primary {
+            padding: 0.3rem 0.6rem !important;
+            font-size: 0.8rem !important;
+          }
+        }
+        
         /* إلغاء تأثير الهافر لأيقونة تسجيل الخروج */
         .navbar .btn-outline-primary:hover {
           background-color: transparent !important;

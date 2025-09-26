@@ -60,7 +60,7 @@ export default function Home() {
                   <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end" >
                     <div className="hero-text" style={{ paddingTop: '8%', paddingRight:'15%' }}>
                       <h1 className="brand-name fw-bold mb-3" style={{ 
-                        fontSize: '3.5rem', 
+                        fontSize: window.innerWidth < 768 ? '2rem' : '3.5rem', 
                         textShadow: '0 2px 4px rgba(0,0,0,0.3)', 
                         color: '#ffffff',
                         lineHeight: '1.2'
@@ -69,7 +69,7 @@ export default function Home() {
                       </h1>
                       <p className="text-light fs-5 fw-medium pe-0" style={{ 
                         maxWidth: '500px',
-                        fontSize: '1.25rem'
+                        fontSize: window.innerWidth < 768 ? '1rem' : '1.25rem'
                       }}>
                         فريقنا الطبي المتخصص في خدمتك على مدار الساعة
                       </p>
@@ -92,7 +92,7 @@ export default function Home() {
                   <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end">
                     <div className="hero-text" style={{ paddingTop: '8%', paddingRight:'15%' }}>
                       <h1 className="brand-name fw-bold mb-3" style={{ 
-                        fontSize: '3.5rem', 
+                        fontSize: window.innerWidth < 768 ? '2rem' : '3.5rem', 
                         textShadow: '0 2px 4px rgba(0,0,0,0.3)', 
                         color: '#ffffff',
                         lineHeight: '1.2'
@@ -101,7 +101,7 @@ export default function Home() {
                       </h1>
                       <p className="text-light fs-5 fw-medium pe-0" style={{ 
                         maxWidth: '500px',
-                        fontSize: '1.25rem'
+                        fontSize: window.innerWidth < 768 ? '1rem' : '1.25rem'
                       }}>
                         احصلي على أفضل رعاية صحية مع أحدث الأجهزة الطبية والخبرة الممتازة
                       </p>
