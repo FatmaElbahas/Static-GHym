@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserMd, faCogs, faPhoneAlt, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
-import TeamAbout from '../../assets/images/team about.jpg';
+import TeamAbout from '../../assets/images/team about.png';
 // About Us section component (RTL friendly, lightweight, accessible)
 const AboutUs = () => {
   // Remote content state (API-driven)
@@ -36,76 +36,143 @@ const AboutUs = () => {
     return () => controller.abort();
   }, []);
   return (
-    <section id="about" className='my-5' dir="rtl" style={{ background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 45%)', marginBottom: 0 }}>
+    <section id="about" className='my-5' dir="rtl" style={{ backgroundColor: '#f8f9fa', marginBottom: 0 }}>
       <div className="container py-5">
         <div id="about-title" className="section-title-divider my-3 text-center">
           <hr />
-          <span className="title-pill">من نحن</span>
+          <span className="title-pill" style={{ color: '#000000' }}>من نحن</span>
         </div>
-        <div className="row g-4 align-items-center">
+        <div className="row g-5 align-items-center">
               {/* Text area */}
-          <div className="col-12 col-lg-6 order-2 order-lg-1 text-end">
-            <div className="d-flex flex-column gap-3">
+          <div className="col-12 col-lg-6 order-1 order-lg-1">
+            <div className="ps-lg-4">
+              <h2 className="fw-normal mb-4" style={{ 
+                color: 'var(--color-main)', 
+                fontSize: '2rem',
+                lineHeight: '1.2'
+              }}>
+                نحن نؤمن بأن الصحة حق للجميع
+              </h2>
               
-              <h3 className="fw-bold" style={{ color: 'var(--color-main, #00a8b0)', fontSize: '1.5rem' }}>نحن نؤمن بأن الصحة حق للجميع</h3>
-              <p className="mb-2" style={{ color: '#334155', lineHeight: 1.9, fontSize: '1.05rem' }}>
+              <p className="mb-4" style={{ 
+                color: '#666666', 
+                fontSize: '1.1rem',
+                lineHeight: '1.7'
+              }}>
                 {aboutText && !isLoading ? aboutText : 'تأسس مركز غيم الطبي على رؤية واضحة: تقديم رعاية صحية استثنائية تجمع بين الخبرة الطبية العالية والتقنيات الحديثة والخدمة الإنسانية المتميزة. نلتزم بمعايير الجودة العالمية في جميع خدماتنا الطبية.'}
               </p>
 
-              <ul className="list-unstyled m-0">
-                <li className="d-flex align-items-center gap-2 mb-2">
-                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: '50%', background: '#f1f5f9', border: '1px solid rgba(15,23,42,0.08)' }}>
-                    <FontAwesomeIcon icon={faUserMd} style={{ color: 'var(--color-main, #00a8b0)', fontSize: '0.95rem' }} />
-                  </span>
-                  <span>أطباء معتمدون بخبرة دولية</span>
-                </li>
-                <li className="d-flex align-items-center gap-2 mb-2">
-                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: '50%', background: '#f1f5f9', border: '1px solid rgba(15,23,42,0.08)' }}>
-                    <FontAwesomeIcon icon={faCogs} style={{ color: 'var(--color-main, #00a8b0)', fontSize: '0.95rem' }} />
-                  </span>
-                  <span>تقنيات طبية متقدمة ومعدات حديثة</span>
-                </li>
-                <li className="d-flex align-items-center gap-2 mb-2">
-                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: '50%', background: '#f1f5f9', border: '1px solid rgba(15,23,42,0.08)' }}>
-                    <FontAwesomeIcon icon={faPhoneAlt} style={{ color: 'var(--color-main, #00a8b0)', fontSize: '0.95rem' }} />
-                  </span>
-                  <span>خدمة عملاء متميزة على مدار الساعة</span>
-                </li>
-                <li className="d-flex align-items-center gap-2">
-                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: '50%', background: '#f1f5f9', border: '1px solid rgba(15,23,42,0.08)' }}>
-                    <FontAwesomeIcon icon={faShieldAlt} style={{ color: 'var(--color-main, #00a8b0)', fontSize: '0.95rem' }} />
-                  </span>
-                  <span>معايير سلامة وجودة عالمية</span>
-                </li>
-              </ul>
+              <div className="row g-3">
+                <div className="col-12 col-md-6">
+                  <div className="d-flex align-items-start gap-3">
+                    <div className="flex-shrink-0" style={{
+                      width: '50px',
+                      height: '50px',
+                      borderRadius: '50%',
+                      backgroundColor: '#0d78c0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <FontAwesomeIcon icon={faUserMd} style={{ color: '#ffffff', fontSize: '1.2rem' }} />
+                    </div>
+                    <div>
+                      <h6 className="fw-bold mb-1" style={{ color: '#333333', fontSize: '1.1rem' }}>أطباء معتمدون</h6>
+                      <p className="mb-0 text-muted small">خبرة دولية في جميع التخصصات الطبية</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="col-12 col-md-6">
+                  <div className="d-flex align-items-start gap-3">
+                    <div className="flex-shrink-0" style={{
+                      width: '50px',
+                      height: '50px',
+                      borderRadius: '50%',
+                      backgroundColor: '#0d78c0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <FontAwesomeIcon icon={faCogs} style={{ color: '#ffffff', fontSize: '1.2rem' }} />
+                    </div>
+                    <div>
+                      <h6 className="fw-bold mb-1" style={{ color: '#333333', fontSize: '1.1rem' }}>تقنيات متقدمة</h6>
+                      <p className="mb-0 text-muted small">أحدث المعدات والتقنيات الطبية</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="col-12 col-md-6">
+                  <div className="d-flex align-items-start gap-3">
+                    <div className="flex-shrink-0" style={{
+                      width: '50px',
+                      height: '50px',
+                      borderRadius: '50%',
+                      backgroundColor: '#0d78c0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <FontAwesomeIcon icon={faPhoneAlt} style={{ color: '#ffffff', fontSize: '1.2rem' }} />
+                    </div>
+                    <div>
+                      <h6 className="fw-bold mb-1" style={{ color: '#333333', fontSize: '1.1rem' }}>خدمة على مدار الساعة</h6>
+                      <p className="mb-0 text-muted small">دعم فني متقدم ورعاية مستمرة</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="col-12 col-md-6">
+                  <div className="d-flex align-items-start gap-3">
+                    <div className="flex-shrink-0" style={{
+                      width: '50px',
+                      height: '50px',
+                      borderRadius: '50%',
+                      backgroundColor: '#0d78c0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <FontAwesomeIcon icon={faShieldAlt} style={{ color: '#ffffff', fontSize: '1.2rem' }} />
+                    </div>
+                    <div>
+                      <h6 className="fw-bold mb-1" style={{ color: '#333333', fontSize: '1.1rem' }}>معايير الجودة</h6>
+                      <p className="mb-0 text-muted small">سلامة وجودة عالمية معتمدة</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               
             </div>
           </div>
           {/* Image area */}
-          <div className="col-12 col-lg-6 order-1 order-lg-2">
-            <div className="position-relative overflow-hidden" style={{ border: '1px solid rgba(15,23,42,0.06)', borderRadius: 24, boxShadow: '0 12px 28px rgba(15,23,42,0.12), 0 2px 8px rgba(15,23,42,0.06)' }}>
+          <div className="col-12 col-lg-6 order-2 order-lg-2">
+            <div className="position-relative overflow-hidden" style={{ 
+              borderRadius: '20px', 
+              boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+              height: '500px'
+            }}>
               <div
-                className="w-100"
+                className="w-100 h-100"
                 style={{
                   backgroundImage: `url(${imageUrl || TeamAbout})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
-                  aspectRatio: '16 / 10',
-                  borderRadius: 24,
+                  borderRadius: '20px',
                 }}
                 aria-label="صورة تعريفية"
                 role="img"
               />
             </div>
           </div>
-
         
         </div>
         {/* Section actions moved below content */}
-        <div className="text-center mt-4 about-actions">
+        <div className="text-center mt-5 about-actions">
           <a href="/all-services" className="btn fw-semibold rounded-pill shadow-sm mx-2 about-btn-primary">
-            استكشف خدماتنا
+            خدمات غيم
           </a>
           <a href="/contact" className="btn fw-semibold rounded-pill mx-2 about-btn-outline">
             تواصل معنا
@@ -117,10 +184,11 @@ const AboutUs = () => {
       <style>{`
         /* Slightly increase About section title size */
         #about-title .title-pill {
-          font-size: 1.65rem !important;
+          font-size: 2.5rem !important;
+          color: #000000 !important;
         }
         @media (min-width: 992px) {
-          #about-title .title-pill { font-size: 1.85rem !important; }
+          #about-title .title-pill { font-size: 2.5rem !important; color: #000000 !important; }
         }
 
         /* Buttons styling */

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
@@ -40,16 +40,30 @@ export default function Services() {
 
   useEffect(() => {
     let isMounted = true;
-    const load = async () => {
+    const controller = new AbortController();
+    
+    const loadServices = async () => {
       try {
-        if (!isMounted) return;
         setLoading(true);
         setError(null);
-        const res = await fetch(SERVICES_URL);
-        const json = await res.json();
-        if (!res.ok || json?.status === 'error') {
-          throw new Error(json?.message || `HTTP ${res.status}`);
+        
+        const res = await fetch(SERVICES_URL, { 
+          signal: controller.signal,
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
         }
+        
+        const json = await res.json();
+        if (json?.status === 'error') {
+          throw new Error(json?.message || 'خطأ في الخادم');
+        }
+        
         const list = Array.isArray(json?.data) ? json.data : [];
         const formatted = list
           .filter(s => s.status === 1)
@@ -57,33 +71,42 @@ export default function Services() {
             id: s.id,
             title: s.title_ar || s.title || s.title_en,
             desc: s.about_ar || s.about || s.about_en || '',
-            img: buildImageUrl(s.images && s.images[0] && s.images[0].image),
+            img: buildImageUrl(s.images?.[0]?.image),
             price: s.price,
             duration: s.service_time,
             discount: s.discount,
           }));
-        if (!isMounted) return;
-        setServices(formatted);
+        
+        if (isMounted) {
+          setServices(formatted);
+        }
       } catch (e) {
-        if (!isMounted) return;
-        setError(e.message || 'حدث خطأ أثناء جلب الخدمات');
+        if (e.name !== 'AbortError' && isMounted) {
+          setError(e.message || 'حدث خطأ أثناء جلب الخدمات');
+        }
       } finally {
-        if (!isMounted) return;
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
-    load();
-    return () => { isMounted = false; };
+    
+    loadServices();
+    
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, []);
 
-  const featured = services.slice(0, 4);
-  const rest = services.slice(4);
+  // Memoized services for better performance
+  const displayedServices = useMemo(() => services.slice(0, 6), [services]);
   return (
-    <section className="services-section py-5">
+    <section className="services-section py-3" style={{ marginTop: '150px', marginBottom: '-80px' }}>
       <div className="container">
-        <div id="services-title" className="section-title-divider my-3">
+        <div className="section-title-divider my-3 mb-5" style={{ marginTop: '40px' }}>
           <hr />
-          <span className="title-pill">ابرز خدمات غيم</span>
+          <span className="title-pill" style={{ color: '#000000' }}>خدماتنا</span>
         </div>
         <div id="services-cards" className="services-container mx-auto">
           {loading && (
@@ -99,100 +122,115 @@ export default function Services() {
           )}
           {!loading && !error && (
           <>
-          {/* الصف الأول: 4 عناصر باستخدام صف Bootstrap */}
-          <div className="row g-4 justify-content-center mb-2">
-            {featured.map((f, idx) => (
-              <div key={`f-${idx}`} className="col-6 col-md-6 col-lg-3 col-xl-3">
-                <div className="d-flex flex-column align-items-center text-center px-2">
-                  <div className="mb-5" style={{ padding: 0 }}>
+          {/* خدمات في شبكة 3x2 */}
+          <div className="row g-4 justify-content-center">
+            {displayedServices.map((service, idx) => (
+              <div key={idx} className="col-md-6 col-lg-4">
+                <div className="service-card" style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '12px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                  padding: '30px',
+                  textAlign: 'center',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  transition: 'all 0.3s ease'
+                }}>
+                  <div className="service-icon mb-4" style={{
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '50%',
+                    backgroundColor: '#0d78c0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: '20px'
+                  }}>
                     <img 
-                      src={f.img || toothPlaceholder} 
-                      alt={f.title} 
-                      style={{ width: '79px', height: '79px', objectFit: f.img ? 'cover' : 'contain', borderRadius: f.img ? '10px' : '0' }}
+                      src={service.img || toothPlaceholder} 
+                      alt={service.title} 
+                      loading="lazy"
+                      style={{ 
+                        width: '50px', 
+                        height: '50px', 
+                        objectFit: 'contain',
+                        filter: 'brightness(0) invert(1)'
+                      }}
                       onError={(e) => {
-                        console.log('Image failed to load:', f.img, 'falling back to placeholder');
                         e.target.src = toothPlaceholder;
-                        e.target.style.objectFit = 'contain';
-                        e.target.style.borderRadius = '0';
+                        e.target.style.filter = 'brightness(0) invert(1)';
                       }}
                     />
                   </div>
-                  <h5 className="mt-1 mb-2" style={{ fontSize: '20px', fontWeight: 600 }}>{f.title}</h5>
-                  <p className="text-muted mt-1 mb-0" style={{ fontSize: '16px', fontWeight: 600 }}>{f.desc}</p>
-                  <div className="mt-2 small" style={{ color:'var(--color-main)', fontWeight:700 }}>
-                    {typeof f.price === 'number' && (
-                      <>
-                        {f.discount ? (
-                          <>
-                            <span className="text-muted text-decoration-line-through me-2">{f.price} ر.س</span>
-                            <span>{Math.round(f.price * (1 - f.discount/100))} ر.س</span>
-                          </>
-                        ) : (
-                          <span>{f.price} ر.س</span>
-                        )}
-                        <span className="ms-2 text-muted">• {f.duration} دقيقة</span>
-                      </>
-                    )}
-                  </div>
+                  
+                  <h5 className="mb-3" style={{ 
+                    color: '#333333', 
+                    fontSize: '1.4rem', 
+                    fontWeight: 'bold',
+                    marginBottom: '15px'
+                  }}>
+                    {service.title}
+                  </h5>
+                  
+                  <p className="mb-0" style={{ 
+                    color: '#666666', 
+                    fontSize: '1rem', 
+                    lineHeight: '1.5',
+                    flexGrow: 1
+                  }}>
+                    {service.desc || 'خدمة طبية متخصصة تقدم بأعلى معايير الجودة والرعاية'}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* باقي العناصر كلها في شبكة واحدة مرنة */}
-          <div className="services-grid-7 g-4">
-            {rest.map((f, idx) => (
-              <div key={`r-${idx}`} className="services-grid-item text-center">
-                <div className="d-flex flex-column align-items-center text-center px-2">
-                  <div className="mb-4" style={{ padding: 0 }}>
-                    <img 
-                      src={f.img || toothPlaceholder} 
-                      alt={f.title} 
-                      style={{ width: '60px', height: '60px', objectFit: f.img ? 'cover' : 'contain', borderRadius: f.img ? '8px' : '0' }}
-                      onError={(e) => {
-                        console.log('Image failed to load:', f.img, 'falling back to placeholder');
-                        e.target.src = toothPlaceholder;
-                        e.target.style.objectFit = 'contain';
-                        e.target.style.borderRadius = '0';
-                      }}
-                    />
-                  </div>
-                  <p className="mt-1 mb-0" style={{ fontSize: '14px' }}>{f.title}</p>
-                </div>
-              </div>
-            ))}
-          </div>
           </>
           )}
         </div>
       </div>
       {/* Section CTA at bottom */}
-      <div className="text-center mt-4">
+      <div className="text-center mt-5">
         <a
           href="/all-services"
           className="btn fw-semibold rounded-pill services-more-btn"
           style={{
-            backgroundColor: 'transparent',
-            color: 'var(--color-main)',
-            padding: '0.8rem 1.6rem',
-            border: '2px solid var(--color-main)',
-            fontSize: '1.05rem',
-            letterSpacing: '0.3px',
-            boxShadow: '0 8px 20px rgba(3,143,173,0.12)'
+            backgroundColor: '#0d78c0',
+            color: '#ffffff',
+            padding: '12px 30px',
+            border: '2px solid #0d78c0',
+            fontSize: '1.1rem',
+            fontWeight: '600',
+            borderRadius: '25px',
+            transition: 'all 0.3s ease'
           }}
         >
-          المزيد
+          عرض المزيد
         </a>
       </div>
       <style>{`
         .services-more-btn:hover { 
-          color: #ffffff !important; 
-          background-color: var(--color-main) !important;
-          transform: translateY(-2px);
-          box-shadow: 0 12px 26px rgba(3,143,173,0.25);
+          background-color: #0b5a7a !important;
+          border-color: #0b5a7a !important;
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px rgba(13, 120, 192, 0.3);
         }
         @media (max-width: 576px) {
           .services-more-btn { width: 100%; max-width: 360px; }
+        }
+      `}</style>
+      
+      {/* CSS for hover effects */}
+      <style>{`
+        .service-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .service-card:hover .service-icon {
+          transform: scale(1.1);
         }
       `}</style>
     </section>

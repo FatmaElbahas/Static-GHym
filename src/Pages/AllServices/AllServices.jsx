@@ -80,14 +80,15 @@ export default function AllServices() {
     return () => { isMounted = false; };
   }, []);
 
-  const featured = services.slice(0, 8);
-  const rest = services.slice(8);
+  const featured = services.slice(0, 6);
+  const rest = services.slice(6);
+  
   return (
-    <section className="services-section py-5 mt-5">
+    <section className="services-section py-5 mb-3" style={{ marginTop: '150px', marginBottom: '-80px' }}>
       <div className="container">
-        <div className="section-title-divider my-3">
+        <div className="section-title-divider my-3 mb-5" style={{ marginTop: '40px' }}>
           <hr />
-          <span className="title-pill">خدمات غيم</span>
+          <span className="title-pill" style={{ color: '#000000' }}>خدمات غيم</span>
         </div>
         <div className="services-container mx-auto">
           {loading && (
@@ -103,39 +104,77 @@ export default function AllServices() {
           )}
           {!loading && !error && (
           <>
-          {/* الصف الأول: 4 عناصر باستخدام صف Bootstrap */}
-          <div className="row g-4 justify-content-center mb-2">
-            {featured.map((f, idx) => (
-              <div key={`f-${idx}`} className="col-6 col-md-6 col-lg-3 col-xl-3">
-                <div className="d-flex flex-column align-items-center text-center px-2">
-                  <div className="mb-5" style={{ padding: 0 }}>
+          {/* خدمات مميزة في شبكة 3x2 */}
+          <div className="row g-4 justify-content-center mb-5">
+            {featured.map((service, idx) => (
+              <div key={idx} className="col-md-6 col-lg-4">
+                <div className="service-card" style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '12px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                  padding: '30px',
+                  textAlign: 'center',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  transition: 'all 0.3s ease'
+                }}>
+                  <div className="service-icon mb-4" style={{
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '50%',
+                    backgroundColor: '#0d78c0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: '20px'
+                  }}>
                     <img 
-                      src={f.img || toothPlaceholder} 
-                      alt={f.title} 
-                      style={{ width: '79px', height: '79px', objectFit: f.img ? 'cover' : 'contain', borderRadius: f.img ? '10px' : '0' }}
+                      src={service.img || toothPlaceholder} 
+                      alt={service.title} 
+                      loading="lazy"
+                      style={{ 
+                        width: '50px', 
+                        height: '50px', 
+                        objectFit: 'contain',
+                        filter: 'brightness(0) invert(1)'
+                      }}
                       onError={(e) => {
-                        console.log('Image failed to load:', f.img, 'falling back to placeholder');
                         e.target.src = toothPlaceholder;
-                        e.target.style.objectFit = 'contain';
-                        e.target.style.borderRadius = '0';
+                        e.target.style.filter = 'brightness(0) invert(1)';
                       }}
                     />
                   </div>
-                  <h5 className="mt-1 mb-2" style={{ fontSize: '20px', fontWeight: 700 }}>{f.title}</h5>
-                  {f.desc && (
-                    <p className="text-muted mt-1 mb-0" style={{ fontSize: '15px' }}>
-                      {f.desc.length > 120 ? f.desc.slice(0, 120) + '…' : f.desc}
-                    </p>
-                  )}
-                  <div className="mt-2" style={{ color:'var(--color-main)', fontWeight:700, fontSize:'0.95rem' }}>
-                    {typeof f.price === 'number' ? (
-                      f.discount ? (
+                  
+                  <h5 className="mb-3" style={{ 
+                    color: '#333333', 
+                    fontSize: '1.4rem', 
+                    fontWeight: 'bold',
+                    marginBottom: '15px'
+                  }}>
+                    {service.title}
+                  </h5>
+                  
+                  <p className="mb-3" style={{ 
+                    color: '#666666', 
+                    fontSize: '1rem', 
+                    lineHeight: '1.5',
+                    flexGrow: 1
+                  }}>
+                    {service.desc || 'خدمة طبية متخصصة تقدم بأعلى معايير الجودة والرعاية'}
+                  </p>
+
+                  {/* السعر */}
+                  <div className="mt-auto" style={{ color:'#0d78c0', fontWeight:700, fontSize:'1.1rem' }}>
+                    {typeof service.price === 'number' ? (
+                      service.discount ? (
                         <>
-                          <span className="text-muted text-decoration-line-through me-2">{f.price} ر.س</span>
-                          <span>{Math.round(f.price * (1 - f.discount/100))} ر.س</span>
+                          <span className="text-muted text-decoration-line-through me-2">{service.price} ر.س</span>
+                          <span>{Math.round(service.price * (1 - service.discount/100))} ر.س</span>
                         </>
                       ) : (
-                        <span>{f.price} ر.س</span>
+                        <span>{service.price} ر.س</span>
                       )
                     ) : null}
                   </div>
@@ -144,49 +183,107 @@ export default function AllServices() {
             ))}
           </div>
 
-          {/* باقي العناصر كلها في شبكة واحدة مرنة */}
-          <div className="services-grid-7 g-4">
-            {rest.map((f, idx) => (
-              <div key={`r-${idx}`} className="services-grid-item text-center">
-                <div className="d-flex flex-column align-items-center text-center px-2">
-                  <div className="mb-4" style={{ padding: 0 }}>
-                    <img 
-                      src={f.img || toothPlaceholder} 
-                      alt={f.title} 
-                      style={{ width: '60px', height: '60px', objectFit: f.img ? 'cover' : 'contain', borderRadius: f.img ? '8px' : '0' }}
-                      onError={(e) => {
-                        console.log('Image failed to load:', f.img, 'falling back to placeholder');
-                        e.target.src = toothPlaceholder;
-                        e.target.style.objectFit = 'contain';
-                        e.target.style.borderRadius = '0';
-                      }}
-                    />
-                  </div>
-                  <p className="mt-1 mb-1 fw-semibold" style={{ fontSize: '15px' }}>{f.title}</p>
-                  <div className="small text-muted" style={{ minHeight: '18px' }}>
-                    {f.desc ? (f.desc.length > 80 ? f.desc.slice(0, 80) + '…' : f.desc) : ''}
-                  </div>
-                  <div className="mt-1" style={{ color:'var(--color-main)', fontWeight:700, fontSize:'0.9rem' }}>
-                    {typeof f.price === 'number' ? (
-                      f.discount ? (
-                        <>
-                          <span className="text-muted text-decoration-line-through me-2">{f.price} ر.س</span>
-                          <span>{Math.round(f.price * (1 - f.discount/100))} ر.س</span>
-                        </>
-                      ) : (
-                        <span>{f.price} ر.س</span>
-                      )
-                    ) : null}
-                  </div>
-                </div>
+          {/* باقي الخدمات في شبكة مرنة */}
+          {rest.length > 0 && (
+            <>
+              <div className="section-title-divider my-4">
+                <hr />
+                <span className="title-pill" style={{ color: '#000000' }}>خدمات إضافية</span>
               </div>
-            ))}
-          </div>
+              <div className="row g-4 justify-content-center">
+                {rest.map((service, idx) => (
+                  <div key={`r-${idx}`} className="col-md-6 col-lg-4 col-xl-3">
+                    <div className="service-card" style={{
+                      backgroundColor: '#ffffff',
+                      borderRadius: '12px',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                      padding: '25px',
+                      textAlign: 'center',
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      transition: 'all 0.3s ease'
+                    }}>
+                      <div className="service-icon mb-3" style={{
+                        width: '60px',
+                        height: '60px',
+                        borderRadius: '50%',
+                        backgroundColor: '#0d78c0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginBottom: '15px'
+                      }}>
+                        <img 
+                          src={service.img || toothPlaceholder} 
+                          alt={service.title} 
+                          loading="lazy"
+                          style={{ 
+                            width: '35px', 
+                            height: '35px', 
+                            objectFit: 'contain',
+                            filter: 'brightness(0) invert(1)'
+                          }}
+                          onError={(e) => {
+                            e.target.src = toothPlaceholder;
+                            e.target.style.filter = 'brightness(0) invert(1)';
+                          }}
+                        />
+                      </div>
+                      
+                      <h6 className="mb-2" style={{ 
+                        color: '#333333', 
+                        fontSize: '1.1rem', 
+                        fontWeight: 'bold'
+                      }}>
+                        {service.title}
+                      </h6>
+                      
+                      <p className="mb-3" style={{ 
+                        color: '#666666', 
+                        fontSize: '0.9rem', 
+                        lineHeight: '1.4',
+                        flexGrow: 1
+                      }}>
+                        {service.desc ? (service.desc.length > 80 ? service.desc.slice(0, 80) + '…' : service.desc) : 'خدمة طبية متخصصة'}
+                      </p>
+
+                      {/* السعر */}
+                      <div className="mt-auto" style={{ color:'#0d78c0', fontWeight:700, fontSize:'1rem' }}>
+                        {typeof service.price === 'number' ? (
+                          service.discount ? (
+                            <>
+                              <span className="text-muted text-decoration-line-through me-2">{service.price} ر.س</span>
+                              <span>{Math.round(service.price * (1 - service.discount/100))} ر.س</span>
+                            </>
+                          ) : (
+                            <span>{service.price} ر.س</span>
+                          )
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
           </>
           )}
         </div>
       </div>
       
+      {/* CSS for hover effects */}
+      <style>{`
+        .service-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .service-card:hover .service-icon {
+          transform: scale(1.1);
+        }
+      `}</style>
     </section>
   );
 }

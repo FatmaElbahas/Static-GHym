@@ -10,7 +10,6 @@ import PricingPage from './Pages/PricingPage/PricingPage';
 import ContactPage from './Pages/ContactPage/ContactPage';
 import ErrorPage from './Pages/ErrorPage/ErrorPage';
 import Footer from './Components/Footer/Footer';
-import MapSection from './Components/MapSection/MapSection';
 import Book from './Pages/Book/Book';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import Register from './Pages/Auth/Register';
@@ -43,10 +42,7 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
-      {!isDashboard && <>
-        <MapSection />
-        <Footer />
-      </>}
+      {!isDashboard && <Footer />}
     </div>
   );
 }

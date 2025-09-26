@@ -12,12 +12,35 @@ const CATEGORIES_URL = 'https://enqlygo.com/api/salons/categories';
 const MostBookedDoctorsSlides = memo(({ doctors }) => {
   const slides = useMemo(() => doctors.map((d) => (
     <SwiperSlide key={d.id}>
-      <div className="partner-slide-card doctor-slide-card position-relative">
-        <div className="doctor-image-wrap">
+      <div className="doctor-card" style={{
+        backgroundColor: '#ffffff',
+        borderRadius: '12px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        padding: '20px',
+        textAlign: 'center',
+        height: '400px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        transition: 'all 0.3s ease',
+        cursor: 'pointer'
+      }}>
+        <div className="doctor-image" style={{
+          width: '120px',
+          height: '120px',
+          borderRadius: '50%',
+          overflow: 'hidden',
+          marginBottom: '20px',
+          border: '3px solid #f0f0f0'
+        }}>
           <img
             src={d.photo}
             alt={d.name}
-            className="img-fluid"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover'
+            }}
             loading="lazy"
             onError={(e) => {
               const placeholder = 'https://www.w3schools.com/howto/img_avatar.png';
@@ -25,20 +48,45 @@ const MostBookedDoctorsSlides = memo(({ doctors }) => {
             }}
           />
         </div>
-        {/* rating badge */}
-        {typeof d.rating !== 'undefined' ? (
-          <div className="position-absolute top-0 start-0 p-2" style={{fontSize:'0.85rem'}}>
-            <span className="text-warning">★</span>
-            <span className="ms-1 text-muted">{Number(d.rating).toFixed(1)}</span>
+        
+        <div className="doctor-info" style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div>
+            <h5 className="mb-2" style={{ 
+              color: '#000000', 
+              fontSize: '1.3rem', 
+              fontWeight: 'bold',
+              marginBottom: '8px'
+            }}>
+              {d.name}
+            </h5>
+            <p className="mb-3" style={{ 
+              color: '#0d78c0', 
+              fontSize: '1rem', 
+              fontWeight: '500',
+              marginBottom: '12px'
+            }}>
+              {d.specialty || 'طبيب عام'}
+            </p>
+            <p className="mb-3" style={{ 
+              color: '#666666', 
+              fontSize: '0.9rem', 
+              lineHeight: '1.4'
+            }}>
+              {d.clinic || 'مركز غيم الطبي'}
+            </p>
           </div>
-        ) : null}
-        <div className="partner-name doctor-info mt-1 text-center ">
-          <p className="mb-2 main-color fw-500">{d.name}</p>
-          <small className="text-muted d-block mb-1">{d.clinic}</small>
-          {d.specialty ? (
-            <small className="text-muted d-block mb-1">{d.specialty}</small>
-          ) : null}
-          <small className="text-muted d-block">{d.address}</small>
+          
+          <button className="btn btn-primary" style={{
+            backgroundColor: '#0d78c0',
+            borderColor: '#0d78c0',
+            borderRadius: '25px',
+            padding: '10px 25px',
+            fontSize: '0.9rem',
+            fontWeight: '500',
+            marginTop: 'auto'
+          }}>
+            احجز الآن
+          </button>
         </div>
       </div>
     </SwiperSlide>
@@ -57,13 +105,9 @@ const MostBookedDoctorsSlides = memo(({ doctors }) => {
           nextEl: '.swiper-button-next-custom',
         }}
         breakpoints={{
-          320: { slidesPerView: 1, spaceBetween: 15 },
-          480: { slidesPerView: 2, spaceBetween: 15 },
-          640: { slidesPerView: 2, spaceBetween: 20 },
-          768: { slidesPerView: 3, spaceBetween: 25 },
-          1024: { slidesPerView: 4, spaceBetween: 30 },
-          1200: { slidesPerView: 5, spaceBetween: 30 },
-          1400: { slidesPerView: 6, spaceBetween: 30 },
+          320: { slidesPerView: 1, spaceBetween: 20 },
+          768: { slidesPerView: 2, spaceBetween: 30 },
+          1200: { slidesPerView: 3, spaceBetween: 30 },
         }}
         className="partners-swiper"
       >
@@ -235,11 +279,11 @@ const MostBookedDoctors = () => {
   }
 
   return (
-    <section className="partners-swiper-section py-5">
-      <div className="container-fluid">
-        <div className="section-title-divider my-3">
+    <section className="partners-swiper-section py-5" style={{ backgroundColor: '#f8f9fa' }}>
+      <div className="container">
+        <div className="section-title-divider my-3 mb-5">
           <hr />
-          <span className="title-pill">الأطباء الأكثر حجزاً</span>
+          <span className="title-pill" style={{ color: '#000000' }}>أفضل أطبائنا</span>
         </div>
         <div className="swiper-container-wrapper">
           <MostBookedDoctorsSlides doctors={doctors} />
@@ -250,5 +294,27 @@ const MostBookedDoctors = () => {
 };
 
 export default MostBookedDoctors;
+
+// CSS for hover effects
+const hoverStyles = `
+  .doctor-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+  
+  .doctor-card:hover .btn {
+    background-color: #0b5a7a !important;
+    border-color: #0b5a7a !important;
+    transform: scale(1.05);
+  }
+`;
+
+// Add styles to document head
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement('style');
+  styleSheet.type = 'text/css';
+  styleSheet.innerText = hoverStyles;
+  document.head.appendChild(styleSheet);
+}
 
 

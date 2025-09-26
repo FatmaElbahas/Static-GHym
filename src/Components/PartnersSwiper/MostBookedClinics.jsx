@@ -161,7 +161,7 @@ const MostBookedClinics = () => {
       <div className="container-fluid">
         <div className="section-title-divider my-3">
           <hr />
-          <span className="title-pill">العيادات الأكثر حجزاً</span>
+          <span className="title-pill" style={{ color: '#000000' }}>العيادات الأكثر حجزاً</span>
         </div>
 
         <div className="swiper-container-wrapper">

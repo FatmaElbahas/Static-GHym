@@ -1,192 +1,80 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAppleAlt, faLocationDot } from '@fortawesome/free-solid-svg-icons';
-import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import { faFacebookF, faTwitter, faInstagram, faTiktok, faSnapchatGhost } from "@fortawesome/free-brands-svg-icons";
-import { faCcMastercard, faCcVisa, faCcApplePay } from "@fortawesome/free-brands-svg-icons";
+import { faFacebookF, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 const logo1 = "https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png";
-import sbc from "../../assets/images/sbc.png";
-import vat from "../../assets/images/vat.png";
 
 export default function Footer() {
-  const mapLink = "https://maps.google.com/?q=Ghaim%20Medical%20Center";
   return (
-    <footer className="bg-main py-5 text-white">
+    <footer className="py-5 mt-4 text-white" style={{ backgroundColor: '#1F2937' }}>
       <div className="container">
-        {/* التصميم الأصلي للشاشات الكبيرة */}
-        <div className="d-none d-md-block">
-          {/* الجزء العلوي */}
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-start gap-4">
-            
-            {/* تحميل التطبيق */}
-            <div className="text-center text-md-start" style={{ marginTop: '10px' }}>
-              <h5 className="fw-bold mb-3 footer-title">حمل تطبيق غيم لحجز مواعيدك بسهولة</h5>
-              <div className="d-flex gap-3 justify-content-center justify-content-md-start flex-wrap mt-5">
-                {/* زر جوجل بلاي */}
-                <button className="d-flex align-items-center gap-2 rounded-pill px-5 py-3 bg-transparent text-white border border-white fw-bold">
-                  <i className="fab fa-google-play" style={{ fontSize: '1.5em' }}></i>
-                  جوجل بلاي
-                </button>
-
-                {/* زر ابل استور */}
-                <button className="d-flex align-items-center gap-2 rounded-pill px-5 py-3 bg-transparent text-white border border-white fw-bold">
-                  ابل استور <FontAwesomeIcon icon={faAppleAlt} style={{ fontSize: '1.5em' }} />
-                </button>
-
-                {/* زر الموقع على الخريطة */}
-                <a href={mapLink} target="_blank" rel="noopener noreferrer" className="d-flex align-items-center gap-2 rounded-pill px-5 py-3 bg-white text-main fw-bold" style={{ color: '#0b3b3f', textDecoration: 'none' }}>
-                  <FontAwesomeIcon icon={faLocationDot} style={{ fontSize: '1.3em', color: 'var(--color-main)' }} />
-                  موقعنا على الخريطة
-                </a>
+        {/* التصميم الجديد مثل الصورة */}
+        <div className="row">
+          {/* العمود الأول - MediCare Branding & Socials */}
+          <div className="col-md-3 mb-4">
+            <div className="d-flex align-items-center gap-3 mb-3">
+              <div className="bg-white rounded p-2 me-4" style={{ width: '40px', height: '40px' }}>
+                <img src={logo1} alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </div>
+              <h3 className="fw-bold mb-0" style={{ fontSize: '2.2rem', color: 'var(--color-main)' }}>غيم</h3>
             </div>
-
-            {/* اللوجو + السوشيال + الدفع */}
-            <div className="text-center d-flex flex-column justify-content-center align-items-center">
-              <img src={logo1} alt="Logo" style={{ width: "100px" }} />
-
-              {/* أيقونات السوشيال */}
-              <ul className="list-unstyled d-flex gap-3 justify-content-center mt-3 mb-3">
-                <li><a href="#" className="text-white"><FontAwesomeIcon icon={faFacebookF} size="lg" /></a></li>
-                <li><a href="#" className="text-white"><FontAwesomeIcon icon={faTwitter} size="lg" /></a></li>
-                <li><a href="#" className="text-white"><FontAwesomeIcon icon={faInstagram} size="lg" /></a></li>
-                <li><a href="#" className="text-white"><FontAwesomeIcon icon={faTiktok} size="lg" /></a></li>
-                <li><a href="#" className="text-white"><FontAwesomeIcon icon={faSnapchatGhost} size="lg" /></a></li>
-              </ul>
-
-              {/* أيقونات الدفع */}
-              <ul className="list-unstyled d-flex gap-3 justify-content-center mb-0">
-                <li><FontAwesomeIcon icon={faCcMastercard} size="2x" style={{ color: '#FF5F00' }} /></li>
-                <li><FontAwesomeIcon icon={faCcVisa} size="2x" style={{ color: '#1A1F71' }} /></li>
-                <li><FontAwesomeIcon icon={faCcApplePay} size="2x" style={{ color: '#000' }} /></li>
-              </ul>
-            </div>
-          </div>
-
-          {/* الجزء السفلي */}
-          <div className="copyRight mt-4 pt-3 border-top border-light">
-            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-              {/* VAT + SBC */}
-              <div className="d-flex align-items-center gap-3 footer-certificates">
-                <div className="d-flex align-items-center gap-2 footer-vat-section">
-                  <img src={vat} alt="VAT" className="footer-vat-img" style={{ width: "40px" }} />
-                  <span className="footer-text">الرقم الضريبي: 312066452700003</span>
-                </div>
-                <div className="footer-divider" style={{ width: '2px', height: '40px', backgroundColor: 'white' }}></div>
-                <div className="footer-sbc-section">
-                  <img src={sbc} alt="SBC" className="footer-sbc-img" style={{ width: "90px" }} />
-                </div>
+            <p className="text-white-50 mb-3" style={{ fontSize: '1rem', lineHeight: '1.4' }}>
+              نقدم خدمات رعاية صحية استثنائية بالرحمة والخبرة.
+            </p>
+            <div className="d-flex gap-3">
+              <div className="bg-white rounded-circle d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
+                <FontAwesomeIcon icon={faFacebookF} style={{ color: '#1976D2' }} />
               </div>
-
-              {/* حقوق النشر */}
-              <div className="text-center text-md-end">
-                <p className="mb-1 footer-copyright">جميع الحقوق محفوظة لشركة فن التطبيقات لتقنية المعلومات © 2025</p>
-                <p className="mb-0 footer-copyright">سجل تجاري رقم ٢٠٥٠١٤٢٦٣٧ | سياسة الخصوصية</p>
+              <div className="bg-white rounded-circle d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
+                <FontAwesomeIcon icon={faTwitter} style={{ color: '#1976D2' }} />
+              </div>
+              <div className="bg-white rounded-circle d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
+                <FontAwesomeIcon icon={faInstagram} style={{ color: '#1976D2' }} />
               </div>
             </div>
           </div>
-        </div>
 
-        {/* التصميم الجديد للموبايل والتابلت */}
-        <div className="d-block d-md-none">
-          {/* الجزء العلوي - تحميل التطبيق */}
-          <div className="text-center mb-4">
-            {/* اللوجو مع النص */}
-            <div className="d-flex justify-content-center align-items-center gap-3 mb-4">
-              <img src={logo1} alt="Logo" className="footer-logo" style={{ width: "60px", height: "60px" }} />
-              <h5 className="fw-bold mb-0 footer-title">حمل تطبيق غيم لحجز مواعيدك بسهولة</h5>
-            </div>
-            
-            {/* أزرار التحميل */}
-            <div className="d-flex gap-3 justify-content-center flex-wrap mb-4">
-              {/* زر جوجل بلاي */}
-              <button className="d-flex align-items-center gap-2 rounded-pill px-4 py-2 bg-transparent text-white border border-white fw-bold download-btn">
-                <i className="fab fa-google-play" style={{ fontSize: '1.2em' }}></i>
-                جوجل بلاي
-              </button>
+          {/* العمود الثاني - الروابط السريعة */}
+          <div className="col-md-3 mb-4 align-items-center">
+            <h5 className="fw-bold text-white mb-3" style={{ fontSize: '1.2rem' }}>الروابط السريعة</h5>
+            <ul className="list-unstyled">
+              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: '1.1rem' }}>الرئيسية</a></li>
+              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: '1.1rem' }}>الخدمات</a></li>
+              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: '1.1rem' }}>الأطباء</a></li>
+              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: '1.1rem' }}>من نحن</a></li>
+            </ul>
+          </div>
 
-              {/* زر ابل استور */}
-              <button className="d-flex align-items-center gap-2 rounded-pill px-4 py-2 bg-transparent text-white border border-white fw-bold download-btn">
-                ابل استور <FontAwesomeIcon icon={faAppleAlt} style={{ fontSize: '1.2em' }} />
-              </button>
+          {/* العمود الثالث - الخدمات */}
+          <div className="col-md-3 mb-4 text-center">
+            <h5 className="fw-bold text-white mb-3" style={{ fontSize: '1.2rem' }}>الخدمات</h5>
+            <ul className="list-unstyled">
+              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: '1.1rem' }}>طب القلب</a></li>
+              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: '1.1rem' }}>طب الأعصاب</a></li>
+              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: '1.1rem' }}>طب الأطفال</a></li>
+              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: '1.1rem' }}>المختبر</a></li>
+            </ul>
+          </div>
 
-              {/* زر الموقع على الخريطة */}
-              <a href={mapLink} target="_blank" rel="noopener noreferrer" className="d-flex align-items-center gap-2 rounded-pill px-4 py-2 bg-white text-main fw-bold download-btn" style={{ color: 'var(--color-main)', textDecoration: 'none' }}>
-                <FontAwesomeIcon icon={faLocationDot} style={{ fontSize: '1.1em', color: 'var(--color-main)' }} />
-                موقعنا على الخريطة
-              </a>
-            </div>
-
-            {/* تابعنا */}
-            <div className="d-flex justify-content-center align-items-center gap-2 mb-3">
-              <span className="footer-text">تابعنا</span>
-              <ul className="list-unstyled d-flex gap-2 mb-0">
-                <li><a href="#" className="text-white social-link"><FontAwesomeIcon icon={faFacebookF} size="sm" /></a></li>
-                <li><a href="#" className="text-white social-link"><FontAwesomeIcon icon={faSnapchatGhost} size="sm" /></a></li>
-                <li><a href="#" className="text-white social-link"><FontAwesomeIcon icon={faFacebookF} size="sm" /></a></li>
-                <li><a href="#" className="text-white social-link"><FontAwesomeIcon icon={faTiktok} size="sm" /></a></li>
-                <li><a href="#" className="text-white social-link"><FontAwesomeIcon icon={faTwitter} size="sm" /></a></li>
-                <li><a href="#" className="text-white social-link"><FontAwesomeIcon icon={faInstagram} size="sm" /></a></li>
-              </ul>
-            </div>
-
-            {/* خط فاصل */}
-            <hr className="border-light mb-3" />
-
-            {/* طرق الدفع */}
-            <div className="d-flex justify-content-center align-items-center gap-3 mb-3">
-              <FontAwesomeIcon icon={faCcVisa} size="lg" style={{ color: '#1A1F71' }} />
-              <FontAwesomeIcon icon={faCcApplePay} size="lg" style={{ color: '#000' }} />
-              <span className="footer-text">مدى</span>
-              <span className="footer-text">tabby</span>
-            </div>
-
-            {/* خط فاصل */}
-            <hr className="border-light mb-3" />
-
-            {/* حقوق النشر */}
-            <div className="text-center">
-              <p className="mb-1 footer-copyright">جميع الحقوق محفوظة لشركة فن التطبيقات لتقنية المعلومات © 2025</p>
-              <p className="mb-2 footer-copyright">سجل تجاري رقم ٢٠٥٠١٤٢٦٣٧ | سياسة الخصوصية</p>
-              
-              {/* VAT */}
-              <div className="d-flex justify-content-center align-items-center gap-2 mb-2">
-                <div className="bg-warning px-2 py-1 rounded" style={{ fontSize: '0.7rem' }}>
-                  <div className="text-dark fw-bold">ضريبة القيمة المضافة</div>
-                  <div className="text-dark fw-bold">VAT</div>
-                </div>
-                <span className="footer-text">الرقم الضريبي: 312066452700003</span>
-              </div>
-
-              {/* SBC */}
-              <div className="d-flex justify-content-center align-items-center gap-2">
-                <span className="footer-text">موثق لدى</span>
-                <span className="footer-text">المركز السعودي للأعمال</span>
-                <span className="footer-text">Saudi Business Center</span>
-                <img src={sbc} alt="SBC" className="footer-sbc-img" style={{ width: "60px" }} />
-              </div>
-            </div>
+          {/* العمود الرابع - معلومات الاتصال */}
+          <div className="col-md-3 mb-4 text-center">
+            <h5 className="fw-bold text-white mb-3" style={{ fontSize: '1.2rem' }}>معلومات الاتصال</h5>
+            <ul className="list-unstyled ">
+              <li className="mb-2 text-white-50" style={{ fontSize: '1.1rem' }}>شارع الملك فهد، حي الملز</li>
+              <li className="mb-2 text-white-50" style={{ fontSize: '1.1rem' }}>الرياض، المملكة العربية السعودية</li>
+              <li className="mb-2 text-white-50" style={{ fontSize: '1.1rem' }}>+966 11 123 4567</li>
+              <li className="mb-2 text-white-50" style={{ fontSize: '1.1rem' }}>info@blsmy-medical.com</li>
+            </ul>
           </div>
         </div>
 
-        {/* زر الواتساب */}
-        <div className="position-fixed" style={{ bottom: '20px', right: '20px', zIndex: 1000 }}>
-          <a href="https://wa.me/966500000000" className="btn btn-success rounded-circle shadow-lg" style={{ 
-            width: '70px', 
-            height: '70px', 
-            padding: '0',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#25D366',
-            border: 'none',
-            boxShadow: '0 4px 12px rgba(37, 211, 102, 0.4)'
-          }}>
-            <FontAwesomeIcon icon={faWhatsapp} style={{ fontSize: '2.5em', color: 'white' }} />
-          </a>
-        </div>
+        {/* خط فاصل */}
+        <hr className="border-secondary my-4" />
 
+        {/* حقوق النشر */}
+        <div className="text-center">
+          <p className="text-white-50 mb-0" style={{ fontSize: '1rem' }}>© 2024 مركز غيم الطبي. جميع الحقوق محفوظة.</p>
+        </div>
       </div>
     </footer>
   );

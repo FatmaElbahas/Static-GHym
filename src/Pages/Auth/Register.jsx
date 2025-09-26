@@ -260,7 +260,21 @@ const Register = () => {
                   type="submit"
                   className="btn btn-primary btn-lg w-100 py-3"
                   disabled={isSubmitting}
-                  style={{backgroundColor: '#038FAD', borderColor: '#038FAD'}}
+                  style={{backgroundColor: '#0d78c0', borderColor: '#0d78c0', transition: 'all 0.3s ease'}}
+                  onMouseEnter={(e) => {
+                    if (!isSubmitting) {
+                      e.target.style.backgroundColor = 'white';
+                      e.target.style.borderColor = '#0d78c0';
+                      e.target.style.color = '#0d78c0';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isSubmitting) {
+                      e.target.style.backgroundColor = '#0d78c0';
+                      e.target.style.borderColor = '#0d78c0';
+                      e.target.style.color = 'white';
+                    }
+                  }}
                 >
                   {isSubmitting ? (
                     <>
@@ -280,7 +294,7 @@ const Register = () => {
               <div className="text-center mt-4">
                 <p className="mb-0 text-muted">
                   هل لديك حساب بالفعل ؟ 
-                  <Link to="/login" className="text-decoration-none fw-semibold ms-1" style={{color: '#038FAD'}}>
+                  <Link to="/login" className="text-decoration-none fw-semibold ms-1" style={{color: '#0d78c0'}}>
                     سجل دخولك
                   </Link>
                 </p>

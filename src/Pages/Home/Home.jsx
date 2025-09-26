@@ -7,8 +7,10 @@ import Partners from '../../Components/Partners/Partners';
 import MostBookedClinics from '../../Components/PartnersSwiper/MostBookedClinics';
 import MostBookedDoctors from '../../Components/PartnersSwiper/MostBookedDoctors';
 import Testimonials from '../../Components/Testimonials/Testimonials';
-import HeroBg from '../../assets/images/hero-bg.ab3138f8.webp';
 import AboutUs from '../../Components/AboutUs/AboutUs';
+import MapSection from '../../Components/MapSection/MapSection';
+import HeroBg from '../../Assets/images/heropage.png';
+import HeroBg2 from '../../Assets/images/attractive hero.png';
 
 export default function Home() {
   const location = useLocation();
@@ -42,27 +44,33 @@ export default function Home() {
   <link rel="icon" type="image/png" href="https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png" />
 </Helmet>
       <div className="home-page book-page " style={{ paddingTop: '0' }}>
-      <section className="hero-section position-relative mb-0" style={{height: '60vh'}} dir="rtl">
+      <section className="hero-section position-relative mb-0" style={{height: '60vh', width: '100vw', marginLeft: 'calc(-50vw + 50%)'}} dir="rtl">
           <div id="heroCarousel" className="carousel slide h-100" data-bs-ride="carousel" data-bs-interval="5000">
             <div className="carousel-inner h-100">
 
               {/* Slide 1 */}
               <div className="carousel-item active h-100">
-                <div
-                  className="hero-background position-absolute top-0 start-0 w-100 h-100"
-                  style={{
-                    backgroundImage: `url(${HeroBg})`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center center',
-                  }}
-                >
-                  <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.48) 45%, rgba(0,0,0,0.32) 100%)' }}>
-                    <div className="hero-text " style={{ paddingTop: '8%', paddingRight:'15%' }}>
-                      <h1 className="brand-name  fw-bold mb-3" style={{ fontSize: '3.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.2)', color: 'var(--color-main)' }}>
+  <div
+    className="hero-background"
+    style={{ backgroundImage: `url(${HeroBg})` }}
+  >
+
+  
+
+                  <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end" >
+                    <div className="hero-text" style={{ paddingTop: '8%', paddingRight:'15%' }}>
+                      <h1 className="brand-name fw-bold mb-3" style={{ 
+                        fontSize: '3.5rem', 
+                        textShadow: '0 2px 4px rgba(0,0,0,0.3)', 
+                        color: '#ffffff',
+                        lineHeight: '1.2'
+                      }}>
                         احجز موعدك بسهولة
                       </h1>
-                      <p className="text-white fs-5 fw-medium pe-0" style={{ maxWidth: '500px' }}>
+                      <p className="text-light fs-5 fw-medium pe-0" style={{ 
+                        maxWidth: '500px',
+                        fontSize: '1.25rem'
+                      }}>
                         فريقنا الطبي المتخصص في خدمتك على مدار الساعة
                       </p>
                     </div>
@@ -81,12 +89,20 @@ export default function Home() {
                     backgroundPosition: 'center center',
                   }}
                 >
-                  <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.48) 45%, rgba(0,0,0,0.32) 100%)' }}>
-                    <div className="hero-text " style={{ paddingTop: '8%',  paddingRight:'15%'  }}>
-                      <h1 className="brand-name color-main fw-bold mb-3" style={{ fontSize: '3.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.2)', color: 'var(--color-main)' }}>
-                        دكاتره متميزة ورائدة
+                  <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end">
+                    <div className="hero-text" style={{ paddingTop: '8%', paddingRight:'15%' }}>
+                      <h1 className="brand-name fw-bold mb-3" style={{ 
+                        fontSize: '3.5rem', 
+                        textShadow: '0 2px 4px rgba(0,0,0,0.3)', 
+                        color: '#ffffff',
+                        lineHeight: '1.2'
+                      }}>
+                        الرعاية الطبية التي تستحقها
                       </h1>
-                      <p className="text-white fs-5 fw-medium pe-0" style={{ maxWidth: '500px' }}>
+                      <p className="text-light fs-5 fw-medium pe-0" style={{ 
+                        maxWidth: '500px',
+                        fontSize: '1.25rem'
+                      }}>
                         احصلي على أفضل رعاية صحية مع أحدث الأجهزة الطبية والخبرة الممتازة
                       </p>
                     </div>
@@ -134,21 +150,33 @@ export default function Home() {
               <div className="booking-text flex-grow-1 text-end">
                 <div className="question-container rounded-3 p-3 mb-2">
                   <h3 className="booking-question fw-bold mb-0" style={{
-                    color: 'var(--color-main)',
-                    fontSize: window.innerWidth < 768 ? '1.1rem' : '1.75rem'
-                  }}>هل ترغب بحجز موعد ؟</h3>
+                    color: '#000000',
+                    fontSize: window.innerWidth < 768 ? '1.5rem' : '2.2rem'
+                  }}>خدمتنا</h3>
                 </div>
                 <p className="booking-description text-muted fw-bold mb-0 text-nowrap" style={{
                   fontSize: window.innerWidth < 768 ? '0.9rem' : '1.25rem'
-                }}>احجز موعدك لدى إحدى المراكز بخطوات بسيطة....</p>
+                }}>احجز موعدك لدى <span style={{color: 'var(--color-main)', fontWeight: '900'}}>خدمتنا</span> بخطوات بسيطة....</p>
               </div>
               <div className="booking-button flex-shrink-0">
                 <Link to="/offers" className="btn rounded-pill fw-bold" style={{
                   backgroundColor: 'var(--color-main)', 
                   borderColor: 'var(--color-main)', 
                   color: 'white',
-                  fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem',
-                  padding: window.innerWidth < 768 ? '0.4rem 1rem' : '0.5rem 1.5rem'
+                  fontSize: window.innerWidth < 768 ? '1.1rem' : '1.4rem',
+                  padding: window.innerWidth < 768 ? '0.6rem 1.5rem' : '0.8rem 2.5rem',
+                  fontWeight: '900',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = 'white';
+                  e.target.style.color = '#0d78c0';
+                  e.target.style.borderColor = '#0d78c0';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = '#0d78c0';
+                  e.target.style.color = 'white';
+                  e.target.style.borderColor = '#0d78c0';
                 }}>
                   احجز الآن
                 </Link>
@@ -156,15 +184,15 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <AboutUs />
-      <Stats />
-      <div id="services-section" style={{ scrollMarginTop: '100px' }}>
+        <div id="services-section" style={{ scrollMarginTop: '150px', marginTop: '48px' }}>
         <Services />
       </div>
-      <Partners />
-      <MostBookedClinics />
+        <AboutUs />
+      <Stats />
+      
       <MostBookedDoctors />
       <Testimonials />
+      <MapSection />
     </div>
     </>
   );

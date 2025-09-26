@@ -282,8 +282,8 @@ const Login = () => {
                       style={{
                         borderRadius: '10px', 
                         fontSize: '0.9rem', 
-                        backgroundColor: status === 'success' ? '#28a745' : '#038FAD', 
-                        borderColor: status === 'success' ? '#28a745' : '#038FAD',
+                        backgroundColor: status === 'success' ? '#28a745' : '#0d78c0', 
+                        borderColor: status === 'success' ? '#28a745' : '#0d78c0',
                         transition: 'all 0.3s ease'
                       }}
                       disabled={isSubmitting || status === 'success'}
@@ -313,7 +313,7 @@ const Login = () => {
               <div className="text-center mt-4">
                 <p className="mb-0 text-muted">
                   ليس لديك حساب ؟
-                  <Link to="/register" className="text-decoration-none fw-semibold ms-1" style={{color: '#038FAD'}}>
+                  <Link to="/register" className="text-decoration-none fw-semibold ms-1" style={{color: '#0d78c0'}}>
                     إنشاء حساب جديد
                   </Link>
                 </p>

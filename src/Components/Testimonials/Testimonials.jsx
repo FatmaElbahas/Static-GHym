@@ -75,7 +75,7 @@ const Testimonials = () => {
             }}
           />
           <div className="text-end flex-grow-1">
-            <h6 className="mb-1 fw-bold main-color">{t.name}</h6>
+            <h6 className="mb-1 fw-bold" style={{ color: '#0d78c0' }}>{t.name}</h6>
             <small className="d-block text-muted">{t.clinic}</small>
             <small className="d-block text-muted">{t.doctor}</small>
             <div className="d-flex gap-1  align-items-center mt-1">
@@ -95,7 +95,7 @@ const Testimonials = () => {
            
           </div>
         </div>
-        <p className="mb-0 text-center " style={{ color: '#00a8b0', fontWeight: 700, fontSize: '20px' }}>"{t.text}"</p>
+        <p className="mb-0 text-center " style={{ color: '#0d78c0', fontWeight: 700, fontSize: '20px' }}>"{t.text}"</p>
       </div>
     </SwiperSlide>
   )), [items]);
@@ -103,7 +103,7 @@ const Testimonials = () => {
   if (loading) {
     return (
       <section className="partners-swiper-section py-5">
-        <div className="container-fluid text-center">
+        <div className="container text-center">
           <div className="spinner-border text-primary" role="status"><span className="visually-hidden">تحميل...</span></div>
         </div>
       </section>
@@ -113,7 +113,7 @@ const Testimonials = () => {
   if (error) {
     return (
       <section className="partners-swiper-section py-5">
-        <div className="container-fluid text-center">
+        <div className="container text-center">
           <p className="text-danger">تعذر تحميل آراء العملاء</p>
         </div>
       </section>
@@ -126,10 +126,10 @@ const Testimonials = () => {
 
   return (
     <section className="partners-swiper-section py-5">
-      <div className="container-fluid">
+      <div className="container">
         <div className="section-title-divider my-3">
           <hr />
-          <span className="title-pill">آراء العملاء</span>
+          <span className="title-pill" style={{ color: '#000000' }}>آراء العملاء</span>
         </div>
         <Swiper
           modules={[Autoplay, Navigation, Pagination]}

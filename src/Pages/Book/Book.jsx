@@ -13,8 +13,8 @@ import Stats from '../../Components/Stats/Stats';
 import Services from '../../Components/Services/Services';
 import DoctorCard from '../../Components/DoctorCard/DoctorCard.jsx';
 import Logo from '../../assets/images/Logo.png';
-import HeroBg from '../../assets/images/hero-bg.ab3138f8.webp';
-import HeroBg2 from '../../assets/images/hero2.jpg';
+import HeroBg from '../../Assets/images/heropage.png';
+import HeroBg2 from '../../Assets/images/attractive hero.png';
 import SidebarFilters from '../../Components/Filter/SidebarFilters.jsx';
 import ReactPaginate from 'react-paginate';
 import { FilterProvider, useFilter } from '../../context/FilterContext';
@@ -571,12 +571,22 @@ function BookContent() {
                     backgroundPosition: 'center center',
                   }}
                 >
-                  <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.48) 45%, rgba(0,0,0,0.32) 100%)' }}>
-                    <div className="hero-text " style={{ paddingTop: '8%', paddingRight:'15%' }}>
-                      <h1 className="brand-name  fw-bold mb-3" style={{ fontSize: '3.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.2)', color: 'var(--color-main)' }}>
+                  <div className="hero-overlay position-relative h-100 d-flex align-items-center justify-content-center" >
+                    <div className="hero-text text-center" style={{ paddingTop: '8%' }}>
+                      <h1 className="brand-name fw-bold mb-4" style={{ 
+                        fontSize: '3.5rem', 
+                        textShadow: '0 2px 4px rgba(0,0,0,0.3)', 
+                        color: '#ffffff',
+                        lineHeight: '1.2'
+                      }}>
                         احجز موعدك بسهولة
                       </h1>
-                      <p className="text-white fs-5 fw-medium pe-0" style={{ maxWidth: '500px' }}>
+                      <p className="text-light mb-4" style={{ 
+                        fontSize: '1.25rem',
+                        maxWidth: '600px',
+                        margin: '0 auto',
+                        fontWeight: '400'
+                      }}>
                         فريقنا الطبي المتخصص في خدمتك على مدار الساعة
                       </p>
                     </div>
@@ -589,18 +599,28 @@ function BookContent() {
                 <div
                   className="hero-background position-absolute top-0 start-0 w-100 h-100"
                   style={{
-                    backgroundImage: `url(${HeroBg})`,
+                    backgroundImage: `url(${HeroBg2})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center center',
                   }}
                 >
-                  <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.48) 45%, rgba(0,0,0,0.32) 100%)' }}>
-                    <div className="hero-text " style={{ paddingTop: '8%',  paddingRight:'15%'  }}>
-                      <h1 className="brand-name color-main fw-bold mb-3" style={{ fontSize: '3.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.2)', color: 'var(--color-main)' }}>
+                  <div className="hero-overlay position-relative h-100 d-flex align-items-center justify-content-center" >
+                    <div className="hero-text text-center" style={{ paddingTop: '8%' }}>
+                      <h1 className="brand-name fw-bold mb-4" style={{ 
+                        fontSize: '3.5rem', 
+                        textShadow: '0 2px 4px rgba(0,0,0,0.3)', 
+                        color: '#ffffff',
+                        lineHeight: '1.2'
+                      }}>
                         دكاتره متميزة ورائدة
                       </h1>
-                      <p className="text-white fs-5 fw-medium pe-0" style={{ maxWidth: '500px' }}>
+                      <p className="text-light mb-4" style={{ 
+                        fontSize: '1.25rem',
+                        maxWidth: '600px',
+                        margin: '0 auto',
+                        fontWeight: '400'
+                      }}>
                         احصلي على أفضل رعاية صحية مع أحدث الأجهزة الطبية والخبرة الممتازة
                       </p>
                     </div>
@@ -658,7 +678,7 @@ function BookContent() {
                     transition: 'all 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.borderColor = 'var(--color-main)';
+                    e.target.style.borderColor = '#0d78c0';
                     e.target.style.boxShadow = '0 3px 8px rgba(3, 143, 173, 0.15)';
                   }}
                   onMouseLeave={(e) => {
@@ -691,7 +711,7 @@ function BookContent() {
                       paddingRight: '55px'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.borderColor = 'var(--color-main)';
+                      e.target.style.borderColor = '#0d78c0';
                       e.target.style.boxShadow = '0 3px 8px rgba(3, 143, 173, 0.15)';
                     }}
                     onMouseLeave={(e) => {
@@ -703,9 +723,9 @@ function BookContent() {
                       <option value="" disabled>جاري تحميل المدن...</option>
                     ) : (
                       <>
-                        <option value="الكل" style={{color: 'var(--color-main)'}}>جميع المدن</option>
+                        <option value="الكل" style={{color: '#0d78c0'}}>جميع المدن</option>
                         {cities.map((city, index) => (
-                          <option key={index} value={city} style={{color: 'var(--color-main)'}}>
+                          <option key={index} value={city} style={{color: '#0d78c0'}}>
                             {city}
                           </option>
                         ))}
@@ -732,15 +752,21 @@ function BookContent() {
                       borderRadius: '8px',
                       transition: 'all 0.3s ease',
                       padding: '0 30px',
-                      minWidth: '140px'
+                      minWidth: '140px',
+                      backgroundColor: '#0d78c0',
+                      borderColor: '#0d78c0'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#027a8a';
+                      e.target.style.backgroundColor = 'white';
+                      e.target.style.borderColor = '#0d78c0';
+                      e.target.style.color = '#0d78c0';
                       e.target.style.transform = 'translateY(-2px)';
                       e.target.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'var(--color-main)';
+                      e.target.style.backgroundColor = '#0d78c0';
+                      e.target.style.borderColor = '#0d78c0';
+                      e.target.style.color = 'white';
                       e.target.style.transform = 'translateY(0)';
                       e.target.style.boxShadow = '0 3px 6px rgba(0,0,0,0.15)';
                   }}
@@ -771,20 +797,22 @@ function BookContent() {
                         fontWeight: '500',
                         boxShadow: '0 3px 6px rgba(0,0,0,0.15)',
                       borderRadius: '50%',
-                      borderColor: 'var(--color-main)',
-                      color: 'var(--color-main)',
+                      borderColor: '#0d78c0',
+                      color: '#0d78c0',
                       transition: 'all 0.3s ease',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = 'var(--color-main)';
-                      e.target.style.color = 'white';
+                      e.target.style.backgroundColor = 'white';
+                      e.target.style.color = '#0d78c0';
+                      e.target.style.borderColor = '#0d78c0';
                     }}
                     onMouseLeave={(e) => {
                       e.target.style.backgroundColor = 'transparent';
-                      e.target.style.color = 'var(--color-main)';
+                      e.target.style.color = '#0d78c0';
+                      e.target.style.borderColor = '#0d78c0';
                       }}
                     >
                       {isLoading ? (
@@ -800,7 +828,7 @@ function BookContent() {
                   
                   {/* Reset Search Button */}
                   <button 
-                    className="btn btn-outline-secondary"
+                    className="btn btn-outline-primary"
                     onClick={resetSearch}
                     disabled={isLoading}
                     title="إعادة تعيين البحث"
@@ -811,20 +839,23 @@ function BookContent() {
                       fontWeight: '500',
                       boxShadow: '0 3px 6px rgba(0,0,0,0.15)',
                       borderRadius: '50%',
-                      borderColor: 'var(--color-main)',
-                      color: 'var(--color-main)',
+                      borderColor: '#0d78c0',
+                      color: '#0d78c0',
+                      backgroundColor: 'transparent',
                       transition: 'all 0.3s ease',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = 'var(--color-main)';
-                      e.target.style.color = 'white';
+                      e.target.style.backgroundColor = 'white';
+                      e.target.style.color = '#0d78c0';
+                      e.target.style.borderColor = '#0d78c0';
                     }}
                     onMouseLeave={(e) => {
                       e.target.style.backgroundColor = 'transparent';
-                      e.target.style.color = 'var(--color-main)';
+                      e.target.style.color = '#0d78c0';
+                      e.target.style.borderColor = '#0d78c0';
                     }}
                   >
                     <FontAwesomeIcon icon={faRotateLeft} />
@@ -847,8 +878,8 @@ function BookContent() {
         <style>{`
           .btn-outline-primary:hover,
           .btn-outline-secondary:hover {
-            background: linear-gradient(135deg, var(--color-main), #027a8a) !important;
-            border-color: var(--color-main) !important;
+            background: linear-gradient(135deg, #0d78c0, #027a8a) !important;
+            border-color: #0d78c0 !important;
             color: white !important;
             transform: translateY(-2px) !important;
             box-shadow: 0 6px 20px rgba(3, 143, 173, 0.4) !important;
@@ -866,7 +897,7 @@ function BookContent() {
           }
           
           .btn-primary {
-            background: linear-gradient(135deg, var(--color-main), #027a8a) !important;
+            background: linear-gradient(135deg, #0d78c0, #027a8a) !important;
             border: none !important;
             box-shadow: 0 4px 12px rgba(3, 143, 173, 0.3) !important;
           }
@@ -904,14 +935,14 @@ function BookContent() {
           
           .form-control:focus,
           .form-select:focus {
-            border-color: var(--color-main) !important;
+            border-color: #0d78c0 !important;
             box-shadow: 0 0 0 0.2rem rgba(3, 143, 173, 0.15) !important;
             background-color: rgba(255, 255, 255, 1) !important;
           }
           
           .form-control:hover,
           .form-select:hover {
-            border-color: var(--color-main) !important;
+            border-color: #0d78c0 !important;
             box-shadow: 0 3px 8px rgba(3, 143, 173, 0.15) !important;
           }
           
@@ -967,7 +998,7 @@ function BookContent() {
           
           /* تخصيص مظهر الـ options */
           .form-select option {
-            color: var(--color-main) !important;
+            color: #0d78c0 !important;
             background-color: white !important;
             font-weight: 500 !important;
           }
@@ -975,48 +1006,48 @@ function BookContent() {
           .form-select option:hover,
           .form-select option:focus,
           .form-select option:active {
-            background-color: var(--color-main) !important;
+            background-color: #0d78c0 !important;
             color: white !important;
-            background: var(--color-main) !important;
+            background: #0d78c0 !important;
             background-image: none !important;
           }
           
           /* تجاوز أقوى للـ hover */
           .form-select option:hover {
-            background: var(--color-main) !important;
-            background-color: var(--color-main) !important;
+            background: #0d78c0 !important;
+            background-color: #0d78c0 !important;
             color: white !important;
           }
           
           .form-select option:checked,
           .form-select option[selected] {
-            background-color: var(--color-main) !important;
+            background-color: #0d78c0 !important;
             color: white !important;
-            background: var(--color-main) !important;
+            background: #0d78c0 !important;
           }
           
           .form-select option:checked:hover,
           .form-select option[selected]:hover {
-            background-color: var(--color-main) !important;
+            background-color: #0d78c0 !important;
             color: white !important;
-            background: var(--color-main) !important;
+            background: #0d78c0 !important;
           }
           
           /* تجاوز ألوان المتصفح الافتراضية */
           .form-select option::-moz-selection {
-            background-color: var(--color-main) !important;
+            background-color: #0d78c0 !important;
             color: white !important;
           }
           
           .form-select option::selection {
-            background-color: var(--color-main) !important;
+            background-color: #0d78c0 !important;
             color: white !important;
           }
           
           /* تجاوز أقوى للمتصفحات المختلفة */
           .form-select option:hover {
-            background: var(--color-main) !important;
-            background-color: var(--color-main) !important;
+            background: #0d78c0 !important;
+            background-color: #0d78c0 !important;
             color: white !important;
             -webkit-appearance: none !important;
             -moz-appearance: none !important;
@@ -1025,13 +1056,13 @@ function BookContent() {
           
           /* تجاوز خاص لـ Chrome و Safari */
           .form-select option:hover::-webkit-option {
-            background: var(--color-main) !important;
+            background: #0d78c0 !important;
             color: white !important;
           }
           
           /* تجاوز خاص لـ Firefox */
           .form-select option:hover::-moz-option {
-            background: var(--color-main) !important;
+            background: #0d78c0 !important;
             color: white !important;
           }
           

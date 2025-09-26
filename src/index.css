@@ -55,46 +55,69 @@ html {
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 /* Responsive Stats Styles */
+.stats-section {
+  background-color: #1e40af !important;
+  margin-top: -48px !important;
+}
+
 .stats-icon {
-  font-size: 2.5rem;
+  font-size: 2rem;
+  color: var(--color-main) !important;
 }
 
 .stats-number, .stats-suffix {
-  font-size: 1.2rem;
+  font-size: 2.5rem;
+  color: #ffffff !important;
+  font-weight: bold !important;
 }
 
 .stats-text {
-  font-size: 0.8rem;
+  font-size: 1.1rem;
+  color: #ffffff !important;
+  font-weight: 600 !important;
 }
 
 @media (min-width: 768px) {
+  .stats-section {
+    margin-top: -48px !important;
+  }
+  
   .stats-icon {
-    font-size: 3rem;
+    font-size: 2.2rem;
   }
   
   .stats-number, .stats-suffix {
-    font-size: 1.5rem;
+    font-size: 2.8rem;
   }
   
   .stats-text {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 }
 
 @media (min-width: 1024px) {
+  .stats-section {
+    margin-top: -72px !important;
+  }
+  
   .stats-icon {
-    font-size: 4rem;
+    font-size: 2.5rem;
   }
   
   .stats-number, .stats-suffix {
-    font-size: 2rem;
+    font-size: 3rem;
   }
   
   .stats-text {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
   }
 }
 
+@media (max-width: 767px) {
+  .stats-section {
+    margin-top: -48px !important;
+  }
+}
 
 /* تنسيق خاص لزر تسجيل الخروج النشط */
 .navbar .logout-btn.activeLink {
@@ -692,7 +715,7 @@ html {
 }
 /* Services */
 .services-section {
-  background: #fff;
+  background: transparent;
 }
 /* Extra space below services title divider */
 .services-section .section-title-divider {
@@ -776,8 +799,8 @@ html {
   padding: 0.45rem 1.3rem;
   border-radius: 50px;
   font-weight: 700;
-  color: #038FAD;
-  font-size: 1.4rem;
+  color: #000000;
+  font-size: 2.5rem;
 }
 
 :root {
@@ -794,8 +817,12 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
-  --color-main: #016e84;
-  --bg-main: #038FAD;
+  --color-main: #0d78c0;
+  --bg-main: #0d78c0;
+}
+
+body {
+  background-color: #F9FAFB !important;
 }
 .main-color{
   color: #038FAD !important;
@@ -951,7 +978,7 @@ button:focus-visible {
   color: var(--color-main) !important;
 }
 footer.bg-main{
-  background-color: var(--color-main) !important;
+  background-color: #1F2937 !important;
 }
 .nav-pills .nav-link {
   color: #808080;
@@ -2015,7 +2042,7 @@ width: 10%;
 
 /* Stats Section */
 .stats-section {
-  background: linear-gradient(135deg, rgba(3, 143, 173, 0.15) 0%, rgba(0, 189, 195, 0.1) 30%, rgba(3, 143, 173, 0.2) 70%, rgba(0, 189, 195, 0.12) 100%);
+  background-color: var(--color-main) !important;
   margin-top: -220px;
   padding-top: 30px;
 }
@@ -2322,7 +2349,7 @@ width: 10%;
   cursor: not-allowed;
 }
 :root {
-  --main-color: #038FAD ; /* غيري للون الأساسي بتاعك */
+  --main-color: var(--color-main) ; /* غيري للون الأساسي بتاعك */
 }
 
 .pagination {
@@ -2443,7 +2470,7 @@ width: 10%;
 }
 
 .dashboard-header {
-  background: linear-gradient(135deg, var(--color-main), #027a8a);
+  background: #0d78c0;
   color: white;
   padding: 1rem 0;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -2690,7 +2717,7 @@ width: 10%;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-main), #027a8a);
+  background: #0d78c0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2909,7 +2936,7 @@ width: 10%;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-main), #027a8a);
+  background: #0d78c0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3047,7 +3074,7 @@ width: 10%;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-main), #027a8a);
+  background: #0d78c0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3291,7 +3318,7 @@ width: 10%;
 }
 
 .register-header {
-  background: linear-gradient(135deg, var(--color-main), #027a8a);
+  background: #0d78c0;
   color: white;
   padding: 2rem;
   text-align: center;
@@ -3462,7 +3489,7 @@ width: 10%;
 }
 
 .btn-register {
-  background: linear-gradient(135deg, var(--color-main), #027a8a);
+  background: #0d78c0;
   border: none;
   border-radius: 10px;
   padding: 0.875rem 1.5rem;
@@ -3722,7 +3749,7 @@ width: 10%;
 }
 
 .btn-login {
-  background: linear-gradient(135deg, var(--color-main), #027a8a);
+  background: #0d78c0;
   border: none;
   border-radius: 12px;
   padding: 1rem 2rem;
@@ -3967,7 +3994,7 @@ width: 10%;
 @media (min-width: 1200px) { .services-section .section-title-divider { margin-bottom: 5rem !important; } }
 
 /* Services title typography override */
-.services-section .section-title-divider .title-pill { font-size: 34px !important; font-weight: 700 !important; }
+.services-section .section-title-divider .title-pill { font-size: 2.5rem !important; font-weight: 700 !important; color: #000000 !important; }
 
 /* Services container width adjustments for better 7-col fit */
 .services-section .services-container { max-width: 950px; }
@@ -4236,3 +4263,14 @@ width: 10%;
   }
 }
 
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  object-fit: cover !important;
+}
