@@ -11,19 +11,19 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #038FAD, #00BDC3);
+  background: #0d78c0;
   border-radius: 10px;
   border: 2px solid #f1f1f1;
   transition: all 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #027a8a, #00a8b0);
-  box-shadow: 0 2px 8px rgba(3, 143, 173, 0.3);
+  background: #0b5a7a;
+  box-shadow: 0 2px 8px rgba(13, 120, 192, 0.3);
 }
 
 ::-webkit-scrollbar-thumb:active {
-  background: linear-gradient(135deg, #015f6b, #008a91);
+  background: #0a4a5c;
 }
 
 ::-webkit-scrollbar-corner {
@@ -33,7 +33,7 @@
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #038FAD #f1f1f1;
+  scrollbar-color: #0d78c0 #f1f1f1;
 }
 
 /* Smooth scrolling for all elements */
