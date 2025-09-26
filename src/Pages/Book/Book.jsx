@@ -878,7 +878,7 @@ function BookContent() {
         <style>{`
           .btn-outline-primary:hover,
           .btn-outline-secondary:hover {
-            background: linear-gradient(135deg, #0d78c0, #027a8a) !important;
+            background: #0d78c0 !important;
             border-color: #0d78c0 !important;
             color: white !important;
             transform: translateY(-2px) !important;
@@ -886,7 +886,7 @@ function BookContent() {
           }
           
           .btn-primary:hover {
-            background: linear-gradient(135deg, #027a8a, #015f6b) !important;
+            background: #0d78c0 !important;
             transform: translateY(-2px) !important;
             box-shadow: 0 6px 20px rgba(3, 143, 173, 0.5) !important;
           }
@@ -897,7 +897,7 @@ function BookContent() {
           }
           
           .btn-primary {
-            background: linear-gradient(135deg, #0d78c0, #027a8a) !important;
+            background: #0d78c0 !important;
             border: none !important;
             box-shadow: 0 4px 12px rgba(3, 143, 173, 0.3) !important;
           }

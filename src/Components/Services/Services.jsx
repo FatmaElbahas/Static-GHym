@@ -102,11 +102,11 @@ export default function Services() {
   // Memoized services for better performance
   const displayedServices = useMemo(() => services.slice(0, 6), [services]);
   return (
-    <section className="services-section py-3" style={{ marginTop: '150px', marginBottom: '-80px' }}>
+    <section className="services-section py-1" style={{ marginTop: '80px', marginBottom: '40px' }}>
       <div className="container">
-        <div className="section-title-divider my-3 mb-5" style={{ marginTop: '40px' }}>
+        <div className="section-title-divider mt-0 mb-5" style={{ marginTop: '20px' }}>
           <hr />
-          <span className="title-pill" style={{ color: '#000000' }}>خدماتنا</span>
+          <span className="title-pill" style={{ color: '#0d78c0' }}>أبرز خدمات غيم</span>
         </div>
         <div id="services-cards" className="services-container mx-auto">
           {loading && (
@@ -121,8 +121,6 @@ export default function Services() {
             <div className="alert alert-danger text-center" role="alert">{error}</div>
           )}
           {!loading && !error && (
-          <>
-          {/* خدمات في شبكة 3x2 */}
           <div className="row g-4 justify-content-center">
             {displayedServices.map((service, idx) => (
               <div key={idx} className="col-md-6 col-lg-4">
@@ -186,8 +184,6 @@ export default function Services() {
               </div>
             ))}
           </div>
-
-          </>
           )}
         </div>
       </div>

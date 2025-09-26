@@ -834,7 +834,7 @@ export default function SidebarFilters() {
                 height: '80px',
                 borderRadius: '50%',
                 overflow: 'hidden',
-                background: 'var(--color-main)',
+                background: '#0d78c0',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
@@ -889,18 +889,18 @@ export default function SidebarFilters() {
                     window.location.reload();
                   }}
                   style={{
-                    borderColor: 'var(--color-main)',
-                    color: 'var(--color-main)',
+                    borderColor: '#0d78c0',
+                    color: '#0d78c0',
                     borderRadius: '20px',
                     transition: 'all 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = 'var(--color-main)';
+                    e.target.style.backgroundColor = '#0d78c0';
                     e.target.style.color = 'white';
                   }}
                   onMouseLeave={(e) => {
                     e.target.style.backgroundColor = 'transparent';
-                    e.target.style.color = 'var(--color-main)';
+                    e.target.style.color = '#0d78c0';
                   }}
                 >
                   <FontAwesomeIcon icon={faRotateLeft} className="me-2" />
@@ -1009,8 +1009,8 @@ export default function SidebarFilters() {
         
         .sidebar-filters .btn-outline-primary:hover,
         .sidebar-filters .btn-outline-secondary:hover {
-          background-color: var(--color-main) !important;
-          border-color: var(--color-main) !important;
+          background-color: #0d78c0 !important;
+          border-color: #0d78c0 !important;
           color: white !important;
         }
         
@@ -1033,7 +1033,7 @@ export default function SidebarFilters() {
         }
         
         .sidebar-filters .form-select option {
-          color: var(--color-main) !important;
+          color: #0d78c0 !important;
           background-color: white !important;
           font-weight: 500 !important;
         }
@@ -1041,48 +1041,48 @@ export default function SidebarFilters() {
         .sidebar-filters .form-select option:hover,
         .sidebar-filters .form-select option:focus,
         .sidebar-filters .form-select option:active {
-          background-color: var(--color-main) !important;
+          background-color: #0d78c0 !important;
           color: white !important;
-          background: var(--color-main) !important;
+          background: #0d78c0 !important;
           background-image: none !important;
         }
         
         /* تجاوز أقوى للـ hover */
         .sidebar-filters .form-select option:hover {
-          background: var(--color-main) !important;
-          background-color: var(--color-main) !important;
+          background: #0d78c0 !important;
+          background-color: #0d78c0 !important;
           color: white !important;
         }
         
         .sidebar-filters .form-select option:checked,
         .sidebar-filters .form-select option[selected] {
-          background-color: var(--color-main) !important;
+          background-color: #0d78c0 !important;
           color: white !important;
-          background: var(--color-main) !important;
+          background: #0d78c0 !important;
         }
         
         .sidebar-filters .form-select option:checked:hover,
         .sidebar-filters .form-select option[selected]:hover {
-          background-color: var(--color-main) !important;
+          background-color: #0d78c0 !important;
           color: white !important;
-          background: var(--color-main) !important;
+          background: #0d78c0 !important;
         }
         
         /* تجاوز ألوان المتصفح الافتراضية */
         .sidebar-filters .form-select option::-moz-selection {
-          background-color: var(--color-main) !important;
+          background-color: #0d78c0 !important;
           color: white !important;
         }
         
         .sidebar-filters .form-select option::selection {
-          background-color: var(--color-main) !important;
+          background-color: #0d78c0 !important;
           color: white !important;
         }
         
         /* تجاوز أقوى للمتصفحات المختلفة */
         .sidebar-filters .form-select option:hover {
-          background: var(--color-main) !important;
-          background-color: var(--color-main) !important;
+          background: #0d78c0 !important;
+          background-color: #0d78c0 !important;
           color: white !important;
           -webkit-appearance: none !important;
           -moz-appearance: none !important;
@@ -1091,13 +1091,13 @@ export default function SidebarFilters() {
         
         /* تجاوز خاص لـ Chrome و Safari */
         .sidebar-filters .form-select option:hover::-webkit-option {
-          background: var(--color-main) !important;
+          background: #0d78c0 !important;
           color: white !important;
         }
         
         /* تجاوز خاص لـ Firefox */
         .sidebar-filters .form-select option:hover::-moz-option {
-          background: var(--color-main) !important;
+          background: #0d78c0 !important;
           color: white !important;
         }
       `}</style>
@@ -1122,7 +1122,7 @@ export default function SidebarFilters() {
               height: '80px',
               borderRadius: '50%',
               overflow: 'hidden',
-              background: 'var(--color-main)',
+              background: '#0d78c0',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -1500,20 +1500,20 @@ export default function SidebarFilters() {
               className="btn btn-outline-secondary w-100"
               onClick={resetFilters}
             style={{
-                borderColor: 'var(--color-main)',
-                color: 'var(--color-main)',
+                borderColor: '#0d78c0',
+                color: '#0d78c0',
                 borderRadius: '25px',
                 height: '50px',
                 fontWeight: '500',
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
-                e.target.style.backgroundColor = 'var(--color-main)';
+                e.target.style.backgroundColor = '#0d78c0';
                 e.target.style.color = 'white';
               }}
               onMouseLeave={(e) => {
                 e.target.style.backgroundColor = 'transparent';
-                e.target.style.color = 'var(--color-main)';
+                e.target.style.color = '#0d78c0';
               }}
             >
               <FontAwesomeIcon icon={faRotateLeft} className="me-2" />

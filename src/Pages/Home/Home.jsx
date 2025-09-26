@@ -152,16 +152,16 @@ export default function Home() {
                   <h3 className="booking-question fw-bold mb-0" style={{
                     color: '#000000',
                     fontSize: window.innerWidth < 768 ? '1.5rem' : '2.2rem'
-                  }}>خدمتنا</h3>
+                  }}>خدمات غيم</h3>
                 </div>
                 <p className="booking-description text-muted fw-bold mb-0 text-nowrap" style={{
                   fontSize: window.innerWidth < 768 ? '0.9rem' : '1.25rem'
-                }}>احجز موعدك لدى <span style={{color: 'var(--color-main)', fontWeight: '900'}}>خدمتنا</span> بخطوات بسيطة....</p>
+                }}>احجز موعدك لدى <span style={{color: '#0d78c0', fontWeight: '900'}}>خدمات غيم</span> بخطوات بسيطة....</p>
               </div>
               <div className="booking-button flex-shrink-0">
                 <Link to="/offers" className="btn rounded-pill fw-bold" style={{
-                  backgroundColor: 'var(--color-main)', 
-                  borderColor: 'var(--color-main)', 
+                  backgroundColor: '#0d78c0', 
+                  borderColor: '#0d78c0', 
                   color: 'white',
                   fontSize: window.innerWidth < 768 ? '1.1rem' : '1.4rem',
                   padding: window.innerWidth < 768 ? '0.6rem 1.5rem' : '0.8rem 2.5rem',
@@ -189,7 +189,6 @@ export default function Home() {
         <div id="services-section" style={{ scrollMarginTop: '150px', marginTop: '48px' }}>
         <Services />
       </div>
-        <AboutUs />
       <Stats />
       
       <MostBookedDoctors />

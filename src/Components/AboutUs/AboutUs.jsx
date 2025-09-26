@@ -43,13 +43,34 @@ const AboutUs = () => {
           <span className="title-pill" style={{ color: '#000000' }}>من نحن</span>
         </div>
         <div className="row g-5 align-items-center">
-              {/* Text area */}
+          {/* Image area */}
+          <div className="col-12 col-lg-6 order-2 order-lg-2">
+            <div className="position-relative overflow-hidden" style={{ 
+              borderRadius: '20px', 
+              boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+              height: '500px'
+            }}>
+              <div
+                className="w-100 h-100"
+                style={{
+                  backgroundImage: `url(${imageUrl || TeamAbout})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '20px',
+                }}
+                aria-label="صورة تعريفية"
+                role="img"
+              />
+            </div>
+          </div>
+          {/* Text area */}
           <div className="col-12 col-lg-6 order-1 order-lg-1">
             <div className="ps-lg-4">
-              <h2 className="fw-normal mb-4" style={{ 
-                color: 'var(--color-main)', 
+              <h2 className="fw-normal mb-3" style={{ 
+                color: '#0d78c0', 
                 fontSize: '2rem',
-                lineHeight: '1.2'
+                lineHeight: '1.2',
+                marginTop: '0.5rem'
               }}>
                 نحن نؤمن بأن الصحة حق للجميع
               </h2>
@@ -147,32 +168,13 @@ const AboutUs = () => {
               
             </div>
           </div>
-          {/* Image area */}
-          <div className="col-12 col-lg-6 order-2 order-lg-2">
-            <div className="position-relative overflow-hidden" style={{ 
-              borderRadius: '20px', 
-              boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-              height: '500px'
-            }}>
-              <div
-                className="w-100 h-100"
-                style={{
-                  backgroundImage: `url(${imageUrl || TeamAbout})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '20px',
-                }}
-                aria-label="صورة تعريفية"
-                role="img"
-              />
-            </div>
-          </div>
+
         
         </div>
         {/* Section actions moved below content */}
-        <div className="text-center mt-5 about-actions">
+        <div className="text-center mt-4 about-actions">
           <a href="/all-services" className="btn fw-semibold rounded-pill shadow-sm mx-2 about-btn-primary">
-            خدمات غيم
+            استكشف خدماتنا
           </a>
           <a href="/contact" className="btn fw-semibold rounded-pill mx-2 about-btn-outline">
             تواصل معنا
