@@ -141,7 +141,7 @@ const Dashboard = () => {
                   className="btn btn-outline-light btn-sm p-2" 
                   onClick={handleLogout}
                   title="تسجيل الخروج"
-                  style={{ fontSize: '14px' }}
+                  style={{ fontSize: '14px', transform: 'scaleX(-1)' }}
                 >
                   <FontAwesomeIcon icon={faSignOutAlt} />
                 </button>

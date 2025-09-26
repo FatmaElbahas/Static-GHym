@@ -68,7 +68,7 @@ const AboutUs = () => {
             <div className="ps-lg-4">
               <h2 className="fw-normal mb-3" style={{ 
                 color: '#0d78c0', 
-                fontSize: window.innerWidth < 768 ? '0.6rem' : '2rem',
+                fontSize: window.innerWidth < 768 ? '0.75rem' : '2rem',
                 lineHeight: '1.2',
                 marginTop: '0.5rem',
                 whiteSpace: 'nowrap'
