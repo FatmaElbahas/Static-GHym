@@ -29,15 +29,6 @@ import jobsSystem from '../../assets/images/jobsSystem.png';
 import labResults from '../../assets/images/labResults.svg';
 import medInsurance from '../../assets/images/medInsurance.svg';
 import toothPlaceholder from '../../assets/images/الاسنان.png';
-// Offer-style images for static services grid
-import Offer1 from '../../assets/images/offer1.png';
-import Offer2 from '../../assets/images/offer2.jpg';
-import Offer3 from '../../assets/images/offer3.jpg';
-import Offer4 from '../../assets/images/offer4.png';
-import Offer5 from '../../assets/images/Offer_5.png';
-import Offer6 from '../../assets/images/Offer_6.png';
-import Offer7 from '../../assets/images/Offer_7.png';
-import Offer8 from '../../assets/images/Offer_8.png';
 
 // Static services data (to match exact visual cards like offers)
 const STATIC_SERVICES = [
