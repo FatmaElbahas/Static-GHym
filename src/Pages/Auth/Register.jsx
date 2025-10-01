@@ -2,10 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-  faEye, 
-  faEyeSlash,
-  faTimes,
-  faUserPlus
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
 const Register = () => {
@@ -18,8 +15,6 @@ const Register = () => {
     agreeToTerms: false
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -115,36 +110,39 @@ const Register = () => {
   }, [validateForm, formData]);
 
   return (
-    <div className="min-vh-100 bg-light d-flex align-items-center">
+    <div style={{ backgroundColor: '#f8f9fa', minHeight: '100vh', display: 'flex', alignItems: 'center', paddingTop: '2rem', paddingBottom: '2rem' }}>
       <div className="container">
-        <div className="row g-0 min-vh-100 d-flex align-items-center justify-content-start ">
-          <div className="col-lg-6 ">
-            <div className="w-full p-4">
-              <div className="text-center mb-4">
-                <div className="mb-3">
-                  <img 
-                    src="https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png" 
-                    alt="غيم" 
-                    className="img-fluid"
-                    style={{width: '80px', height: '80px'}}
-                  />
-                </div>
-                <h2 className="h3 fw-bold text-dark mb-0">انشاء حساب مركز طبي جديد</h2>
+        <div className="row justify-content-center">
+          <div className="col-12 col-md-10 col-lg-6">
+            <div className="bg-white rounded-4 shadow p-5">
+              <div className="text-end mb-5">
+                <h2 style={{ 
+                  color: '#484848', 
+                  fontWeight: '700', 
+                  fontSize: 'clamp(22px, 5vw, 28px)',
+                  marginBottom: '2.5rem'
+                }}>
+                  إنشاء حساب جديد
+                </h2>
               </div>
 
               {/* Form */}<form onSubmit={handleSubmit}>
                 {/* الاسم الكامل */}
-                <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    <span className="text-danger">*</span> الاسم الكامل
-                  </label>
+                <div className="mb-4">
                   <input
                     type="text"
                     name="fullname"
                     value={formData.fullname}
                     onChange={handleInputChange}
-                    className={`form-control form-control-lg ${errors.fullname ? 'is-invalid' : ''}`}
-                    placeholder="أدخل الاسم الكامل"
+                    className={`form-control ${errors.fullname ? 'is-invalid' : ''}`}
+                    style={{
+                      borderRadius: '10px',
+                      fontSize: '16px',
+                      padding: '1rem',
+                      border: '1px solid #e9ecef',
+                      backgroundColor: '#ffffff'
+                    }}
+                    placeholder="الاسم الكامل"
                   />
                   {errors.fullname && (
                     <div className="invalid-feedback">
@@ -155,17 +153,21 @@ const Register = () => {
                 </div>
 
                 {/* الهاتف */}
-                <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    <span className="text-danger">*</span> رقم الجوال
-                  </label>
+                <div className="mb-4">
                   <input
                     type="tel"
                     name="phone_number"
                     value={formData.phone_number}
                     onChange={handleInputChange}
-                    className={`form-control form-control-lg ${errors.phone_number ? 'is-invalid' : ''}`}
-                    placeholder="05XXXXXXXX"
+                    className={`form-control ${errors.phone_number ? 'is-invalid' : ''}`}
+                    style={{
+                      borderRadius: '10px',
+                      fontSize: '16px',
+                      padding: '1rem',
+                      border: '1px solid #e9ecef',
+                      backgroundColor: '#ffffff'
+                    }}
+                    placeholder="رقم الجوال"
                   />
                   {errors.phone_number && (
                     <div className="invalid-feedback">
@@ -176,17 +178,21 @@ const Register = () => {
                 </div>
 
                 {/* الإيميل */}
-                <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    <span className="text-danger">*</span> البريد الإلكتروني
-                  </label>
+                <div className="mb-4">
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`form-control form-control-lg ${errors.email ? 'is-invalid' : ''}`}
-                    placeholder="أدخل بريدك الإلكتروني"
+                    className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                    style={{
+                      borderRadius: '10px',
+                      fontSize: '16px',
+                      padding: '1rem',
+                      border: '1px solid #e9ecef',
+                      backgroundColor: '#ffffff'
+                    }}
+                    placeholder="البريد الإلكتروني"
                   />
                   {errors.email && (
                     <div className="invalid-feedback">
@@ -197,27 +203,22 @@ const Register = () => {
                 </div>
 
                 {/* كلمة المرور */}
-                <div className="mb-3">
-                  <label className="form-label fw-semibold">
-                    <span className="text-danger">*</span> كلمة المرور
-                  </label>
-                  <div className="input-group">
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      name="password"
-                      value={formData.password}
-                      onChange={handleInputChange}
-                      className={`form-control form-control-lg ${errors.password ? 'is-invalid' : ''}`}
-                      placeholder="أدخل كلمة المرور"
+                <div className="mb-4">
+                  <input
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                    style={{
+                      borderRadius: '10px',
+                      fontSize: '16px',
+                      padding: '1rem',
+                      border: '1px solid #e9ecef',
+                      backgroundColor: '#ffffff'
+                    }}
+                    placeholder="كلمة المرور"
                     />
-                    <button
-                      type="button"
-                      className="btn btn-outline-secondary"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                    </button>
-                  </div>
                   {errors.password && (
                     <div className="invalid-feedback">
                       <FontAwesomeIcon icon={faTimes} className="me-1" />
@@ -227,26 +228,22 @@ const Register = () => {
                 </div>
 
                 {/* تأكيد كلمة المرور */}
-                <div className="mb-4"><label className="form-label fw-semibold">
-                    <span className="text-danger">*</span> تأكيد كلمة المرور
-                  </label>
-                  <div className="input-group">
-                    <input
-                      type={showConfirmPassword ? 'text' : 'password'}
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleInputChange}
-                      className={`form-control form-control-lg ${errors.confirmPassword ? 'is-invalid' : ''}`}
-                      placeholder="أكد كلمة المرور"
-                    />
-                    <button
-                      type="button"
-                      className="btn btn-outline-secondary"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    >
-                      <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
-                    </button>
-                  </div>
+                <div className="mb-4">
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
+                    style={{
+                      borderRadius: '10px',
+                      fontSize: '16px',
+                      padding: '1rem',
+                      border: '1px solid #e9ecef',
+                      backgroundColor: '#ffffff'
+                    }}
+                    placeholder="تأكيد كلمة المرور"
+                  />
                   {errors.confirmPassword && (
                     <div className="invalid-feedback">
                       <FontAwesomeIcon icon={faTimes} className="me-1" />
@@ -258,21 +255,27 @@ const Register = () => {
                 {/* زرار الإنشاء */}
                 <button
                   type="submit"
-                  className="btn btn-primary btn-lg w-100 py-3"
+                  className="btn w-100 mt-2"
                   disabled={isSubmitting}
-                  style={{backgroundColor: '#0d78c0', borderColor: '#0d78c0', transition: 'all 0.3s ease'}}
+                  style={{
+                    borderRadius: '10px',
+                    fontSize: '16px',
+                    backgroundColor: '#DFD458',
+                    borderColor: '#DFD458',
+                    color: '#ffffff',
+                    fontWeight: '600',
+                    padding: '1rem',
+                    border: 'none',
+                    transition: 'all 0.3s ease'
+                  }}
                   onMouseEnter={(e) => {
                     if (!isSubmitting) {
-                      e.target.style.backgroundColor = 'white';
-                      e.target.style.borderColor = '#0d78c0';
-                      e.target.style.color = '#0d78c0';
+                      e.currentTarget.style.backgroundColor = '#C5B34E';
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!isSubmitting) {
-                      e.target.style.backgroundColor = '#0d78c0';
-                      e.target.style.borderColor = '#0d78c0';
-                      e.target.style.color = 'white';
+                      e.currentTarget.style.backgroundColor = '#DFD458';
                     }
                   }}
                 >
@@ -282,25 +285,29 @@ const Register = () => {
                       جاري إنشاء الحساب...
                     </>
                   ) : (
-                    <>
-                      <FontAwesomeIcon icon={faUserPlus} className="me-2" />
-                      انشاء حساب
-                    </>
+                    'إنشاء حساب'
                   )}
                 </button>
               </form>
 
               {/* Login Link */}
-              <div className="text-center mt-4">
-                <p className="mb-0 text-muted">
-                  هل لديك حساب بالفعل ؟ 
-                  <Link to="/login" className="text-decoration-none fw-semibold ms-1" style={{color: '#0d78c0'}}>
-                    سجل دخولك
-                  </Link>
-                </p>
+              <div className="text-end mt-5">
+                <Link 
+                  to="/login" 
+                  className="text-decoration-none d-inline-flex align-items-center gap-2"
+                  style={{ 
+                    color: '#DFD458', 
+                    fontSize: '15px', 
+                    fontWeight: '500' 
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#C5B34E'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#DFD458'}
+                >
+                  <span>هل لديك حساب؟ تسجيل الدخول</span>
+                </Link>
               </div>
             </div>
-          </div> 
+          </div>
         </div>
       </div>
     </div>

@@ -36,13 +36,13 @@ const AboutUs = () => {
     return () => controller.abort();
   }, []);
   return (
-    <section id="about" className='about-section my-5' dir="rtl" style={{ backgroundColor: '#f8f9fa', marginBottom: 0 }}>
+    <section id="about" className='about-section mt-5 mb-0' dir="rtl" style={{ backgroundColor: '#f8f9fa', marginBottom: '0!important' }}>
       <div className="container py-5">
         <div id="about-title" className="section-title-divider my-3 text-center">
           <hr />
           <span className="title-pill" style={{ color: '#000000' }}>من نحن</span>
         </div>
-        <div className="row g-5 align-items-center">
+        <div className="row g-5  align-items-center">
           {/* Image area */}
           <div className="col-12 col-lg-6 order-2 order-lg-2">
             <div className="position-relative overflow-hidden" style={{ 
@@ -64,7 +64,7 @@ const AboutUs = () => {
             </div>
           </div>
           {/* Text area */}
-          <div className="col-12 col-lg-6 order-1 order-lg-1">
+          <div className="col-12 col-lg-6 order-1 mt-0 order-lg-1 d-flex align-items-start" >
             <div className="ps-lg-4">
               <h2 className="fw-normal mb-3" style={{ 
                 color: '#0d78c0', 
@@ -84,7 +84,7 @@ const AboutUs = () => {
                 {aboutText && !isLoading ? aboutText : 'تأسس مركز غيم الطبي على رؤية واضحة: تقديم رعاية صحية استثنائية تجمع بين الخبرة الطبية العالية والتقنيات الحديثة والخدمة الإنسانية المتميزة. نلتزم بمعايير الجودة العالمية في جميع خدماتنا الطبية.'}
               </p>
 
-              <div className="row g-3">
+              <div className="row gy-4 gx-3">
                 <div className="col-12 col-md-6">
                   <div className="d-flex align-items-start gap-3">
                     <div className="flex-shrink-0" style={{

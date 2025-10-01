@@ -8,7 +8,9 @@ import {
   faLock,
   faTimes,
   faSignInAlt,
-  faCheckCircle
+  faCheckCircle,
+  faArrowRight,
+  faUserPlus
 } from '@fortawesome/free-solid-svg-icons';
 
 const logo = "https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png";
@@ -149,23 +151,66 @@ const Login = () => {
   };
 
   return (
-    <div className="min-vh-100 bg-light d-flex align-items-center">
-      <div className="container-fluid">
-        <div className="row g-0 min-vh-100">
-          {/* Left Side - Form */}
-          <div className="col-lg-6 d-flex align-items-center justify-content-center bg-white">
-            <div className="w-100 p-3" style={{maxWidth: '500px'}}>
+    <>
+      <style>{`
+        body {
+          margin-top: 0 !important;
+          padding-top: 0 !important;
+        }
+      `}</style>
+      
+      {/* Login Navbar */}
+      <nav className="bg-white shadow-sm" style={{ padding: '0.7rem 0', marginTop: 0, position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000 }}>
+        <div className="container">
+          <div className="d-flex justify-content-between align-items-center">
+            {/* Back Arrow */}
+            <button
+              onClick={() => navigate('/')}
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                border: '1px solid #e9ecef',
+                backgroundColor: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                color: '#484848',
+                fontSize: '16px'
+              }}
+            >
+              <FontAwesomeIcon icon={faArrowRight} />
+            </button>
+
+            {/* Logo */}
+            <img 
+              src={logo}
+              alt="Root" 
+              style={{width: '85px', height: 'auto'}}
+            />
+
+            {/* Empty div for spacing */}
+            <div style={{ width: '40px' }}></div>
+          </div>
+        </div>
+      </nav>
+
+    <div style={{ backgroundColor: '#f8f9fa', minHeight: '100vh', display: 'flex', alignItems: 'center', paddingTop: '5rem', paddingBottom: '2rem' }}>
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-12 col-md-10 col-lg-6">
+            <div className="bg-white rounded-4 shadow p-5 p-lg-5">
               {/* Header */}
-              <div className="text-center mb-3">
-                <div className="mb-2">
-                  <img 
-                    src={logo}
-                    alt="غيم" 
-                    className="img-fluid"
-                    style={{width: '80px', height: '80px'}}
-                  />
-                </div>
-                <h2 className="h4 fw-bold text-dark mb-0">تسجيل الدخول</h2>
+              <div className="text-end mb-5">
+                <h2 style={{ 
+                  color: '#484848', 
+                  fontWeight: '700', 
+                  fontSize: 'clamp(22px, 5vw, 28px)',
+                  marginBottom: '2.5rem'
+                }}>
+                  تسجيل الدخول
+                </h2>
               </div>
 
               {/* Form */}
@@ -212,10 +257,7 @@ const Login = () => {
                     )}
 
                     {/* البريد الإلكتروني */}
-                    <div className="mb-3">
-                      <label className="form-label fw-semibold" style={{fontSize: '0.9rem'}}>
-                        <span className="text-danger">*</span> البريد الإلكتروني
-                      </label>
+                    <div className="mb-4">
                       <Field name="email">
                         {({ field, meta }) => (
                           <div>
@@ -223,7 +265,13 @@ const Login = () => {
                               {...field}
                               type="email"
                               className={`form-control ${meta.touched && meta.error ? 'is-invalid' : ''}`}
-                              style={{borderRadius: '10px', fontSize: '0.9rem'}}
+                              style={{
+                                borderRadius: '10px', 
+                                fontSize: '16px',
+                                padding: '1rem',
+                                border: '1px solid #e9ecef',
+                                backgroundColor: '#ffffff'
+                              }}
                               placeholder="أدخل بريدك الإلكتروني"
                               onChange={(e) => {
                                 const formattedValue = e.target.value.toLowerCase();
@@ -245,9 +293,6 @@ const Login = () => {
 
                     {/* كلمة المرور */}
                     <div className="mb-4">
-                      <label className="form-label fw-semibold" style={{fontSize: '0.9rem'}}>
-                        <span className="text-danger">*</span> كلمة المرور
-                      </label>
                       <Field name="password">
                         {({ field, meta }) => (
                           <div>
@@ -255,7 +300,13 @@ const Login = () => {
                               {...field}
                               type="password"
                               className={`form-control ${meta.touched && meta.error ? 'is-invalid' : ''}`}
-                              style={{borderRadius: '10px', fontSize: '0.9rem'}}
+                              style={{
+                                borderRadius: '10px', 
+                                fontSize: '16px',
+                                padding: '1rem',
+                                border: '1px solid #e9ecef',
+                                backgroundColor: '#ffffff'
+                              }}
                               placeholder="أدخل كلمة المرور"
                               onChange={(e) => {
                                 const formattedValue = e.target.value.replace(/\s/g, '');
@@ -278,15 +329,29 @@ const Login = () => {
                     {/* زر تسجيل الدخول */}
                     <button
                       type="submit"
-                      className="btn btn-primary w-100 py-2"
+                      className="btn w-100 mt-2"
                       style={{
                         borderRadius: '10px', 
-                        fontSize: '0.9rem', 
-                        backgroundColor: status === 'success' ? '#28a745' : '#0d78c0', 
-                        borderColor: status === 'success' ? '#28a745' : '#0d78c0',
+                        fontSize: '16px', 
+                        backgroundColor: status === 'success' ? '#28a745' : '#DFD458', 
+                        borderColor: status === 'success' ? '#28a745' : '#DFD458',
+                        color: '#ffffff',
+                        fontWeight: '600',
+                        padding: '1rem',
+                        border: 'none',
                         transition: 'all 0.3s ease'
                       }}
                       disabled={isSubmitting || status === 'success'}
+                      onMouseEnter={(e) => {
+                        if (status !== 'success' && !isSubmitting) {
+                          e.currentTarget.style.backgroundColor = '#C5B34E';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (status !== 'success') {
+                          e.currentTarget.style.backgroundColor = '#DFD458';
+                        }
+                      }}
                     >
                       {status === 'success' ? (
                         <>
@@ -299,10 +364,7 @@ const Login = () => {
                           جاري تسجيل الدخول...
                         </>
                       ) : (
-                        <>
-                          <FontAwesomeIcon icon={faSignInAlt} className="me-2" />
-                          تسجيل الدخول
-                        </>
+                        'دخول'
                       )}
                     </button>
                   </Form>
@@ -310,35 +372,28 @@ const Login = () => {
               </Formik>
 
               {/* Register Link */}
-              <div className="text-center mt-4">
-                <p className="mb-0 text-muted">
-                  ليس لديك حساب ؟
-                  <Link to="/register" className="text-decoration-none fw-semibold ms-1" style={{color: '#0d78c0'}}>
-                    إنشاء حساب جديد
-                  </Link>
-                </p>
+              <div className="text-end mt-5">
+                <Link 
+                  to="/register" 
+                  className="text-decoration-none d-inline-flex align-items-center gap-2"
+                  style={{ 
+                    color: '#DFD458 !important', 
+                    fontSize: '15px', 
+                    fontWeight: '500' 
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#C5B34E'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#DFD458'}
+                >
+                  <FontAwesomeIcon icon={faUserPlus} style={{ color: '#DFD458' }} />
+                  <span style={{ color: '#DFD458' }}>إنشاء حساب</span>
+                </Link>
               </div>
-            </div>
-          </div>
-
-          {/* Right Side - Image */}
-          <div className="col-lg-6 d-none d-lg-flex align-items-center justify-content-center bg-light">
-            <div className="text-center">
-              <div 
-                style={{
-                  width: '500px',
-                  height: '400px',
-                  backgroundImage: `url('/login.svg')`,
-                  backgroundSize: 'contain',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center'
-                }}
-              />
             </div>
           </div>
         </div>
       </div>
     </div>
+    </>
   );
 };
 

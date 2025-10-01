@@ -1,152 +1,145 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React from 'react';
+import commentImg from '../../assets/images/comment.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-const API_URL = 'https://enqlygo.com/api/salons/reviews';
-
-const Stars = ({ count = 5 }) => {
-  return (
-    <div className="d-flex gap-1 justify-content-center align-items-center">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <span 
-          key={i} 
-          style={{ 
-            color: i < count ? '#F5C518' : '#E0E0E0',
-            fontSize: '16px',
-            fontWeight: 'bold'
-          }}
-        >
-          ★
-        </span>
-      ))}
-    </div>
-  );
-};
+const STATIC_TESTIMONIALS = [
+  {
+    id: 1,
+    name: 'fatma elbahas',
+    text:
+      'ألف شكر للدكتور مهاب محمد على تعامله الراقي ومصداقيته وأمانته مثال للدكتور الأمين والخلص في عمله',
+  },
+  {
+    id: 2,
+    name: 'fatma elbahas',
+    text: 'تجربة ممتازة وخدمة سريعة، أنصح الجميع. شكراً على الاحترافية العالية.',
+  },
+  {
+    id: 3,
+    name: 'fatma elbahas',
+    text: 'أفضل عيادة تعاملت معها. اهتمام بالتفاصيل واحترام للمواعيد.',
+  },
+  {
+    id: 4,
+    name: 'fatma elbahas',
+    text: 'خدمة رائعة وتعامل محترم جدًا، تجربة تستحق التكرار.',
+  },
+  {
+    id: 5,
+    name: 'fatma elbahas',
+    text: 'النتيجة ممتازة والدعم سريع. شكراً لكم.',
+  },
+  {
+    id: 6,
+    name: 'fatma elbahas',
+    text: 'اهتمام واضح براحة العميل من أول لحظة.',
+  },
+  {
+    id: 7,
+    name: 'fatma elbahas',
+    text: 'دقة في المواعيد وأسعار مناسبة وجودة عالية.',
+  },
+  {
+    id: 8,
+    name: 'fatma elbahas',
+    text: 'تعامل راقٍ ونتائج مبهرة. أوصي بها للجميع.',
+  },
+  {
+    id: 9,
+    name: 'fatma elbahas',
+    text: 'شكراً لاهتمامكم بالتفاصيل وحرصكم على رضا العميل.',
+  },
+];
 
 const Testimonials = () => {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const res = await fetch(API_URL);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const json = await res.json();
-        const list = (json && json.data && json.data.data) || [];
-        const mapped = list.map((r) => ({
-          id: r.id,
-          name: (r.user && (r.user.fullname || r.user.identity)) || 'مستخدم',
-          clinic: (r.salon && r.salon.salon_name) || 'غير محدد',
-          doctor: (r.salon && r.salon.owner_name) || 'غير محدد',
-          text: r.comment || '',
-          avatar: (r.user && r.user.profile_image) || 'https://www.w3schools.com/howto/img_avatar.png',
-          rating: r.rating || 0,
-        }));
-        setItems(mapped);
-      } catch (e) {
-        setError(e.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchReviews();
-  }, []);
-
-  const slides = useMemo(() => items.map((t) => (
-    <SwiperSlide key={t.id}>
-      <div className="testimonial-card rounded-4 shadow-sm p-4 bg-white ">
-        <div className="d-flex align-items-start mb-3">
-          <img 
-            src={t.avatar} 
-            alt={t.name} 
-            className="rounded-circle" 
-            style={{ width: 56, height: 56, objectFit: 'cover', marginLeft: '20px' }}
-            loading="lazy"
-            decoding="async"
-            onError={(e) => {
-              e.target.src = 'https://www.w3schools.com/howto/img_avatar.png';
-            }}
-          />
-          <div className="text-end flex-grow-1">
-            <h6 className="mb-1 fw-bold" style={{ color: '#0d78c0' }}>{t.name}</h6>
-            <small className="d-block text-muted">{t.clinic}</small>
-            <small className="d-block text-muted">{t.doctor}</small>
-            <div className="d-flex gap-1  align-items-center mt-1">
-              {Array.from({ length: t.rating }).map((_, i) => (
-                <span 
-                  key={i} 
-                  style={{ 
-                    color: '#F5C518',
-                    fontSize: '14px',
-                    fontWeight: 'bold'
-                  }}
-                >
-                  ★
-                </span>
-              ))}
-            </div>
-           
-          </div>
-        </div>
-        <p className="mb-0 text-center " style={{ color: '#0d78c0', fontWeight: 700, fontSize: '20px' }}>"{t.text}"</p>
-      </div>
-    </SwiperSlide>
-  )), [items]);
-
-  if (loading) {
-    return (
-      <section className="partners-swiper-section py-5">
-        <div className="container text-center">
-          <div className="spinner-border text-primary" role="status"><span className="visually-hidden">تحميل...</span></div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section className="partners-swiper-section py-5">
-        <div className="container text-center">
-          <p className="text-danger">تعذر تحميل آراء العملاء</p>
-        </div>
-      </section>
-    );
-  }
-
-  if (items.length === 0) {
-    return null;
-  }
-
   return (
-    <section className="partners-swiper-section py-5">
-      <div className="container">
-        <div className="section-title-divider my-3">
-          <hr />
-          <span className="title-pill" style={{ color: '#000000' }}>آراء العملاء</span>
+    <section className="py-0 testimonials" style={{ backgroundColor: 
+    
+    
+    
+    
+    
+    
+    
+    
+    '#ffffff' }}>
+      <div className="mx-auto" style={{ width: '90%' }}>
+        <div className="mb-4 text-end" style={{ marginTop: '20px', paddingRight: '10px' }}>
+          <h2 className="m-0" style={{ color: '#484848', fontWeight: 800, fontSize: '34px' }}>آراء العملاء</h2>
         </div>
+
         <Swiper
-          modules={[Autoplay, Navigation, Pagination]}
+          modules={[Autoplay, Pagination]}
           spaceBetween={24}
           slidesPerView={1}
+          breakpoints={{ 576: { slidesPerView: 1 }, 768: { slidesPerView: 2 }, 1200: { slidesPerView: 3 } }}
+          autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: false }}
           loop={true}
-          autoplay={{ delay: 3500, disableOnInteraction: false }}
-          pagination={{ clickable: true }}
-          navigation
-          breakpoints={{
-            768: { slidesPerView: 2, spaceBetween: 24 },
-            1200: { slidesPerView: 3, spaceBetween: 24 },
+          allowTouchMove={false}
+          pagination={{ 
+            clickable: true,
+            dynamicBullets: false
           }}
-          className="partners-swiper"
         >
-          {slides}
+          {STATIC_TESTIMONIALS.map((t) => (
+            <SwiperSlide key={t.id}>
+              <div
+                className="position-relative rounded-4"
+                style={{
+                  background: '#ffffff',
+                  border: '1px solid #f0f0f0',
+                  boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
+                  padding: '24px',
+                  minHeight: '220px',
+                  overflow: 'hidden',
+                }}
+              >
+                <div
+                  aria-hidden
+                  style={{
+                    position: 'absolute',
+                    insetInlineStart: '16px',
+                    top: '0px',
+                    bottom: 'auto',
+                    width: '200px',
+                    height: '200px',
+                    opacity: 0.05,
+                    color: '#000',
+                    pointerEvents: 'none',
+                  }}
+                >
+                  <img src={commentImg} alt="comment" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                </div>
+
+                <p
+                  className="mb-3"
+                  style={{
+                    color: '#484848',
+                    fontSize: '20px',
+                    lineHeight: 1.8,
+                    textAlign: 'start',
+                    margin: 0,
+                  }}
+                >
+                  {t.text}
+                </p>
+
+                <div className="mt-3 d-flex justify-content-end">
+                  <span className="fw-bold" style={{ color: '#DFD458' }}>{t.name}</span>
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
         </Swiper>
+
+        <style>{`
+          .testimonials .swiper-scrollbar { display: none !important; }
+          .testimonials .swiper-scrollbar-drag { display: none !important; }
+          @media (max-width: 576px) { .testimonial-card { padding: 20px; } }
+        `}</style>
       </div>
     </section>
   );

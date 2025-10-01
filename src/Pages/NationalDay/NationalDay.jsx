@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
-const OffersPage = () => {
+const NationalDay = () => {
   const [sortBy, setSortBy] = useState('الافتراضي');
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
@@ -324,7 +324,7 @@ const OffersPage = () => {
         </>
       )}
 
-    <div className="mt-5" style={{ backgroundColor: '#ffffff', minHeight: '100vh', paddingTop: '40px' }}>
+    <div className="mt-5 national-day-page-container" style={{ backgroundColor: '#ffffff', minHeight: '100vh', paddingTop: '40px' }}>
       <div className="container py-4" style={{ maxWidth: '1400px', margin: '0 auto' }}>
         
         {/* العنوان الرئيسي */}
@@ -358,7 +358,7 @@ const OffersPage = () => {
           </div>
 
           {/* الفلترة والترتيب */}
-          <div className="d-flex gap-3 flex-wrap order-1 order-lg-2">
+          <div className="d-flex gap-3 flex-wrap order-1 order-lg-2 products-filter-buttons">
             {/* تصفية النتائج */}
             <button 
               onClick={() => setShowFilterModal(true)}
@@ -479,7 +479,7 @@ const OffersPage = () => {
         {/* المنتجات Grid */}
         <div className="row g-3">
           {products.map((product) => (
-            <div key={product.id} className="col-6 col-md-4 col-lg-3">
+            <div key={product.id} className="col-12 col-lg-3">
               <div className="h-100">
                 <div className="card w-100 h-100 border-0 position-relative product-offer-card" style={{ 
                   maxWidth: '100%',
@@ -654,4 +654,4 @@ const OffersPage = () => {
   );
 };
 
-export default OffersPage;
+export default NationalDay;

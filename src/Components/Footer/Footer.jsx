@@ -1,79 +1,107 @@
-import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebookF, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
-
-const logo1 = "https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png";
+import { faPhone, faEnvelope, faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { faTwitter, faInstagram, faTiktok, faSnapchat } from '@fortawesome/free-brands-svg-icons';
+import tabbyIcon from '../../assets/images/tabby2.svg';
+import tamaraIcon from '../../assets/images/tamara2.svg';
+import amexIcon from '../../assets/images/amex.webp';
+import mastercardIcon from '../../assets/images/mastercard-circle.png';
+import visaIcon from '../../assets/images/visa-circle.png';
+import madaIcon from '../../assets/images/mada-circle.webp';
+import applePayIcon from '../../assets/images/apple_pay.svg';
+import bankTransferIcon from '../../assets/images/bankTransfer.png';
+import vatIcon from '../../assets/images/vat.svg';
 
 export default function Footer() {
+  const socialIcons = [
+    { icon: faInstagram, hoverColor: '#E1306C' },
+    { icon: faTiktok, hoverColor: '#000000' },
+    { icon: faTwitter, hoverColor: '#1DA1F2' },
+    { icon: faSnapchat, hoverColor: '#FFFC00' },
+    { icon: faGlobe, hoverColor: null },
+    { icon: faEnvelope, hoverColor: '#EA4335' },
+    { icon: faPhone, hoverColor: '#25D366' }
+  ];
+
   return (
-    <footer className="py-5 mt-4 text-white" style={{ backgroundColor: '#1F2937' }}>
-      <div className="container">
-        {/* التصميم الجديد مثل الصورة */}
-        <div className="row">
-          {/* العمود الأول - MediCare Branding & Socials */}
-          <div className="col-md-3 mb-4 text-center text-md-start">
-            <div className="d-flex align-items-center gap-3 mb-3 justify-content-center justify-content-md-start">
-              <div className="bg-white rounded p-2 me-4" style={{ width: '40px', height: '40px' }}>
-                <img src={logo1} alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-              </div>
-              <h3 className="fw-bold mb-0" style={{ fontSize: window.innerWidth < 768 ? '1.8rem' : '2.2rem', color: 'var(--color-main)' }}>غيم</h3>
+    <footer className="mt-4" style={{ backgroundColor: '#ffffff', width: '90%', margin: '0 auto' }}>
+      <div className="py-5">
+        <div className="foot1" style={{ backgroundColor: '#F9F9F9' }}>
+          <div className="d-flex flex-wrap align-items-start justify-content-between gap-5 py-5">
+            {/* أيقونات التواصل */}
+            <div className="footer-social-icons mx-auto">
+              {socialIcons.map((item, idx) => (
+                <div 
+                  key={idx} 
+                  className="footer-social-icon-box"
+                  onMouseEnter={(e) => {
+                    if (item.hoverColor) {
+                      if (item.hoverColor.includes('gradient')) {
+                        e.currentTarget.style.background = item.hoverColor;
+                      } else {
+                        e.currentTarget.style.backgroundColor = item.hoverColor;
+                      }
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (item.hoverColor) {
+                      e.currentTarget.style.background = '#ffffff';
+                      e.currentTarget.style.backgroundColor = '#ffffff';
+                    }
+                  }}
+                >
+                  <FontAwesomeIcon icon={item.icon} style={{ color: '#DFD458' }} className="footer-icon" />
+                </div>
+              ))}
             </div>
-            <p className="text-white-50 mb-3" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1rem', lineHeight: '1.4' }}>
-              نقدم خدمات رعاية صحية استثنائية بالرحمة والخبرة.
-            </p>
-            <div className="d-flex gap-3 justify-content-center justify-content-md-start">
-              <div className="bg-white rounded-circle d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
-                <FontAwesomeIcon icon={faFacebookF} style={{ color: '#1976D2' }} />
+
+            {/* روابط مهمة */}
+            <div className="flex-grow-1 footer-links-section" style={{ minWidth: '260px' }}>
+              <div className="d-none d-lg-block">
+                <h2 className="mb-3" style={{ color: '#484848', fontSize: '30px', fontWeight: '500' }}>روابط مهمة</h2>
+                <ul className="list-unstyled m-0" style={{ color: '#484848', lineHeight: 2, paddingRight: 0 }}>
+                  <li>- سياسة الخصوصية</li>
+                  <li>- تواصل معنا</li>
+                  <li>- خريطة الموقع</li>
+                  <li>- حجز مواعيد</li>
+                </ul>
               </div>
-              <div className="bg-white rounded-circle d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
-                <FontAwesomeIcon icon={faTwitter} style={{ color: '#1976D2' }} />
-              </div>
-              <div className="bg-white rounded-circle d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
-                <FontAwesomeIcon icon={faInstagram} style={{ color: '#1976D2' }} />
+
+              {/* شعارات وسائل الدفع */}
+              <div className="footer-payment-icons mx-auto">
+                {[
+                  { src: applePayIcon, alt: 'Apple Pay' },
+                  { src: madaIcon, alt: 'Mada' },
+                  { src: visaIcon, alt: 'Visa' },
+                  { src: mastercardIcon, alt: 'Mastercard' },
+                  { src: amexIcon, alt: 'American Express' },
+                  { src: tamaraIcon, alt: 'Tamara' },
+                  { src: tabbyIcon, alt: 'Tabby' },
+                  { src: bankTransferIcon, alt: 'Bank Transfer' },
+                ].map((item, i) => (
+                  <div key={i} className="footer-payment-icon-box">
+                    <img src={item.src} alt={item.alt} loading="lazy" className="footer-payment-img" />
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-
-          {/* العمود الثاني - الروابط السريعة */}
-          <div className="col-md-3 mb-4 text-center text-md-start">
-            <h5 className="fw-bold text-white mb-3" style={{ fontSize: window.innerWidth < 768 ? '1rem' : '1.2rem' }}>الروابط السريعة</h5>
-            <ul className="list-unstyled">
-              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1.1rem' }}>الرئيسية</a></li>
-              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1.1rem' }}>الخدمات</a></li>
-              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1.1rem' }}>الأطباء</a></li>
-              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1.1rem' }}>من نحن</a></li>
-            </ul>
-          </div>
-
-          {/* العمود الثالث - الخدمات */}
-          <div className="col-md-3 mb-4 text-center text-md-start">
-            <h5 className="fw-bold text-white mb-3" style={{ fontSize: window.innerWidth < 768 ? '1rem' : '1.2rem' }}>الخدمات</h5>
-            <ul className="list-unstyled">
-              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1.1rem' }}>طب القلب</a></li>
-              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1.1rem' }}>طب الأعصاب</a></li>
-              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1.1rem' }}>طب الأطفال</a></li>
-              <li className="mb-2"><a href="#" className="text-white-50 text-decoration-none" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1.1rem' }}>المختبر</a></li>
-            </ul>
-          </div>
-
-          {/* العمود الرابع - معلومات الاتصال */}
-          <div className="col-md-3 mb-4 text-center text-md-start">
-            <h5 className="fw-bold text-white mb-3" style={{ fontSize: window.innerWidth < 768 ? '1rem' : '1.2rem' }}>معلومات الاتصال</h5>
-            <ul className="list-unstyled ">
-              <li className="mb-2 text-white-50" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1.1rem' }}>شارع الملك فهد، حي الملز</li>
-              <li className="mb-2 text-white-50" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1.1rem' }}>الرياض، المملكة العربية السعودية</li>
-              <li className="mb-2 text-white-50" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1.1rem' }}>+966 11 123 4567</li>
-              <li className="mb-2 text-white-50" style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1.1rem' }}>info@blsmy-medical.com</li>
-            </ul>
           </div>
         </div>
 
-        {/* خط فاصل */}
-        <hr className="border-secondary my-4" />
-
-        {/* حقوق النشر */}
-        <div className="text-center">
-          <p className="text-white-50 mb-0" style={{ fontSize: '1rem' }}>© 2024 مركز غيم الطبي. جميع الحقوق محفوظة.</p>
+        {/* سطر سفلي */}
+        <div className="footer-bottom-section">
+          <div className="footer-zid-section">
+            <span>صنع بواسطة زد</span>
+            <img
+              src="https://media.zid.store/d297fb8b-c322-412e-a2f4-ffa96dc57022/b6aca386-4eeb-4e0f-8009-35ca7063d184.svg"
+              alt="Zid"
+              className="footer-zid-logo"
+              loading="lazy"
+            />
+            <div className="footer-vat-box">
+              <img src={vatIcon} alt="VAT" className="footer-vat-img" />
+            </div>
+          </div>
+          <div className="footer-registry-text">رقم السجل التجاري: 1010796858</div>
         </div>
       </div>
     </footer>

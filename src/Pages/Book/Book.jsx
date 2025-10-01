@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faSearch, 
-  faUsers, 
   faTimes, 
   faRotateLeft,
   faFilter
@@ -138,6 +137,7 @@ function BookContent() {
   const [citiesLoading, setCitiesLoading] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const hasLoadedRef = useRef(false);
 
   // جلب المدن من API
@@ -274,8 +274,7 @@ function BookContent() {
         }
         
         // تطبيق فلاتر إضافية من الـ form
-        const newFilte
-         = {
+        const newFilters = {
           ...filters,
           // البحث في النص إذا كان موجود
           owner_name: searchQuery.trim() ? searchQuery : '',
@@ -455,81 +454,36 @@ function BookContent() {
     setSearchQuery("");
     setSelectedCity("الكل");
     setSearchResults([]);
-    hasLoadedRef.current = false; // عشان يسمح بجلب البيانات تاني
-    
+    setError(null);
+    // إعادة تعيين جميع الفلاتر
+    resetFilters();
+    // السماح بإعادة الجلب ثم الجلب فعلياً
+    hasLoadedRef.current = false;
     try {
       setIsLoading(true);
       console.log('🔄 Fetching all doctors again from API...');
       const response = await fetch("https://enqlygo.com/api/salons");
       const result = await response.json();
-      
       if (result.status === "success" && result.data && result.data.length > 0) {
         console.log('✅ Doctors reset - count:', result.data.length);
-        setSearchResults(result.data);
         updateAllData(result.data);
-        
-        // إعادة تعيين الفلاتر
-        updateFilters({
-          owner_name: '',
-          salon_name: '',
-          city: ''
-        });
+        setSearchResults(result.data);
+        hasLoadedRef.current = true;
       } else {
         console.log('❌ No doctors found in reset');
-        setSearchResults([]);
         updateAllData([]);
+        setSearchResults([]);
       }
-    } catch (error) {
-      console.error('❌ Error resetting search:', error);
-      alert("حدث خطأ أثناء إعادة تحميل الأطباء");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [updateAllData, updateFilters]);
-
-  // دالة عرض جميع الأطباء
-  const showAllDoctors = useCallback(async () => {
-    console.log('🔄 Showing all doctors...');
-    setSearchQuery("");
-    setSelectedCity("الكل");
-    setError(null);
-    
-    // إعادة تعيين searchResults لعرض جميع البيانات
-    setSearchResults([]);
-    
-    // إعادة تعيين hasLoadedRef للسماح بإعادة جلب البيانات
-    hasLoadedRef.current = false;
-    
-    try {
-      setIsLoading(true);
-      console.log('🔄 Fetching all doctors from API...');
-      const response = await fetch("https://enqlygo.com/api/salons");
-      const result = await response.json();
-      
-      if (result.status === "success" && result.data && result.data.length > 0) {
-        console.log('✅ All doctors count:', result.data.length);
-        
-        // تحديث البيانات في الفلتر مباشرة
-        updateAllData(result.data);
-        
-        // إعادة تعيين جميع الفلاتر
-        resetFilters();
-        
-        // تعيين hasLoadedRef
-        hasLoadedRef.current = true;
-        
-        console.log('✅ All doctors displayed successfully');
-      } else {
-        console.log('❌ No doctors found in API response');
-        setError('لم يتم العثور على أطباء');
-      }
-    } catch (error) {
-      console.error('❌ Error fetching all doctors:', error);
-      setError('حدث خطأ في جلب البيانات');
+    } catch (err) {
+      console.error('❌ Error resetting search:', err);
+      setError('حدث خطأ أثناء إعادة تحميل الأطباء');
+      alert('حدث خطأ أثناء إعادة تحميل الأطباء');
     } finally {
       setIsLoading(false);
     }
   }, [updateAllData, resetFilters]);
+
+  // تم الاكتفاء بزر إعادة التعيين لإظهار جميع الأطباء
 
 
   // جلب الأطباء من API عند تحميل الصفحة (مرة واحدة فقط)
@@ -740,7 +694,7 @@ function BookContent() {
                 <div className="d-flex align-items-center gap-2">
               {/* Search Button */}
                 <button 
-                    className="btn btn-primary bg-main border-0"
+                    className="btn btn-primary bg-main border-0 btn-search"
                   onClick={handleSearch}
                   disabled={isSearching || isLoading}
                     title="بحث"
@@ -784,51 +738,10 @@ function BookContent() {
                   )}
                 </button>
                   
-                  {/* Show All Doctors Button */}
-                    <button 
-                      className="btn btn-outline-primary"
-                      onClick={showAllDoctors}
-                      disabled={isLoading}
-                    title="عرض جميع الأطباء"
-                      style={{ 
-                      width: '50px',
-                        height: '50px', 
-                        fontSize: '1rem',
-                        fontWeight: '500',
-                        boxShadow: '0 3px 6px rgba(0,0,0,0.15)',
-                      borderRadius: '50%',
-                      borderColor: '#0d78c0',
-                      color: '#0d78c0',
-                      transition: 'all 0.3s ease',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = 'white';
-                      e.target.style.color = '#0d78c0';
-                      e.target.style.borderColor = '#0d78c0';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'transparent';
-                      e.target.style.color = '#0d78c0';
-                      e.target.style.borderColor = '#0d78c0';
-                      }}
-                    >
-                      {isLoading ? (
-                        <>
-                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        </>
-                      ) : (
-                        <>
-                        <FontAwesomeIcon icon={faUsers} />
-                        </>
-                      )}
-                    </button>
-                  
+              
                   {/* Reset Search Button */}
                   <button 
-                    className="btn btn-outline-primary"
+                    className="btn btn-outline-primary btn-reset"
                     onClick={resetSearch}
                     disabled={isLoading}
                     title="إعادة تعيين البحث"
@@ -846,16 +759,6 @@ function BookContent() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = 'white';
-                      e.target.style.color = '#0d78c0';
-                      e.target.style.borderColor = '#0d78c0';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'transparent';
-                      e.target.style.color = '#0d78c0';
-                      e.target.style.borderColor = '#0d78c0';
                     }}
                   >
                     <FontAwesomeIcon icon={faRotateLeft} />
@@ -884,11 +787,25 @@ function BookContent() {
             transform: translateY(-2px) !important;
             box-shadow: 0 6px 20px rgba(3, 143, 173, 0.4) !important;
           }
+          /* Force Reset button to turn white on hover */
+          .btn-reset:hover {
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            color: #0d78c0 !important;
+            border-color: #0d78c0 !important;
+          }
           
           .btn-primary:hover {
             background: #0d78c0 !important;
             transform: translateY(-2px) !important;
             box-shadow: 0 6px 20px rgba(3, 143, 173, 0.5) !important;
+          }
+          /* Force Search button to turn white on hover */
+          .btn-search:hover {
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            color: #0d78c0 !important;
+            border-color: #0d78c0 !important;
           }
           
           .btn {

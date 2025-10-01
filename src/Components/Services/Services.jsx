@@ -1,6 +1,11 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+ 
 
 // Import service images
 import bookReservations from '../../assets/images/bookReservations.svg';
@@ -24,187 +29,148 @@ import jobsSystem from '../../assets/images/jobsSystem.png';
 import labResults from '../../assets/images/labResults.svg';
 import medInsurance from '../../assets/images/medInsurance.svg';
 import toothPlaceholder from '../../assets/images/الاسنان.png';
+// Offer-style images for static services grid
+import Offer1 from '../../assets/images/offer1.png';
+import Offer2 from '../../assets/images/offer2.jpg';
+import Offer3 from '../../assets/images/offer3.jpg';
+import Offer4 from '../../assets/images/offer4.png';
+import Offer5 from '../../assets/images/Offer_5.png';
+import Offer6 from '../../assets/images/Offer_6.png';
+import Offer7 from '../../assets/images/Offer_7.png';
+import Offer8 from '../../assets/images/Offer_8.png';
 
-const SERVICES_URL = 'https://enqlygo.com/api/salons/most_booking_services';
-
-const buildImageUrl = (path) => {
-  if (!path || typeof path !== 'string') return null;
-  if (path.startsWith('http')) return path;
-  return `https://enqlygo.com/${path.replace(/^\/+/, '')}`;
-};
+// Static services data (to match exact visual cards like offers)
+const STATIC_SERVICES = [
+  { id: 1, title: 'جلسة مورفيس', price: 895, img: 'https://media.zid.store/cdn-cgi/image/w=300,h=300,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/8d473eb7-a9f9-4f93-83ef-43fee0dfc3a2-thumbnail-770x770.png' },
+  { id: 2, title: '3 جلسات ليزر فل بيدي', price: 895, img: 'https://media.zid.store/cdn-cgi/image/w=300,h=300,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/c4f8239e-4610-4bdc-9e65-377f046854f9-thumbnail-770x770.png' },
+  { id: 3, title: 'جلسة ليزر تجديد دقن', price: 49, img: 'https://media.zid.store/cdn-cgi/image/w=300,h=300,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/b6bba8c8-0b1a-4231-9aa4-1b29d9548f16-thumbnail-770x770.png' },
+  { id: 4, title: '4 مل فلر', price: 3295, img: 'https://media.zid.store/cdn-cgi/image/w=300,h=300,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/c4f8239e-4610-4bdc-9e65-377f046854f9-thumbnail-770x770.png' },
+  { id: 5, title: 'جلسة مورفيس', price: 895, img: 'https://media.zid.store/cdn-cgi/image/w=300,h=300,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/8d473eb7-a9f9-4f93-83ef-43fee0dfc3a2-thumbnail-770x770.png' },
+  { id: 6, title: '3 جلسات ليزر فل بيدي', price: 895, img: 'https://media.zid.store/cdn-cgi/image/w=300,h=300,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/c4f8239e-4610-4bdc-9e65-377f046854f9-thumbnail-770x770.png' },
+  { id: 7, title: 'جلسة ليزر تجديد دقن', price: 49, img: 'https://media.zid.store/cdn-cgi/image/w=300,h=300,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/b6bba8c8-0b1a-4231-9aa4-1b29d9548f16-thumbnail-770x770.png' },
+  { id: 8, title: '4 مل فلر', price: 3295, img: 'https://media.zid.store/cdn-cgi/image/w=300,h=300,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/c4f8239e-4610-4bdc-9e65-377f046854f9-thumbnail-770x770.png' }
+];
 
 export default function Services() {
-  const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
-    
-    const loadServices = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        
-        const res = await fetch(SERVICES_URL, { 
-          signal: controller.signal,
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          }
-        });
-        
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
-        }
-        
-        const json = await res.json();
-        if (json?.status === 'error') {
-          throw new Error(json?.message || 'خطأ في الخادم');
-        }
-        
-        const list = Array.isArray(json?.data) ? json.data : [];
-        const formatted = list
-          .filter(s => s.status === 1)
-          .map(s => ({
-            id: s.id,
-            title: s.title_ar || s.title || s.title_en,
-            desc: s.about_ar || s.about || s.about_en || '',
-            img: buildImageUrl(s.images?.[0]?.image),
-            price: s.price,
-            duration: s.service_time,
-            discount: s.discount,
-          }));
-        
-        if (isMounted) {
-          setServices(formatted);
-        }
-      } catch (e) {
-        if (e.name !== 'AbortError' && isMounted) {
-          setError(e.message || 'حدث خطأ أثناء جلب الخدمات');
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    };
-    
-    loadServices();
-    
-    return () => {
-      isMounted = false;
-      controller.abort();
-    };
-  }, []);
 
   // Memoized services for better performance
-  const displayedServices = useMemo(() => services.slice(0, 6), [services]);
+  const displayedServices = useMemo(() => STATIC_SERVICES.slice(0, 8), []);
+
+  // إعدادات سلايدر مماثلة للموجود في MostBookedDoctors: 4 بطاقات بكل سلايد على الديسكتوب
   return (
-    <section className="services-section py-1" style={{ marginTop: '40px', marginBottom: '40px' }}>
-      <div className="container">
-        <div className="section-title-divider mt-0 mb-5" style={{ marginTop: '20px' }}>
-          <hr />
-          <span className="title-pill" style={{ color: '#0d78c0' }}>أبرز خدمات غيم</span>
+    <section className="services-section py-1" style={{ marginTop: '40px', marginBottom: '40px', backgroundColor: '#F9F9F9' }}>
+      <div className="py-3">
+        <div className="mb-4 text-end " style={{ marginTop: '0px',paddingRight: '100px' }}>
+          <h2 className="m-0" style={{ color: '#484848', fontWeight: 800, fontSize: '34px' }}>أبرز خدمات غيم</h2>
         </div>
-        <div id="services-cards" className="services-container mx-auto">
-          {loading && (
-            <div className="d-flex align-items-center justify-content-center py-5">
-              <div className="text-center p-4 rounded-3 shadow-sm" style={{ background:'#fff', minWidth:'280px' }}>
-                <FontAwesomeIcon icon={faSpinner} spin size="3x" style={{ color:'var(--color-main)' }} />
-                <div className="mt-3 fw-semibold" style={{ color:'var(--color-main)' }}>جاري تحميل الخدمات...</div>
-              </div>
-            </div>
-          )}
-          {error && (
-            <div className="alert alert-danger text-center" role="alert">{error}</div>
-          )}
-          {!loading && !error && (
-          <div className="row g-4 justify-content-center">
+        <div id="services-cards" className="services w-90 mx-auto">
+          <>
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            spaceBetween={16}
+            slidesPerView={4}
+            autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+            pagination={{ 
+              clickable: true,
+              dynamicBullets: false
+            }}
+            breakpoints={{
+              0: { slidesPerView: 1 },
+              992: { slidesPerView: 4 }
+            }}
+            style={{ paddingBottom: '0px' }}
+          >
             {displayedServices.map((service, idx) => (
-              <div key={idx} className="col-md-6 col-lg-4">
-                <div className="service-card" style={{
-                  backgroundColor: '#ffffff',
-                  borderRadius: '12px',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                  padding: '30px',
-                  textAlign: 'center',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  transition: 'all 0.3s ease'
-                }}>
-                  <div className="service-icon mb-4" style={{
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '50%',
-                    backgroundColor: '#0d78c0',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: '20px'
+              <SwiperSlide key={`srv-${idx}`}>
+                <div className="h-100">
+                  <div className="card w-100 h-100 border-0 position-relative offer-card" style={{ 
+                    maxWidth: '100%',
+                    borderRadius: '10px',
+                    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                    background: 'white'
                   }}>
-                    <img 
-                      src={service.img || toothPlaceholder} 
-                      alt={service.title} 
-                      loading="lazy"
-                      style={{ 
-                        width: '50px', 
-                        height: '50px', 
-                        objectFit: 'contain',
-                        filter: 'brightness(0) invert(1)'
-                      }}
-                      onError={(e) => {
-                        e.target.src = toothPlaceholder;
-                        e.target.style.filter = 'brightness(0) invert(1)';
-                      }}
-                    />
+                        <button
+                          type="button"
+                          aria-label="favorite"
+                          className="position-absolute"
+                          style={{
+                            top: '0px',
+                            left: '0px',
+                            width: '36px',
+                            height: '36px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            background: '#ffffff',
+                            borderRadius: '8px',
+                            border: '1px solid #e6e6e6',
+                            boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
+                            zIndex: 2
+                          }}
+                        >
+                          <span style={{ fontSize: '40px', color: '#999999' }}>♡</span>
+                        </button>
+                        <img
+                          src={service.img || toothPlaceholder}
+                          alt={service.title}
+                          className="img-fluid w-100 shadow d-block"
+                          style={{ width: '100%', height: '380px', objectFit: 'cover', marginTop: 0 }}
+                          loading="lazy"
+                          onError={(e) => { e.currentTarget.src = toothPlaceholder; e.currentTarget.style.objectFit = 'contain'; }}
+                        />
+                        <div className="card-body py-2" style={{ paddingTop: '6px', paddingBottom: '6px' }}>
+                          <h5 className="card-title fw-semibold text-end" style={{color:'#484848'}}>{service.title}</h5>
+                          <div className="d-flex align-items-center justify-content-center mt-2" style={{ gap: '10px' }}>
+                            <div className="d-flex align-items-center" style={{ gap: '6px' }}>
+                              <span className="fw-bold" style={{ color: '#DFD458', fontSize: '22px', lineHeight: 1 }}>{service.price}</span>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 1124.14 1256.39"
+                                width="12"
+                                height="13"
+                                style={{ display: 'inline-block', verticalAlign: 'middle', margin: '0 2px' }}
+                                aria-label="Saudi Riyal"
+                                title="Saudi Riyal"
+                              >
+                                <path fill="#231f20" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"></path>
+                                <path fill="#231f20" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"></path>
+                              </svg>
+                            </div>
+                            <button
+                              type="button"
+                              aria-label="add to cart"
+                              style={{
+                                width: '36px',
+                                height: '36px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                background: '#F0F0F0',
+                                color: '#4b4b4b',
+                                borderRadius: '50%',
+                                border: 'none',
+                                boxShadow: '0 2px 6px rgba(0,0,0,0.06)'
+                              }}
+                            >
+                              <FontAwesomeIcon icon={faCartShopping} />
+                            </button>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          className="quick-view-btn"
+                          aria-label="عرض سريع"
+                        >
+                          عرض سريع
+                        </button>
                   </div>
-                  
-                  <h5 className="mb-3" style={{ 
-                    color: '#333333', 
-                    fontSize: '1.4rem', 
-                    fontWeight: 'bold',
-                    marginBottom: '15px'
-                  }}>
-                    {service.title}
-                  </h5>
-                  
-                  <p className="mb-0" style={{ 
-                    color: '#666666', 
-                    fontSize: '1rem', 
-                    lineHeight: '1.5',
-                    flexGrow: 1
-                  }}>
-                    {service.desc || 'خدمة طبية متخصصة تقدم بأعلى معايير الجودة والرعاية'}
-                  </p>
                 </div>
-              </div>
+              </SwiperSlide>
             ))}
-          </div>
-          )}
+          </Swiper>
+          
+          </>
         </div>
-      </div>
-      {/* Section CTA at bottom */}
-      <div className="text-center mt-5">
-        <a
-          href="/all-services"
-          className="btn fw-semibold rounded-pill services-more-btn"
-          style={{
-            backgroundColor: '#0d78c0',
-            color: '#ffffff',
-            padding: '12px 30px',
-            border: '2px solid #0d78c0',
-            fontSize: '1.1rem',
-            fontWeight: '600',
-            borderRadius: '25px',
-            transition: 'all 0.3s ease'
-          }}
-        >
-          عرض المزيد
-        </a>
       </div>
       <style>{`
         /* Override global margin-top for services section */
@@ -240,9 +206,29 @@ export default function Services() {
       
       {/* CSS for hover effects */}
       <style>{`
-        .service-card:hover {
+        .offer-card { position: relative; }
+        .offer-card .quick-view-btn {
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, 100%);
+          bottom: 18%;
+          width: 85%;
+          height: 44px;
+          background: #DFD458;
+          color: #ffffff;
+          border: none;
+          border-radius: 10px;
+          font-weight: 700;
+          transition: transform 0.35s ease, opacity 0.35s ease;
+          opacity: 0;
+          box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+          z-index: 3;
+        }
+        .offer-card:hover .quick-view-btn { transform: translate(-50%, 0); opacity: 1; }
+        .offer-card .quick-view-btn:hover { filter: brightness(0.95); }
+        .offer-card:hover {
           transform: translateY(-8px);
-          box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+          box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
         
         .service-card:hover .service-icon {

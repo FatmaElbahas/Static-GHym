@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MainNavbar from './Components/Navbar/Navbar';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './Pages/Home/Home';
@@ -16,25 +16,79 @@ import Register from './Pages/Auth/Register';
 import RegisterPage from './Pages/Auth/RegisterPage';
 import Login from './Pages/Auth/Login';
 import AllServices from './Pages/AllServices/AllServices';
+import PaymentMethods from './Pages/PaymentMethods/PaymentMethods';
+import ProductsPage from './Pages/Products/ProductsPage';
+import NationalDay from './Pages/NationalDay/NationalDay';
 
 function App() {
   const location = useLocation();
+  const [progress, setProgress] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  
   const isDashboard = location.pathname === '/dashboard';
+  const isLogin = location.pathname === '/login';
+  const isRegister = location.pathname === '/register';
+  
+  const hideMainNavbar = isDashboard || isLogin || isRegister;
+  const hideFooter = isDashboard;
+
+  // Loading bar animation on route change
+  useEffect(() => {
+    setIsLoading(true);
+    setProgress(0);
+    
+    // Simulate progress
+    const interval1 = setTimeout(() => setProgress(30), 100);
+    const interval2 = setTimeout(() => setProgress(60), 300);
+    const interval3 = setTimeout(() => setProgress(90), 500);
+    const interval4 = setTimeout(() => {
+      setProgress(100);
+      setTimeout(() => {
+        setIsLoading(false);
+        setProgress(0);
+      }, 300);
+    }, 800);
+
+    return () => {
+      clearTimeout(interval1);
+      clearTimeout(interval2);
+      clearTimeout(interval3);
+      clearTimeout(interval4);
+    };
+  }, [location.pathname]);
 
   return (
     <div className="App">
-      {!isDashboard && <MainNavbar />}
+      {/* Loading Progress Bar */}
+      {isLoading && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          right: 0,
+          width: `${progress}%`,
+          height: '4px',
+          backgroundColor: '#DFD458',
+          zIndex: 99999,
+          transition: 'width 0.3s ease',
+          boxShadow: '0 0 10px rgba(223, 212, 88, 0.8)'
+        }} />
+      )}
+      
+      {!hideMainNavbar && <MainNavbar />}
       <div className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/book" element={<Book/>} />
-          <Route path="/offers" element={<OffersPage />} />
+          <Route path="/offers" element={<NationalDay />} />
+          <Route path="/national-day" element={<NationalDay />} />
+          <Route path="/products" element={<ProductsPage />} />
           <Route path="/all-services" element={<AllServices />} />
           <Route path="/services" element={<Services />} />
           <Route path="/clinics" element={<ClinicsPage />} />
           <Route path="/jobs" element={<JobsPage />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/payment-methods" element={<PaymentMethods />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<Login />} />
@@ -42,7 +96,7 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
-      {!isDashboard && <Footer />}
+      {!hideFooter && <Footer />}
     </div>
   );
 }

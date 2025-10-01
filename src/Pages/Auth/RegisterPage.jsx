@@ -9,7 +9,8 @@ import {
   faPhone,
   faLock,
   faTimes,
-  faUserPlus
+  faUserPlus,
+  faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
 
 const logo = "https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png";
@@ -71,6 +72,7 @@ const validationSchema = Yup.object({
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const [showAlert, setShowAlert] = React.useState(true);
 
   // القيم الافتراضية للنموذج
   const initialValues = {
@@ -288,24 +290,103 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-vh-100 bg-light d-flex align-items-center">
-      <div className="container-fluid">
-        <div className="row g-0 min-vh-100">
-          {/* النموذج */}
-          <div className="col-lg-6 d-flex align-items-center">
-            <div className="w-100 px-4 px-lg-5">
-              <div className="bg-white rounded-3 shadow-sm p-4 p-lg-5" style={{maxWidth: '500px', margin: '0 auto'}}>
-                {/* Header */}
-                <div className="text-center mb-4">
-                  <div className="d-flex align-items-center justify-content-center mb-3">
-                    <img 
-                      src={logo} 
-                      alt="Logo" 
-                      style={{width: '40px', height: '40px', objectFit: 'contain'}}
-                    />
-                  </div>
-                  <h2 className="h4 fw-bold text-dark mb-0">انشاء حساب مركز طبي جديد</h2>
-                </div>
+    <>
+      <style>{`
+        body {
+          margin-top: 0 !important;
+          padding-top: 3rem !important;
+        }
+      `}</style>
+      
+      {/* Alert */}
+      {showAlert && (
+        <div 
+          className="alert alert-warning mb-0 text-center national-day-alert" 
+          style={{ 
+            position: 'fixed', 
+            top: 0, 
+            left: 0, 
+            right: 0, 
+            zIndex: 1001,
+            borderRadius: 0,
+            padding: '0.5rem 0.75rem',
+            fontSize: '13px'
+          }}
+        >
+          <div className="container d-flex justify-content-between align-items-center">
+            <span style={{ fontSize: '13px' }}>⚠️ هذا تنبيه مهم - يرجى قراءته قبل المتابعة</span>
+            <button
+              type="button"
+              onClick={() => setShowAlert(false)}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                fontSize: '18px',
+                cursor: 'pointer',
+                color: '#856404',
+                padding: 0,
+                lineHeight: 1
+              }}
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
+      
+      {/* Register Navbar */}
+      <nav className="bg-white shadow-sm register-navbar" style={{ padding: '0.7rem 0', marginTop: 0, position: 'fixed', top: showAlert ? '42px' : 0, left: 0, right: 0, zIndex: 1000, transition: 'top 0.3s ease' }}>
+        <div className="container">
+          <div className="d-flex justify-content-between align-items-center">
+            {/* Back Arrow */}
+            <button
+              onClick={() => navigate('/login')}
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                border: '1px solid #e9ecef',
+                backgroundColor: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                color: '#484848',
+                fontSize: '16px'
+              }}
+            >
+              <FontAwesomeIcon icon={faArrowRight} />
+            </button>
+
+            {/* Logo */}
+            <img 
+              src={logo}
+              alt="Root" 
+              style={{width: '85px', height: 'auto'}}
+            />
+
+            {/* Empty div for spacing */}
+            <div style={{ width: '40px' }}></div>
+          </div>
+        </div>
+      </nav>
+
+    <div style={{ backgroundColor: '#f8f9fa', minHeight: '100vh', display: 'flex', alignItems: 'center', paddingTop: showAlert ? '8rem' : '6rem', paddingBottom: '2rem', transition: 'padding-top 0.3s ease' }}>
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-12 col-md-10 col-lg-6">
+            <div className="bg-white rounded-4 shadow p-5">
+              {/* Header */}
+              <div className="text-end mb-5">
+                <h2 style={{ 
+                  color: '#484848', 
+                  fontWeight: '700', 
+                  fontSize: 'clamp(22px, 5vw, 28px)',
+                  marginBottom: '2.5rem'
+                }}>
+                  إنشاء حساب جديد
+                </h2>
+              </div>
 
                 <Formik
                   initialValues={initialValues}
@@ -313,7 +394,7 @@ const RegisterPage = () => {
                   onSubmit={handleSubmit}
                 >
                   {({ isSubmitting, status, setFieldValue }) => (
-                    <Form>
+                    <Form className="py-3">
                       {/* رسالة الخطأ العامة */}
                       {status && (
                         <div className="alert alert-danger mb-3" role="alert">
@@ -323,10 +404,7 @@ const RegisterPage = () => {
                       )}
 
                       {/* اسم الشخص المسؤول */}
-                      <div className="mb-3">
-                        <label className="form-label fw-semibold" style={{fontSize: '0.9rem'}}>
-                          <span className="text-danger">*</span> اسم الشخص المسؤول
-                        </label>
+                      <div className="mb-4">
                         <Field name="firstName">
                           {({ field, meta }) => (
                             <div>
@@ -334,8 +412,14 @@ const RegisterPage = () => {
                                 {...field}
                                 type="text"
                                 className={`form-control ${meta.touched && meta.error ? 'is-invalid' : ''}`}
-                                style={{borderRadius: '10px', fontSize: '0.9rem'}}
-                                placeholder="أدخل اسم الشخص المسؤول"
+                                style={{
+                                  borderRadius: '10px',
+                                  fontSize: '16px',
+                                  padding: '1rem',
+                                  border: '1px solid #e9ecef',
+                                  backgroundColor: '#ffffff'
+                                }}
+                                placeholder="الاسم الكامل"
                                 onChange={(e) => {
                                   const formattedValue = formatName(e.target.value);
                                   setFieldValue('firstName', formattedValue);
@@ -355,10 +439,7 @@ const RegisterPage = () => {
                       </div>
 
                       {/* البريد الإلكتروني */}
-                      <div className="mb-3">
-                        <label className="form-label fw-semibold" style={{fontSize: '0.9rem'}}>
-                          <span className="text-danger">*</span> البريد الإلكتروني
-                        </label>
+                      <div className="mb-4">
                         <Field name="email">
                           {({ field, meta }) => (
                             <div>
@@ -366,8 +447,14 @@ const RegisterPage = () => {
                                 {...field}
                                 type="email"
                                 className={`form-control ${meta.touched && meta.error ? 'is-invalid' : ''}`}
-                                style={{borderRadius: '10px', fontSize: '0.9rem'}}
-                                placeholder="أدخل البريد الإلكتروني"
+                                style={{
+                                  borderRadius: '10px',
+                                  fontSize: '16px',
+                                  padding: '1rem',
+                                  border: '1px solid #e9ecef',
+                                  backgroundColor: '#ffffff'
+                                }}
+                                placeholder="البريد الإلكتروني"
                                 onChange={(e) => {
                                   const formattedValue = e.target.value.toLowerCase();
                                   setFieldValue('email', formattedValue);
@@ -387,10 +474,7 @@ const RegisterPage = () => {
                       </div>
 
                       {/* رقم الجوال */}
-                      <div className="mb-3">
-                        <label className="form-label fw-semibold" style={{fontSize: '0.9rem'}}>
-                          <span className="text-danger">*</span> رقم الجوال
-                        </label>
+                      <div className="mb-4">
                         <Field name="phone">
                           {({ field, meta }) => (
                             <div>
@@ -398,7 +482,13 @@ const RegisterPage = () => {
                                 {...field}
                                 type="tel"
                                 className={`form-control ${meta.touched && meta.error ? 'is-invalid' : ''}`}
-                                style={{borderRadius: '10px', fontSize: '0.9rem'}}
+                                style={{
+                                  borderRadius: '10px',
+                                  fontSize: '16px',
+                                  padding: '1rem',
+                                  border: '1px solid #e9ecef',
+                                  backgroundColor: '#ffffff'
+                                }}
                                 placeholder="05XXXXXXXX"
                                 onChange={(e) => {
                                   const formattedValue = formatPhoneNumber(e.target.value);
@@ -419,10 +509,7 @@ const RegisterPage = () => {
                       </div>
 
                       {/* كلمة المرور */}
-                      <div className="mb-3">
-                        <label className="form-label fw-semibold" style={{fontSize: '0.9rem'}}>
-                          <span className="text-danger">*</span> كلمة المرور
-                        </label>
+                      <div className="mb-4">
                         <Field name="password">
                           {({ field, meta }) => (
                             <div>
@@ -430,8 +517,14 @@ const RegisterPage = () => {
                                 {...field}
                                 type="password"
                                 className={`form-control ${meta.touched && meta.error ? 'is-invalid' : ''}`}
-                                style={{borderRadius: '10px', fontSize: '0.9rem'}}
-                                placeholder="أدخل كلمة المرور"
+                                style={{
+                                  borderRadius: '10px',
+                                  fontSize: '16px',
+                                  padding: '1rem',
+                                  border: '1px solid #e9ecef',
+                                  backgroundColor: '#ffffff'
+                                }}
+                                placeholder="كلمة المرور"
                                 onChange={(e) => {
                                   const formattedValue = e.target.value.replace(/\s/g, '');
                                   setFieldValue('password', formattedValue);
@@ -452,9 +545,6 @@ const RegisterPage = () => {
 
                       {/* تأكيد كلمة المرور */}
                       <div className="mb-4">
-                        <label className="form-label fw-semibold" style={{fontSize: '0.9rem'}}>
-                          <span className="text-danger">*</span> تأكيد كلمة المرور
-                        </label>
                         <Field name="confirmPassword">
                           {({ field, meta }) => (
                             <div>
@@ -462,8 +552,14 @@ const RegisterPage = () => {
                                 {...field}
                                 type="password"
                                 className={`form-control ${meta.touched && meta.error ? 'is-invalid' : ''}`}
-                                style={{borderRadius: '10px', fontSize: '0.9rem'}}
-                                placeholder="أعد إدخال كلمة المرور"
+                                style={{
+                                  borderRadius: '10px',
+                                  fontSize: '16px',
+                                  padding: '1rem',
+                                  border: '1px solid #e9ecef',
+                                  backgroundColor: '#ffffff'
+                                }}
+                                placeholder="تأكيد كلمة المرور"
                                 onChange={(e) => {
                                   const formattedValue = e.target.value.replace(/\s/g, '');
                                   setFieldValue('confirmPassword', formattedValue);
@@ -485,14 +581,29 @@ const RegisterPage = () => {
                       {/* زر التسجيل */}
                       <button
                         type="submit"
-                        className="btn btn-primary w-100 py-2"
-                        style={{
-                          borderRadius: '10px', 
-                          fontSize: '0.9rem', 
-                          backgroundColor: '#038FAD', 
-                          borderColor: '#038FAD'
-                        }}
+                        className="btn w-100 mt-2"
                         disabled={isSubmitting}
+                        style={{
+                          borderRadius: '10px',
+                          fontSize: '16px',
+                          backgroundColor: '#DFD458',
+                          borderColor: '#DFD458',
+                          color: '#ffffff',
+                          fontWeight: '600',
+                          padding: '1rem',
+                          border: 'none',
+                          transition: 'all 0.3s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!isSubmitting) {
+                            e.currentTarget.style.backgroundColor = '#C5B34E';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!isSubmitting) {
+                            e.currentTarget.style.backgroundColor = '#DFD458';
+                          }
+                        }}
                       >
                         {isSubmitting ? (
                           <>
@@ -500,49 +611,35 @@ const RegisterPage = () => {
                             جاري إنشاء الحساب...
                           </>
                         ) : (
-                          <>
-                            <FontAwesomeIcon icon={faUserPlus} className="me-2" />
-                            إنشاء حساب
-                          </>
+                          'إنشاء حساب'
                         )}
                       </button>
 
                       {/* رابط تسجيل الدخول */}
-                      <div className="text-center mt-3">
-                        <p className="text-muted mb-0" style={{fontSize: '0.9rem'}}>
-                          لديك حساب بالفعل؟{' '}
-                          <Link 
-                            to="/login" 
-                            className="text-decoration-none fw-semibold"
-                            style={{color: '#038FAD'}}
-                          >
-                            تسجيل الدخول
-                          </Link>
-                        </p>
+                      <div className="text-end mt-5">
+                        <Link 
+                          to="/login" 
+                          className="text-decoration-none d-inline-flex align-items-center gap-2"
+                          style={{ 
+                            color: '#DFD458', 
+                            fontSize: '15px', 
+                            fontWeight: '500' 
+                          }}
+                          onMouseEnter={(e) => e.currentTarget.style.color = '#C5B34E'}
+                          onMouseLeave={(e) => e.currentTarget.style.color = '#DFD458'}
+                        >
+                          <span>هل لديك حساب؟ تسجيل الدخول</span>
+                        </Link>
                       </div>
                     </Form>
                   )}
                 </Formik>
-              </div>
-            </div>
-          </div>
-
-          {/* الصورة */}
-          <div className="col-lg-6 d-none d-lg-block">
-            <div 
-              className="h-100 d-flex align-items-center justify-content-center"
-              style={{
-                backgroundImage: 'url(/register.svg)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat'
-              }}
-            >
             </div>
           </div>
         </div>
       </div>
     </div>
+    </>
   );
 };
 
