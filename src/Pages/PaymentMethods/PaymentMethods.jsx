@@ -235,7 +235,7 @@ const PaymentMethods = () => {
             e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.15)';
           }}
           >
-            <div style={{ 
+            <div className="bank-card-title" style={{ 
               color: '#DFD458', 
               fontWeight: '700', 
               fontSize: '24px',
@@ -249,13 +249,13 @@ const PaymentMethods = () => {
               {bankAccounts.map((account, idx) => (
                 <div 
                   key={`${account.label}-${idx}`}
-                  className="d-flex justify-content-between align-items-center"
+                  className="d-flex justify-content-between align-items-center bank-account-row"
                   style={{
                     padding: '1.2rem 0',
                     borderBottom: idx !== bankAccounts.length - 1 ? '1px solid #e9ecef' : 'none'
                   }}
                 >
-                  <div style={{ 
+                  <div className="bank-account-label" style={{ 
                     color: '#484848', 
                     fontSize: '18px',
                     fontWeight: '500',
@@ -264,15 +264,18 @@ const PaymentMethods = () => {
                   }}>
                     {account.label}
                   </div>
-                  <div style={{ 
+                  <div className="bank-account-value" style={{ 
                     color: '#484848', 
                     fontSize: '18px', 
                     fontWeight: '500',
-                    textAlign: 'right',
+                    textAlign: 'left',
                     flex: 1,
                     fontFamily: 'monospace',
                     letterSpacing: '0.5px',
-                    paddingRight: '3rem'
+                    paddingLeft: '0.5rem',
+                    wordBreak: 'break-all',
+                    overflowWrap: 'break-word',
+                    maxWidth: '100%'
                   }}>
                     {account.value}
                   </div>

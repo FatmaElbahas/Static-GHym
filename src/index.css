@@ -5024,11 +5024,65 @@ width: 10%;
   .bank-account-card {
     padding: 1.5rem !important;
   }
+  
+  .bank-card-title {
+    font-size: 20px !important;
+  }
+  
+  .bank-account-label {
+    font-size: 14px !important;
+    min-width: 90px !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .bank-account-value {
+    font-size: 14px !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0 !important;
+    letter-spacing: 0.2px !important;
+    text-align: left !important;
+    max-width: calc(100% - 100px) !important;
+  }
+  
+  .bank-account-row {
+    padding: 0.8rem 0 !important;
+    gap: 0.5rem !important;
+  }
 }
 
 @media (max-width: 575.98px) {
   .bank-account-card {
     padding: 1rem !important;
+  }
+  
+  .bank-card-title {
+    font-size: 18px !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .bank-account-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 0.8rem 0 !important;
+    gap: 0.3rem !important;
+  }
+  
+  .bank-account-label {
+    font-size: 13px !important;
+    min-width: unset !important;
+    width: 100% !important;
+    font-weight: 600 !important;
+  }
+  
+  .bank-account-value {
+    font-size: 12px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    letter-spacing: 0.1px !important;
+    text-align: right !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    word-break: break-all !important;
   }
 }
 
