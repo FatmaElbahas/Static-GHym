@@ -1,8 +1,8 @@
 import { StrictMode } from 'react';
-import "@fontsource/tajawal/400.css"; // Regular
-import "@fontsource/tajawal/500.css"; // Medium
-import "@fontsource/tajawal/700.css"; // Bold
-import 'bootstrap/dist/css/bootstrap.min.css';
+// Tajawal font removed - using IBM Plex Sans Arabic from Google Fonts instead
+// import "@fontsource/tajawal/400.css";
+// import "@fontsource/tajawal/500.css";
+// import "@fontsource/tajawal/700.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { createRoot } from 'react-dom/client';

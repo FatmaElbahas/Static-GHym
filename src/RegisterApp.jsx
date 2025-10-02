@@ -10,6 +10,7 @@ import Login from './Pages/Auth/Login';
 import ProductsPage from './Pages/Products/ProductsPage';
 import NationalDay from './Pages/NationalDay/NationalDay';
 import PaymentMethods from './Pages/PaymentMethods/PaymentMethods';
+import Book from './Pages/Book/Book';
 
 function RegisterApp() {
   const location = useLocation();
@@ -28,6 +29,7 @@ function RegisterApp() {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethods />} />
+          <Route path="/book" element={<Book />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<Login />} />

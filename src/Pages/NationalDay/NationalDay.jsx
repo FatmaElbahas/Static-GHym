@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 const NationalDay = () => {
   const [sortBy, setSortBy] = useState('الافتراضي');
@@ -142,7 +140,7 @@ const NationalDay = () => {
             {/* السعر */}
             <div className="mb-4">
               <h3 style={{
-                color: '#DFD458',
+                color: '#0171BD',
                 fontSize: '20px',
                 fontWeight: '600',
                 marginBottom: '1.5rem',
@@ -250,7 +248,7 @@ const NationalDay = () => {
                     height: '6px',
                     borderRadius: '5px',
                     outline: 'none',
-                    background: `linear-gradient(to left, #DFD458 0%, #DFD458 ${((priceTo || 10000) / 10000) * 100}%, #e9ecef ${((priceTo || 10000) / 10000) * 100}%, #e9ecef 100%)`,
+                    background: `linear-gradient(to left, #0171BD 0%, #0171BD ${((priceTo || 10000) / 10000) * 100}%, #e9ecef ${((priceTo || 10000) / 10000) * 100}%, #e9ecef 100%)`,
                     appearance: 'none',
                     WebkitAppearance: 'none'
                   }}
@@ -267,7 +265,7 @@ const NationalDay = () => {
                   borderRadius: '8px',
                   textAlign: 'center',
                   cursor: 'pointer',
-                  border: showDiscountsOnly ? '2px solid #DFD458' : '1px solid #e9ecef',
+                  border: showDiscountsOnly ? '2px solid #0171BD' : '1px solid #e9ecef',
                   transition: 'all 0.2s ease'
                 }}
               >
@@ -288,7 +286,7 @@ const NationalDay = () => {
                 style={{
                   flex: 1,
                   padding: '0.8rem',
-                  backgroundColor: '#DFD458',
+                  backgroundColor: '#0171BD',
                   border: 'none',
                   borderRadius: '8px',
                   color: '#ffffff',
@@ -298,7 +296,7 @@ const NationalDay = () => {
                   transition: 'all 0.2s ease'
                 }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#C5B34E'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#DFD458'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0171BD'}
               >
                 مسح
               </button>
@@ -389,7 +387,7 @@ const NationalDay = () => {
                 backgroundColor: '#ffffff',
                 border: '1px solid #e9ecef',
                 borderRadius: '6px',
-                color: '#DFD458',
+                color: '#0171BD',
                 fontSize: '16px',
                 fontWeight: '700',
                 cursor: 'pointer'
@@ -488,30 +486,6 @@ const NationalDay = () => {
                   background: 'white',
                   transition: 'all 0.3s ease'
                 }}>
-                  {/* Favorite Icon */}
-                  <button
-                    type="button"
-                    aria-label="favorite"
-                    className="position-absolute"
-                    style={{
-                      top: '0px',
-                      left: '0px',
-                      width: '36px',
-                      height: '36px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      background: '#ffffff',
-                      borderRadius: '8px',
-                      border: '1px solid #e6e6e6',
-                      boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
-                      zIndex: 2,
-                      cursor: 'pointer'
-                    }}
-                  >
-                    <span style={{ fontSize: '40px', color: '#999999' }}>♡</span>
-                  </button>
-
                   {/* Product Image */}
                   <img
                     src={product.img}
@@ -528,7 +502,7 @@ const NationalDay = () => {
                     </h5>
                     <div className="d-flex align-items-center justify-content-center mt-2" style={{ gap: '10px' }}>
                       <div className="d-flex align-items-center" style={{ gap: '6px' }}>
-                        <span className="fw-bold" style={{ color: '#DFD458', fontSize: '22px', lineHeight: 1 }}>
+                        <span className="fw-bold" style={{ color: '#0171BD', fontSize: '22px', lineHeight: 1 }}>
                           {product.price}
                         </span>
                         <svg
@@ -544,25 +518,6 @@ const NationalDay = () => {
                           <path fill="#231f20" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"></path>
                         </svg>
                       </div>
-                      <button
-                        type="button"
-                        aria-label="add to cart"
-                        style={{
-                          width: '36px',
-                          height: '36px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          background: '#F0F0F0',
-                          color: '#4b4b4b',
-                          borderRadius: '50%',
-                          border: 'none',
-                          boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        <FontAwesomeIcon icon={faShoppingCart} />
-                      </button>
                     </div>
                   </div>
 
@@ -595,7 +550,7 @@ const NationalDay = () => {
           bottom: 18%;
           width: 85%;
           height: 44px;
-          background: #DFD458;
+          background: #0171BD;
           color: #ffffff;
           border: none;
           border-radius: 10px;
@@ -627,7 +582,7 @@ const NationalDay = () => {
           width: 20px;
           height: 20px;
           background: #ffffff;
-          border: 3px solid #DFD458;
+          border: 3px solid #0171BD;
           border-radius: 50%;
           cursor: pointer;
           box-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -637,7 +592,7 @@ const NationalDay = () => {
           width: 20px;
           height: 20px;
           background: #ffffff;
-          border: 3px solid #DFD458;
+          border: 3px solid #0171BD;
           border-radius: 50%;
           cursor: pointer;
           box-shadow: 0 2px 4px rgba(0,0,0,0.2);

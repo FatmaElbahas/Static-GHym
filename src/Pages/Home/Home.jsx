@@ -154,13 +154,14 @@ export default function Home() {
   {/* Favicon */}
   <link rel="icon" type="image/png" href="https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png" />
 </Helmet>
-      <div className="home-page book-page " style={{ paddingTop: '0' }}>
-      <section className="hero-section position-relative mb-0" style={{height: '60vh', width: '100vw', marginTop: showAlert ? '208px' : '160px', transition: 'margin-top 0.3s ease'}} dir="rtl">
+      <div className="home-page book-page " style={{ paddingTop: '0', width: '100%', overflow: 'hidden', margin: 0, padding: 0 }}>
+      <section className="hero-section position-relative mb-0" style={{height: '60vh', width: '100vw', marginTop: showAlert ? '208px' : '160px', transition: 'margin-top 0.3s ease', padding: 0, marginLeft: 0, marginRight: 0, left: 0, right: 0}} dir="rtl">
           <div 
             id="heroCarousel" 
             className="carousel slide h-100" 
             data-bs-ride="carousel" 
             data-bs-interval="5000"
+            style={{ margin: 0, padding: 0, width: '100%' }}
             onMouseEnter={(e) => {
               const prevBtn = e.currentTarget.querySelector('.carousel-control-prev');
               const nextBtn = e.currentTarget.querySelector('.carousel-control-next');
@@ -174,18 +175,20 @@ export default function Home() {
               if (nextBtn) nextBtn.style.opacity = '0';
             }}
           >
-            <div className="carousel-inner h-100">
+            <div className="carousel-inner h-100" style={{ margin: 0, padding: 0 }}>
 
               {/* Slide 1 */}
               <div className="carousel-item active h-100">
               <div
-  className="hero-background"
+  className="hero-background position-absolute top-0 start-0 w-100 h-100"
   style={{ 
     backgroundImage: 'url("https://media.zid.store/cdn-cgi/image/q=85,f=auto/https://media.zid.store/69733e3a-6328-43ea-90ee-cd02df32c66d/cd450c71-bf69-4fee-baf2-e7720296929c.jpg")',
     backgroundSize: 'cover',
-    backgroundPosition: 'top center',
+    backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat',
-    opacity: 1
+    opacity: 1,
+    margin: 0,
+    padding: 0
   }}
 >
 
@@ -255,25 +258,33 @@ export default function Home() {
               data-bs-target="#heroCarousel" 
               data-bs-slide="prev"
               style={{
-                opacity: 0,
-                transition: 'opacity 0.3s ease',
+                opacity: 0.7,
+                transition: 'all 0.3s ease',
                 zIndex: 10,
-                width: '40px',
-                height: '40px',
-                backgroundColor: 'white',
+                width: '45px',
+                height: '45px',
+                backgroundColor: '#0171BD',
                 borderRadius: '50%',
-                border: '1px solid #e0e0e0',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                border: '2px solid white',
+                boxShadow: '0 4px 12px rgba(1, 113, 189, 0.4)',
                 left: '20px'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = '1';
+                e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = '0.7';
+                e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
               }}
             >
               <span 
                 className="carousel-control-prev-icon" 
                 aria-hidden="true"
                 style={{
-                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23666'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e")`,
-                  width: '16px',
-                  height: '16px'
+                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e")`,
+                  width: '20px',
+                  height: '20px'
                 }}
               ></span>
               <span className="visually-hidden">Previous</span>
@@ -285,25 +296,33 @@ export default function Home() {
               data-bs-target="#heroCarousel" 
               data-bs-slide="next"
               style={{
-                opacity: 0,
-                transition: 'opacity 0.3s ease',
+                opacity: 0.7,
+                transition: 'all 0.3s ease',
                 zIndex: 10,
-                width: '40px',
-                height: '40px',
-                backgroundColor: 'white',
+                width: '45px',
+                height: '45px',
+                backgroundColor: '#0171BD',
                 borderRadius: '50%',
-                border: '1px solid #e0e0e0',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                border: '2px solid white',
+                boxShadow: '0 4px 12px rgba(1, 113, 189, 0.4)',
                 right: '20px'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = '1';
+                e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = '0.7';
+                e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
               }}
             >
               <span 
                 className="carousel-control-next-icon" 
                 aria-hidden="true"
                 style={{
-                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23666'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e")`,
-                  width: '16px',
-                  height: '16px'
+                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e")`,
+                  width: '20px',
+                  height: '20px'
                 }}
               ></span>
               <span className="visually-hidden">Next</span>
@@ -322,7 +341,7 @@ export default function Home() {
                   width: '18px',
                   height: '12px',
                   borderRadius: '50%',
-                  backgroundColor: '#DFD458',
+                  backgroundColor: '#0171BD',
                   border: 'none',
                   margin: '0 5px'
                 }}
@@ -364,6 +383,52 @@ export default function Home() {
           </div>
         </div> */}
         </section>
+        <div className="booking-card bg-white rounded-5 shadow-lg p-5 px-4 d-flex justify-content-between align-items-center" style={{marginBottom: '-20px' ,width: '80%',minHeight: '120px', borderRadius: '50px'}}>
+          <div className="container-fluid">
+            <div className="booking-content d-flex align-items-center gap-4">
+              <div className="booking-icon flex-shrink-0">
+                <i className="fas fa-calendar-alt fs-1 color-main"></i>
+              </div>
+              <div className="booking-text flex-grow-1 text-end">
+                <div className="question-container rounded-3 p-3 mb-2">
+                  <h3 className="booking-question fw-bold mb-0" style={{
+                    color: '#000000',
+                    fontSize: window.innerWidth < 768 ? '1.5rem' : '2.2rem'
+                  }}>خدمات غيم</h3>
+                </div>
+                <p className="booking-description text-muted fw-bold mb-0 text-nowrap" style={{
+                  fontSize: window.innerWidth < 768 ? '0.9rem' : '1.25rem'
+                }}>احجز موعدك لدى <span style={{color: '#0d78c0', fontWeight: '900'}}>خدمات غيم</span> بخطوات بسيطة....</p>
+              </div>
+              <div className="booking-button flex-shrink-0">
+                <button 
+                  onClick={handleBookingClick}
+                  className="btn rounded-pill fw-bold" 
+                  style={{
+                    backgroundColor: '#0d78c0', 
+                    borderColor: '#0d78c0', 
+                    color: 'white',
+                    fontSize: window.innerWidth < 768 ? '1.1rem' : '1.4rem',
+                    padding: window.innerWidth < 768 ? '0.6rem 1.5rem' : '0.8rem 2.5rem',
+                    fontWeight: '900',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = 'white';
+                    e.target.style.color = '#0d78c0';
+                    e.target.style.borderColor = '#0d78c0';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = '#0d78c0';
+                    e.target.style.color = 'white';
+                    e.target.style.borderColor = '#0d78c0';
+                  }}>
+                  احجز الآن
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* <div className="booking-card bg-white rounded-5 shadow-lg p-5 px-4 d-flex justify-content-between align-items-center" style={{marginBottom: '-100px' ,width: '80%',minHeight: '120px', borderRadius: '50px'}}>
           <div className="container-fluid">
             <div className="booking-content d-flex align-items-center gap-4">
@@ -460,7 +525,18 @@ export default function Home() {
                 style={{ paddingBottom: '0px' }}
               >
               <SwiperSlide>
-                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden' }}>
+                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden', transition: 'transform 0.3s ease' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.querySelector('.sections-text').style.color = '#0171BD';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = '#0171BD';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.querySelector('.sections-text').style.color = 'white';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = 'white';
+                  }}
+                >
                   <div className="position-relative">
                     <img 
                       src="https://media.zid.store/cdn-cgi/image/q=85,f=auto/https://media.zid.store/69733e3a-6328-43ea-90ee-cd02df32c66d/cd450c71-bf69-4fee-baf2-e7720296929c.jpg" 
@@ -469,8 +545,8 @@ export default function Home() {
                       style={{ height: '250px', objectFit: 'cover' }}
                     />
                     <div className="position-absolute bottom-0 start-0 end-0 p-3 sections-overlay" style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', paddingRight: '32px !important', paddingBottom: '28px !important' }}>
-                      <div className="text-white mb-0 fw-bold text-end sections-text" style={{ fontSize: '22px' }}>
-                        <div className="sections-line" style={{ width: '30px', height: '2px', backgroundColor: 'white', margin: '0 0 8px auto' }}></div>
+                      <div className="sections-text mb-0 fw-bold text-end" style={{ fontSize: '22px', color: 'white', transition: 'color 0.3s ease' }}>
+                        <div className="sections-line" style={{ width: '35px', height: '2.5px', backgroundColor: 'white', margin: '0 0 8px auto', transition: 'background-color 0.3s ease' }}></div>
                         عروض ليزر الرجال
                       </div>
                     </div>
@@ -478,7 +554,18 @@ export default function Home() {
                 </div>
               </SwiperSlide>
               <SwiperSlide>
-                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden' }}>
+                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden', transition: 'transform 0.3s ease' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.querySelector('.sections-text').style.color = '#0171BD';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = '#0171BD';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.querySelector('.sections-text').style.color = 'white';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = 'white';
+                  }}
+                >
                   <div className="position-relative">
                     <img 
                       src="https://media.zid.store/cdn-cgi/image/h=230,q=85,f=auto/https://media.zid.store/69733e3a-6328-43ea-90ee-cd02df32c66d/937240f5-3bb0-4658-8059-df16b88098fe-260x260.png" 
@@ -487,8 +574,8 @@ export default function Home() {
                       style={{ height: '250px', objectFit: 'cover' }}
                     />
                     <div className="position-absolute bottom-0 start-0 end-0 p-3 sections-overlay" style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', paddingRight: '32px !important', paddingBottom: '28px !important' }}>
-                      <div className="text-white mb-0 fw-bold text-end sections-text" style={{ fontSize: '22px' }}>
-                        <div className="sections-line" style={{ width: '30px', height: '2px', backgroundColor: 'white', margin: '0 0 8px auto' }}></div>
+                      <div className="sections-text mb-0 fw-bold text-end" style={{ fontSize: '22px', color: 'white', transition: 'color 0.3s ease' }}>
+                        <div className="sections-line" style={{ width: '35px', height: '2.5px', backgroundColor: 'white', margin: '0 0 8px auto', transition: 'background-color 0.3s ease' }}></div>
                         الاسنان
                       </div>
                     </div>
@@ -496,7 +583,18 @@ export default function Home() {
                 </div>
               </SwiperSlide>
               <SwiperSlide>
-                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden' }}>
+                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden', transition: 'transform 0.3s ease' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.querySelector('.sections-text').style.color = '#0171BD';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = '#0171BD';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.querySelector('.sections-text').style.color = 'white';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = 'white';
+                  }}
+                >
                   <div className="position-relative">
                     <img 
                       src="https://media.zid.store/cdn-cgi/image/h=230,q=85,f=auto/https://media.zid.store/69733e3a-6328-43ea-90ee-cd02df32c66d/908ea229-c828-4222-934c-ebf924c31053-260x260.png" 
@@ -505,8 +603,8 @@ export default function Home() {
                       style={{ height: '250px', objectFit: 'cover' }}
                     />
                     <div className="position-absolute bottom-0 start-0 end-0 p-3 sections-overlay" style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', paddingRight: '32px !important', paddingBottom: '28px !important' }}>
-                      <div className="text-white mb-0 fw-bold text-end sections-text" style={{ fontSize: '22px' }}>
-                        <div className="sections-line" style={{ width: '30px', height: '2px', backgroundColor: 'white', margin: '0 0 8px auto' }}></div>
+                      <div className="sections-text mb-0 fw-bold text-end" style={{ fontSize: '22px', color: 'white', transition: 'color 0.3s ease' }}>
+                        <div className="sections-line" style={{ width: '35px', height: '2.5px', backgroundColor: 'white', margin: '0 0 8px auto', transition: 'background-color 0.3s ease' }}></div>
                         الجلدية
                       </div>
                     </div>
@@ -514,7 +612,18 @@ export default function Home() {
                 </div>
               </SwiperSlide>
               <SwiperSlide>
-                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden' }}>
+                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden', transition: 'transform 0.3s ease' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.querySelector('.sections-text').style.color = '#0171BD';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = '#0171BD';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.querySelector('.sections-text').style.color = 'white';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = 'white';
+                  }}
+                >
                   <div className="position-relative">
                     <img 
                       src="https://media.zid.store/cdn-cgi/image/h=230,q=85,f=auto/https://media.zid.store/69733e3a-6328-43ea-90ee-cd02df32c66d/2a19fc67-b1f1-44f6-ba39-2476d48ce8d3-260x260.png" 
@@ -523,8 +632,8 @@ export default function Home() {
                       style={{ height: '250px', objectFit: 'cover' }}
                     />
                     <div className="position-absolute bottom-0 start-0 end-0 p-3 sections-overlay" style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', paddingRight: '32px !important', paddingBottom: '28px !important' }}>
-                      <div className="text-white mb-0 fw-bold text-end sections-text" style={{ fontSize: '22px' }}>
-                        <div className="sections-line" style={{ width: '30px', height: '2px', backgroundColor: 'white', margin: '0 0 8px auto' }}></div>
+                      <div className="sections-text mb-0 fw-bold text-end" style={{ fontSize: '22px', color: 'white', transition: 'color 0.3s ease' }}>
+                        <div className="sections-line" style={{ width: '35px', height: '2.5px', backgroundColor: 'white', margin: '0 0 8px auto', transition: 'background-color 0.3s ease' }}></div>
                         عروض اليوم الوطني 95
                       </div>
                     </div>
@@ -532,7 +641,18 @@ export default function Home() {
                 </div>
               </SwiperSlide>
               <SwiperSlide>
-                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden' }}>
+                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden', transition: 'transform 0.3s ease' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.querySelector('.sections-text').style.color = '#0171BD';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = '#0171BD';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.querySelector('.sections-text').style.color = 'white';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = 'white';
+                  }}
+                >
                   <div className="position-relative">
                     <img 
                       src="https://media.zid.store/cdn-cgi/image/h=230,q=85,f=auto/https://media.zid.store/69733e3a-6328-43ea-90ee-cd02df32c66d/7d9bcaab-f342-4dc8-96b4-927877f83cb1-260x260.png" 
@@ -541,8 +661,8 @@ export default function Home() {
                       style={{ height: '250px', objectFit: 'cover' }}
                     />
                     <div className="position-absolute bottom-0 start-0 end-0 p-3 sections-overlay" style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', paddingRight: '32px !important', paddingBottom: '28px !important' }}>
-                      <div className="text-white mb-0 fw-bold text-end sections-text" style={{ fontSize: '22px' }}>
-                        <div className="sections-line" style={{ width: '30px', height: '2px', backgroundColor: 'white', margin: '0 0 8px auto' }}></div>
+                      <div className="sections-text mb-0 fw-bold text-end" style={{ fontSize: '22px', color: 'white', transition: 'color 0.3s ease' }}>
+                        <div className="sections-line" style={{ width: '35px', height: '2.5px', backgroundColor: 'white', margin: '0 0 8px auto', transition: 'background-color 0.3s ease' }}></div>
                         الطب العام
                       </div>
                     </div>
@@ -550,7 +670,18 @@ export default function Home() {
                 </div>
               </SwiperSlide>
               <SwiperSlide>
-                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden' }}>
+                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden', transition: 'transform 0.3s ease' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.querySelector('.sections-text').style.color = '#0171BD';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = '#0171BD';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.querySelector('.sections-text').style.color = 'white';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = 'white';
+                  }}
+                >
                   <div className="position-relative">
                     <img 
                       src="https://media.zid.store/cdn-cgi/image/q=85,f=auto/https://media.zid.store/69733e3a-6328-43ea-90ee-cd02df32c66d/cd450c71-bf69-4fee-baf2-e7720296929c.jpg" 
@@ -559,8 +690,8 @@ export default function Home() {
                       style={{ height: '250px', objectFit: 'cover' }}
                     />
                     <div className="position-absolute bottom-0 start-0 end-0 p-3 sections-overlay" style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', paddingRight: '32px !important', paddingBottom: '28px !important' }}>
-                      <div className="text-white mb-0 fw-bold text-end sections-text" style={{ fontSize: '22px' }}>
-                        <div className="sections-line" style={{ width: '30px', height: '2px', backgroundColor: 'white', margin: '0 0 8px auto' }}></div>
+                      <div className="sections-text mb-0 fw-bold text-end" style={{ fontSize: '22px', color: 'white', transition: 'color 0.3s ease' }}>
+                        <div className="sections-line" style={{ width: '35px', height: '2.5px', backgroundColor: 'white', margin: '0 0 8px auto', transition: 'background-color 0.3s ease' }}></div>
                         الجراحة التجميلية
                       </div>
                     </div>
@@ -568,7 +699,18 @@ export default function Home() {
                 </div>
               </SwiperSlide>
               <SwiperSlide>
-                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden' }}>
+                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden', transition: 'transform 0.3s ease' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.querySelector('.sections-text').style.color = '#0171BD';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = '#0171BD';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.querySelector('.sections-text').style.color = 'white';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = 'white';
+                  }}
+                >
                   <div className="position-relative">
                     <img 
                       src="https://media.zid.store/cdn-cgi/image/q=85,f=auto/https://media.zid.store/69733e3a-6328-43ea-90ee-cd02df32c66d/cd450c71-bf69-4fee-baf2-e7720296929c.jpg" 
@@ -577,8 +719,8 @@ export default function Home() {
                       style={{ height: '250px', objectFit: 'cover' }}
                     />
                     <div className="position-absolute bottom-0 start-0 end-0 p-3 sections-overlay" style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', paddingRight: '32px !important', paddingBottom: '28px !important' }}>
-                      <div className="text-white mb-0 fw-bold text-end sections-text" style={{ fontSize: '22px' }}>
-                        <div className="sections-line" style={{ width: '30px', height: '2px', backgroundColor: 'white', margin: '0 0 8px auto' }}></div>
+                      <div className="sections-text mb-0 fw-bold text-end" style={{ fontSize: '22px', color: 'white', transition: 'color 0.3s ease' }}>
+                        <div className="sections-line" style={{ width: '35px', height: '2.5px', backgroundColor: 'white', margin: '0 0 8px auto', transition: 'background-color 0.3s ease' }}></div>
                         العناية بالبشرة
                       </div>
                     </div>
@@ -586,7 +728,18 @@ export default function Home() {
                 </div>
               </SwiperSlide>
               <SwiperSlide>
-                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden' }}>
+                <div className="card border-0 shadow-sm h-100 sections-card" style={{ borderRadius: '15px', overflow: 'hidden', transition: 'transform 0.3s ease' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.querySelector('.sections-text').style.color = '#0171BD';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = '#0171BD';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.querySelector('.sections-text').style.color = 'white';
+                    e.currentTarget.querySelector('.sections-line').style.backgroundColor = 'white';
+                  }}
+                >
                   <div className="position-relative">
                     <img 
                       src="https://media.zid.store/cdn-cgi/image/q=85,f=auto/https://media.zid.store/69733e3a-6328-43ea-90ee-cd02df32c66d/cd450c71-bf69-4fee-baf2-e7720296929c.jpg" 
@@ -595,8 +748,8 @@ export default function Home() {
                       style={{ height: '250px', objectFit: 'cover' }}
                     />
                     <div className="position-absolute bottom-0 start-0 end-0 p-3 sections-overlay" style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', paddingRight: '32px !important', paddingBottom: '28px !important' }}>
-                      <div className="text-white mb-0 fw-bold text-end sections-text" style={{ fontSize: '22px' }}>
-                        <div className="sections-line" style={{ width: '30px', height: '2px', backgroundColor: 'white', margin: '0 0 8px auto' }}></div>
+                      <div className="sections-text mb-0 fw-bold text-end" style={{ fontSize: '22px', color: 'white', transition: 'color 0.3s ease' }}>
+                        <div className="sections-line" style={{ width: '35px', height: '2.5px', backgroundColor: 'white', margin: '0 0 8px auto', transition: 'background-color 0.3s ease' }}></div>
                         ليزر الشعر
                       </div>
                     </div>
@@ -692,7 +845,7 @@ export default function Home() {
       
       {/* <MostBookedDoctors /> */}
       <Testimonials />
-      {/* <MapSection /> */}
+      <MapSection />
       </>
     );
 }

@@ -10,6 +10,7 @@ import Login from './Pages/Auth/Login';
 import ProductsPage from './Pages/Products/ProductsPage';
 import NationalDay from './Pages/NationalDay/NationalDay';
 import PaymentMethods from './Pages/PaymentMethods/PaymentMethods';
+import Book from './Pages/Book/Book';
 
 function App() {
   const location = useLocation();
@@ -58,10 +59,10 @@ function App() {
           right: 0,
           width: `${progress}%`,
           height: '4px',
-          backgroundColor: '#DFD458',
+          backgroundColor: '#0171BD',
           zIndex: 99999,
           transition: 'width 0.3s ease',
-          boxShadow: '0 0 10px rgba(223, 212, 88, 0.8)'
+          boxShadow: '0 0 10px rgba(1, 113, 189, 0.8)'
         }} />
       )}
       
@@ -74,6 +75,7 @@ function App() {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethods />} />
+          <Route path="/book" element={<Book />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<Login />} />

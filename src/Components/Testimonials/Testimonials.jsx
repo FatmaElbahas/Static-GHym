@@ -128,7 +128,7 @@ const Testimonials = () => {
                 </p>
 
                 <div className="mt-3 d-flex justify-content-end">
-                  <span className="fw-bold" style={{ color: '#DFD458' }}>{t.name}</span>
+                  <span className="fw-bold" style={{ color: '#0171BD' }}>{t.name}</span>
                 </div>
               </div>
             </SwiperSlide>

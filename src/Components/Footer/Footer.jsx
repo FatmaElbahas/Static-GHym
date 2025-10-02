@@ -49,7 +49,7 @@ export default function Footer() {
                     }
                   }}
                 >
-                  <FontAwesomeIcon icon={item.icon} style={{ color: '#DFD458' }} className="footer-icon" />
+                  <FontAwesomeIcon icon={item.icon} style={{ color: '#0171BD' }} className="footer-icon" />
                 </div>
               ))}
             </div>
@@ -87,22 +87,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* سطر سفلي */}
-        <div className="footer-bottom-section">
-          <div className="footer-zid-section">
-            <span>صنع بواسطة زد</span>
-            <img
-              src="https://media.zid.store/d297fb8b-c322-412e-a2f4-ffa96dc57022/b6aca386-4eeb-4e0f-8009-35ca7063d184.svg"
-              alt="Zid"
-              className="footer-zid-logo"
-              loading="lazy"
-            />
-            <div className="footer-vat-box">
-              <img src={vatIcon} alt="VAT" className="footer-vat-img" />
-            </div>
-          </div>
-          <div className="footer-registry-text">رقم السجل التجاري: 1010796858</div>
-        </div>
+        
       </div>
     </footer>
   );

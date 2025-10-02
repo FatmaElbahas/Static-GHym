@@ -333,8 +333,8 @@ const Login = () => {
                       style={{
                         borderRadius: '10px', 
                         fontSize: '16px', 
-                        backgroundColor: status === 'success' ? '#28a745' : '#DFD458', 
-                        borderColor: status === 'success' ? '#28a745' : '#DFD458',
+                        backgroundColor: status === 'success' ? '#28a745' : '#0171BD', 
+                        borderColor: status === 'success' ? '#28a745' : '#0171BD',
                         color: '#ffffff',
                         fontWeight: '600',
                         padding: '1rem',
@@ -349,7 +349,7 @@ const Login = () => {
                       }}
                       onMouseLeave={(e) => {
                         if (status !== 'success') {
-                          e.currentTarget.style.backgroundColor = '#DFD458';
+                          e.currentTarget.style.backgroundColor = '#0171BD';
                         }
                       }}
                     >
@@ -377,15 +377,15 @@ const Login = () => {
                   to="/register" 
                   className="text-decoration-none d-inline-flex align-items-center gap-2"
                   style={{ 
-                    color: '#DFD458 !important', 
+                    color: '#0171BD !important', 
                     fontSize: '15px', 
                     fontWeight: '500' 
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.color = '#C5B34E'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = '#DFD458'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#0171BD'}
                 >
-                  <FontAwesomeIcon icon={faUserPlus} style={{ color: '#DFD458' }} />
-                  <span style={{ color: '#DFD458' }}>إنشاء حساب</span>
+                  <FontAwesomeIcon icon={faUserPlus} style={{ color: '#0171BD' }} />
+                  <span style={{ color: '#0171BD' }}>إنشاء حساب</span>
                 </Link>
               </div>
             </div>

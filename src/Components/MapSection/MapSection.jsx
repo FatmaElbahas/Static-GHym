@@ -8,11 +8,10 @@ const MapSection = () => {
   const mapSrc = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d184457.3549189419!2d46.53114253451636!3d24.7254553144539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f035b21087a5f%3A0xb4e2e1b6f3b4e2f0!2sRiyadh!5e0!3m2!1sen!2ssa!4v1700000000000!5m2!1sen!2ssa";
 
   return (
-    <section dir="rtl">
-      <div className="container py-5">
-        <div id="map-title" className="section-title-divider mb-5 mt-0 text-center">
-          <hr />
-          <span className="title-pill mb-0" style={{ color: '#000000' }}>موقعنا على الخريطة</span>
+    <section dir="rtl" style={{ backgroundColor: '#F9F9F9', marginTop: '48px', paddingTop: '48px', paddingBottom: '48px' }}>
+      <div className="mx-auto" style={{ width: '90%' }}>
+        <div className="mb-4 text-end" style={{ paddingRight: '10px' }}>
+          <h2 className="m-0" style={{ color: '#484848', fontWeight: 800, fontSize: '34px' }}>موقعنا على الخريطة</h2>
         </div>
 
         <div className="row g-4 align-items-center">
@@ -31,7 +30,7 @@ const MapSection = () => {
                   justifyContent: 'center',
                   flexShrink: 0
                 }}>
-                  <FontAwesomeIcon icon={faMapMarkerAlt} style={{ color: '#0d78c0', fontSize: '1.5rem' }} />
+                  <FontAwesomeIcon icon={faMapMarkerAlt} style={{ color: '#0171BD', fontSize: '1.5rem' }} />
                 </div>
                 <div className="contact-details">
                   <h6 className="fw-bold mb-1" style={{ color: '#333', fontSize: '1.1rem' }}>العنوان</h6>
@@ -52,7 +51,7 @@ const MapSection = () => {
                   justifyContent: 'center',
                   flexShrink: 0
                 }}>
-                  <FontAwesomeIcon icon={faPhone} style={{ color: '#0d78c0', fontSize: '1.5rem' }} />
+                  <FontAwesomeIcon icon={faPhone} style={{ color: '#0171BD', fontSize: '1.5rem' }} />
                 </div>
                 <div className="contact-details">
                   <h6 className="fw-bold mb-1" style={{ color: '#333', fontSize: '1.1rem' }}>الهاتف</h6>
@@ -60,13 +59,13 @@ const MapSection = () => {
                     href="tel:+966111234567" 
                     className="mb-0 text-decoration-none" 
                     style={{ 
-                      color: '#0d78c0', 
+                      color: '#0171BD', 
                       fontSize: '1rem',
                       cursor: 'pointer',
                       transition: 'color 0.3s ease'
                     }}
-                    onMouseEnter={(e) => e.target.style.color = '#027a8a'}
-                    onMouseLeave={(e) => e.target.style.color = '#0d78c0'}
+                    onMouseEnter={(e) => e.target.style.color = '#0171BD'}
+                    onMouseLeave={(e) => e.target.style.color = '#0171BD'}
                   >
                     +966 11 123 4567
                   </a>
@@ -85,7 +84,7 @@ const MapSection = () => {
                   justifyContent: 'center',
                   flexShrink: 0
                 }}>
-                  <FontAwesomeIcon icon={faEnvelope} style={{ color: '#0d78c0', fontSize: '1.5rem' }} />
+                  <FontAwesomeIcon icon={faEnvelope} style={{ color: '#0171BD', fontSize: '1.5rem' }} />
                 </div>
                 <div className="contact-details">
                   <h6 className="fw-bold mb-1" style={{ color: '#333', fontSize: '1.1rem' }}>البريد الإلكتروني</h6>
@@ -93,13 +92,13 @@ const MapSection = () => {
                     href="mailto:info@blsmy-medical.com" 
                     className="mb-0 text-decoration-none" 
                     style={{ 
-                      color: '#0d78c0', 
+                      color: '#0171BD', 
                       fontSize: '1rem',
                       cursor: 'pointer',
                       transition: 'color 0.3s ease'
                     }}
-                    onMouseEnter={(e) => e.target.style.color = '#027a8a'}
-                    onMouseLeave={(e) => e.target.style.color = '#0d78c0'}
+                    onMouseEnter={(e) => e.target.style.color = '#0171BD'}
+                    onMouseLeave={(e) => e.target.style.color = '#0171BD'}
                   >
                     info@blsmy-medical.com
                   </a>
@@ -118,7 +117,7 @@ const MapSection = () => {
                   justifyContent: 'center',
                   flexShrink: 0
                 }}>
-                  <FontAwesomeIcon icon={faClock} style={{ color: '#0d78c0', fontSize: '1.5rem' }} />
+                  <FontAwesomeIcon icon={faClock} style={{ color: '#0171BD', fontSize: '1.5rem' }} />
                 </div>
                 <div className="contact-details">
                   <h6 className="fw-bold mb-1" style={{ color: '#333', fontSize: '1.1rem' }}>ساعات العمل</h6>

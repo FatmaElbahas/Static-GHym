@@ -11,6 +11,7 @@ import bankTransferIcon from '../../assets/images/bankTransfer.png';
 // Memoized Payment Icon Component
 const PaymentIcon = memo(({ icon, name }) => (
   <div 
+    className="payment-icon"
     style={{
       display: 'flex',
       alignItems: 'center',
@@ -236,7 +237,7 @@ const PaymentMethods = () => {
           }}
           >
             <div className="bank-card-title" style={{ 
-              color: '#DFD458', 
+              color: '#0171BD', 
               fontWeight: '700', 
               fontSize: '24px',
               marginBottom: '1.5rem',

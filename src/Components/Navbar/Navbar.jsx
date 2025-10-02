@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faShoppingCart, faSearch, faTimes, faUser, faGlobe, faBoxOpen, faListAlt, faTags, faLink, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faSearch, faTimes, faUser, faGlobe, faBoxOpen, faListAlt, faTags, faLink, faHome, faCalendarAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import menuIcon from '../../assets/images/menu.png';
 
 const logo = "https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png";
@@ -146,6 +146,46 @@ function MainNavbar() {
             >
               <FontAwesomeIcon icon={faUser} style={{ fontSize: '20px' }} />
               <span>تسجيل دخول</span>
+            </NavLink>
+
+            {/* حجز موعد */}
+            <NavLink
+              to="/book"
+              className="d-flex align-items-center gap-3 text-decoration-none"
+              style={{
+                borderRadius: '8px',
+                backgroundColor: '#f8f9fa',
+                color: '#4a4a4a',
+                fontSize: '18px',
+                fontWeight: '400',
+                padding: '0.4rem 1rem',
+                transition: 'background-color 0.2s'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e9ecef'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+            >
+              <FontAwesomeIcon icon={faCalendarAlt} style={{ fontSize: '20px' }} />
+              <span>حجز موعد</span>
+            </NavLink>
+
+            {/* تواصل معنا */}
+            <NavLink
+              to="/contact"
+              className="d-flex align-items-center gap-3 text-decoration-none"
+              style={{
+                borderRadius: '8px',
+                backgroundColor: '#f8f9fa',
+                color: '#4a4a4a',
+                fontSize: '18px',
+                fontWeight: '400',
+                padding: '0.4rem 1rem',
+                transition: 'background-color 0.2s'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e9ecef'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+            >
+              <FontAwesomeIcon icon={faEnvelope} style={{ fontSize: '20px' }} />
+              <span>تواصل معنا</span>
             </NavLink>
 
             <hr style={{ margin: '0.15rem 0' }} />
@@ -320,7 +360,7 @@ function MainNavbar() {
               className="d-flex align-items-center gap-3 text-decoration-none"
               style={{
                 borderRadius: '8px',
-                backgroundColor: '#DFD458',
+                backgroundColor: '#0171BD',
                 color: '#ffffff',
                 fontSize: '18px',
                 fontWeight: '500',
@@ -330,7 +370,7 @@ function MainNavbar() {
                 justifyContent: 'center'
               }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#C5B34E'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#DFD458'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0171BD'}
             >
               <span>خيارات الدفع والتوصيل</span>
             </NavLink>
@@ -556,15 +596,15 @@ function MainNavbar() {
           </div>
 
           {/* القسم الأوسط: الشعار */}
-          <NavLink to="/" className="navbar-brand mx-auto">
+          <NavLink to="/" className="navbar-brand mx-auto" style={{ marginLeft: '80px', marginRight: '50px' }}>
             <img
               src={logo}
               alt="Logo"
               style={{ 
-                width: "200px", 
-                height: "50px", 
+                width: "300px", 
+                height: "80px", 
                 objectFit: "contain",
-                maxWidth: '150px'
+                maxWidth: '250px'
               }}
             />
           </NavLink>
@@ -633,11 +673,6 @@ function MainNavbar() {
               تسجيل دخول
             </NavLink>
             
-            {/* خط فاصل */}
-            <div className="d-none d-lg-block" style={{ width: '1px', height: '20px', backgroundColor: '#ddd' }}></div>
-            
-            {/* سلة التسوق */}
-            <FontAwesomeIcon icon={faShoppingCart} className="text-dark" style={{ fontSize: '18px' }} />
           </div>
         </div>
       </div>
@@ -696,6 +731,32 @@ function MainNavbar() {
             }}
           >
             عروض اليوم الوطني 95
+          </NavLink>
+          <NavLink 
+            to="/book" 
+            className="text-decoration-none" 
+            style={{ 
+              fontSize: '20px',
+              fontWeight: 'bolder',
+              color: '#4A4A4A',
+              textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+              letterSpacing: '0.5px'
+            }}
+          >
+            حجز موعد
+          </NavLink>
+          <NavLink 
+            to="/contact" 
+            className="text-decoration-none" 
+            style={{ 
+              fontSize: '20px',
+              fontWeight: 'bolder',
+              color: '#4A4A4A',
+              textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+              letterSpacing: '0.5px'
+            }}
+          >
+            تواصل معنا
           </NavLink>
         </div>
       </div>

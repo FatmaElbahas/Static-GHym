@@ -1,6 +1,4 @@
 import React, { useMemo } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -80,27 +78,6 @@ export default function Services() {
                     boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
                     background: 'white'
                   }}>
-                        <button
-                          type="button"
-                          aria-label="favorite"
-                          className="position-absolute"
-                          style={{
-                            top: '0px',
-                            left: '0px',
-                            width: '36px',
-                            height: '36px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            background: '#ffffff',
-                            borderRadius: '8px',
-                            border: '1px solid #e6e6e6',
-                            boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
-                            zIndex: 2
-                          }}
-                        >
-                          <span style={{ fontSize: '40px', color: '#999999' }}>♡</span>
-                        </button>
                         <img
                           src={service.img || toothPlaceholder}
                           alt={service.title}
@@ -113,7 +90,7 @@ export default function Services() {
                           <h5 className="card-title fw-semibold text-end" style={{color:'#484848'}}>{service.title}</h5>
                           <div className="d-flex align-items-center justify-content-center mt-2" style={{ gap: '10px' }}>
                             <div className="d-flex align-items-center" style={{ gap: '6px' }}>
-                              <span className="fw-bold" style={{ color: '#DFD458', fontSize: '22px', lineHeight: 1 }}>{service.price}</span>
+                              <span className="fw-bold" style={{ color: '#0171BD', fontSize: '22px', lineHeight: 1 }}>{service.price}</span>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 1124.14 1256.39"
@@ -127,24 +104,6 @@ export default function Services() {
                                 <path fill="#231f20" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"></path>
                               </svg>
                             </div>
-                            <button
-                              type="button"
-                              aria-label="add to cart"
-                              style={{
-                                width: '36px',
-                                height: '36px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                background: '#F0F0F0',
-                                color: '#4b4b4b',
-                                borderRadius: '50%',
-                                border: 'none',
-                                boxShadow: '0 2px 6px rgba(0,0,0,0.06)'
-                              }}
-                            >
-                              <FontAwesomeIcon icon={faCartShopping} />
-                            </button>
                           </div>
                         </div>
                         <button
@@ -205,7 +164,7 @@ export default function Services() {
           bottom: 18%;
           width: 85%;
           height: 44px;
-          background: #DFD458;
+          background: #0171BD;
           color: #ffffff;
           border: none;
           border-radius: 10px;

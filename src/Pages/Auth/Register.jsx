@@ -260,8 +260,8 @@ const Register = () => {
                   style={{
                     borderRadius: '10px',
                     fontSize: '16px',
-                    backgroundColor: '#DFD458',
-                    borderColor: '#DFD458',
+                    backgroundColor: '#0171BD',
+                    borderColor: '#0171BD',
                     color: '#ffffff',
                     fontWeight: '600',
                     padding: '1rem',
@@ -275,7 +275,7 @@ const Register = () => {
                   }}
                   onMouseLeave={(e) => {
                     if (!isSubmitting) {
-                      e.currentTarget.style.backgroundColor = '#DFD458';
+                      e.currentTarget.style.backgroundColor = '#0171BD';
                     }
                   }}
                 >
@@ -296,12 +296,12 @@ const Register = () => {
                   to="/login" 
                   className="text-decoration-none d-inline-flex align-items-center gap-2"
                   style={{ 
-                    color: '#DFD458', 
+                    color: '#0171BD', 
                     fontSize: '15px', 
                     fontWeight: '500' 
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.color = '#C5B34E'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = '#DFD458'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#0171BD'}
                 >
                   <span>هل لديك حساب؟ تسجيل الدخول</span>
                 </Link>
