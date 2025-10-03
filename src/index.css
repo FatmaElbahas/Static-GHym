@@ -6353,7 +6353,7 @@ body {
 
 @media (max-width: 480px) {
   body {
-    margin-top: 0px !important;
+    margin-top: 30px !important;
   }
   
   .home-page {
