@@ -167,7 +167,7 @@ export default function Home() {
   <link rel="icon" type="image/png" href="https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png" />
 </Helmet>
       <div className="home-page book-page  " style={{ paddingTop: '0', width: '100%', overflow: 'hidden', margin: 0, padding: 0 }}>
-      <section className="hero-section position-relative mb-0" dir="rtl">
+      <section className="hero-section position-relative mb-0" style={{ width: '100vw', marginLeft: 0, marginRight: 0 }} dir="rtl">
           <div 
             id="heroCarousel" 
             className="carousel slide h-100" 

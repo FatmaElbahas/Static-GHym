@@ -502,8 +502,8 @@ function BookContent() {
         <meta property="og:type" content="website" />
       </Helmet>
       
-      <div className="home-page book-page position-relative">
-      <section className="hero-section position-relative mb-0" dir="rtl">
+      <div className="home-page book-page position-relative" style={{ width: '100%', overflow: 'hidden', margin: 0, padding: 0 }}>
+      <section className="hero-section position-relative mb-0" style={{ width: '100vw', marginLeft: 0, marginRight: 0 }} dir="rtl">
           <div 
             id="heroCarousel" 
             className="carousel slide h-100" 
@@ -531,7 +531,7 @@ function BookContent() {
                 <img 
                   src={HeroBg2} 
                   alt="Hero Background 1" 
-                  className="w-100 h-100"
+                  className="w-100 h-100 book-hero-img"
                   style={{
                     objectFit: 'contain',
                     backgroundColor: '#f8f9fa'
@@ -546,7 +546,7 @@ function BookContent() {
                   <img 
                     src={HeroBg} 
                     alt="Hero Background 2" 
-                    className="w-100 h-100"
+                    className="w-100 h-100 book-hero-img"
                     style={{
                       objectFit: 'contain',
                       backgroundColor: '#f8f9fa'
