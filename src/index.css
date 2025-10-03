@@ -1168,6 +1168,7 @@ body .container-xxl {
   width: 100% !important;
   max-width: 100vw !important;
   overflow-x: hidden !important;
+  background-color: #ffffff !important;
 }
 /* استثناء: اجعل كونتينر النافبار بالحجم القديم */
 .navbar .container,
@@ -5770,6 +5771,7 @@ body {
   font-family: 'IBM Plex Sans Arabic', sans-serif;
   color: #4a4a4a;
   margin-top: 90px !important;
+  background-color: #ffffff !important;
 }
 
 /* Reduce body margin-top on larger screens */
@@ -6353,7 +6355,7 @@ body {
 
 @media (max-width: 480px) {
   body {
-    margin-top: 25px !important;
+    margin-top: 24px !important;
   }
   
   .home-page {
@@ -6400,4 +6402,16 @@ body {
     width: 100vw !important;
     max-width: 100vw !important;
   }
+}
+
+
+ 
+
+  element.style {
+    background-image: none !important;
+  width: auto !important; /* يرجع العرض طبيعي */
+  transform: none !important;
+}
+body{
+  background-color: #ffffff !important;
 }
