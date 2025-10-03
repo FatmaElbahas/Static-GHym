@@ -11,6 +11,7 @@ import ProductsPage from './Pages/Products/ProductsPage';
 import NationalDay from './Pages/NationalDay/NationalDay';
 import PaymentMethods from './Pages/PaymentMethods/PaymentMethods';
 import Book from './Pages/Book/Book';
+import Error404 from './Pages/Error404/Error404';
 
 function App() {
   const location = useLocation();
@@ -20,9 +21,10 @@ function App() {
   const isDashboard = location.pathname === '/dashboard';
   const isLogin = location.pathname === '/login';
   const isRegister = location.pathname === '/register';
+  const isError404 = !['/', '/offers', '/national-day', '/products', '/contact', '/payment-methods', '/book', '/dashboard', '/register', '/login', '/logout'].includes(location.pathname);
   
-  const hideMainNavbar = isDashboard || isLogin || isRegister;
-  const hideFooter = isDashboard;
+  const hideMainNavbar = isDashboard || isLogin || isRegister || isError404;
+  const hideFooter = isDashboard || isError404;
 
   // Loading bar animation on route change
   useEffect(() => {
@@ -80,7 +82,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Home />} />
-          <Route path="*" element={<Home />} />
+          <Route path="*" element={<Error404 />} />
         </Routes>
       </div>
       {!hideFooter && <Footer />}

@@ -12,8 +12,8 @@ import Stats from '../../Components/Stats/Stats';
 import Services from '../../Components/Services/Services';
 import DoctorCard from '../../Components/DoctorCard/DoctorCard.jsx';
 import Logo from '../../assets/images/Logo.png';
-import HeroBg from '../../assets/images/روتت.avif';
-import HeroBg2 from '../../assets/images/attractive hero.png';
+import HeroBg from '../../assets/images/heroghym.webp';
+import HeroBg2 from '../../assets/images/heroghym2.webp';
 import SidebarFilters from '../../Components/Filter/SidebarFilters.jsx';
 import ReactPaginate from 'react-paginate';
 import { FilterProvider, useFilter } from '../../context/FilterContext';
@@ -66,9 +66,9 @@ function SearchResults() {
     <>
       {/* عرض النتائج */}
       {currentDoctors.length > 0 ? (
-        <div className="row g-4">
+        <div className="row g-4 justify-content-center">
           {currentDoctors.map((doctor, index) => (
-            <div key={doctor.id || index} className="col-lg-4 col-md-6">
+            <div key={doctor.id || index} className="col-lg-4 col-md-6 col-sm-8 col-10">
               <DoctorCard salonData={doctor} />
             </div>
           ))}
@@ -502,14 +502,14 @@ function BookContent() {
         <meta property="og:type" content="website" />
       </Helmet>
       
-      <div className="book-page position-relative">
-      <section className="hero-section position-relative mb-0" style={{height: '60vh', width: '100vw', marginTop: '160px', transition: 'margin-top 0.3s ease', padding: 0, marginLeft: 0, marginRight: 0, left: 0, right: 0}} dir="rtl">
+      <div className="home-page book-page position-relative">
+      <section className="hero-section position-relative mb-0" dir="rtl">
           <div 
             id="heroCarousel" 
             className="carousel slide h-100" 
             data-bs-ride="carousel" 
             data-bs-interval="5000"
-            style={{ margin: 0, padding: 0, width: '100%' }}
+            style={{ margin: 0, padding: 0 }}
             onMouseEnter={(e) => {
               const prevBtn = e.currentTarget.querySelector('.carousel-control-prev');
               const nextBtn = e.currentTarget.querySelector('.carousel-control-next');
@@ -527,71 +527,31 @@ function BookContent() {
 
               {/* Slide 1 */}
               <div className="carousel-item active h-100">
-              <div
-  className="hero-background position-absolute top-0 start-0 w-100 h-100"
-  style={{ 
-    backgroundImage: 'url("https://media.zid.store/cdn-cgi/image/q=85,f=auto/https://media.zid.store/69733e3a-6328-43ea-90ee-cd02df32c66d/cd450c71-bf69-4fee-baf2-e7720296929c.jpg")',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center center',
-    backgroundRepeat: 'no-repeat',
-    opacity: 1,
-    margin: 0,
-    padding: 0
-  }}
->
-
-  
-
-                  {/* <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end" >
-                    <div className="hero-text" style={{ paddingTop: '8%', paddingRight:'15%' }}>
-                      <h1 className="brand-name fw-bold mb-3" style={{ 
-                        fontSize: window.innerWidth < 768 ? '2rem' : '3.5rem', 
-                        textShadow: '0 2px 4px rgba(0,0,0,0.3)', 
-                        color: '#ffffff',
-                        lineHeight: '1.2'
-                      }}>
-                        احجز موعدك بسهولة
-                      </h1>
-                      <p className="text-light fs-5 fw-medium pe-0" style={{ 
-                        maxWidth: '500px',
-                        fontSize: window.innerWidth < 768 ? '1rem' : '1.25rem'
-                      }}>
-                        فريقنا الطبي المتخصص في خدمتك على مدار الساعة
-                      </p>
-                    </div>
-                  </div> */}
-                </div>
+              <div className="hero-background w-100 h-100 position-relative" data-bg="1">
+                <img 
+                  src={HeroBg2} 
+                  alt="Hero Background 1" 
+                  className="w-100 h-100"
+                  style={{
+                    objectFit: 'contain',
+                    backgroundColor: '#f8f9fa'
+                  }}
+                />
+              </div>
               </div>
 
               {/* Slide 2 */}
               <div className="carousel-item h-100">
-                <div
-                  className="hero-background position-absolute top-0 start-0 w-100 h-100"
-                  style={{
-                    backgroundImage: `url(${HeroBg})`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center center',
-                  }}
-                >
-                  {/* <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end">
-                    <div className="hero-text" style={{ paddingTop: '8%', paddingRight:'15%' }}>
-                      <h1 className="brand-name fw-bold mb-3" style={{ 
-                        fontSize: window.innerWidth < 768 ? '2rem' : '3.5rem', 
-                        textShadow: '0 2px 4px rgba(0,0,0,0.3)', 
-                        color: '#ffffff',
-                        lineHeight: '1.2'
-                      }}>
-                        الرعاية الطبية التي تستحقها
-                      </h1>
-                      <p className="text-light fs-5 fw-medium pe-0" style={{ 
-                        maxWidth: '500px',
-                        fontSize: window.innerWidth < 768 ? '1rem' : '1.25rem'
-                      }}>
-                        احصلي على أفضل رعاية صحية مع أحدث الأجهزة الطبية والخبرة الممتازة
-                      </p>
-                    </div>
-                  </div> */}
+                <div className="w-100 h-100 hero-background position-relative" data-bg="2">
+                  <img 
+                    src={HeroBg} 
+                    alt="Hero Background 2" 
+                    className="w-100 h-100"
+                    style={{
+                      objectFit: 'contain',
+                      backgroundColor: '#f8f9fa'
+                    }}
+                  />
                 </div>
               </div>
 
@@ -630,7 +590,7 @@ function BookContent() {
                 className="carousel-control-prev-icon" 
                 aria-hidden="true"
                 style={{
-                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e")`,
+                  backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e\")",
                   width: '20px',
                   height: '20px'
                 }}
@@ -668,7 +628,7 @@ function BookContent() {
                 className="carousel-control-next-icon" 
                 aria-hidden="true"
                 style={{
-                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e")`,
+                  backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e\")",
                   width: '20px',
                   height: '20px'
                 }}
@@ -710,7 +670,6 @@ function BookContent() {
               ></button>
             </div>
           </div>
-        
         </section>
 
         <section className="booking-form-section w-full py-1">
@@ -909,7 +868,7 @@ function BookContent() {
       </div>
 
       {/* Booking Form Section */}
-      <div className="book-page container-fluid" style={{paddingBlock:'50px', marginTop: '80px' }} dir="rtl">
+      <div className="main" style={{width: '90%', marginLeft: 'auto', marginRight: 'auto', paddingBlock:'50px', marginTop: '60px' }} dir="rtl">
         <style>{`
           .btn-outline-primary:hover,
           .btn-outline-secondary:hover {

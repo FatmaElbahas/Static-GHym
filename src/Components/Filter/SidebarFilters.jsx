@@ -814,7 +814,7 @@ export default function SidebarFilters() {
   // Loading state للفلاتر - يظهر loading افتراضي حتى تيجي الداتا من API
   if (isLoading || apiStatus === 'loading') {
     return (
-      <aside className="col-lg-3 col-md-4">
+      <aside className="col-lg-3 col-md-4 col-sm-8 col-10 mx-auto">
         <div
           className="p-5 bg-white"
           style={{
@@ -998,7 +998,7 @@ export default function SidebarFilters() {
   }
 
   return (
-    <aside className="col-lg-3 col-md-4" style={{ marginTop: '1.5rem' }}>
+    <aside className="col-lg-3 col-md-4 col-sm-8 col-10 mx-auto" style={{ marginTop: '1.5rem' }}>
       <style>{`
         @media (min-width: 992px) {
           .sidebar-filters {

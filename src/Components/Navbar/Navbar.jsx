@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faSearch, faTimes, faUser, faGlobe, faBoxOpen, faListAlt, faTags, faLink, faHome, faCalendarAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faTimes, faUser, faGlobe, faBoxOpen, faListAlt, faTags, faLink, faHome, faCalendarAlt, faEnvelope, faShieldAlt, faMapMarkedAlt } from '@fortawesome/free-solid-svg-icons';
 import menuIcon from '../../assets/images/menu.png';
 
 const logo = "https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png";
@@ -90,11 +90,13 @@ function MainNavbar() {
       width: '300px',
       maxWidth: '85%',
       height: '100vh',
-      backgroundColor: '#fff',
+      backgroundColor: '#ffffff',
+      background: 'linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%)',
       zIndex: 9999,
       overflowY: 'auto',
       transition: 'right 0.3s ease',
-      boxShadow: '-2px 0 10px rgba(0,0,0,0.1)'
+      boxShadow: '-4px 0 20px rgba(1, 113, 189, 0.1)',
+      borderLeft: '3px solid #0171BD'
     }
   }), [isOpen]);
 
@@ -113,18 +115,24 @@ function MainNavbar() {
               to="/"
               className="d-flex align-items-center gap-3 text-decoration-none"
               style={{
-                borderRadius: '8px',
-                backgroundColor: '#f8f9fa',
-                color: '#4a4a4a',
+                borderRadius: '10px',
+                backgroundColor: '#f0f7fc',
+                color: '#2c3e50',
                 fontSize: '18px',
-                fontWeight: '400',
-                padding: '0.4rem 1rem',
-                transition: 'background-color 0.2s'
+                fontWeight: '500',
+                padding: '0.6rem 1rem',
+                transition: 'all 0.3s ease'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e9ecef'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#e3f2fd';
+                e.currentTarget.style.transform = 'translateX(-5px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#f0f7fc';
+                e.currentTarget.style.transform = 'translateX(0)';
+              }}
             >
-              <FontAwesomeIcon icon={faHome} style={{ fontSize: '20px' }} />
+              <FontAwesomeIcon icon={faHome} style={{ fontSize: '20px', color: '#0171BD' }} />
               <span>الصفحة الرئيسية</span>
             </NavLink>
             
@@ -133,18 +141,24 @@ function MainNavbar() {
               to="/login"
               className="d-flex align-items-center gap-3 text-decoration-none"
               style={{
-                borderRadius: '8px',
-                backgroundColor: '#f8f9fa',
-                color: '#4a4a4a',
+                borderRadius: '10px',
+                backgroundColor: '#f0f7fc',
+                color: '#2c3e50',
                 fontSize: '18px',
-                fontWeight: '400',
-                padding: '0.4rem 1rem',
-                transition: 'background-color 0.2s'
+                fontWeight: '500',
+                padding: '0.6rem 1rem',
+                transition: 'all 0.3s ease'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e9ecef'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#e3f2fd';
+                e.currentTarget.style.transform = 'translateX(-5px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#f0f7fc';
+                e.currentTarget.style.transform = 'translateX(0)';
+              }}
             >
-              <FontAwesomeIcon icon={faUser} style={{ fontSize: '20px' }} />
+              <FontAwesomeIcon icon={faUser} style={{ fontSize: '20px', color: '#0171BD' }} />
               <span>تسجيل دخول</span>
             </NavLink>
 
@@ -153,18 +167,24 @@ function MainNavbar() {
               to="/book"
               className="d-flex align-items-center gap-3 text-decoration-none"
               style={{
-                borderRadius: '8px',
-                backgroundColor: '#f8f9fa',
-                color: '#4a4a4a',
+                borderRadius: '10px',
+                backgroundColor: '#f0f7fc',
+                color: '#2c3e50',
                 fontSize: '18px',
-                fontWeight: '400',
-                padding: '0.4rem 1rem',
-                transition: 'background-color 0.2s'
+                fontWeight: '500',
+                padding: '0.6rem 1rem',
+                transition: 'all 0.3s ease'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e9ecef'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#e3f2fd';
+                e.currentTarget.style.transform = 'translateX(-5px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#f0f7fc';
+                e.currentTarget.style.transform = 'translateX(0)';
+              }}
             >
-              <FontAwesomeIcon icon={faCalendarAlt} style={{ fontSize: '20px' }} />
+              <FontAwesomeIcon icon={faCalendarAlt} style={{ fontSize: '20px', color: '#0171BD' }} />
               <span>حجز موعد</span>
             </NavLink>
 
@@ -173,40 +193,52 @@ function MainNavbar() {
               to="/contact"
               className="d-flex align-items-center gap-3 text-decoration-none"
               style={{
-                borderRadius: '8px',
-                backgroundColor: '#f8f9fa',
-                color: '#4a4a4a',
+                borderRadius: '10px',
+                backgroundColor: '#f0f7fc',
+                color: '#2c3e50',
                 fontSize: '18px',
-                fontWeight: '400',
-                padding: '0.4rem 1rem',
-                transition: 'background-color 0.2s'
+                fontWeight: '500',
+                padding: '0.6rem 1rem',
+                transition: 'all 0.3s ease'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e9ecef'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#e3f2fd';
+                e.currentTarget.style.transform = 'translateX(-5px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#f0f7fc';
+                e.currentTarget.style.transform = 'translateX(0)';
+              }}
             >
-              <FontAwesomeIcon icon={faEnvelope} style={{ fontSize: '20px' }} />
+              <FontAwesomeIcon icon={faEnvelope} style={{ fontSize: '20px', color: '#0171BD' }} />
               <span>تواصل معنا</span>
             </NavLink>
 
-            <hr style={{ margin: '0.15rem 0' }} />
+            <hr style={{ margin: '0.8rem 0', borderColor: '#e3f2fd' }} />
 
             {/* جميع المنتجات */}
             <NavLink
               to="/products"
               className="d-flex align-items-center gap-3 text-decoration-none"
               style={{
-                borderRadius: '8px',
-                backgroundColor: '#f8f9fa',
-                color: '#4a4a4a',
+                borderRadius: '10px',
+                backgroundColor: '#f0f7fc',
+                color: '#2c3e50',
                 fontSize: '18px',
-                fontWeight: '400',
-                padding: '0.4rem 1rem',
-                transition: 'background-color 0.2s'
+                fontWeight: '500',
+                padding: '0.6rem 1rem',
+                transition: 'all 0.3s ease'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e9ecef'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#e3f2fd';
+                e.currentTarget.style.transform = 'translateX(-5px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#f0f7fc';
+                e.currentTarget.style.transform = 'translateX(0)';
+              }}
             >
-              <FontAwesomeIcon icon={faBoxOpen} style={{ fontSize: '20px' }} />
+              <FontAwesomeIcon icon={faBoxOpen} style={{ fontSize: '20px', color: '#0171BD' }} />
               <span>جميع المنتجات</span>
             </NavLink>
 
@@ -214,38 +246,53 @@ function MainNavbar() {
             <div
               className="d-flex align-items-center gap-3"
               style={{
-                borderRadius: '8px',
-                backgroundColor: '#f8f9fa',
-                color: '#4a4a4a',
+                borderRadius: '10px',
+                backgroundColor: '#f0f7fc',
+                color: '#2c3e50',
                 fontSize: '18px',
-                fontWeight: '400',
-                padding: '0.4rem 1rem',
-                cursor: 'pointer'
+                fontWeight: '500',
+                padding: '0.6rem 1rem',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#e3f2fd';
+                e.currentTarget.style.transform = 'translateX(-5px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#f0f7fc';
+                e.currentTarget.style.transform = 'translateX(0)';
               }}
             >
-              <FontAwesomeIcon icon={faListAlt} style={{ fontSize: '20px' }} />
+              <FontAwesomeIcon icon={faListAlt} style={{ fontSize: '20px', color: '#0171BD' }} />
               <span>جميع التصنيفات</span>
             </div>
 
-            <hr style={{ margin: '0.15rem 0' }} />
+            <hr style={{ margin: '0.8rem 0', borderColor: '#e3f2fd' }} />
 
             {/* عروض اليوم الوطني 95 */}
             <NavLink
               to="/offers"
               className="d-flex align-items-center gap-3 text-decoration-none"
               style={{
-                borderRadius: '8px',
-                backgroundColor: '#f8f9fa',
-                color: '#4a4a4a',
+                borderRadius: '10px',
+                backgroundColor: '#f0f7fc',
+                color: '#2c3e50',
                 fontSize: '18px',
-                fontWeight: '400',
-                padding: '0.4rem 1rem',
-                transition: 'background-color 0.2s'
+                fontWeight: '500',
+                padding: '0.6rem 1rem',
+                transition: 'all 0.3s ease'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e9ecef'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#e3f2fd';
+                e.currentTarget.style.transform = 'translateX(-5px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#f0f7fc';
+                e.currentTarget.style.transform = 'translateX(0)';
+              }}
             >
-              <FontAwesomeIcon icon={faTags} style={{ fontSize: '20px' }} />
+              <FontAwesomeIcon icon={faTags} style={{ fontSize: '20px', color: '#0171BD' }} />
               <span>عروض اليوم الوطني 95</span>
             </NavLink>
 
@@ -254,14 +301,24 @@ function MainNavbar() {
               className="d-flex align-items-center gap-3"
               style={{
                 borderRadius: '8px',
-                backgroundColor: '#f8f9fa',
-                color: '#4a4a4a',
-                fontSize: '17px',
+                backgroundColor: 'transparent',
+                color: '#6c757d',
+                fontSize: '16px',
                 fontWeight: '400',
-                padding: '0.6rem 1rem 0.6rem 2rem'
+                padding: '0.5rem 1rem 0.5rem 2.5rem',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#0171BD';
+                e.currentTarget.style.paddingRight = '2rem';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = '#6c757d';
+                e.currentTarget.style.paddingRight = '2.5rem';
               }}
             >
-              <span>■ الجلدية</span>
+              <span style={{ color: '#0171BD', fontWeight: 'bold' }}>●</span>
+              <span>الجلدية</span>
             </div>
 
             {/* الأسنان */}
@@ -269,14 +326,24 @@ function MainNavbar() {
               className="d-flex align-items-center gap-3"
               style={{
                 borderRadius: '8px',
-                backgroundColor: '#f8f9fa',
-                color: '#4a4a4a',
-                fontSize: '17px',
+                backgroundColor: 'transparent',
+                color: '#6c757d',
+                fontSize: '16px',
                 fontWeight: '400',
-                padding: '0.6rem 1rem 0.6rem 2rem'
+                padding: '0.5rem 1rem 0.5rem 2.5rem',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#0171BD';
+                e.currentTarget.style.paddingRight = '2rem';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = '#6c757d';
+                e.currentTarget.style.paddingRight = '2.5rem';
               }}
             >
-              <span>■ الأسنان</span>
+              <span style={{ color: '#0171BD', fontWeight: 'bold' }}>●</span>
+              <span>الأسنان</span>
             </div>
 
             {/* عروض ليزر الرجال */}
@@ -284,14 +351,24 @@ function MainNavbar() {
               className="d-flex align-items-center gap-3"
               style={{
                 borderRadius: '8px',
-                backgroundColor: '#f8f9fa',
-                color: '#4a4a4a',
-                fontSize: '17px',
+                backgroundColor: 'transparent',
+                color: '#6c757d',
+                fontSize: '16px',
                 fontWeight: '400',
-                padding: '0.6rem 1rem 0.6rem 2rem'
+                padding: '0.5rem 1rem 0.5rem 2.5rem',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#0171BD';
+                e.currentTarget.style.paddingRight = '2rem';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = '#6c757d';
+                e.currentTarget.style.paddingRight = '2.5rem';
               }}
             >
-              <span>■ عروض ليزر الرجال</span>
+              <span style={{ color: '#0171BD', fontWeight: 'bold' }}>●</span>
+              <span>عروض ليزر الرجال</span>
             </div>
 
             {/* عروض ليزر النساء */}
@@ -299,80 +376,105 @@ function MainNavbar() {
               className="d-flex align-items-center gap-3"
               style={{
                 borderRadius: '8px',
-                backgroundColor: '#f8f9fa',
-                color: '#4a4a4a',
-                fontSize: '17px',
+                backgroundColor: 'transparent',
+                color: '#6c757d',
+                fontSize: '16px',
                 fontWeight: '400',
-                padding: '0.6rem 1rem 0.6rem 2rem'
+                padding: '0.5rem 1rem 0.5rem 2.5rem',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#0171BD';
+                e.currentTarget.style.paddingRight = '2rem';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = '#6c757d';
+                e.currentTarget.style.paddingRight = '2.5rem';
               }}
             >
-              <span>■ عروض ليزر النساء</span>
+              <span style={{ color: '#0171BD', fontWeight: 'bold' }}>●</span>
+              <span>عروض ليزر النساء</span>
             </div>
 
-            <hr style={{ margin: '0.15rem 0' }} />
+            <hr style={{ margin: '0.8rem 0', borderColor: '#e3f2fd' }} />
 
             {/* روابط مهمة */}
             <div
               onClick={() => setShowSubMenu(true)}
               className="d-flex align-items-center gap-3"
               style={{
-                borderRadius: '8px',
-                backgroundColor: '#f8f9fa',
-                color: '#4a4a4a',
+                borderRadius: '10px',
+                backgroundColor: '#f0f7fc',
+                color: '#2c3e50',
                 fontSize: '18px',
-                fontWeight: '400',
-                padding: '0.4rem 1rem',
+                fontWeight: '500',
+                padding: '0.6rem 1rem',
                 cursor: 'pointer',
-                transition: 'background-color 0.2s'
+                transition: 'all 0.3s ease'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e9ecef'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#e3f2fd';
+                e.currentTarget.style.transform = 'translateX(-5px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#f0f7fc';
+                e.currentTarget.style.transform = 'translateX(0)';
+              }}
             >
-              <FontAwesomeIcon icon={faLink} style={{ fontSize: '20px' }} />
+              <FontAwesomeIcon icon={faLink} style={{ fontSize: '20px', color: '#0171BD' }} />
               <span>روابط مهمة</span>
-              <span style={{ marginRight: 'auto' }}>◄</span>
+              <span style={{ marginRight: 'auto', color: '#0171BD' }}>◄</span>
             </div>
 
             {/* الشحن إلى */}
             <div
               className="d-flex align-items-center gap-3"
               style={{
-                borderRadius: '8px',
-                backgroundColor: '#f8f9fa',
-                color: '#4a4a4a',
+                borderRadius: '10px',
+                backgroundColor: '#f0f7fc',
+                color: '#2c3e50',
                 fontSize: '18px',
-                fontWeight: '400',
+                fontWeight: '500',
                 padding: '0.6rem 1rem'
               }}
             >
-              <FontAwesomeIcon icon={faGlobe} style={{ fontSize: '20px' }} />
+              <FontAwesomeIcon icon={faGlobe} style={{ fontSize: '20px', color: '#0171BD' }} />
               <div className="d-flex flex-column">
                 <span style={{ fontSize: '14px', color: '#6c757d' }}>الشحن إلى</span>
                 <span>السعودية</span>
               </div>
             </div>
 
-            <hr style={{ margin: '0.15rem 0' }} />
+            <hr style={{ margin: '0.8rem 0', borderColor: '#e3f2fd' }} />
 
             {/* خيارات الدفع والتوصيل */}
             <NavLink
               to="/payment-methods"
               className="d-flex align-items-center gap-3 text-decoration-none"
               style={{
-                borderRadius: '8px',
+                borderRadius: '10px',
                 backgroundColor: '#0171BD',
                 color: '#ffffff',
                 fontSize: '18px',
-                fontWeight: '500',
+                fontWeight: '600',
                 padding: '0.8rem 1rem',
-                transition: 'background-color 0.2s',
+                transition: 'all 0.3s ease',
                 textAlign: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                boxShadow: '0 2px 8px rgba(1, 113, 189, 0.3)'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#C5B34E'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0171BD'}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#015a9a';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(1, 113, 189, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#0171BD';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(1, 113, 189, 0.3)';
+              }}
             >
-              <span>خيارات الدفع والتوصيل</span>
+              <span style={{ color: '#ffffff' }}>خيارات الدفع والتوصيل</span>
             </NavLink>
           </div>
         </div>
@@ -388,7 +490,7 @@ function MainNavbar() {
               left: 0,
               right: 0,
               bottom: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.3)',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
               zIndex: 10000,
               opacity: 1,
               visibility: 'visible'
@@ -405,11 +507,13 @@ function MainNavbar() {
               width: '300px',
               maxWidth: '85%',
               height: '100vh',
-              backgroundColor: '#fff',
+              backgroundColor: '#ffffff',
+              background: 'linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%)',
               zIndex: 10001,
               overflowY: 'auto',
               transition: 'right 0.3s ease',
-              boxShadow: '-2px 0 10px rgba(0,0,0,0.1)'
+              boxShadow: '-4px 0 20px rgba(1, 113, 189, 0.1)',
+              borderLeft: '3px solid #0171BD'
             }}
           >
             <div style={{ padding: '1.5rem' }}>
@@ -486,61 +590,105 @@ function MainNavbar() {
                 <NavLink
                   to="/"
                   onClick={() => setShowSubMenu(false)}
-                  className="d-flex align-items-center text-decoration-none"
+                  className="d-flex align-items-center gap-3 text-decoration-none"
                   style={{
-                    padding: '0.8rem 1rem',
-                    color: '#484848',
-                    fontSize: '16px',
-                    fontWeight: '400',
-                    borderBottom: '1px solid #f0f0f0'
+                    borderRadius: '10px',
+                    backgroundColor: '#f0f7fc',
+                    color: '#2c3e50',
+                    fontSize: '18px',
+                    fontWeight: '500',
+                    padding: '0.6rem 1rem',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#e3f2fd';
+                    e.currentTarget.style.transform = 'translateX(-5px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f0f7fc';
+                    e.currentTarget.style.transform = 'translateX(0)';
                   }}
                 >
-                  سياسة الخصوصية
+                  <FontAwesomeIcon icon={faShieldAlt} style={{ fontSize: '20px', color: '#0171BD' }} />
+                  <span>سياسة الخصوصية</span>
                 </NavLink>
 
                 <NavLink
                   to="/contact"
                   onClick={() => setShowSubMenu(false)}
-                  className="d-flex align-items-center text-decoration-none"
+                  className="d-flex align-items-center gap-3 text-decoration-none"
                   style={{
-                    padding: '0.8rem 1rem',
-                    color: '#484848',
-                    fontSize: '16px',
-                    fontWeight: '400',
-                    borderBottom: '1px solid #f0f0f0'
+                    borderRadius: '10px',
+                    backgroundColor: '#f0f7fc',
+                    color: '#2c3e50',
+                    fontSize: '18px',
+                    fontWeight: '500',
+                    padding: '0.6rem 1rem',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#e3f2fd';
+                    e.currentTarget.style.transform = 'translateX(-5px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f0f7fc';
+                    e.currentTarget.style.transform = 'translateX(0)';
                   }}
                 >
-                  تواصل معنا
+                  <FontAwesomeIcon icon={faEnvelope} style={{ fontSize: '20px', color: '#0171BD' }} />
+                  <span>تواصل معنا</span>
                 </NavLink>
 
                 <NavLink
                   to="/"
                   onClick={() => setShowSubMenu(false)}
-                  className="d-flex align-items-center text-decoration-none"
+                  className="d-flex align-items-center gap-3 text-decoration-none"
                   style={{
-                    padding: '0.8rem 1rem',
-                    color: '#484848',
-                    fontSize: '16px',
-                    fontWeight: '400',
-                    borderBottom: '1px solid #f0f0f0'
+                    borderRadius: '10px',
+                    backgroundColor: '#f0f7fc',
+                    color: '#2c3e50',
+                    fontSize: '18px',
+                    fontWeight: '500',
+                    padding: '0.6rem 1rem',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#e3f2fd';
+                    e.currentTarget.style.transform = 'translateX(-5px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f0f7fc';
+                    e.currentTarget.style.transform = 'translateX(0)';
                   }}
                 >
-                  خريطة الموقع
+                  <FontAwesomeIcon icon={faMapMarkedAlt} style={{ fontSize: '20px', color: '#0171BD' }} />
+                  <span>خريطة الموقع</span>
                 </NavLink>
 
                 <NavLink
                   to="/book"
                   onClick={() => setShowSubMenu(false)}
-                  className="d-flex align-items-center text-decoration-none"
+                  className="d-flex align-items-center gap-3 text-decoration-none"
                   style={{
-                    padding: '0.8rem 1rem',
-                    color: '#484848',
-                    fontSize: '16px',
-                    fontWeight: '400',
-                    borderBottom: '1px solid #f0f0f0'
+                    borderRadius: '10px',
+                    backgroundColor: '#f0f7fc',
+                    color: '#2c3e50',
+                    fontSize: '18px',
+                    fontWeight: '500',
+                    padding: '0.6rem 1rem',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#e3f2fd';
+                    e.currentTarget.style.transform = 'translateX(-5px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f0f7fc';
+                    e.currentTarget.style.transform = 'translateX(0)';
                   }}
                 >
-                  حجز مواعيد
+                  <FontAwesomeIcon icon={faCalendarAlt} style={{ fontSize: '20px', color: '#0171BD' }} />
+                  <span>حجز مواعيد</span>
                 </NavLink>
               </div>
             </div>
@@ -550,7 +698,8 @@ function MainNavbar() {
 
       <nav className="navbar navbar-expand-lg navbar-light bg-white fixed-top" style={{ 
         boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-        padding: '0.5rem 0'
+        padding: window.innerWidth <= 991 && window.innerWidth >= 769 ? '0.2rem 0' : 
+                 window.innerWidth <= 768 ? '0.3rem 0' : '0.5rem 0'
       }}>
       <div className="mx-auto" style={{ width: '95%', maxWidth: 'none' }}>
         <div className="d-flex justify-content-between align-items-center w-100">
@@ -596,15 +745,28 @@ function MainNavbar() {
           </div>
 
           {/* القسم الأوسط: الشعار */}
-          <NavLink to="/" className="navbar-brand mx-auto" style={{ marginLeft: '80px', marginRight: '50px' }}>
+          <NavLink to="/" className="navbar-brand mx-auto navbar-logo-link" style={{ marginLeft: '80px', marginRight: '50px' }}>
             <img
               src={logo}
               alt="Logo"
+              className="navbar-logo-img"
               style={{ 
-                width: "300px", 
-                height: "80px", 
                 objectFit: "contain",
-                maxWidth: '250px'
+                width: window.innerWidth <= 480 ? '60px' : 
+                       window.innerWidth <= 576 ? '70px' : 
+                       window.innerWidth <= 768 ? '85px' :
+                       window.innerWidth <= 991 ? '110px' :
+                       window.innerWidth <= 1200 ? '150px' : '300px',
+                height: window.innerWidth <= 480 ? '25px' : 
+                        window.innerWidth <= 576 ? '28px' : 
+                        window.innerWidth <= 768 ? '32px' :
+                        window.innerWidth <= 991 ? '35px' :
+                        window.innerWidth <= 1200 ? '50px' : '80px',
+                maxWidth: window.innerWidth <= 480 ? '60px' : 
+                          window.innerWidth <= 576 ? '70px' : 
+                          window.innerWidth <= 768 ? '85px' :
+                          window.innerWidth <= 991 ? '110px' :
+                          window.innerWidth <= 1200 ? '150px' : '250px'
               }}
             />
           </NavLink>
@@ -650,14 +812,6 @@ function MainNavbar() {
               {selectedLanguage}
             </button>
               </div>
-            
-            {/* خط فاصل */}
-            <div className="d-none d-lg-block" style={{ width: '1px', height: '20px', backgroundColor: '#ddd' }}></div>
-            
-            {/* البحث */}
-            <div className="d-flex align-items-center">
-              <FontAwesomeIcon icon={faSearch} className="text-muted" style={{ fontSize: '18px' }} />
-            </div>
             
             {/* خط فاصل */}
             <div className="d-none d-lg-block" style={{ width: '1px', height: '20px', backgroundColor: '#ddd' }}></div>

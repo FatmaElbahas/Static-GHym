@@ -2,26 +2,24 @@ import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTiktok, faTwitter, faSnapchatGhost, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { Helmet } from 'react-helmet-async';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import Stats from '../../Components/Stats/Stats';
+// Removed unused Stats import for better performance
 import Services from '../../Components/Services/Services';
-import Partners from '../../Components/Partners/Partners';
-import MostBookedClinics from '../../Components/PartnersSwiper/MostBookedClinics';
-import MostBookedDoctors from '../../Components/PartnersSwiper/MostBookedDoctors';
+// Removed unused component imports for better performance
 import Testimonials from '../../Components/Testimonials/Testimonials';
-import AboutUs from '../../Components/AboutUs/AboutUs';
 import MapSection from '../../Components/MapSection/MapSection';
-import HeroBg from '../../assets/images/روتت.avif';
-import HeroBg2 from '../../assets/images/attractive hero.png';
+import HeroBg from '../../assets/images/heroghym.webp';
+import HeroBg2 from '../../assets/images/heroghym2.webp';
 
 export default function Home() {
   const location = useLocation();
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = React.useState(true);
+  // Removed hero responsive styles - using CSS only
 
   // دالة للتحقق من حالة تسجيل الدخول
   const handleBookingClick = (e) => {
@@ -60,8 +58,19 @@ export default function Home() {
           transition: top 0.3s ease !important;
         }
         body {
-          padding-top: ${showAlert ? '46px' : '0'} !important;
+          padding-top: 0 !important;
           transition: padding-top 0.3s ease !important;
+        }
+        
+        .home-page .hero-section {
+          margin-top: ${showAlert ? '46px' : '0'} !important;
+          transition: margin-top 0.3s ease !important;
+        }
+        
+        @media (max-width: 991.98px) and (min-width: 769px) {
+          .home-page .hero-section {
+            margin-top: 0 !important;
+          }
         }
         
         @media (max-width: 991.98px) {
@@ -69,7 +78,7 @@ export default function Home() {
             top: ${showAlert ? '40px' : '0'} !important;
           }
           body {
-            padding-top: ${showAlert ? '40px' : '0'} !important;
+            padding-top: 0 !important;
           }
         }
         
@@ -78,7 +87,10 @@ export default function Home() {
             top: ${showAlert ? '34px' : '0'} !important;
           }
           body {
-            padding-top: ${showAlert ? '34px' : '0'} !important;
+            padding-top: 0 !important;
+          }
+          .home-page .hero-section {
+            margin-top: ${showAlert ? '34px' : '0'} !important;
           }
         }
       `}</style>
@@ -154,14 +166,14 @@ export default function Home() {
   {/* Favicon */}
   <link rel="icon" type="image/png" href="https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png" />
 </Helmet>
-      <div className="home-page book-page " style={{ paddingTop: '0', width: '100%', overflow: 'hidden', margin: 0, padding: 0 }}>
-      <section className="hero-section position-relative mb-0" style={{height: '60vh', width: '100vw', marginTop: showAlert ? '208px' : '160px', transition: 'margin-top 0.3s ease', padding: 0, marginLeft: 0, marginRight: 0, left: 0, right: 0}} dir="rtl">
+      <div className="home-page book-page  " style={{ paddingTop: '0', width: '100%', overflow: 'hidden', margin: 0, padding: 0 }}>
+      <section className="hero-section position-relative mb-0" dir="rtl">
           <div 
             id="heroCarousel" 
             className="carousel slide h-100" 
             data-bs-ride="carousel" 
             data-bs-interval="5000"
-            style={{ margin: 0, padding: 0, width: '100%' }}
+            style={{ margin: 0, padding: 0 }}
             onMouseEnter={(e) => {
               const prevBtn = e.currentTarget.querySelector('.carousel-control-prev');
               const nextBtn = e.currentTarget.querySelector('.carousel-control-next');
@@ -179,71 +191,31 @@ export default function Home() {
 
               {/* Slide 1 */}
               <div className="carousel-item active h-100">
-              <div
-  className="hero-background position-absolute top-0 start-0 w-100 h-100"
-  style={{ 
-    backgroundImage: 'url("https://media.zid.store/cdn-cgi/image/q=85,f=auto/https://media.zid.store/69733e3a-6328-43ea-90ee-cd02df32c66d/cd450c71-bf69-4fee-baf2-e7720296929c.jpg")',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center center',
-    backgroundRepeat: 'no-repeat',
-    opacity: 1,
-    margin: 0,
-    padding: 0
-  }}
->
-
-  
-
-                  {/* <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end" >
-                    <div className="hero-text" style={{ paddingTop: '8%', paddingRight:'15%' }}>
-                      <h1 className="brand-name fw-bold mb-3" style={{ 
-                        fontSize: window.innerWidth < 768 ? '2rem' : '3.5rem', 
-                        textShadow: '0 2px 4px rgba(0,0,0,0.3)', 
-                        color: '#ffffff',
-                        lineHeight: '1.2'
-                      }}>
-                        احجز موعدك بسهولة
-                      </h1>
-                      <p className="text-light fs-5 fw-medium pe-0" style={{ 
-                        maxWidth: '500px',
-                        fontSize: window.innerWidth < 768 ? '1rem' : '1.25rem'
-                      }}>
-                        فريقنا الطبي المتخصص في خدمتك على مدار الساعة
-                      </p>
-                    </div>
-                  </div> */}
-                </div>
+              <div className="hero-background w-100 h-100 position-relative" data-bg="1">
+                <img 
+                  src={HeroBg2} 
+                  alt="Hero Background 1" 
+                  className="w-100 h-100"
+                  style={{
+                    objectFit: 'contain',
+                    backgroundColor: '#f8f9fa'
+                  }}
+                />
+              </div>
               </div>
 
               {/* Slide 2 */}
               <div className="carousel-item h-100">
-                <div
-                  className="hero-background position-absolute top-0 start-0 w-100 h-100"
-                  style={{
-                    backgroundImage: `url(${HeroBg})`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center center',
-                  }}
-                >
-                  {/* <div className="hero-overlay position-relative h-100 d-flex align-items-start justify-content-end">
-                    <div className="hero-text" style={{ paddingTop: '8%', paddingRight:'15%' }}>
-                      <h1 className="brand-name fw-bold mb-3" style={{ 
-                        fontSize: window.innerWidth < 768 ? '2rem' : '3.5rem', 
-                        textShadow: '0 2px 4px rgba(0,0,0,0.3)', 
-                        color: '#ffffff',
-                        lineHeight: '1.2'
-                      }}>
-                        الرعاية الطبية التي تستحقها
-                      </h1>
-                      <p className="text-light fs-5 fw-medium pe-0" style={{ 
-                        maxWidth: '500px',
-                        fontSize: window.innerWidth < 768 ? '1rem' : '1.25rem'
-                      }}>
-                        احصلي على أفضل رعاية صحية مع أحدث الأجهزة الطبية والخبرة الممتازة
-                      </p>
-                    </div>
-                  </div> */}
+                <div className="w-100 h-100 hero-background position-relative" data-bg="2">
+                  <img 
+                    src={HeroBg} 
+                    alt="Hero Background 2" 
+                    className="w-100 h-100"
+                    style={{
+                      objectFit: 'contain',
+                      backgroundColor: '#f8f9fa'
+                    }}
+                  />
                 </div>
               </div>
 
@@ -282,7 +254,7 @@ export default function Home() {
                 className="carousel-control-prev-icon" 
                 aria-hidden="true"
                 style={{
-                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e")`,
+                  backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e\")",
                   width: '20px',
                   height: '20px'
                 }}
@@ -320,7 +292,7 @@ export default function Home() {
                 className="carousel-control-next-icon" 
                 aria-hidden="true"
                 style={{
-                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e")`,
+                  backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e\")",
                   width: '20px',
                   height: '20px'
                 }}
@@ -362,35 +334,17 @@ export default function Home() {
               ></button>
             </div>
           </div>
-          {/* <div className="booking-card bg-white rounded-4 shadow-lg p-4">
-          <div className="container-fluid">
-            <div className="booking-content d-flex align-items-center gap-4">
-              <div className="booking-icon flex-shrink-0">
-                <i className="fas fa-calendar-alt fs-1 color-main"></i>
-              </div>
-              <div className="booking-text flex-grow-1 text-end">
-                <div className="question-container bg-light rounded-3 p-3 mb-2">
-                  <h3 className="booking-question fs-3 fw-bold mb-0" style={{color: '#00a8b0'}}>هل ترغب بحجز موعد ؟</h3>
-                </div>
-                <p className="booking-description fs-5 text-muted fw-bold mb-0">احجز موعدك لدى إحدى المراكز بخطوات بسيطة....</p>
-              </div>
-              <div className="booking-button flex-shrink-0">
-                <Link to="/offers" className="btn btn-lg px-4 py-3 rounded-pill fw-bold" style={{backgroundColor: 'var(--color-main)', borderColor: 'var(--color-main)', color: 'white'}}>
-                  احجز الآن
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div> */}
         </section>
-        <div className="booking-card bg-white rounded-5 shadow-lg p-5 px-4 d-flex justify-content-between align-items-center" style={{marginBottom: '-20px' ,width: '80%',minHeight: '120px', borderRadius: '50px'}}>
+        <div className="booking-card bg-white rounded-5 shadow-lg p-5 px-4 d-flex justify-content-between align-items-center" style={{width: '80%',minHeight: '120px', borderRadius: '50px', marginTop: '-70px', position: 'relative', zIndex: 10}}>
           <div className="container-fluid">
             <div className="booking-content d-flex align-items-center gap-4">
               <div className="booking-icon flex-shrink-0">
                 <i className="fas fa-calendar-alt fs-1 color-main"></i>
               </div>
               <div className="booking-text flex-grow-1 text-end">
-                <div className="question-container rounded-3 p-3 mb-2">
+                <div className="question-container rounded-3 p-3" style={{
+                  marginBottom: window.innerWidth < 768 ? '0.3rem' : '0.5rem'
+                }}>
                   <h3 className="booking-question fw-bold mb-0" style={{
                     color: '#000000',
                     fontSize: window.innerWidth < 768 ? '1.5rem' : '2.2rem'
@@ -429,76 +383,49 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {/* <div className="booking-card bg-white rounded-5 shadow-lg p-5 px-4 d-flex justify-content-between align-items-center" style={{marginBottom: '-100px' ,width: '80%',minHeight: '120px', borderRadius: '50px'}}>
-          <div className="container-fluid">
-            <div className="booking-content d-flex align-items-center gap-4">
-              <div className="booking-icon flex-shrink-0">
-                <i className="fas fa-calendar-alt fs-1 color-main"></i>
-              </div>
-              <div className="booking-text flex-grow-1 text-end">
-                <div className="question-container rounded-3 p-3 mb-2">
-                  <h3 className="booking-question fw-bold mb-0" style={{
-                    color: '#000000',
-                    fontSize: window.innerWidth < 768 ? '1.5rem' : '2.2rem'
-                  }}>خدمات غيم</h3>
-                </div>
-                <p className="booking-description text-muted fw-bold mb-0 text-nowrap" style={{
-                  fontSize: window.innerWidth < 768 ? '0.9rem' : '1.25rem'
-                }}>احجز موعدك لدى <span style={{color: '#0d78c0', fontWeight: '900'}}>خدمات غيم</span> بخطوات بسيطة....</p>
-              </div>
-              <div className="booking-button flex-shrink-0">
-                <button 
-                  onClick={handleBookingClick}
-                  className="btn rounded-pill fw-bold" 
-                  style={{
-                    backgroundColor: '#0d78c0', 
-                    borderColor: '#0d78c0', 
-                    color: 'white',
-                    fontSize: window.innerWidth < 768 ? '1.1rem' : '1.4rem',
-                    padding: window.innerWidth < 768 ? '0.6rem 1.5rem' : '0.8rem 2.5rem',
-                    fontWeight: '900',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = 'white';
-                    e.target.style.color = '#0d78c0';
-                    e.target.style.borderColor = '#0d78c0';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#0d78c0';
-                    e.target.style.color = 'white';
-                    e.target.style.borderColor = '#0d78c0';
-                  }}>
-                  احجز الآن
-                </button>
-              </div>
-            </div>
-          </div>
-        </div> */}
        <section id="about-section" style={{ scrollMarginTop: '150px', marginTop: '48px',backgroundColor: '#fff',color: '#4A4A4A',fontWeight: '700' }}>
         <div className="container">
           <div className="d-flex flex-column align-items-center justify-content-between"> 
-           <h2 className='text-center' style={{color: '#4A4A4A', fontSize: '35px'}}>مجمع غيم الطبي </h2>
-           <p>يقدم مجمع غيم الطبي الخدمات العلاجية و التجميلية في تخصصات الاسنان و الجلدية و الليزر من خلال نخبة من الاستشاريين و الاخصائيين و بأعلى معايير الجودة و الاحترافية</p>
+           <h2 className='text-center' style={{
+             color: '#4A4A4A', 
+             fontSize: window.innerWidth < 768 ? '1.5rem' : '35px'
+           }}>مجمع غيم الطبي </h2>
+           <p style={{
+             fontSize: window.innerWidth < 768 ? '0.85rem' : '1rem'
+           }}>يقدم مجمع غيم الطبي الخدمات العلاجية و التجميلية في تخصصات الاسنان و الجلدية و الليزر من خلال نخبة من الاستشاريين و الاخصائيين و بأعلى معايير الجودة و الاحترافية</p>
            <div className="d-flex align-items-center justify-content-center gap-4 mt-3" aria-label="روابط التواصل الاجتماعي">
              <a href="#" aria-label="TikTok" className="text-decoration-none" style={{color:'#4A4A4A'}}>
-               <FontAwesomeIcon icon={faTiktok} style={{ fontSize: '34px', width: '36px', height: '36px' }} />
+               <FontAwesomeIcon icon={faTiktok} style={{ 
+                 fontSize: window.innerWidth < 768 ? '24px' : '34px', 
+                 width: window.innerWidth < 768 ? '26px' : '36px', 
+                 height: window.innerWidth < 768 ? '26px' : '36px' 
+               }} />
              </a>
              <a href="#" aria-label="Twitter" className="text-decoration-none" style={{color:'#4A4A4A'}}>
-               <FontAwesomeIcon icon={faTwitter} style={{ fontSize: '34px', width: '36px', height: '36px' }} />
+               <FontAwesomeIcon icon={faTwitter} style={{ 
+                 fontSize: window.innerWidth < 768 ? '24px' : '34px', 
+                 width: window.innerWidth < 768 ? '26px' : '36px', 
+                 height: window.innerWidth < 768 ? '26px' : '36px' 
+               }} />
              </a>
              <a href="#" aria-label="Snapchat" className="text-decoration-none" style={{color:'#4A4A4A'}}>
-               <FontAwesomeIcon icon={faSnapchatGhost} style={{ fontSize: '34px', width: '36px', height: '36px' }} />
+               <FontAwesomeIcon icon={faSnapchatGhost} style={{ 
+                 fontSize: window.innerWidth < 768 ? '24px' : '34px', 
+                 width: window.innerWidth < 768 ? '26px' : '36px', 
+                 height: window.innerWidth < 768 ? '26px' : '36px' 
+               }} />
              </a>
              <a href="#" aria-label="Instagram" className="text-decoration-none" style={{color:'#4A4A4A'}}>
-               <FontAwesomeIcon icon={faInstagram} style={{ fontSize: '34px', width: '36px', height: '36px' }} />
+               <FontAwesomeIcon icon={faInstagram} style={{ 
+                 fontSize: window.innerWidth < 768 ? '24px' : '34px', 
+                 width: window.innerWidth < 768 ? '26px' : '36px', 
+                 height: window.innerWidth < 768 ? '26px' : '36px' 
+               }} />
              </a>
            </div>
           </div>
         </div>
        </section>
-       </div>
-        {/* <AboutUs /> */}
 
         {/* Sections Cards */}
         <section className="sections-section py-5" style={{ backgroundColor: '#F9F9F9', marginTop: '48px' }}>
@@ -787,7 +714,7 @@ export default function Home() {
                   className="carousel-control-prev-icon" 
                   aria-hidden="true"
                   style={{
-                    backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23666'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e")`,
+                    backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23666'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e\")",
                     width: '30px',
                     height: '30px',
                     backgroundSize: '30px 30px',
@@ -825,7 +752,7 @@ export default function Home() {
                   className="carousel-control-next-icon" 
                   aria-hidden="true"
                   style={{
-                    backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23666'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e")`,
+                    backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23666'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e\")",
                     width: '30px',
                     height: '30px',
                     backgroundSize: '30px 30px',
@@ -841,14 +768,9 @@ export default function Home() {
         <div id="services-section" style={{ scrollMarginTop: '150px', marginTop: '48px' }}>
         <Services />
       </div>
-      {/* <Stats /> */}
-      
-      {/* <MostBookedDoctors /> */}
       <Testimonials />
       <MapSection />
-      </>
-    );
+      </div>
+    </>
+  );
 }
-
-
-

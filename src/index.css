@@ -48,17 +48,54 @@ html {
   margin-top: 0px !important;
   padding-top: 0px !important;
 }
-body {
-  overflow-x: hidden;
-  font-family: 'IBM Plex Sans Arabic', sans-serif;
-  color: #4a4a4a;
-  margin-top: 80px !important;
-}
+
 
 /* Body margin-top - Mobile */
 @media (max-width: 991px) {
   body {
-    margin-top: 60px !important;
+    margin-top: 0px !important;
+  }
+}
+
+/* Remove body margin-top for small screens */
+@media (max-width: 768px) {
+  body {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+  
+  .home-page {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  body {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+  
+  .home-page {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+  
+  .home-page {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+  
+  .hero-section {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
   }
 }
 
@@ -163,6 +200,31 @@ p {
 
 .navbar-brand:hover img {
   transform: scale(1.05);
+}
+
+/* Logo responsive */
+@media (max-width: 768px) {
+  .navbar-logo-img {
+    width: 180px !important;
+    height: 50px !important;
+    max-width: 180px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-logo-img {
+    width: 150px !important;
+    height: 40px !important;
+    max-width: 150px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-logo-img {
+    width: 130px !important;
+    height: 35px !important;
+    max-width: 130px !important;
+  }
 }
 
 .nav-link {
@@ -1027,9 +1089,7 @@ p {
   --bg-main: #0171BD;
 }
 
-body {
-  background-color: #F9FAFB !important;
-}
+
 .site-text-color,
 h1, h2, h3, h4, h5, h6,
 p {
@@ -1923,27 +1983,106 @@ width: 10%;
 }
 
 /* Home Page Styles */
+/* Optimized Hero Section Styles */
 .hero-section {
-  padding-top: 0 !important;
-  min-height: 51vh !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+  padding: 0 !important;
+  height: 90vh !important;
+  margin: 0 !important;
+  max-width: 100vw !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
-/* Remove all margins and padding from carousel elements */
+/* Tablet and Medium Screens - reduce hero height */
+@media (max-width: 1200px) and (min-width: 992px) {
+  .home-page .hero-section {
+    height: 38vh !important;
+  }
+  
+  .home-page .hero-background img {
+    width: 130% !important;
+    max-width: 130% !important;
+  }
+  
+  .home-page .booking-card {
+    width: 75% !important;
+    padding: 0.6rem 0.9rem !important;
+    min-height: 90px !important;
+  }
+  
+  .home-page .booking-card .booking-question {
+    font-size: 1.4rem !important;
+  }
+  
+  .home-page .booking-card .booking-description {
+    font-size: 0.95rem !important;
+  }
+  
+  .home-page .booking-card .btn {
+    font-size: 1.1rem !important;
+    padding: 0.6rem 1.6rem !important;
+  }
+}
+
+/* Tablet responsive (991px - 769px) moved to end of file */
+
+/* Optimized Hero margin-top for Mobile */
+@media (max-width: 768px) {
+  .hero-section {
+    margin-top: 20px !important;
+    height: 25vh !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    margin-top: 15px !important;
+    height: 20vh !important;
+  }
+  
+  .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  /* Center image on mobile */
+  .home-page .hero-background,
+  .home-page .hero-section .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    margin-top: 10px !important;
+    height: 18vh !important;
+  }
+  
+  .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  /* Center image on small mobile */
+  .home-page .hero-background,
+  .home-page .hero-section .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+  }
+}
+
+/* Optimized Carousel Styles */
 .hero-section .carousel,
 .hero-section .carousel-inner,
 .hero-section .carousel-item {
   margin: 0 !important;
   padding: 0 !important;
-  left: 0 !important;
-}
-
-.hero-section .carousel-inner,
-.hero-section .carousel-item {
   width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
 }
 
 .carousel-inner,
@@ -1964,7 +2103,7 @@ width: 10%;
   max-width: 100% !important;
 }
 
-.hero-section {
+/* .hero-section {
   max-width: 100vw !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
@@ -1973,7 +2112,7 @@ width: 10%;
   left: 0 !important;
   right: 0 !important;
   position: relative !important;
-}
+} */
 
 #heroCarousel {
   margin-left: 0 !important;
@@ -2036,10 +2175,26 @@ width: 10%;
 }
 
 /* Book Page Specific Styles */
+.book-page {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+.book-page-content {
+  width: 90% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 80px !important;
+  padding-block: 50px !important;
+}
+
 .book-page .hero-section {
   margin-top: 0 !important;
-  padding-top: 0 !important;
-  min-height: 90vh !important;
+  padding: 0 !important;
+  height: 90vh !important;
+  max-width: 100vw !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
 @media (max-width: 1300px) and (min-width: 1201px) {
@@ -2060,12 +2215,27 @@ width: 10%;
   }
 }
 
- .hero-background {
-  height: 60vh !important;
-  background-size: contain !important;
-  background-position: center bottom !important;
-  object-fit: cover !important;
+/* Optimized Hero Background - Show Full Image */
+.hero-background {
+  width: 100% !important;
+  height: 90vh !important;
+  background-color: #f8f9fa !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
+
+.hero-background img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  background-color: #f8f9fa !important;
+}
+
+/* Hero images are now handled via <img> tags in JSX */
+
+/* Responsive hero images - moved to end of file */
 
 /* .book-page .hero-overlay {
   justify-content: flex-start !important;
@@ -2131,12 +2301,13 @@ width: 10%;
 @media (max-width: 1200px) and (min-width: 1025px) {
   .book-page .hero-section {
     padding-top: 0 !important;
-    min-height: 52vh !important;
+    min-height: 35vh !important;
+    height: 35vh !important;
   }
   
   .book-page .hero-background {
-    height: 52vh !important;
-    background-size: cover !important;
+    height: 35vh !important;
+    background-size: contain !important;
     background-position: center center !important;
   }
   
@@ -2148,14 +2319,14 @@ width: 10%;
 
 @media (max-width: 1024px) {
   .book-page .hero-section {
-    /* margin-top:100px !important; */
     padding-top: 0 !important;
-    min-height: 55vh !important;
+    min-height: 30vh !important;
+    height: 30vh !important;
   }
   
   .book-page .hero-background {
-    height: 55vh !important;
-    background-size: cover !important;
+    height: 30vh !important;
+    background-size: contain !important;
     background-position: center center !important;
   }
   
@@ -2167,16 +2338,21 @@ width: 10%;
 
 @media (max-width: 768px) {
   .book-page .hero-section {
-    /* margin-top:100px !important; */
-    padding-top: 0 !important;
-    min-height: 50vh !important;
-    height: 50vh !important;
+    margin-top: 0 !important;
+    height: 20vh !important;
   }
   
   .book-page .hero-background {
-    height: 50vh !important;
-    background-size: cover !important;
-    background-position: center center !important;
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  /* Logo responsive for Book page on mobile */
+  .book-page .navbar-logo-img {
+    width: 70px !important;
+    height: 30px !important;
+    max-width: 70px !important;
+    max-height: 30px !important;
   }
   
   .booking-form-section {
@@ -2202,15 +2378,28 @@ width: 10%;
 
 @media (max-width: 576px) {
   .book-page .hero-section {
-    padding-top: 0 !important;
-    min-height: 50vh !important;
-    height: 50vh !important;
+    margin-top: 0 !important;
+    height: 20vh !important;
   }
   
   .book-page .hero-background {
-    height: 50vh !important;
-    background-size: cover !important;
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  /* Center image on mobile */
+  .book-page .hero-section .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
     background-position: center center !important;
+  }
+  
+  /* Logo responsive for Book page on small mobile */
+  .book-page .navbar-logo-img {
+    width: 60px !important;
+    height: 25px !important;
+    max-width: 60px !important;
+    max-height: 25px !important;
   }
   
   .booking-form-section {
@@ -2247,15 +2436,28 @@ width: 10%;
 
 @media (max-width: 480px) {
   .book-page .hero-section {
-    padding-top: 0 !important;
-    min-height: 45vh !important;
-    height: 45vh !important;
+    margin-top: 0 !important;
+    height: 20vh !important;
   }
   
   .book-page .hero-background {
-    height: 45vh !important;
-    background-size: cover !important;
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  /* Center image on small mobile */
+  .book-page .hero-section .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
     background-position: center center !important;
+  }
+  
+  /* Logo responsive for Book page on very small mobile */
+  .book-page .navbar-logo-img {
+    width: 50px !important;
+    height: 20px !important;
+    max-width: 50px !important;
+    max-height: 20px !important;
   }
   
   .booking-form-section {
@@ -2289,14 +2491,25 @@ width: 10%;
   }
 }
 
-.hero-background {
-  background-image: url('../assets/images/hero-bg.ab3138f8.webp');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  margin: 0 !important;
-  padding: 0 !important;
-  left: 0 !important;
+/* Removed duplicate hero-background styles - using optimized version above */
+
+/* Optimized Hero Background for Mobile - Show Full Image */
+@media (max-width: 768px) {
+  .hero-background {
+    background-size: contain !important;
+    background-position: center center !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  .hero-section {
+    height: 25vh !important;
+  }
+  
+  /* Center image on mobile */
+  .home-page .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+  }
 }
 
 /* .hero-background::before {
@@ -2374,29 +2587,64 @@ width: 10%;
   width: 80% !important;        /* match navbar container on desktop */
   margin-left: auto !important;
   margin-right: auto !important;
-  margin-top: -40px !important; /* lift slightly over the next section */
+  margin-top: -100px !important; /* lift slightly over the next section */
 }
 
 @media (max-width: 1200px) {
-  .home-page .booking-card { width: 85% !important; margin-top: -32px !important; }
+  .home-page .booking-card { width: 85% !important; margin-top: -80px !important; }
 }
 
 @media (max-width: 992px) {
-  .home-page .booking-card { width: 95% !important; margin-top: -24px !important; }
+  .home-page .booking-card { 
+    width: 95% !important; 
+    margin-top: -90px !important;
+    padding: 0.5rem 0.7rem !important;
+    min-height: 95px !important;
+  }
+  
+  .home-page .booking-card .booking-question {
+    font-size: 1.3rem !important;
+  }
+  
+  .home-page .booking-card .booking-description {
+    font-size: 0.9rem !important;
+  }
+  
+  .home-page .booking-card .btn {
+    font-size: 1.1rem !important;
+    padding: 0.6rem 1.8rem !important;
+  }
 }
 
 @media (max-width: 576px) {
   .home-page .booking-card { 
     width: 95% !important; 
-    margin-top: -10px !important; 
-    padding: 0.5rem !important;
-    min-height: 100px !important;
+    margin-top: -110px !important; 
+    padding: 0.3rem 0.5rem !important;
+    min-height: 80px !important;
   }
   
   .booking-content {
     flex-direction: column !important;
-    gap: 1rem !important;
+    gap: 0.5rem !important;
     text-align: center !important;
+  }
+  
+  .booking-icon {
+    display: none !important;
+  }
+  
+  .booking-question {
+    font-size: 1rem !important;
+  }
+  
+  .booking-description {
+    font-size: 0.75rem !important;
+  }
+  
+  .booking-button .btn {
+    font-size: 0.9rem !important;
+    padding: 0.4rem 1rem !important;
   }
   
   .booking-icon {
@@ -2434,9 +2682,8 @@ width: 10%;
 }
 
 @media (max-width: 1200px) {
-  .hero-background {
-    height: 400px !important;
-
+  .hero-section {
+    min-height: 50vh !important;
   }
   
   .brand-name {
@@ -2449,8 +2696,8 @@ width: 10%;
 }
 
 @media (max-width: 992px) {
-  .hero-background {
-    height: 380px !important;
+  .hero-section {
+    min-height: 45vh !important;
   }
   
   .brand-name {
@@ -2477,8 +2724,8 @@ width: 10%;
     max-width: 100%;
   }
   
-  .hero-background {
-    height: 350px !important;
+  .hero-section {
+    min-height: 40vh !important;
   }
   
   .brand-name {
@@ -2516,10 +2763,6 @@ width: 10%;
   }
 
   /* tighter spacing between hero and stats on tablet */
-  .hero-section {
-    padding-top: 0 !important;
-    min-height: 30vh;
-  }
   .stats-section {
     margin-top: -200px;
     padding-top: 30px;
@@ -2548,20 +2791,14 @@ width: 10%;
   }
 
   /* tighter spacing on mobile */
-  .hero-section {
-    padding-top: 0 !important;
-    min-height: 38vh;
-  }
   .stats-section {
     margin-top: -180px;
     padding-top: 20px;
   }
   
-  /* Fix hero background on mobile */
-  .hero-background {
-    height: 280px !important;
-    background-size: cover !important;
-    background-position: center !important;
+  /* Fix hero on mobile */
+  .hero-section {
+    min-height: 35vh !important;
   }
   
   /* Adjust hero overlay for mobile */
@@ -2581,8 +2818,8 @@ width: 10%;
 }
 
 @media (max-width: 480px) {
-  .hero-background {
-    height: 250px !important;
+  .hero-section {
+    min-height: 30vh !important;
   }
   
   .brand-name {
@@ -2800,14 +3037,6 @@ width: 10%;
     margin-top: 0.5rem !important;
   }
 }
-.hero-section {
-  position: relative !important;
-  height: 35vh !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
 
 .hero-section .hero-text {
   padding-top: 15% !important;
@@ -2831,7 +3060,7 @@ width: 10%;
 /* موبايل */
 @media (max-width: 575.98px) {
   .hero-section {
-    height: 50vh !important;
+    height: 30vh !important;
   }
   .hero-section .hero-text {
     padding-top: -50% !important;
@@ -4703,20 +4932,294 @@ width: 10%;
   }
 }
 
-.hero-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100vw !important;
-  height: 100vh !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  background-position: center center !important;
-  object-fit: cover !important;
+/* Removed duplicate hero-background styles - using optimized version above */
+
+/* Mobile Hero Image Fix - Center Image */
+@media (max-width: 768px) {
+  .home-page .hero-background,
+  .home-page .hero-section .carousel-item .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+  }
 }
+
+@media (max-width: 576px) {
+  .home-page .hero-background,
+  .home-page .hero-section .carousel-item .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page .hero-background,
+  .home-page .hero-section .carousel-item .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+  }
+}
+
+/* Desktop Hero Image Optimization */
+@media (min-width: 769px) {
+  .hero-background {
+    background-size: contain !important;
+    background-position: center center !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  .home-page .hero-background,
+  .home-page .hero-section .carousel-item .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+  }
+}
+
+/* ========================================
+   NAVBAR RESPONSIVE STYLES
+   ======================================== */
+
+/* Tablet - 991px and below */
+@media (max-width: 991px) {
+  .navbar {
+    margin-bottom: 0 !important;
+  }
+  
+  .navbar-logo-img {
+    width: 160px !important;
+    height: 45px !important;
+    max-width: 160px !important;
+  }
+}
+
+/* Mobile Large - 768px and below */
+@media (max-width: 768px) {
+  .navbar {
+    margin-bottom: 0 !important;
+  }
+  
+  .navbar-logo-img {
+    width: 120px !important;
+    height: 35px !important;
+    max-width: 120px !important;
+  }
+}
+
+/* Mobile Medium - 576px and below */
+@media (max-width: 576px) {
+  .navbar {
+    margin-bottom: 0 !important;
+  }
+  
+  .navbar-logo-img {
+    width: 100px !important;
+    height: 30px !important;
+    max-width: 100px !important;
+  }
+}
+
+/* Mobile Small - 480px and below */
+@media (max-width: 480px) {
+  .navbar {
+    margin-bottom: 0 !important;
+  }
+  
+  .navbar-logo-img {
+    width: 90px !important;
+    height: 28px !important;
+    max-width: 90px !important;
+  }
+}
+
+/* Bottom Navigation Bar (if exists) */
+@media (max-width: 991px) {
+  .bottom-navbar,
+  .navbar-bottom,
+  .fixed-bottom {
+    height: 0 !important;
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .bottom-navbar,
+  .navbar-bottom,
+  .fixed-bottom {
+    height: 0 !important;
+    display: none !important;
+  }
+}
+
+/* ========================================
+   END NAVBAR RESPONSIVE STYLES
+   ======================================== */
+
+/* ========================================
+   HERO SECTION RESPONSIVE STYLES
+   ======================================== */
+
+/* Large screens (Desktop) - 1200px+ */
+@media (min-width: 1200px) {
+  .hero-section {
+    height: 90vh !important;
+    margin-top: 0 !important;
+  }
+  
+  .hero-background {
+    height: 90vh !important;
+    background-size: contain !important;
+    background-position: center top !important;
+    background-color: #f8f9fa !important;
+  }
+}
+
+/* Medium screens (Laptop) - 992px to 1199px */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .hero-section {
+    height: 90vh !important;
+    margin-top: 0 !important;
+  }
+  
+  .hero-background {
+    height: 90vh !important;
+    background-size: contain !important;
+    background-position: center top !important;
+    background-color: #f8f9fa !important;
+  }
+}
+
+/* Tablet screens - 769px to 991px */
+@media (min-width: 769px) and (max-width: 991px) {
+  .hero-section {
+    height: 90vh !important;
+    margin-top: 0 !important;
+  }
+  
+  .hero-background {
+    height: 90vh !important;
+    background-size: contain !important;
+    background-position: center top !important;
+    background-color: #f8f9fa !important;
+  }
+}
+
+/* Mobile Large - 768px and below */
+@media (max-width: 768px) {
+  .hero-section {
+    height: 30vh !important;
+    margin-top: 20px !important;
+    padding: 0 !important;
+  }
+  
+  .hero-background {
+    height: 30vh !important;
+    background-size: contain !important;
+    background-position: center center !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  .home-page .hero-background,
+  .home-page .hero-section .carousel-item .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+  }
+}
+
+/* Mobile Medium - 576px and below */
+@media (max-width: 576px) {
+  .hero-section {
+    height: 20vh !important;
+    margin-top: 15px !important;
+    padding: 0 !important;
+  }
+  
+  .hero-background {
+    height: 20vh !important;
+    background-size: contain !important;
+    background-position: center center !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  .home-page .hero-background,
+  .home-page .hero-section .carousel-item .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+  }
+}
+
+/* Mobile Small - 480px and below */
+@media (max-width: 480px) {
+  .hero-section {
+    height: 18vh !important;
+    margin-top: 10px !important;
+    padding: 0 !important;
+  }
+  
+  .hero-background {
+    height: 18vh !important;
+    background-size: contain !important;
+    background-position: center center !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  .home-page .hero-background,
+  .home-page .hero-section .carousel-item .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+  }
+}
+
+/* Body responsive styles for Hero */
+@media (max-width: 768px) {
+  body {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+  
+  .home-page {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  body {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+  
+  .home-page {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+  
+  .home-page {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+  
+  .hero-section {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+}
+
+/* ========================================
+   END HERO SECTION RESPONSIVE STYLES
+   ======================================== */
 
 /* Footer Links Section - Base Styles */
 .footer-links-section {
@@ -5254,5 +5757,531 @@ width: 10%;
     font-size: 1rem !important;
     width: 1rem !important;
     height: 1rem !important;
+  }
+}
+body {
+  overflow-x: hidden;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  color: #4a4a4a;
+  margin-top: 85px !important;
+}
+
+/* Reduce body margin-top on larger screens */
+@media (min-width: 1200px) {
+  body {
+    margin-top: 75px !important;
+  }
+}
+.hero-section{
+  /* background-color: #1e40af !important; */
+  margin-top: 0 !important;
+}
+
+/* ========================================
+   HERO SECTION RESPONSIVE STYLES - MOBILE
+   ======================================== */
+
+/* Mobile Hero Section - Reduced Heights */
+@media (max-width: 768px) {
+  .hero-section {
+    height: 30vh !important;
+    margin-top: 0 !important;
+  }
+  
+  .hero-background {
+    height: 23vh !important;
+  }
+  
+  .hero-background img {
+    max-height: 100% !important;
+    width: auto !important;
+  }
+  
+  body {
+    margin-top: 0px !important;
+    padding-top: 0 !important;
+  }
+  
+  .home-page {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+@media (max-width: 768px) {
+  .hero-section {
+    height: 30vh !important;
+    margin-top: 0 !important;
+  }
+  
+  .hero-background {
+    height: 23vh !important;
+  }
+  
+  .hero-background img {
+    max-height: 100% !important;
+    width: auto !important;
+  }
+  
+  body {
+    margin-top: 0px !important;
+    padding-top: 0 !important;
+  }
+  
+  .home-page {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    height: 30vh !important;
+    margin-top: 0 !important;
+  }
+  
+  .hero-background {
+    height: 30vh !important;
+  }
+  
+  body {
+    margin-top: 10px !important;
+    padding-top: 0 !important;
+  }
+  
+  .home-page {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    height: 18vh !important;
+    margin-top: 0 !important;
+  }
+  
+  .hero-background {
+    height: 18vh !important;
+  }
+  
+  body {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  .home-page {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+/* Navbar Logo Default */
+.navbar-logo-img {
+  width: 300px !important;
+  height: 80px !important;
+  max-width: 250px !important;
+  object-fit: contain !important;
+}
+
+/* Navbar Responsive for Mobile */
+@media (max-width: 991px) {
+  .navbar {
+    margin-bottom: 0 !important;
+  }
+  
+  .navbar-logo-img {
+    width: 120px !important;
+    height: auto !important;
+    max-width: 120px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    margin-bottom: 0 !important;
+  }
+  
+  .navbar-logo-img {
+    width: 100px !important;
+    height: auto !important;
+    max-width: 100px !important;
+  }
+  
+  .bottom-navbar,
+  .navbar-bottom,
+  .fixed-bottom {
+    height: 0 !important;
+    display: none !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar {
+    margin-bottom: 0 !important;
+  }
+  
+  .navbar-logo-img {
+    width: 80px !important;
+    height: auto !important;
+    max-width: 80px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    margin-bottom: 0 !important;
+  }
+  
+  .navbar-logo-img {
+    width: 70px !important;
+    height: auto !important;
+    max-width: 70px !important;
+  }
+}
+
+/* Carousel Indicators Position for Mobile - Slightly Higher */
+@media (max-width: 991px) {
+  .carousel-indicators {
+    bottom: 35% !important;
+    left: 0 !important;
+    right: 0 !important;
+    transform: none !important;
+    margin: 0 auto !important;
+  }
+}
+@media (max-width: 768px) {
+  .carousel-indicators {
+    bottom: 35% !important;
+    left: 0 !important;
+    right: 0 !important;
+    transform: none !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-indicators {
+    bottom: 40% !important;
+    left: 0 !important;
+    right: 0 !important;
+    transform: none !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-indicators {
+    bottom: 45% !important;
+    left: 0 !important;
+    right: 0 !important;
+    transform: none !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* Booking Card Position - Moved to end of file */
+
+/* Additional booking card positioning */
+.home-page .booking-card {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Force booking card to move up on all devices */
+@media (max-width: 1200px) {
+  .home-page .booking-card {
+    margin-top: -80px !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .home-page .booking-card {
+    margin-top: -90px !important;
+  }
+}
+
+/* Tablet booking card responsive moved to end of file */
+
+@media (max-width: 768px) {
+  .home-page .booking-card {
+    width: 85% !important;
+    margin-top: -55px !important;
+    padding: 0.25rem 0.4rem !important;
+    min-height: 55px !important;
+  }
+  
+  .home-page .booking-card .booking-icon {
+    display: none !important;
+  }
+  
+  .home-page .booking-card .booking-question {
+    font-size: 0.9rem !important;
+  }
+  
+  .home-page .booking-card .booking-description {
+    font-size: 0.7rem !important;
+  }
+  
+  .home-page .booking-card .btn {
+    font-size: 0.85rem !important;
+    padding: 0.4rem 1rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .home-page .booking-card {
+    width: 80% !important;
+    margin-top: -45px !important;
+    padding: 0.2rem 0.35rem !important;
+    min-height: 50px !important;
+  }
+  
+  .home-page .booking-card .booking-question {
+    font-size: 0.85rem !important;
+  }
+  
+  .home-page .booking-card .booking-description {
+    font-size: 0.65rem !important;
+  }
+  
+  .home-page .booking-card .btn {
+    font-size: 0.8rem !important;
+    padding: 0.35rem 0.9rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page .booking-card {
+    width: 80% !important;
+    margin-top: -40px !important;
+    padding: 0.15rem 0.3rem !important;
+    min-height: 45px !important;
+  }
+  
+  .home-page .booking-card .booking-question {
+    font-size: 0.8rem !important;
+  }
+  
+  .home-page .booking-card .booking-description {
+    font-size: 0.6rem !important;
+  }
+  
+  .home-page .booking-card .btn {
+    font-size: 0.75rem !important;
+    padding: 0.3rem 0.8rem !important;
+  }
+}
+
+/* Book Page Hero Carousel Responsive Images */
+@media (max-width: 991px) {
+  .book-page .hero-background,
+  .book-page .hero-section .carousel-item .hero-background {
+    background-size: contain !important;
+    background-color: #1a7ddf !important;
+    background-position: center center !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .book-page .hero-background,
+  .book-page .hero-section .carousel-item .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .book-page .hero-background,
+  .book-page .hero-section .carousel-item .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .book-page .hero-background,
+  .book-page .hero-section .carousel-item .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+  }
+}
+
+/* Book Page Hero Images */
+.book-page .hero-background img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  background-color: #f8f9fa !important;
+}
+
+/* Book Page Carousel Optimization */
+.book-page .hero-section .carousel,
+.book-page .hero-section .carousel-inner,
+.book-page .hero-section .carousel-item {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
+}
+
+/* ========== Tablet Responsive (991px - 769px) ========== */
+@media (max-width: 991px) and (min-width: 769px) {
+  body{
+    margin-top: 40px !important;
+  }
+  .navbar {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  
+  .home-page .hero-section {
+    height: 35vh !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  .home-page .hero-background {
+    background-size: cover !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+    height: 35vh !important;
+  }
+  
+  .home-page .hero-background img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+  }
+  
+  .home-page .booking-card {
+    width: 80% !important;
+    margin-top: -45px !important;
+    padding: 0.5rem 0.8rem !important;
+    min-height: 80px !important;
+  }
+  
+  .home-page .booking-card .booking-question {
+    font-size: 1.3rem !important;
+  }
+  
+  .home-page .booking-card .booking-description {
+    font-size: 0.9rem !important;
+  }
+  
+  .home-page .booking-card .btn {
+    font-size: 1.05rem !important;
+    padding: 0.55rem 1.5rem !important;
+  }
+  
+  /* Logo responsive for Tablet */
+  .navbar-logo-img {
+    width: 110px !important;
+    height: 55px !important;
+    max-width: 110px !important;
+    max-height: 35px !important;
+  }
+  
+  /* Book Page Hero - Same as Home on Tablet */
+  .book-page .hero-section {
+    height: 35vh !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  
+  .book-page .hero-background {
+    background-size: cover !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+    height: 35vh !important;
+  }
+  
+  .book-page .hero-background img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+  }
+  
+  /* Book Page Content Container on Tablet */
+  .book-page-content {
+    width: 90% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+/* Book Page Hero - Desktop (Same as Home) */
+@media (min-width: 1201px) {
+  .book-page .hero-section {
+    height: 90vh !important;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 992px) {
+  .book-page .hero-section {
+    height: 38vh !important;
+  }
+  
+  .book-page .hero-background {
+    background-size: cover !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+  }
+  
+  .book-page .hero-background img {
+    width: 130% !important;
+    max-width: 130% !important;
+    object-fit: cover !important;
+  }
+}
+
+/* Book Page Hero - Mobile (Same as Home) */
+@media (max-width: 768px) {
+  .book-page .hero-section {
+    margin-top: 0 !important;
+    height: 20vh !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .book-page .hero-section {
+    margin-top: 0 !important;
+    height: 20vh !important;
+  }
+  
+  .book-page .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  .book-page .hero-section .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .book-page .hero-section {
+    margin-top: 0 !important;
+    height: 20vh !important;
+  }
+  
+  .book-page .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  .book-page .hero-section .hero-background {
+    background-size: contain !important;
+    background-color: #f8f9fa !important;
+    background-position: center center !important;
   }
 }
