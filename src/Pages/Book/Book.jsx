@@ -868,7 +868,7 @@ function BookContent() {
       </div>
 
       {/* Booking Form Section */}
-      <div className="main" style={{width: '90%', marginLeft: 'auto', marginRight: 'auto', paddingBlock:'50px', marginTop: '60px' }} dir="rtl">
+      <div className="main" style={{width: '90%', marginLeft: 'auto', marginRight: 'auto', paddingBlock:'10px', marginTop: '20px' }} dir="rtl">
         <style>{`
           .btn-outline-primary:hover,
           .btn-outline-secondary:hover {
