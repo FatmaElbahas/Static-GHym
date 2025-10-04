@@ -119,41 +119,16 @@ const SectionCard = ({ title, image }) => {
 const SectionsCarousel = () => {
   const { data: apiSalons, loading, error } = useSalonsData();
 
-  // Debug: Log API data
-  React.useEffect(() => {
-    if (apiSalons && apiSalons.length > 0) {
-      console.log('=== Salons Data ===');
-      console.log('Total salons:', apiSalons.length);
-      console.log('First salon:', apiSalons[0]);
-      console.log('First salon images:', apiSalons[0]?.images);
-      console.log('First salon owner_photo:', apiSalons[0]?.owner_photo);
-      
-      // Check first salon image URL
-      if (apiSalons[0]?.images && apiSalons[0].images.length > 0) {
-        console.log('First image URL:', apiSalons[0].images[0].image);
-      }
-    }
-  }, [apiSalons]);
-
   // Use API data only
   const sections = apiSalons && apiSalons.length > 0 
-    ? apiSalons.filter(salon => salon.status === 1).map(salon => {
-        const salonImage = salon.images && salon.images.length > 0 
+    ? apiSalons.filter(salon => salon.status === 1).map(salon => ({
+        id: salon.id,
+        title: salon.salon_name,
+        // Use first image from images array, or owner_photo as fallback
+        image: salon.images && salon.images.length > 0 
           ? salon.images[0].image 
-          : salon.owner_photo;
-        
-        if (!salonImage) {
-          console.log(`⚠️ Salon "${salon.salon_name}" has NO image!`);
-        } else {
-          console.log(`✅ Salon "${salon.salon_name}" image:`, salonImage);
-        }
-        
-        return {
-          id: salon.id,
-          title: salon.salon_name,
-          image: salonImage
-        };
-      })
+          : salon.owner_photo
+      }))
     : [];
 
   // Loading state
