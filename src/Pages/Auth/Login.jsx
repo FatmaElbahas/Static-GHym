@@ -329,7 +329,7 @@ const Login = () => {
                     {/* زر تسجيل الدخول */}
                     <button
                       type="submit"
-                      className="btn w-100 mt-2"
+                      className="btn w-100 mt-2 submit-btn-custom"
                       style={{
                         borderRadius: '10px', 
                         fontSize: '16px', 
@@ -338,18 +338,26 @@ const Login = () => {
                         color: '#ffffff',
                         fontWeight: '600',
                         padding: '1rem',
-                        border: 'none',
+                        border: '2px solid',
                         transition: 'all 0.3s ease'
                       }}
                       disabled={isSubmitting || status === 'success'}
                       onMouseEnter={(e) => {
                         if (status !== 'success' && !isSubmitting) {
-                          e.currentTarget.style.backgroundColor = '#C5B34E';
+                          e.currentTarget.style.setProperty('background-color', '#ffffff', 'important');
+                          e.currentTarget.style.setProperty('color', '#0171BD', 'important');
+                          e.currentTarget.style.setProperty('border-color', '#0171BD', 'important');
+                          e.currentTarget.style.transform = 'translateY(-2px)';
+                          e.currentTarget.style.boxShadow = '0 4px 12px rgba(1, 113, 189, 0.3)';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (status !== 'success') {
-                          e.currentTarget.style.backgroundColor = '#0171BD';
+                          e.currentTarget.style.setProperty('background-color', '#0171BD', 'important');
+                          e.currentTarget.style.setProperty('color', '#ffffff', 'important');
+                          e.currentTarget.style.setProperty('border-color', '#0171BD', 'important');
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = 'none';
                         }
                       }}
                     >
@@ -379,10 +387,17 @@ const Login = () => {
                   style={{ 
                     color: '#0171BD !important', 
                     fontSize: '15px', 
-                    fontWeight: '500' 
+                    fontWeight: '500',
+                    transition: 'all 0.3s ease'
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#C5B34E'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = '#0171BD'}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.setProperty('color', '#015a94', 'important');
+                    e.currentTarget.style.textDecoration = 'underline';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.setProperty('color', '#0171BD', 'important');
+                    e.currentTarget.style.textDecoration = 'none';
+                  }}
                 >
                   <FontAwesomeIcon icon={faUserPlus} style={{ color: '#0171BD' }} />
                   <span style={{ color: '#0171BD' }}>إنشاء حساب</span>

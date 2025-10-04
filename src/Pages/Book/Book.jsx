@@ -18,16 +18,16 @@ import SidebarFilters from '../../Components/Filter/SidebarFilters.jsx';
 import ReactPaginate from 'react-paginate';
 import { FilterProvider, useFilter } from '../../context/FilterContext';
 
-// مكون النتائج الذي يستخدم الفلتر
+// Optimized SearchResults component with memoization
 function SearchResults() {
   const { getDisplayData, isFiltered, filters, filteredData, allData } = useFilter();
   const [page, setPage] = useState(1);
   const doctorsPerPage = 6;
   
-  // الحصول على البيانات من الفلتر
-  const displayData = getDisplayData();
+  // Memoized display data
+  const displayData = useMemo(() => getDisplayData(), [getDisplayData]);
   
-  // إعادة تعيين الصفحة عند تغيير الفلاتر
+  // Reset page when filters change
   useEffect(() => {
     setPage(1);
     console.log('🔄 Page reset due to filter change');
@@ -35,9 +35,9 @@ function SearchResults() {
     console.log('🔄 Display data length after filter change:', displayData.length);
   }, [filters, displayData.length]);
   
-  // Debug: طباعة البيانات
+  // Debug info
   console.log('🔍 SearchResults Debug:', {
-    isFiltered: isFiltered,
+    isFiltered,
     allDataLength: allData.length,
     filteredDataLength: filteredData.length,
     displayDataLength: displayData.length,
@@ -49,15 +49,18 @@ function SearchResults() {
     } : null
   });
   
-  const totalPages = Math.ceil(displayData.length / doctorsPerPage);
-  
-  // تقطيع الكروت حسب الصفحة
-  const currentDoctors = displayData.slice(
-    (page - 1) * doctorsPerPage,
-    page * doctorsPerPage
+  const totalPages = useMemo(() => 
+    Math.ceil(displayData.length / doctorsPerPage), 
+    [displayData.length]
   );
   
-  // دالة تغيير الصفحة
+  // Memoized current doctors slice
+  const currentDoctors = useMemo(() => 
+    displayData.slice((page - 1) * doctorsPerPage, page * doctorsPerPage),
+    [displayData, page]
+  );
+  
+  // Memoized page change handler
   const handlePageChange = useCallback(({ selected }) => {
     setPage(selected + 1);
   }, []);
@@ -139,7 +142,48 @@ function BookContent() {
   const [isLoading, setIsLoading] = useState(false);
   const hasLoadedRef = useRef(false);
 
-  // جلب المدن من API
+  // Optimized fallback search with reduced code
+  const performFallbackSearch = useCallback(async (searchTerm) => {
+    try {
+      console.log('🔄 Trying fallback search...');
+      const fallbackResponse = await fetch("https://enqlygo.com/api/salons");
+      
+      if (!fallbackResponse.ok) {
+        throw new Error(`HTTP error! status: ${fallbackResponse.status}`);
+      }
+      
+      const fallbackResult = await fallbackResponse.json();
+      
+      if (fallbackResult.status === "success" && fallbackResult.data?.length > 0) {
+        const lowerSearchTerm = searchTerm.toLowerCase();
+        
+        const filteredResults = fallbackResult.data.filter(item => 
+          [item.owner_name, item.salon_name, item.doctor_name, item.name]
+            .some(field => field?.toLowerCase().includes(lowerSearchTerm))
+        );
+        
+        console.log('📊 Fallback search results:', filteredResults.length);
+        
+        if (filteredResults.length > 0) {
+          setSearchResults(filteredResults);
+          updateAllData(filteredResults);
+          
+          updateFilters({
+            ...filters,
+            owner_name: searchQuery.trim(),
+            salon_name: searchQuery.trim(),
+            city: selectedCity !== 'الكل' ? selectedCity : ''
+          });
+          return true;
+        }
+      }
+    } catch (fallbackError) {
+      console.error("Fallback search failed:", fallbackError);
+    }
+    return false;
+  }, [filters, searchQuery, selectedCity, updateAllData, updateFilters]);
+
+  // Optimized cities extraction from API
   useEffect(() => {
     const fetchCities = async () => {
       try {
@@ -152,58 +196,34 @@ function BookContent() {
         if (data.status === 'success' && data.data) {
           console.log('✅ Salons data loaded for cities extraction:', data.data.length);
           
-          // استخراج المدن من العناوين
-          const extractedCities = data.data.map(item => {
-            const address = item.salon_address || item.address || '';
-            if (typeof address === 'string' && address.trim()) {
-                      // قائمة المدن المعروفة للبحث (عربي + إنجليزي)
-                      const knownCities = [
-                        'الرياض', 'Riyadh',
-                        'جدة', 'Jeddah', 
-                        'الدمام', 'Dammam',
-                        'المدينة المنورة', 'Medina',
-                        'الطائف', 'Taif',
-                        'الخبر', 'Khobar',
-                        'الظهران', 'Dhahran',
-                        'القاهرة', 'Cairo',
-                        'الفيوم', 'Fayoum',
-                        'مصر الجديدة', 'New Cairo', 'Heliopolis',
-                        'الإسكندرية', 'Alexandria'
-                      ];
+          const knownCities = [
+            'الرياض', 'Riyadh', 'جدة', 'Jeddah', 'الدمام', 'Dammam',
+            'المدينة المنورة', 'Medina', 'الطائف', 'Taif', 'الخبر', 'Khobar',
+            'الظهران', 'Dhahran', 'القاهرة', 'Cairo', 'الفيوم', 'Fayoum',
+            'مصر الجديدة', 'New Cairo', 'Heliopolis', 'الإسكندرية', 'Alexandria'
+          ];
+          
+          const extractedCities = data.data
+            .map(item => {
+              const address = item.salon_address || item.address || '';
+              if (!address.trim()) return null;
               
-              // البحث عن المدينة في العنوان
-              for (const city of knownCities) {
-                if (address.includes(city)) {
-                  return city;
-                }
-              }
+              // Check for known cities
+              const foundCity = knownCities.find(city => address.includes(city));
+              if (foundCity) return foundCity;
               
-              // إذا لم توجد مدينة معروفة، نأخذ أول جزء من العنوان
-              if (address.includes(' - ')) {
-                return address.split(' - ')[0].trim();
-              } else if (address.includes('،')) {
-                return address.split('،')[0].trim();
-              } else if (address.includes(',')) {
-                return address.split(',')[0].trim();
-              } else {
-                return address.trim();
-              }
-            }
-            return null;
-          }).filter(Boolean);
+              // Extract first part of address
+              return address.split(/\s*[-،,]\s*/)[0].trim();
+            })
+            .filter(Boolean);
           
           const uniqueCities = [...new Set(extractedCities)];
           console.log('🏙️ Extracted cities:', uniqueCities);
           setCities(uniqueCities);
-          
-          // تعيين أول مدينة كقيمة افتراضية
-          if (uniqueCities.length > 0) {
-            setSelectedCity("الكل");
-          }
+          setSelectedCity("الكل");
         }
       } catch (error) {
         console.error('❌ Error fetching cities:', error);
-        // استخدام مدن افتراضية في حالة الخطأ
         setCities(['الرياض', 'جدة', 'الدمام']);
       } finally {
         setCitiesLoading(false);
@@ -213,187 +233,81 @@ function BookContent() {
     fetchCities();
   }, []);
 
-  // دالة البحث باستخدام API
+  // Optimized search function with reduced code
   const handleSearch = useCallback(async () => {
-    // السماح بالبحث بالمدينة فقط أو مع النص أو بدونهما
+    if (!searchQuery.trim() && (selectedCity === "الكل" || !selectedCity)) {
+      console.log('⏭️ Skipping empty search');
+      return;
+    }
+
     setIsSearching(true);
     setIsLoading(true);
+    
     try {
-      // البحث حسب النص أو المدينة أو كليهما
-      let apiUrl = "https://enqlygo.com/api/salons?";
+      const params = new URLSearchParams();
       
       if (searchQuery.trim()) {
-        // البحث في اسم الطبيب واسم العيادة معاً
-        const encodedQuery = encodeURIComponent(searchQuery);
-        apiUrl += `owner_name=${encodedQuery}&salon_name=${encodedQuery}`;
+        const encodedQuery = encodeURIComponent(searchQuery.trim());
+        params.append('owner_name', encodedQuery);
+        params.append('salon_name', encodedQuery);
       }
       
-      // إضافة المدينة للبحث إذا لم تكن "الكل"
       if (selectedCity && selectedCity !== "الكل") {
-        if (searchQuery.trim()) {
-          apiUrl += `&city=${encodeURIComponent(selectedCity)}`;
-        } else {
-          apiUrl += `city=${encodeURIComponent(selectedCity)}`;
-        }
+        params.append('city', encodeURIComponent(selectedCity));
       }
 
+      const apiUrl = `https://enqlygo.com/api/salons?${params.toString()}`;
       console.log('🔍 Searching with URL:', apiUrl);
+      
       const response = await fetch(apiUrl);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const result = await response.json();
       
-      if (result.status === "success" && result.data && result.data.length > 0) {
+      if (result.status === "success" && result.data?.length > 0) {
         let finalResults = result.data;
         
-        // فلترة محلية بالمدينة كـ fallback
+        // Local filtering by city as fallback
         if (selectedCity && selectedCity !== "الكل") {
-          finalResults = finalResults.filter(item => {
-            const address = item.salon_address || item.address || '';
-            return address.toLowerCase().includes(selectedCity.toLowerCase());
-          });
+          finalResults = finalResults.filter(item => 
+            (item.salon_address || item.address || '')
+              .toLowerCase()
+              .includes(selectedCity.toLowerCase())
+          );
         }
         
         console.log('✅ API Search results count:', finalResults.length);
-        console.log('📊 API Search results sample:', finalResults.slice(0, 2).map(item => ({
-          id: item.id,
-          name: item.salon_name || item.owner_name,
-          category: item.salon_categories || item.category_id
-        })));
         
         if (finalResults.length > 0) {
           setSearchResults(finalResults);
           updateAllData(finalResults);
+          
+          updateFilters({
+            ...filters,
+            owner_name: searchQuery.trim(),
+            salon_name: searchQuery.trim(),
+            city: selectedCity !== 'الكل' ? selectedCity : ''
+          });
         } else {
-          // إذا لم توجد نتائج بعد الفلترة، جرب البحث المحلي
           throw new Error('No results after filtering');
         }
-        
-        // تطبيق فلاتر إضافية من الـ form
-        const newFilte
-         = {
-          ...filters,
-          // البحث في النص إذا كان موجود
-          owner_name: searchQuery.trim() ? searchQuery : '',
-          salon_name: searchQuery.trim() ? searchQuery : '',
-          city: selectedCity && selectedCity !== 'الكل' ? selectedCity : ''
-        };
-        console.log('🔍 Applying form filters:', newFilters);
-        updateFilters(newFilters);
       } else {
-        // إذا لم توجد نتائج، جرب البحث المحلي كـ fallback
         if (searchQuery.trim()) {
-          try {
-            console.log('🔄 Trying fallback search...');
-            const fallbackResponse = await fetch("https://enqlygo.com/api/salons");
-            const fallbackResult = await fallbackResponse.json();
-            
-            if (fallbackResult.status === "success" && fallbackResult.data?.length > 0) {
-              const searchTerm = searchQuery.trim().toLowerCase();
-              console.log('🔍 Searching for:', searchTerm);
-              
-              const filteredResults = fallbackResult.data.filter(item => {
-                const ownerName = (item.owner_name || '').toLowerCase();
-                const salonName = (item.salon_name || '').toLowerCase();
-                const doctorName = (item.doctor_name || '').toLowerCase();
-                const name = (item.name || '').toLowerCase();
-                
-                const matches = ownerName.includes(searchTerm) || 
-                               salonName.includes(searchTerm) || 
-                               doctorName.includes(searchTerm) || 
-                               name.includes(searchTerm);
-                
-                if (matches) {
-                  console.log('✅ Found match:', {
-                    id: item.id,
-                    owner_name: item.owner_name,
-                    salon_name: item.salon_name,
-                    doctor_name: item.doctor_name
-                  });
-                }
-                
-                return matches;
-              });
-              
-              console.log('📊 Fallback search results:', filteredResults.length);
-              
-              if (filteredResults.length > 0) {
-                setSearchResults(filteredResults);
-                updateAllData(filteredResults);
-                
-                const newFilters = {
-                  ...filters,
-                  owner_name: searchQuery.trim() ? searchQuery : '',
-                  salon_name: searchQuery.trim() ? searchQuery : '',
-                  city: selectedCity && selectedCity !== 'الكل' ? selectedCity : ''
-                };
-                updateFilters(newFilters);
-                return;
-              }
-            }
-          } catch (fallbackError) {
-            console.error("Fallback search failed:", fallbackError);
-          }
+          await performFallbackSearch(searchQuery.trim());
+        } else {
+          setSearchResults([]);
+          updateAllData([]);
         }
-        
-        console.log('❌ No search results found');
-        setSearchResults([]);
-        updateAllData([]);
       }
     } catch (error) {
       console.error("❌ خطأ في البحث:", error);
       
-      // إذا كان الخطأ بسبب عدم وجود نتائج، جرب البحث المحلي
-      if (searchQuery.trim() && (error.message === 'No results after filtering' || error.message.includes('No results'))) {
-        try {
-          console.log('🔄 Trying fallback search due to no results...');
-          const fallbackResponse = await fetch("https://enqlygo.com/api/salons");
-          const fallbackResult = await fallbackResponse.json();
-          
-          if (fallbackResult.status === "success" && fallbackResult.data?.length > 0) {
-            const searchTerm = searchQuery.trim().toLowerCase();
-            console.log('🔍 Fallback searching for:', searchTerm);
-            
-            const filteredResults = fallbackResult.data.filter(item => {
-              const ownerName = (item.owner_name || '').toLowerCase();
-              const salonName = (item.salon_name || '').toLowerCase();
-              const doctorName = (item.doctor_name || '').toLowerCase();
-              const name = (item.name || '').toLowerCase();
-              
-              const matches = ownerName.includes(searchTerm) || 
-                             salonName.includes(searchTerm) || 
-                             doctorName.includes(searchTerm) || 
-                             name.includes(searchTerm);
-              
-              if (matches) {
-                console.log('✅ Fallback found match:', {
-                  id: item.id,
-                  owner_name: item.owner_name,
-                  salon_name: item.salon_name,
-                  doctor_name: item.doctor_name
-                });
-              }
-              
-              return matches;
-            });
-            
-            console.log('📊 Fallback search results:', filteredResults.length);
-            
-            if (filteredResults.length > 0) {
-              setSearchResults(filteredResults);
-              updateAllData(filteredResults);
-              
-              const newFilters = {
-                ...filters,
-                owner_name: searchQuery.trim() ? searchQuery : '',
-                salon_name: searchQuery.trim() ? searchQuery : '',
-                city: selectedCity && selectedCity !== 'الكل' ? selectedCity : ''
-              };
-              updateFilters(newFilters);
-              return;
-            }
-          }
-        } catch (fallbackError) {
-          console.error("Fallback search failed:", fallbackError);
-        }
+      if (searchQuery.trim() && error.message?.includes('No results')) {
+        const fallbackSuccess = await performFallbackSearch(searchQuery.trim());
+        if (fallbackSuccess) return;
       }
       
       console.error("حدث خطأ أثناء البحث");
@@ -401,13 +315,13 @@ function BookContent() {
       setIsSearching(false);
       setIsLoading(false);
     }
-  }, [searchQuery, activeTab, selectedCity, filters, updateAllData, updateFilters]);
+  }, [searchQuery, selectedCity, filters, updateAllData, updateFilters, performFallbackSearch]);
 
-  // دالة جلب جميع الأطباء من API
+  // Optimized fetchAllDoctors with reduced code
   const fetchAllDoctors = useCallback(async () => {
     if (hasLoadedRef.current) {
       console.log('⏭️ Skipping fetchAllDoctors - already loaded');
-      return; // تجنب الاستدعاء المتكرر
+      return;
     }
     
     try {
@@ -417,36 +331,37 @@ function BookContent() {
       
       console.log('🔄 Fetching all doctors from API...');
       const response = await fetch("https://enqlygo.com/api/salons");
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const result = await response.json();
       
-      if (result.status === "success" && result.data && result.data.length > 0) {
+      if (result.status === "success" && result.data?.length > 0) {
         console.log('✅ All doctors count:', result.data.length);
-        console.log('📊 All doctors sample:', result.data.slice(0, 2).map(item => ({
-          id: item.id,
-          name: item.salon_name || item.owner_name,
-          category: item.salon_categories || item.category_id
-        })));
-        
         setSearchResults(result.data);
-        // تحديث البيانات في الفلتر
         updateAllData(result.data);
       } else {
         console.log('❌ No doctors found in API response');
+        setSearchResults([]);
+        updateAllData([]);
       }
     } catch (error) {
       console.error("❌ خطأ في جلب الأطباء:", error);
-      hasLoadedRef.current = false; // إعادة تعيين في حالة الخطأ
+      hasLoadedRef.current = false;
+      setSearchResults([]);
+      updateAllData([]);
     } finally {
       setIsInitialLoad(false);
       setIsLoading(false);
     }
   }, [updateAllData]);
 
-  // دالة إعادة تعيين البحث - تمسح الـ inputs وترجع كل البيانات
+  // Optimized reset search function
   const resetSearch = useCallback(async () => {
     console.log('🔄 Resetting search and loading all data...');
     
-    // مسح الـ inputs أولاً
     setSearchQuery("");
     setSelectedCity("الكل");
     setSearchResults([]);
@@ -454,18 +369,19 @@ function BookContent() {
     
     try {
       setIsLoading(true);
-      console.log('🔄 Fetching all doctors from API...');
       const response = await fetch("https://enqlygo.com/api/salons");
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const result = await response.json();
       
-      if (result.status === "success" && result.data && result.data.length > 0) {
+      if (result.status === "success" && result.data?.length > 0) {
         console.log('✅ All doctors loaded - count:', result.data.length);
         setSearchResults(result.data);
         updateAllData(result.data);
-        
-        // إعادة تعيين جميع الفلاتر
         resetFilters();
-        
         hasLoadedRef.current = true;
       } else {
         console.log('❌ No doctors found');
@@ -474,6 +390,8 @@ function BookContent() {
       }
     } catch (error) {
       console.error('❌ Error resetting and loading doctors:', error);
+      setSearchResults([]);
+      updateAllData([]);
     } finally {
       setIsLoading(false);
     }
@@ -502,14 +420,14 @@ function BookContent() {
         <meta property="og:type" content="website" />
       </Helmet>
       
-      <div className="home-page book-page position-relative" style={{ width: '100%', overflow: 'hidden', margin: 0, padding: 0 }}>
-      <section className="hero-section position-relative mb-0" style={{ width: '100vw', marginLeft: 0, marginRight: 0 }} dir="rtl">
+      <div className="home-page book-page position-relative" style={{ width: '100%', overflow: 'visible', margin: 0, padding: 0 }}>
+      <section className="hero-section position-relative mb-0" style={{ width: '100vw', marginLeft: 0, marginRight: 0, minHeight: '90vh', overflow: 'visible' }} dir="rtl">
           <div 
             id="heroCarousel" 
             className="carousel slide h-100" 
             data-bs-ride="carousel" 
             data-bs-interval="5000"
-            style={{ margin: 0, padding: 0 }}
+            style={{ margin: 0, padding: 0, position: 'relative', zIndex: 1 }}
             onMouseEnter={(e) => {
               const prevBtn = e.currentTarget.querySelector('.carousel-control-prev');
               const nextBtn = e.currentTarget.querySelector('.carousel-control-next');
@@ -669,23 +587,29 @@ function BookContent() {
                 }}
               ></button>
             </div>
-          </div>
-        </section>
-
-        <section className="booking-form-section w-full py-1">
-      <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-12" style={{ maxWidth: '100%' }}>
-            <div className="booking-form-card bg-white h-full rounded-pill shadow-lg p-4 w-full" 
+            
+            {/* Booking Form Inside Hero Section */}
+            <div className="position-absolute w-100" 
                  style={{ 
-                   marginTop: "-330px", 
+                   bottom: '3%', 
+                   left: '50%', 
+                   transform: 'translateX(-50%)',
+                   zIndex: 9999,
+                   padding: '0 5%',
+                   pointerEvents: 'auto'
+                 }}>
+              <div className="container">
+                <div className="row justify-content-center">
+                  <div className="col-12" style={{ maxWidth: '100%' }}>
+                    <div className="booking-form-card bg-white h-full rounded-pill shadow-lg p-4 w-full" 
+                 style={{ 
                    position: "relative", 
-                   zIndex: "10",
+                   zIndex: 10000,
                    border: '1px solid rgba(0,0,0,0.05)',
                    backdropFilter: 'blur(10px)',
-                   background: 'rgba(255, 255, 255, 0.95)',
+                   background: 'rgba(255, 255, 255, 0.98)',
                    borderRadius: '60px',
-                   boxShadow: '0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.07)'
+                   boxShadow: '0 20px 50px rgba(0,0,0,0.2), 0 10px 25px rgba(0,0,0,0.15)'
                  }}
                dir="rtl">
 
@@ -860,16 +784,90 @@ function BookContent() {
                 
                 {/* مسافة بعد الأزرار */}
                 <div className="mt-3"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
           </div>
-        </div>
-      </div>
+        
         </section>
+       
       </div>
 
       {/* Booking Form Section */}
-      <div className="main" style={{width: '90%', marginLeft: 'auto', marginRight: 'auto', paddingBlock:'10px', marginTop: '20px' }} dir="rtl">
+      <div className="main" style={{width: '90%', marginLeft: 'auto', marginRight: 'auto', paddingBlock:'10px', marginTop: '90px', boxShadow: 'none' }} dir="rtl">
         <style>{`
+          /* Performance optimizations */
+          * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+          }
+          
+          /* Remove shadow from main section */
+          .main {
+            box-shadow: none !important;
+          }
+          
+          /* Responsive booking form adjustments */
+          /* Hide booking form on mobile and tablet */
+          @media (max-width: 1024px) {
+            .hero-section .position-absolute[style*="bottom"] {
+              display: none !important;
+            }
+            .book-page .main {
+              margin-top: 20px !important;
+            }
+          }
+          
+          /* Show booking form only on laptop and larger screens */
+          @media (min-width: 1025px) {
+            .hero-section .position-absolute[style*="bottom"] {
+              display: block !important;
+              bottom: 3% !important;
+            }
+            .booking-form-card {
+              border-radius: 60px !important;
+              padding: 1.5rem !important;
+            }
+            .main {
+              margin-top: 90px !important;
+            }
+          }
+          
+          /* Ensure booking form is always visible */
+          .booking-form-card {
+            min-height: 80px;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: relative !important;
+            z-index: 10000 !important;
+          }
+          
+          /* Ensure hero section doesn't hide the form */
+          .hero-section {
+            overflow: visible !important;
+          }
+          
+          .home-page.book-page {
+            overflow: visible !important;
+          }
+          
+          /* Make sure carousel doesn't cover the form */
+          .carousel, .carousel-inner, .carousel-item {
+            overflow: visible !important;
+          }
+          
+          /* Hardware acceleration for better performance */
+          .booking-form-card,
+          .btn,
+          .form-control,
+          .form-select {
+            transform: translateZ(0);
+            will-change: transform;
+          }
+          
           .btn-outline-primary:hover,
           .btn-outline-secondary:hover {
             background: #0171BD !important;
@@ -1060,6 +1058,19 @@ function BookContent() {
           .form-select option:hover::-moz-option {
             background: #0d78c0 !important;
             color: white !important;
+          }
+          
+          /* تطليع الـ sidebar لفوق على الموبايل والتابلت */
+          @media (max-width: 768px) {
+            .sidebar-filters {
+              margin-top: -60px !important;
+            }
+          }
+          
+          @media (min-width: 769px) and (max-width: 1024px) {
+            .sidebar-filters {
+              margin-top: -50px !important;
+            }
           }
           
           /* محاذاة الـ sidebar والـ cards في الشاشات الكبيرة */

@@ -136,31 +136,97 @@ function MainNavbar() {
               <span>الصفحة الرئيسية</span>
             </NavLink>
             
-            {/* تسجيل دخول */}
-            <NavLink
-              to="/login"
-              className="d-flex align-items-center gap-3 text-decoration-none"
-              style={{
-                borderRadius: '10px',
-                backgroundColor: '#f0f7fc',
-                color: '#2c3e50',
-                fontSize: '18px',
-                fontWeight: '500',
-                padding: '0.6rem 1rem',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#e3f2fd';
-                e.currentTarget.style.transform = 'translateX(-5px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#f0f7fc';
-                e.currentTarget.style.transform = 'translateX(0)';
-              }}
-            >
-              <FontAwesomeIcon icon={faUser} style={{ fontSize: '20px', color: '#0171BD' }} />
-              <span>تسجيل دخول</span>
-            </NavLink>
+            {/* تسجيل دخول أو لوحة التحكم */}
+            {isLoggedIn ? (
+              <>
+                {/* لوحة التحكم */}
+                <NavLink
+                  to="/dashboard"
+                  className="d-flex align-items-center gap-3 text-decoration-none"
+                  style={{
+                    borderRadius: '10px',
+                    backgroundColor: '#f0f7fc',
+                    color: '#2c3e50',
+                    fontSize: '18px',
+                    fontWeight: '500',
+                    padding: '0.6rem 1rem',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#e3f2fd';
+                    e.currentTarget.style.transform = 'translateX(-5px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f0f7fc';
+                    e.currentTarget.style.transform = 'translateX(0)';
+                  }}
+                >
+                  <FontAwesomeIcon icon={faUser} style={{ fontSize: '20px', color: '#0171BD' }} />
+                  <span>لوحة التحكم</span>
+                </NavLink>
+                
+                {/* تسجيل الخروج */}
+                <button
+                  onClick={handleLogout}
+                  className="d-flex align-items-center gap-3 text-decoration-none w-100"
+                  style={{
+                    borderRadius: '10px',
+                    backgroundColor: '#f0f7fc',
+                    color: '#0171BD',
+                    fontSize: '18px',
+                    fontWeight: '500',
+                    padding: '0.6rem 1rem',
+                    transition: 'all 0.3s ease',
+                    border: 'none',
+                    cursor: 'pointer',
+                    textAlign: 'right'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#e3f2fd';
+                    e.currentTarget.style.transform = 'translateX(-5px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f0f7fc';
+                    e.currentTarget.style.transform = 'translateX(0)';
+                  }}
+                >
+                  <FontAwesomeIcon 
+                    icon={faSignOutAlt} 
+                    style={{ 
+                      fontSize: '20px', 
+                      color: '#0171BD',
+                      transform: 'scaleX(-1)' // عكس اتجاه الأيقونة
+                    }} 
+                  />
+                  <span>تسجيل الخروج</span>
+                </button>
+              </>
+            ) : (
+              <NavLink
+                to="/login"
+                className="d-flex align-items-center gap-3 text-decoration-none"
+                style={{
+                  borderRadius: '10px',
+                  backgroundColor: '#f0f7fc',
+                  color: '#2c3e50',
+                  fontSize: '18px',
+                  fontWeight: '500',
+                  padding: '0.6rem 1rem',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#e3f2fd';
+                  e.currentTarget.style.transform = 'translateX(-5px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#f0f7fc';
+                  e.currentTarget.style.transform = 'translateX(0)';
+                }}
+              >
+                <FontAwesomeIcon icon={faUser} style={{ fontSize: '20px', color: '#0171BD' }} />
+                <span>تسجيل دخول</span>
+              </NavLink>
+            )}
 
             {/* حجز موعد */}
             <NavLink
@@ -624,7 +690,7 @@ function MainNavbar() {
       <div className="mx-auto" style={{ width: '95%', maxWidth: 'none' }}>
         <div className="d-flex justify-content-between align-items-center w-100">
           
-          {/* القسم الأيسر: خيارات الدفع والتوصيل + Burger Menu للموبايل */}
+          {/* القسم الأيسر: Burger Menu + اللوجو */}
           <div className="d-flex align-items-center gap-3">
             {/* Burger Menu - يظهر فقط على الموبايل */}
             <button
@@ -652,46 +718,35 @@ function MainNavbar() {
               />
             </button>
 
-            <NavLink to="/payment-methods" className="d-none d-lg-block text-decoration-none" style={{ 
-              fontSize: '20px',
-              fontWeight: 'bolder',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-              letterSpacing: '0.5px',
-              color: '#4A4A4A',
-              cursor: 'pointer'
-            }}>
-              خيارات الدفع والتوصيل
+            {/* الشعار */}
+            <NavLink to="/" className="navbar-brand navbar-logo-link">
+              <img
+                src={logo}
+                alt="Logo"
+                className="navbar-logo-img"
+                style={{ 
+                  objectFit: "contain",
+                  width: window.innerWidth <= 480 ? '60px' : 
+                         window.innerWidth <= 576 ? '70px' : 
+                         window.innerWidth <= 768 ? '85px' :
+                         window.innerWidth <= 991 ? '110px' :
+                         window.innerWidth <= 1200 ? '150px' : '300px',
+                  height: window.innerWidth <= 480 ? '25px' : 
+                          window.innerWidth <= 576 ? '28px' : 
+                          window.innerWidth <= 768 ? '32px' :
+                          window.innerWidth <= 991 ? '35px' :
+                          window.innerWidth <= 1200 ? '50px' : '80px',
+                  maxWidth: window.innerWidth <= 480 ? '60px' : 
+                            window.innerWidth <= 576 ? '70px' : 
+                            window.innerWidth <= 768 ? '85px' :
+                            window.innerWidth <= 991 ? '110px' :
+                            window.innerWidth <= 1200 ? '150px' : '250px'
+                }}
+              />
             </NavLink>
           </div>
 
-          {/* القسم الأوسط: الشعار */}
-          <NavLink to="/" className="navbar-brand mx-auto navbar-logo-link" style={{ marginLeft: '80px', marginRight: '50px' }}>
-            <img
-              src={logo}
-              alt="Logo"
-              className="navbar-logo-img"
-              style={{ 
-                objectFit: "contain",
-                width: window.innerWidth <= 480 ? '60px' : 
-                       window.innerWidth <= 576 ? '70px' : 
-                       window.innerWidth <= 768 ? '85px' :
-                       window.innerWidth <= 991 ? '110px' :
-                       window.innerWidth <= 1200 ? '150px' : '300px',
-                height: window.innerWidth <= 480 ? '25px' : 
-                        window.innerWidth <= 576 ? '28px' : 
-                        window.innerWidth <= 768 ? '32px' :
-                        window.innerWidth <= 991 ? '35px' :
-                        window.innerWidth <= 1200 ? '50px' : '80px',
-                maxWidth: window.innerWidth <= 480 ? '60px' : 
-                          window.innerWidth <= 576 ? '70px' : 
-                          window.innerWidth <= 768 ? '85px' :
-                          window.innerWidth <= 991 ? '110px' :
-                          window.innerWidth <= 1200 ? '150px' : '250px'
-              }}
-            />
-          </NavLink>
-
-          {/* القسم الأيمن: السلة + تسجيل الدخول + البحث + اللغة + الدولة */}
+          {/* القسم الأيمن: تسجيل الدخول + اللغة + الدولة */}
           <div className="d-flex align-items-center gap-2 gap-lg-3">
             {/* الدولة - مخفي على الموبايل */}
             <div className="d-flex align-items-center gap-2">
@@ -736,16 +791,106 @@ function MainNavbar() {
             {/* خط فاصل */}
             <div className="d-none d-lg-block" style={{ width: '1px', height: '20px', backgroundColor: '#ddd' }}></div>
             
-            {/* تسجيل الدخول - مخفي على الموبايل */}
-            <NavLink to="/login" className="text-decoration-none d-none d-lg-block" style={{ 
-              fontSize: '20px',
-              fontWeight: 'bolder',
-              color: '#4A4A4A',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-              letterSpacing: '0.5px'
-            }}>
-              تسجيل دخول
-            </NavLink>
+            {/* لوحة التحكم أو تسجيل الدخول */}
+            {isLoggedIn ? (
+              <div className="d-none d-lg-flex align-items-center gap-2">
+                <NavLink 
+                  to="/dashboard" 
+                  className="dashboard-btn" 
+                  style={{ 
+                    fontSize: '18px',
+                    fontWeight: '700',
+                    color: '#ffffff',
+                    backgroundColor: '#0171BD',
+                    padding: '0.5rem 1.5rem',
+                    borderRadius: '8px',
+                    transition: 'all 0.3s ease',
+                    textDecoration: 'none',
+                    border: '2px solid #0171BD'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#ffffff';
+                    e.currentTarget.style.color = '#0171BD';
+                    e.currentTarget.style.borderColor = '#0171BD';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(1, 113, 189, 0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#0171BD';
+                    e.currentTarget.style.color = '#ffffff';
+                    e.currentTarget.style.borderColor = '#0171BD';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  لوحة التحكم
+                </NavLink>
+                
+                {/* أيقونة تسجيل الخروج */}
+                <button
+                  onClick={handleLogout}
+                  className="btn"
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                  title="تسجيل الخروج"
+                >
+                  <FontAwesomeIcon 
+                    icon={faSignOutAlt} 
+                    style={{ 
+                      fontSize: '22px', 
+                      color: '#0171BD',
+                      transition: 'all 0.3s ease',
+                      transform: 'scaleX(-1)' // عكس اتجاه الأيقونة
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scaleX(-1) scale(1.2)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scaleX(-1) scale(1)';
+                    }}
+                  />
+                </button>
+              </div>
+            ) : (
+              <NavLink 
+                to="/login" 
+                className="login-btn d-none d-lg-block" 
+                style={{ 
+                  fontSize: '18px',
+                  fontWeight: '700',
+                  color: '#0171BD',
+                  backgroundColor: '#ffffff',
+                  padding: '0.5rem 1.5rem',
+                  borderRadius: '8px',
+                  transition: 'all 0.3s ease',
+                  textDecoration: 'none',
+                  border: '2px solid #0171BD'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#0171BD';
+                  e.currentTarget.style.color = '#ffffff';
+                  e.currentTarget.style.borderColor = '#0171BD';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(1, 113, 189, 0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#ffffff';
+                  e.currentTarget.style.color = '#0171BD';
+                  e.currentTarget.style.borderColor = '#0171BD';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                تسجيل دخول
+              </NavLink>
+            )}
             
           </div>
         </div>

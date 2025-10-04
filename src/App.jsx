@@ -9,6 +9,7 @@ import RegisterPage from './Pages/Auth/RegisterPage';
 import Login from './Pages/Auth/Login';
 import ProductsPage from './Pages/Products/ProductsPage';
 import NationalDay from './Pages/NationalDay/NationalDay';
+import AddProduct from './Pages/Products/AddProduct';
 import PaymentMethods from './Pages/PaymentMethods/PaymentMethods';
 import Book from './Pages/Book/Book';
 import Error404 from './Pages/Error404/Error404';
@@ -21,10 +22,11 @@ function App() {
   const isDashboard = location.pathname === '/dashboard';
   const isLogin = location.pathname === '/login';
   const isRegister = location.pathname === '/register';
-  const isError404 = !['/', '/offers', '/national-day', '/products', '/contact', '/payment-methods', '/book', '/dashboard', '/register', '/login', '/logout'].includes(location.pathname);
+  const isAddProduct = location.pathname === '/add-product';
+  const isError404 = !['/', '/offers', '/national-day', '/products', '/add-product', '/contact', '/payment-methods', '/book', '/dashboard', '/register', '/login', '/logout'].includes(location.pathname);
   
-  const hideMainNavbar = isDashboard || isLogin || isRegister || isError404;
-  const hideFooter = isDashboard || isError404;
+  const hideMainNavbar = isDashboard || isLogin || isRegister || isAddProduct || isError404;
+  const hideFooter = isDashboard || isAddProduct || isError404;
 
   // Loading bar animation on route change
   useEffect(() => {
@@ -75,6 +77,7 @@ function App() {
           <Route path="/offers" element={<NationalDay />} />
           <Route path="/national-day" element={<NationalDay />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/add-product" element={<AddProduct />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethods />} />
           <Route path="/book" element={<Book />} />

@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import useReviewsData from '../../hooks/useReviewsData';
 
 const STATIC_TESTIMONIALS = [
   {
@@ -54,7 +55,56 @@ const STATIC_TESTIMONIALS = [
   },
 ];
 
+// Star Rating Component
+const StarRating = ({ rating }) => {
+  return (
+    <div className="d-flex gap-1 mb-2">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <i
+          key={star}
+          className={`fas fa-star`}
+          style={{
+            color: star <= rating ? '#FFD700' : '#E0E0E0',
+            fontSize: '16px',
+          }}
+        ></i>
+      ))}
+    </div>
+  );
+};
+
 const Testimonials = () => {
+  const { data: apiReviews, loading, error } = useReviewsData();
+
+  // Use API data if available, otherwise use static data
+  const reviews = apiReviews && apiReviews.length > 0 
+    ? apiReviews.map(review => ({
+        id: review.id,
+        name: review.user?.fullname || 'عميل',
+        text: review.comment,
+        rating: review.rating || 5,
+        image: review.user?.profile_image,
+        salon: review.salon?.salon_name,
+      }))
+    : STATIC_TESTIMONIALS.map(t => ({ ...t, rating: 5 }));
+
+  // Loading state
+  if (loading) {
+    return (
+      <section className="py-5 testimonials" style={{ backgroundColor: '#ffffff' }}>
+        <div className="mx-auto" style={{ width: '90%' }}>
+          <div className="mb-4 text-end" style={{ marginTop: '20px', paddingRight: '10px' }}>
+            <h2 className="m-0" style={{ color: '#484848', fontWeight: 800, fontSize: '34px' }}>آراء العملاء</h2>
+          </div>
+          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '300px' }}>
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">جاري التحميل...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
   return (
     <section className="py-0 testimonials" style={{ backgroundColor: 
     
@@ -84,8 +134,8 @@ const Testimonials = () => {
             dynamicBullets: false
           }}
         >
-          {STATIC_TESTIMONIALS.map((t) => (
-            <SwiperSlide key={t.id}>
+          {reviews.map((review) => (
+            <SwiperSlide key={review.id}>
               <div
                 className="position-relative rounded-4"
                 style={{
@@ -93,7 +143,7 @@ const Testimonials = () => {
                   border: '1px solid #f0f0f0',
                   boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
                   padding: '24px',
-                  minHeight: '220px',
+                  minHeight: '250px',
                   overflow: 'hidden',
                 }}
               >
@@ -114,21 +164,35 @@ const Testimonials = () => {
                   <img src={commentImg} alt="comment" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 </div>
 
+                {/* Star Rating */}
+                <StarRating rating={review.rating} />
+
+                {/* Review Text */}
                 <p
                   className="mb-3"
                   style={{
                     color: '#484848',
-                    fontSize: '20px',
+                    fontSize: '18px',
                     lineHeight: 1.8,
                     textAlign: 'start',
-                    margin: 0,
+                    margin: '12px 0',
                   }}
                 >
-                  {t.text}
+                  {review.text}
                 </p>
 
+                {/* User Info */}
                 <div className="mt-3 d-flex justify-content-end">
-                  <span className="fw-bold" style={{ color: '#0171BD' }}>{t.name}</span>
+                  <div>
+                    <span className="fw-bold d-block text-end" style={{ color: '#0171BD', fontSize: '16px' }}>
+                      {review.name}
+                    </span>
+                    {review.salon && (
+                      <span className="text-muted d-block text-end" style={{ fontSize: '13px' }}>
+                        {review.salon}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             </SwiperSlide>

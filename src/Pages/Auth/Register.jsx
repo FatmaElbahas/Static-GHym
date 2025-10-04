@@ -96,14 +96,18 @@ const Register = () => {
       const data = await response.json();
 
       if (response.ok) {
-        alert("تم إنشاء الحساب بنجاح!");
+        // Success - redirect to login
         console.log("Response:", data);
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 500);
       } else {
-        alert(data.message || "حدث خطأ أثناء إنشاء الحساب");
+        console.error("Registration failed:", data.message);
+        // Show error in UI instead of alert
       }
     } catch (error) {
       console.error("Registration error:", error);
-      alert("حدث خطأ في الاتصال بالسيرفر");
+      // Show error in UI instead of alert
     } finally {
       setIsSubmitting(false);
     }
@@ -255,7 +259,7 @@ const Register = () => {
                 {/* زرار الإنشاء */}
                 <button
                   type="submit"
-                  className="btn w-100 mt-2"
+                  className="btn w-100 mt-2 submit-btn-custom"
                   disabled={isSubmitting}
                   style={{
                     borderRadius: '10px',
@@ -265,17 +269,25 @@ const Register = () => {
                     color: '#ffffff',
                     fontWeight: '600',
                     padding: '1rem',
-                    border: 'none',
+                    border: '2px solid #0171BD',
                     transition: 'all 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
                     if (!isSubmitting) {
-                      e.currentTarget.style.backgroundColor = '#C5B34E';
+                      e.currentTarget.style.setProperty('background-color', '#ffffff', 'important');
+                      e.currentTarget.style.setProperty('color', '#0171BD', 'important');
+                      e.currentTarget.style.setProperty('border-color', '#0171BD', 'important');
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(1, 113, 189, 0.3)';
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!isSubmitting) {
-                      e.currentTarget.style.backgroundColor = '#0171BD';
+                      e.currentTarget.style.setProperty('background-color', '#0171BD', 'important');
+                      e.currentTarget.style.setProperty('color', '#ffffff', 'important');
+                      e.currentTarget.style.setProperty('border-color', '#0171BD', 'important');
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'none';
                     }
                   }}
                 >
@@ -298,10 +310,17 @@ const Register = () => {
                   style={{ 
                     color: '#0171BD', 
                     fontSize: '15px', 
-                    fontWeight: '500' 
+                    fontWeight: '500',
+                    transition: 'all 0.3s ease'
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#C5B34E'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = '#0171BD'}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#015a94';
+                    e.currentTarget.style.textDecoration = 'underline';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#0171BD';
+                    e.currentTarget.style.textDecoration = 'none';
+                  }}
                 >
                   <span>هل لديك حساب؟ تسجيل الدخول</span>
                 </Link>

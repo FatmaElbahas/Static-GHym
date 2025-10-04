@@ -224,9 +224,10 @@ const RegisterPage = () => {
           localStorage.setItem('user', JSON.stringify(result.data.user));
         }
         
-        alert('تم إنشاء الحساب بنجاح!');
-        // إعادة توجيه إلى صفحة تسجيل الدخول
-        navigate('/login');
+        // إعادة توجيه إلى صفحة تسجيل الدخول بدون alert
+        setTimeout(() => {
+          navigate('/login');
+        }, 500);
       } else {
         // معالجة أخطاء API
         if (result.errors) {
@@ -596,12 +597,20 @@ const RegisterPage = () => {
                         }}
                         onMouseEnter={(e) => {
                           if (!isSubmitting) {
-                            e.currentTarget.style.backgroundColor = '#C5B34E';
+                            e.currentTarget.style.setProperty('background-color', '#ffffff', 'important');
+                            e.currentTarget.style.setProperty('color', '#0171BD', 'important');
+                            e.currentTarget.style.setProperty('border-color', '#0171BD', 'important');
+                            e.currentTarget.style.transform = 'translateY(-2px)';
+                            e.currentTarget.style.boxShadow = '0 4px 12px rgba(1, 113, 189, 0.3)';
                           }
                         }}
                         onMouseLeave={(e) => {
                           if (!isSubmitting) {
-                            e.currentTarget.style.backgroundColor = '#0171BD';
+                            e.currentTarget.style.setProperty('background-color', '#0171BD', 'important');
+                            e.currentTarget.style.setProperty('color', '#ffffff', 'important');
+                            e.currentTarget.style.setProperty('border-color', '#0171BD', 'important');
+                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.boxShadow = 'none';
                           }
                         }}
                       >
@@ -623,10 +632,17 @@ const RegisterPage = () => {
                           style={{ 
                             color: '#0171BD', 
                             fontSize: '15px', 
-                            fontWeight: '500' 
+                            fontWeight: '500',
+                            transition: 'all 0.3s ease'
                           }}
-                          onMouseEnter={(e) => e.currentTarget.style.color = '#C5B34E'}
-                          onMouseLeave={(e) => e.currentTarget.style.color = '#0171BD'}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.color = '#015a94';
+                            e.currentTarget.style.textDecoration = 'underline';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.color = '#0171BD';
+                            e.currentTarget.style.textDecoration = 'none';
+                          }}
                         >
                           <span>هل لديك حساب؟ تسجيل الدخول</span>
                         </Link>

@@ -18,7 +18,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #C5B34E;
+  background: #015a94;
   box-shadow: 0 2px 8px rgba(1, 113, 189, 0.3);
 }
 
@@ -139,6 +139,53 @@ p {
 .navbar a:hover, .navbar .nav-link:hover, .navbar span:hover {
   color: #0171BD !important;
   transition: color 0.3s ease;
+}
+
+/* Dashboard button - override general navbar link styles */
+.navbar .dashboard-btn {
+  color: #ffffff !important;
+  background-color: #0171BD !important;
+}
+
+.navbar .dashboard-btn:hover {
+  color: #0171BD !important;
+  background-color: #ffffff !important;
+}
+
+/* Login button - override general navbar link styles */
+.navbar .login-btn {
+  color: #0171BD !important;
+  background-color: #ffffff !important;
+  border-color: #0171BD !important;
+}
+
+.navbar .login-btn:hover {
+  color: #ffffff !important;
+  background-color: #0171BD !important;
+  border-color: #0171BD !important;
+}
+
+/* Submit buttons in Login and Register pages */
+.submit-btn-custom {
+  color: #ffffff !important;
+  background-color: #0171BD !important;
+  border-color: #0171BD !important;
+}
+
+.submit-btn-custom:hover:not(:disabled),
+.submit-btn-custom:focus:not(:disabled),
+.submit-btn-custom:active:not(:disabled) {
+  color: #0171BD !important;
+  background-color: #ffffff !important;
+  border-color: #0171BD !important;
+}
+
+/* Override Bootstrap btn classes */
+.btn.submit-btn-custom:hover:not(:disabled),
+.btn.submit-btn-custom:focus:not(:disabled) {
+  color: #0171BD !important;
+  background-color: #ffffff !important;
+  border-color: #0171BD !important;
 }
 
 /* تأثير hover لشريط التصنيفات */
@@ -668,7 +715,7 @@ p {
   
   .booking-form-section {
     bottom: 80px !important;
-    display: none !important;
+    display: block !important;
   }
   
   /* إضافة مسافة يمين ويسار للفوتر في التابلت */
@@ -725,9 +772,9 @@ p {
     font-size: 0.9rem !important;
   }
   
-  /* إخفاء الـ booking form في الموبايل */
+  /* إظهار الـ booking form في الموبايل */
   .booking-form-section {
-    display: none !important;
+    display: block !important;
   }
   
   /* أنماط الفوتر للموبايل */
@@ -834,9 +881,9 @@ p {
     font-size: 0.8rem !important;
   }
   
-  /* إخفاء الـ booking form في الموبايل الصغير */
+  /* إظهار الـ booking form في الموبايل الصغير */
   .booking-form-section {
-    display: none !important;
+    display: block !important;
   }
   
   /* أنماط الفوتر للموبايل الصغير */
@@ -1313,7 +1360,7 @@ footer.bg-main{
   color: #fff !important;
 }
 .activeLink {
-  color: #C5B34E !important;
+  color: #0171BD !important;
   font-weight: bold;
 }
 .linksContainer a {
@@ -1335,7 +1382,7 @@ footer.bg-main{
 }
 
 .activeLink {
-  color: #C5B34E !important;
+  color: #0171BD !important;
   font-weight: bold;
 }
 .custom-border {
@@ -2252,11 +2299,7 @@ width: 10%;
 /* Booking Form Styles */
 .booking-form-section {
   background: transparent;
-  position: absolute;
-  bottom: 40px;
-  left: 0;
-  right: 0;
-  z-index: 20;
+  display: block !important;
 }
 
 .booking-form-card {
@@ -2320,7 +2363,7 @@ width: 10%;
   
   .booking-form-section {
     bottom: 45px !important;
-    display: none !important;
+    display: block !important;
   }
 }
 
@@ -2339,7 +2382,7 @@ width: 10%;
   
   .booking-form-section {
     bottom: 50px !important;
-    display: none !important;
+    display: block !important;
   }
 }
 
@@ -3011,14 +3054,7 @@ width: 10%;
   cursor: not-allowed;
 }
 .booking-form-section {
-  position: absolute !important;
-  left: 0 !important;
-  right: 0 !important;
-  z-index: 20 !important;
-  bottom: -35% !important;
-  width: 100% !important;
-  padding: 1rem 0 !important;
-  /* position: 'absolute'; bottom: -100; left: 0; right: 0; zIndex: 20 */
+  display: none !important;
 }
 
 
@@ -3142,6 +3178,18 @@ width: 10%;
   left: 0;
   right: 0;
   z-index: 1030;
+}
+
+/* Dashboard header buttons - white text */
+.dashboard-header .btn-outline-light {
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+.dashboard-header .btn-outline-light:hover {
+  color: #0d78c0 !important;
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
 }
 
 .dashboard-body {

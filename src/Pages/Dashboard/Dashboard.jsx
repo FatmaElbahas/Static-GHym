@@ -12,7 +12,8 @@ import {
   faSignOutAlt,
   faChartLine,
   faUsers,
-  faHospital
+  faHospital,
+  faBox
 } from '@fortawesome/free-solid-svg-icons';
 import Profile from '../../Components/Dashboard/Profile';
 import Footer from '../../Components/Footer/Footer';
@@ -20,6 +21,7 @@ import Bookings from '../../Components/Dashboard/Bookings';
 import Services from '../../Components/Dashboard/Services';
 import NewBooking from '../../Components/Dashboard/NewBooking';
 import DashboardHome from '../../Components/Dashboard/DashboardHome';
+import Products from '../../Components/Dashboard/Products';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -77,6 +79,7 @@ const Dashboard = () => {
     { id: 'profile', label: 'البروفايل', icon: faUser },
     { id: 'bookings', label: 'حجوزاتي', icon: faCalendarAlt },
     { id: 'services', label: 'الخدمات', icon: faStethoscope },
+    { id: 'products', label: 'المنتجات', icon: faBox },
     { id: 'new-booking', label: 'حجز جديد', icon: faPlus }
   ];
 
@@ -90,6 +93,8 @@ const Dashboard = () => {
         return <Bookings />;
       case 'services':
         return <Services />;
+      case 'products':
+        return <Products />;
       case 'new-booking':
         return <NewBooking />;
       default:

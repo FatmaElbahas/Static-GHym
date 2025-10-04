@@ -1,4 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import useOffersData from '../../hooks/useOffersData';
+import placeholderImg from '../../assets/images/الاسنان.png';
+
+// Image component with loading state
+const ProductImage = ({ src, alt }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <div style={{ position: 'relative', width: '100%', height: '380px' }}>
+      {/* Placeholder - shown while loading or on error */}
+      {(!imageLoaded || imageError) && (
+        <img
+          src={placeholderImg}
+          alt="loading"
+          className="img-fluid w-100 shadow d-block"
+          style={{
+            width: '100%',
+            height: '380px',
+            objectFit: 'contain',
+            backgroundColor: '#f8f9fa',
+            position: imageLoaded && !imageError ? 'absolute' : 'relative',
+            opacity: imageError ? 1 : 0.5
+          }}
+        />
+      )}
+      
+      {/* Actual image from API */}
+      <img
+        src={src}
+        alt={alt}
+        className="img-fluid w-100 shadow d-block"
+        style={{
+          width: '100%',
+          height: '380px',
+          objectFit: 'cover',
+          display: imageLoaded && !imageError ? 'block' : 'none',
+          position: 'absolute',
+          top: 0,
+          left: 0
+        }}
+        loading="lazy"
+        onLoad={() => setImageLoaded(true)}
+        onError={() => {
+          setImageError(true);
+          setImageLoaded(true);
+        }}
+      />
+    </div>
+  );
+};
 
 const ProductsPage = () => {
   const [sortBy, setSortBy] = useState('الافتراضي');
@@ -7,6 +58,9 @@ const ProductsPage = () => {
   const [priceFrom, setPriceFrom] = useState('');
   const [priceTo, setPriceTo] = useState('');
   const [showDiscountsOnly, setShowDiscountsOnly] = useState(false);
+
+  // Fetch offers data from API
+  const { data: apiProducts, loading, error } = useOffersData();
 
   const sortOptions = [
     'الافتراضي',
@@ -28,57 +82,47 @@ const ProductsPage = () => {
     return () => document.removeEventListener('click', handleClickOutside);
   }, [showSortDropdown]);
   
-  // Products data - 8 منتجات (4 مكررة)
-  const products = [
-    { 
-      id: 1, 
-      title: 'جلسة مورفيس - جلسة تنضيف بشرة', 
-      price: 895.00,
-      img: 'https://media.zid.store/cdn-cgi/image/w=500,h=500,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/8d473eb7-a9f9-4f93-83ef-43fee0dfc3a2-thumbnail-770x770.png'
-    },
-    { 
-      id: 2, 
-      title: 'جلسة ليزر تحديد دقن', 
-      price: 49.00,
-      img: 'https://media.zid.store/cdn-cgi/image/w=500,h=500,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/b6bba8c8-0b1a-4231-9aa4-1b29d9548f16-thumbnail-770x770.png'
-    },
-    { 
-      id: 3, 
-      title: 'ابرز السوال البنائي – حقن ليبو جونيك', 
-      price: 3295.00,
-      img: 'https://media.zid.store/cdn-cgi/image/w=500,h=500,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/c4f8239e-4610-4bdc-9e65-377f046854f9-thumbnail-770x770.png'
-    },
-    { 
-      id: 4, 
-      title: 'جلسة ليزر تحديد دقن', 
-      price: 49.00,
-      img: 'https://media.zid.store/cdn-cgi/image/w=500,h=500,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/8d473eb7-a9f9-4f93-83ef-43fee0dfc3a2-thumbnail-770x770.png'
-    },
-    { 
-      id: 5, 
-      title: 'جلسة مورفيس - جلسة تنضيف بشرة', 
-      price: 895.00,
-      img: 'https://media.zid.store/cdn-cgi/image/w=500,h=500,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/8d473eb7-a9f9-4f93-83ef-43fee0dfc3a2-thumbnail-770x770.png'
-    },
-    { 
-      id: 6, 
-      title: 'جلسة ليزر تحديد دقن', 
-      price: 49.00,
-      img: 'https://media.zid.store/cdn-cgi/image/w=500,h=500,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/b6bba8c8-0b1a-4231-9aa4-1b29d9548f16-thumbnail-770x770.png'
-    },
-    { 
-      id: 7, 
-      title: 'ابرز السوال البنائي – حقن ليبو جونيك', 
-      price: 3295.00,
-      img: 'https://media.zid.store/cdn-cgi/image/w=500,h=500,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/c4f8239e-4610-4bdc-9e65-377f046854f9-thumbnail-770x770.png'
-    },
-    { 
-      id: 8, 
-      title: 'جلسة ليزر تحديد دقن', 
-      price: 49.00,
-      img: 'https://media.zid.store/cdn-cgi/image/w=500,h=500,q=100,f=auto/https://media.zid.store/thumbs/69733e3a-6328-43ea-90ee-cd02df32c66d/8d473eb7-a9f9-4f93-83ef-43fee0dfc3a2-thumbnail-770x770.png'
+  // Filter and sort products
+  const products = useMemo(() => {
+    if (!apiProducts || apiProducts.length === 0) {
+      return [];
     }
-  ];
+
+    let filtered = [...apiProducts];
+
+    // Filter by price range
+    if (priceFrom) {
+      filtered = filtered.filter(p => p.price >= Number(priceFrom));
+    }
+    if (priceTo) {
+      filtered = filtered.filter(p => p.price <= Number(priceTo));
+    }
+
+    // Filter discounts only
+    if (showDiscountsOnly) {
+      filtered = filtered.filter(p => p.discount && p.discount > 0);
+    }
+
+    // Sorting
+    switch (sortBy) {
+      case 'الأحدث':
+        filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        break;
+      case 'الأقل سعر':
+        filtered.sort((a, b) => a.price - b.price);
+        break;
+      case 'الأعلى سعر':
+        filtered.sort((a, b) => b.price - a.price);
+        break;
+      case 'الأكثر شعبية':
+        // يمكن إضافة sorting حسب bookings_count لاحقاً
+        break;
+      default:
+        break;
+    }
+
+    return filtered;
+  }, [apiProducts, priceFrom, priceTo, showDiscountsOnly, sortBy]);
 
   return (
     <>
@@ -342,18 +386,30 @@ const ProductsPage = () => {
           </h1>
         </div>
 
-        {/* شريط الفلترة والترتيب */}
-        <div className="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
-          {/* عدد النتائج */}
-          <div style={{ 
-            color: '#6c757d', 
-            fontSize: '18px',
-            fontWeight: '700',
-            order: 3,
-            paddingRight: '2rem'
-          }} className="order-lg-1">
-            تم إيجاد <span style={{ color: '#000000' }}>8</span> منتجات
+        {/* Loading State */}
+        {loading && (
+          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '400px' }}>
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">جاري التحميل...</span>
+            </div>
           </div>
+        )}
+
+        {/* Content */}
+        {!loading && (
+          <>
+            {/* شريط الفلترة والترتيب */}
+            <div className="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+              {/* عدد النتائج */}
+              <div style={{ 
+                color: '#6c757d', 
+                fontSize: '18px',
+                fontWeight: '700',
+                order: 3,
+                paddingRight: '2rem'
+              }} className="order-lg-1">
+                تم إيجاد <span style={{ color: '#000000' }}>{products.length}</span> منتجات
+              </div>
 
           {/* الفلترة والترتيب */}
           <div className="d-flex gap-3 flex-wrap order-1 order-lg-2 products-filter-buttons">
@@ -474,66 +530,100 @@ const ProductsPage = () => {
           margin: '0 auto 2rem auto'
         }} />
 
-        {/* المنتجات Grid */}
-        <div className="row g-3">
-          {products.map((product) => (
-            <div key={product.id} className="col-12 col-lg-3">
-              <div className="h-100">
-                <div className="card w-100 h-100 border-0 position-relative product-offer-card" style={{ 
-                  maxWidth: '100%',
-                  borderRadius: '10px',
-                  boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                  background: 'white',
-                  transition: 'all 0.3s ease'
-                }}>
-                  {/* Product Image */}
-                  <img
-                    src={product.img}
-                    alt={product.title}
-                    className="img-fluid w-100 shadow d-block"
-                    style={{ width: '100%', height: '380px', objectFit: 'cover', marginTop: 0 }}
-                    loading="lazy"
-                  />
+            {/* المنتجات Grid */}
+            <div className="row g-4">
+              {products.length === 0 ? (
+                <div className="col-12 text-center py-5">
+                  <p style={{ color: '#6c757d', fontSize: '18px' }}>لا توجد منتجات</p>
+                </div>
+              ) : (
+                products.map((product) => {
+                  // Get product image
+                  const productImage = product.images && product.images.length > 0 
+                    ? product.images[0].image 
+                    : null;
 
-                  {/* Product Info */}
-                  <div className="card-body py-2" style={{ paddingTop: '6px', paddingBottom: '6px' }}>
-                    <h5 className="card-title fw-semibold text-end" style={{ color: '#484848' }}>
-                      {product.title}
-                    </h5>
-                    <div className="d-flex align-items-center justify-content-center mt-2" style={{ gap: '10px' }}>
-                      <div className="d-flex align-items-center" style={{ gap: '6px' }}>
-                        <span className="fw-bold" style={{ color: '#0171BD', fontSize: '22px', lineHeight: 1 }}>
-                          {product.price}
-                        </span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 1124.14 1256.39"
-                          width="12"
-                          height="13"
-                          style={{ display: 'inline-block', verticalAlign: 'middle', margin: '0 2px' }}
-                          aria-label="Saudi Riyal"
-                          title="Saudi Riyal"
-                        >
-                          <path fill="#231f20" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"></path>
-                          <path fill="#231f20" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"></path>
-                        </svg>
+                  // Skip products without images
+                  if (!productImage) {
+                    return null;
+                  }
+
+                  return (
+                    <div key={product.id} className="col-12 col-lg-3">
+                      <div className="h-100">
+                        <div className="card w-100 h-100 border-0 position-relative product-offer-card" style={{ 
+                          maxWidth: '100%',
+                          borderRadius: '10px',
+                          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                          background: 'white',
+                          transition: 'all 0.3s ease'
+                        }}>
+                          {/* Product Image */}
+                          <ProductImage 
+                            src={productImage}
+                            alt={product.title_ar}
+                          />
+
+                          {/* Product Info */}
+                          <div className="card-body py-2" style={{ 
+                            paddingTop: '8px', 
+                            paddingBottom: '8px',
+                            paddingLeft: '12px',
+                            paddingRight: '12px'
+                          }}>
+                            {/* Service Name */}
+                            <h5 className="card-title fw-semibold text-end mb-2" style={{ 
+                              color: '#484848',
+                              fontSize: '18px',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              display: '-webkit-box',
+                              WebkitLineClamp: 2,
+                              WebkitBoxOrient: 'vertical',
+                              minHeight: '50px'
+                            }}>
+                              {product.title_ar}
+                            </h5>
+                            
+                            {/* Price */}
+                            <div className="d-flex align-items-center justify-content-center mt-2" style={{ gap: '6px' }}>
+                              <span className="fw-bold" style={{ color: '#0171BD', fontSize: '22px', lineHeight: 1 }}>
+                                {product.price > 0 ? product.price : 'اتصل للسعر'}
+                              </span>
+                              {product.price > 0 && (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 1124.14 1256.39"
+                                  width="12"
+                                  height="13"
+                                  style={{ display: 'inline-block', verticalAlign: 'middle', margin: '0 2px' }}
+                                  aria-label="Saudi Riyal"
+                                  title="Saudi Riyal"
+                                >
+                                  <path fill="#231f20" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"></path>
+                                  <path fill="#231f20" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"></path>
+                                </svg>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Quick View Button */}
+                          <button
+                            type="button"
+                            className="product-quick-view-btn"
+                            aria-label="عرض سريع"
+                          >
+                            عرض سريع
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  {/* Quick View Button */}
-                  <button
-                    type="button"
-                    className="product-quick-view-btn"
-                    aria-label="عرض سريع"
-                  >
-                    عرض سريع
-                  </button>
-                </div>
-              </div>
+                  );
+                })
+              )}
             </div>
-          ))}
-        </div>
+          </>
+        )}
 
       </div>
 

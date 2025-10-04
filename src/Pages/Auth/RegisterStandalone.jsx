@@ -93,12 +93,14 @@ const RegisterStandalone = () => {
       // هنا يمكن إضافة منطق إرسال البيانات الفعلي
       console.log('Registration data:', formData);
       
-      // إعادة توجيه أو عرض رسالة نجاح
-      alert('تم إنشاء الحساب بنجاح!');
+      // إعادة توجيه إلى صفحة تسجيل الدخول بدون alert
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 500);
       
     } catch (error) {
       console.error('Registration error:', error);
-      alert('حدث خطأ أثناء إنشاء الحساب');
+      // Show error in console instead of alert
     } finally {
       setIsSubmitting(false);
     }
