@@ -14,7 +14,7 @@ const AboutSection = () => {
         id="about-section" 
         style={{ 
           scrollMarginTop: '150px', 
-          marginTop: '80px',
+          marginTop: isMobile ? '30px' : '60px',
           backgroundColor: '#fff',
           color: '#4A4A4A',
           fontWeight: '700', 
@@ -41,7 +41,7 @@ const AboutSection = () => {
       id="about-section" 
       style={{ 
         scrollMarginTop: '150px', 
-        marginTop: '80px',
+        marginTop: isMobile ? '30px' : '80px',
         backgroundColor: '#fff',
         color: '#4A4A4A',
         fontWeight: '700', 

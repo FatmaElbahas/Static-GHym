@@ -690,34 +690,8 @@ function MainNavbar() {
       <div className="mx-auto" style={{ width: '95%', maxWidth: 'none' }}>
         <div className="d-flex justify-content-between align-items-center w-100">
           
-          {/* القسم الأيسر: Burger Menu + اللوجو */}
-          <div className="d-flex align-items-center gap-3">
-            {/* Burger Menu - يظهر فقط على الموبايل */}
-            <button
-              className="burger-btn d-lg-none"
-              onClick={toggleSidebar}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                padding: '0.5rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-              aria-label="Toggle Menu"
-            >
-              <img 
-                src={menuIcon} 
-                alt="Menu" 
-                style={{ 
-                  width: '28px', 
-                  height: '28px',
-                  objectFit: 'contain'
-                }} 
-              />
-            </button>
-
+          {/* على الموبايل: اللوجو على اليمين */}
+          <div className="d-flex align-items-center">
             {/* الشعار */}
             <NavLink to="/" className="navbar-brand navbar-logo-link">
               <img
@@ -744,6 +718,35 @@ function MainNavbar() {
                 }}
               />
             </NavLink>
+          </div>
+          
+          {/* على الموبايل: Burger Menu على اليسار */}
+          <div className="d-flex align-items-center" style={{ marginLeft: '-15rem' }}>
+            {/* Burger Menu - يظهر فقط على الموبايل */}
+            <button
+              className="burger-btn d-lg-none"
+              onClick={toggleSidebar}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '0.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              aria-label="Toggle Menu"
+            >
+              <img 
+                src={menuIcon} 
+                alt="Menu" 
+                style={{ 
+                  width: '28px', 
+                  height: '28px',
+                  objectFit: 'contain'
+                }} 
+              />
+            </button>
           </div>
 
           {/* القسم الأيمن: تسجيل الدخول + اللغة + الدولة */}
