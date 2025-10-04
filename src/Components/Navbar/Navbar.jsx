@@ -63,8 +63,22 @@ function MainNavbar() {
 
   // تسجيل الخروج
   const handleLogout = useCallback(() => {
+    // Remove all auth-related items
     localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    
+    // Clear session storage
+    sessionStorage.clear();
+    
+    // Update state
     setIsLoggedIn(false);
+    
+    // Dispatch event to notify other components
+    window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new Event('logout'));
+    
+    // Navigate to home
     navigate('/');
     setIsOpen(false);
   }, [navigate]);

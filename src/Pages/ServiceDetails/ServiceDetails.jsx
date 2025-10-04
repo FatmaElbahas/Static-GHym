@@ -35,6 +35,41 @@ const ServiceDetails = () => {
   const [notes, setNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Check if user is logged in
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const token = localStorage.getItem('token') || localStorage.getItem('authToken');
+      const wasLoggedIn = isLoggedIn;
+      setIsLoggedIn(!!token);
+      
+      // If logged out, reset to step 1
+      if (wasLoggedIn && !token) {
+        setStep(1);
+      }
+      
+      // If logged in and came from login page, start from step 2
+      const returnToBooking = sessionStorage.getItem('returnToBooking');
+      if (token && returnToBooking === serviceId) {
+        setStep(2);
+        sessionStorage.removeItem('returnToBooking');
+      }
+    };
+    
+    checkLoginStatus();
+    
+    // Listen for login/logout events
+    window.addEventListener('loginSuccess', checkLoginStatus);
+    window.addEventListener('logout', checkLoginStatus);
+    window.addEventListener('storage', checkLoginStatus);
+    
+    return () => {
+      window.removeEventListener('loginSuccess', checkLoginStatus);
+      window.removeEventListener('logout', checkLoginStatus);
+      window.removeEventListener('storage', checkLoginStatus);
+    };
+  }, [serviceId, isLoggedIn]);
 
   const AVAILABLE_TIMES_URL = 'https://enqlygo.com/api/salons/available_times';
   const BOOKING_URL = 'https://enqlygo.com/api/user/bookings';
@@ -343,7 +378,15 @@ const ServiceDetails = () => {
                 {step === 1 && (
                   <button 
                     className="btn w-100"
-                    onClick={() => setStep(2)}
+                    onClick={() => {
+                      if (isLoggedIn) {
+                        setStep(2);
+                      } else {
+                        // Save service ID to return after login
+                        sessionStorage.setItem('returnToBooking', serviceId);
+                        navigate('/login');
+                      }
+                    }}
                     style={{ 
                       fontSize: '16px', 
                       fontWeight: 'bold', 
@@ -372,8 +415,8 @@ const ServiceDetails = () => {
           </div>
         </div>
 
-        {/* Booking Steps */}
-        {step > 1 && (
+        {/* Booking Steps - Only show if logged in */}
+        {step > 1 && isLoggedIn && (
           <div className="card border-0 shadow-sm" style={{ borderRadius: '15px' }}>
             <div className="card-body p-3">
               

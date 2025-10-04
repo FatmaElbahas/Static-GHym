@@ -91,9 +91,15 @@ const Login = () => {
         // إظهار رسالة نجاح جميلة
         setStatus('success');
         
-        // إعادة توجيه إلى الداشبورد بعد ثانيتين
+        // إعادة توجيه بعد ثانيتين
         setTimeout(() => {
-          navigate('/dashboard');
+          // Check if user was trying to book a service
+          const returnToBooking = sessionStorage.getItem('returnToBooking');
+          if (returnToBooking) {
+            navigate(`/service/${returnToBooking}`);
+          } else {
+            navigate('/dashboard');
+          }
         }, 2000);
       } else {
         // معالجة أخطاء API
@@ -241,7 +247,7 @@ const Login = () => {
                               🎉 تم تسجيل الدخول بنجاح!
                             </div>
                             <div className="small text-success opacity-75">
-                              جاري التوجيه إلى لوحة التحكم...
+                              جاري التوجيه...
                             </div>
                           </div>
                         </div>
