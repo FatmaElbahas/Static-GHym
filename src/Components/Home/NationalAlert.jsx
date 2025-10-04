@@ -5,52 +5,49 @@ const NationalAlert = ({ showAlert, onClose }) => {
 
   return (
     <div 
-      className="mb-0 text-center home-national-alert" 
+      className="home-national-alert" 
       style={{ 
         position: 'fixed', 
         top: 0, 
         left: 0, 
         right: 0, 
-        zIndex: 1050,
-        borderRadius: 0,
-        padding: '8px 12px',
-        fontSize: '16px',
         backgroundColor: '#215931',
-        color: '#ffffff'
+        color: 'white',
+        zIndex: 1050,
+        padding: '8px 10px',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
       }}
     >
-      <div className="container d-flex justify-content-center align-items-center" style={{ gap: '10px' }}>
-        <span style={{ fontWeight: 'bold', color: '#ffffff', textAlign: 'center', flex: 1, fontSize: '16px' }}>
-          عروض اليوم الوطني 95 بدأت لاتفوتك🇸🇦💚! ضبطناكم باقوى العروض على خدمات قسم الاسنان والجلدية والليزر
+      <div className="container d-flex justify-content-between align-items-center" style={{ gap: '10px' }}>
+        <span style={{ fontSize: '14px', fontWeight: '500', flex: 1, textAlign: 'center' }}>
+          🎉 احتفالاً باليوم الوطني السعودي 95 - خصومات حصرية على جميع خدماتنا!
         </span>
         <button
-          type="button"
           onClick={onClose}
           style={{
-            background: 'transparent',
-            border: '2px solid #ffffff',
+            background: 'white',
+            color: '#215931',
+            border: '2px solid white',
             borderRadius: '50%',
-            fontSize: '22px',
-            fontWeight: 'bold',
+            width: '28px',
+            height: '28px',
             cursor: 'pointer',
-            color: '#ffffff',
-            width: '30px',
-            height: '30px',
+            fontSize: '20px',
+            lineHeight: '1',
+            padding: '0',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: 0,
-            lineHeight: 1,
-            flexShrink: 0,
-            transition: 'all 0.3s ease'
+            fontWeight: 'bold',
+            flexShrink: 0
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = '#ffffff';
-            e.currentTarget.style.color = '#215931';
+            e.currentTarget.style.background = '#215931';
+            e.currentTarget.style.color = 'white';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'transparent';
-            e.currentTarget.style.color = '#ffffff';
+            e.currentTarget.style.background = 'white';
+            e.currentTarget.style.color = '#215931';
           }}
         >
           ×

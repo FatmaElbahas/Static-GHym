@@ -23,9 +23,9 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="mt-4" style={{ backgroundColor: '#ffffff', width: '90%', margin: '0 auto' }}>
-      <div className="py-5">
-        <div className="foot1" style={{ backgroundColor: '#F9F9F9' }}>
+    <footer className="mt-4" style={{ backgroundColor: '#F9F9F9', width: '100%' }}>
+      <div className="py-5" style={{ width: '90%', margin: '0 auto' }}>
+        <div className="foot1">
           <div className="d-flex flex-wrap align-items-start justify-content-between gap-5 py-5">
             {/* أيقونات التواصل */}
             <div className="footer-social-icons mx-auto">

@@ -13,8 +13,8 @@ const useOffersData = () => {
     const fetchOffersData = async () => {
       try {
         setLoading(true);
-        // Fetch services from salon ID 2
-        const response = await fetch('https://enqlygo.com/api/salons/2/services');
+        // Fetch all services from all salons
+        const response = await fetch('https://enqlygo.com/api/salons/services');
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -22,35 +22,9 @@ const useOffersData = () => {
         
         const result = await response.json();
         
-        if (result.status === 'success' && result.data && result.data.services) {
-          const salon = result.data;
-          
-          // Map services with images - use salon owner_photo as fallback
-          const allServices = salon.services.map(service => {
-            // Use service images if available, otherwise use salon owner_photo
-            let serviceImages = [];
-            
-            if (service.images && service.images.length > 0) {
-              serviceImages = service.images;
-            } else if (salon.images && salon.images.length > 0) {
-              serviceImages = salon.images;
-            } else if (salon.owner_photo) {
-              // Use owner_photo as fallback
-              serviceImages = [{
-                id: `salon_${salon.id}`,
-                service_id: service.id,
-                image: salon.owner_photo
-              }];
-            }
-            
-            return {
-              ...service,
-              salon_name: salon.salon_name,
-              salon_id: salon.id,
-              images: serviceImages
-            };
-          });
-          
+        if (result.status === 'success' && result.data) {
+          // The API returns array of services directly
+          const allServices = Array.isArray(result.data) ? result.data : [];
           setData(allServices);
         } else {
           throw new Error('Invalid response format');

@@ -1,66 +1,78 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
 import useOffersData from '../../hooks/useOffersData';
-import placeholderImg from '../../assets/images/الاسنان.png';
 
-// Image component with loading state
-const ProductImage = ({ src, alt }) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
-
-  return (
-    <div style={{ position: 'relative', width: '100%', height: '380px' }}>
-      {/* Placeholder - shown while loading or on error */}
-      {(!imageLoaded || imageError) && (
-        <img
-          src={placeholderImg}
-          alt="loading"
-          className="img-fluid w-100 shadow d-block"
-          style={{
-            width: '100%',
-            height: '380px',
-            objectFit: 'contain',
-            backgroundColor: '#f8f9fa',
-            position: imageLoaded && !imageError ? 'absolute' : 'relative',
-            opacity: imageError ? 1 : 0.5
-          }}
-        />
-      )}
-      
-      {/* Actual image from API */}
-      <img
-        src={src}
-        alt={alt}
-        className="img-fluid w-100 shadow d-block"
-        style={{
-          width: '100%',
-          height: '380px',
-          objectFit: 'cover',
-          display: imageLoaded && !imageError ? 'block' : 'none',
-          position: 'absolute',
-          top: 0,
-          left: 0
-        }}
-        loading="lazy"
-        onLoad={() => setImageLoaded(true)}
-        onError={() => {
-          setImageError(true);
-          setImageLoaded(true);
-        }}
-      />
-    </div>
-  );
-};
+// Base path for images
+const IMAGE_BASE_PATH = 'https://enqlygo.com/storage/app/public';
 
 const ProductsPage = () => {
+  const [searchParams] = useSearchParams();
+  const salonId = searchParams.get('salon');
+  
   const [sortBy, setSortBy] = useState('الافتراضي');
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [priceFrom, setPriceFrom] = useState('');
   const [priceTo, setPriceTo] = useState('');
   const [showDiscountsOnly, setShowDiscountsOnly] = useState(false);
+  const [salonServices, setSalonServices] = useState([]);
+  const [salonLoading, setSalonLoading] = useState(false);
 
-  // Fetch offers data from API
-  const { data: apiProducts, loading, error } = useOffersData();
+  // Fetch offers data from API (all services)
+  const { data: apiProducts, loading: allServicesLoading, error } = useOffersData();
+
+  // Fetch salon-specific services when salonId is present
+  useEffect(() => {
+    if (salonId) {
+      const fetchSalonServices = async () => {
+        setSalonLoading(true);
+        try {
+          const response = await fetch(`https://enqlygo.com/api/salons/${salonId}/services`);
+          const result = await response.json();
+          
+          if (result.status === 'success' && result.data) {
+            const salonData = result.data;
+            
+            // Get salon images
+            const salonImage = salonData.owner_photo || 
+                              (salonData.images && salonData.images.length > 0 ? salonData.images[0].image : null);
+            
+            // Check if data is an array or object with services property
+            let services = [];
+            
+            if (Array.isArray(salonData)) {
+              services = salonData;
+            } else if (salonData.services) {
+              services = salonData.services.map(service => ({
+                ...service,
+                // Add salon image to each service
+                salonImage: salonImage,
+                images: service.images || (salonImage ? [{image: salonImage}] : [])
+              }));
+            }
+            
+            setSalonServices(services);
+          } else {
+            setSalonServices([]);
+          }
+        } catch (err) {
+          console.error('Error fetching salon services:', err);
+          setSalonServices([]);
+        } finally {
+          setSalonLoading(false);
+        }
+      };
+      
+      fetchSalonServices();
+    } else {
+      setSalonServices([]);
+    }
+  }, [salonId]);
+
+  // Determine which data to use and loading state
+  const apiProductsToUse = salonId ? salonServices : apiProducts;
+  const loading = salonId ? salonLoading : allServicesLoading;
+
 
   const sortOptions = [
     'الافتراضي',
@@ -84,11 +96,11 @@ const ProductsPage = () => {
   
   // Filter and sort products
   const products = useMemo(() => {
-    if (!apiProducts || apiProducts.length === 0) {
+    if (!apiProductsToUse || apiProductsToUse.length === 0) {
       return [];
     }
 
-    let filtered = [...apiProducts];
+    let filtered = [...apiProductsToUse];
 
     // Filter by price range
     if (priceFrom) {
@@ -122,7 +134,7 @@ const ProductsPage = () => {
     }
 
     return filtered;
-  }, [apiProducts, priceFrom, priceTo, showDiscountsOnly, sortBy]);
+  }, [apiProductsToUse, priceFrom, priceTo, showDiscountsOnly, sortBy]);
 
   return (
     <>
@@ -376,13 +388,13 @@ const ProductsPage = () => {
           borderRadius: '12px',
           width: '100%'
         }}>
-          <h1 style={{ 
+          <h1           style={{ 
             color: '#484848', 
             fontWeight: '700', 
             fontSize: 'clamp(24px, 5vw, 32px)',
             marginBottom: '0'
           }}>
-            جميع المنتجات
+            جميع الخدمات
           </h1>
         </div>
 
@@ -538,56 +550,99 @@ const ProductsPage = () => {
                 </div>
               ) : (
                 products.map((product) => {
-                  // Get product image
-                  const productImage = product.images && product.images.length > 0 
-                    ? product.images[0].image 
-                    : null;
-
-                  // Skip products without images
-                  if (!productImage) {
-                    return null;
+                  // Get product image or use placeholder
+                  let productImage = 'https://placehold.co/400x350/f8f9fa/0171BD?text=No+Image';
+                  
+                  // Try different image properties
+                  if (product.images && product.images.length > 0) {
+                    const imageUrl = product.images[0].image;
+                    
+                    // Check if image URL is absolute or relative
+                    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+                      productImage = imageUrl;
+                    } else {
+                      // Add base path for relative URLs
+                      productImage = `${IMAGE_BASE_PATH}/${imageUrl}`;
+                    }
+                  } else if (product.image) {
+                    // Try 'image' property instead of 'images'
+                    const imageUrl = product.image;
+                    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+                      productImage = imageUrl;
+                    } else {
+                      productImage = `${IMAGE_BASE_PATH}/${imageUrl}`;
+                    }
+                  } else if (product.service_image) {
+                    // Try 'service_image' property
+                    const imageUrl = product.service_image;
+                    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+                      productImage = imageUrl;
+                    } else {
+                      productImage = `${IMAGE_BASE_PATH}/${imageUrl}`;
+                    }
                   }
 
                   return (
                     <div key={product.id} className="col-12 col-lg-3">
                       <div className="h-100">
-                        <div className="card w-100 h-100 border-0 position-relative product-offer-card" style={{ 
+                        <Link to={`/service/${product.id}`} className="text-decoration-none">
+                        <div className="card w-100 border-0 offer-card" style={{ 
                           maxWidth: '100%',
                           borderRadius: '10px',
                           boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
                           background: 'white',
+                          height: '480px',
+                          display: 'flex',
+                          flexDirection: 'column',
                           transition: 'all 0.3s ease'
                         }}>
-                          {/* Product Image */}
-                          <ProductImage 
+                          <img
                             src={productImage}
-                            alt={product.title_ar}
+                            alt={product.title_ar || 'خدمة'}
+                            className="img-fluid w-100 shadow d-block"
+                            style={{ 
+                              width: '100%', 
+                              height: '350px', 
+                              objectFit: 'cover', 
+                              marginTop: 0,
+                              backgroundColor: '#f8f9fa',
+                              flexShrink: 0
+                            }}
+                            loading="lazy"
+                            onError={(e) => { 
+                              e.currentTarget.src = 'https://placehold.co/400x350/f8f9fa/0171BD?text=No+Image';
+                            }}
                           />
-
-                          {/* Product Info */}
-                          <div className="card-body py-2" style={{ 
-                            paddingTop: '8px', 
-                            paddingBottom: '8px',
+                          
+                          <div className="card-body" style={{ 
+                            paddingTop: '12px', 
+                            paddingBottom: '12px',
                             paddingLeft: '12px',
-                            paddingRight: '12px'
+                            paddingRight: '12px',
+                            flex: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            overflow: 'hidden',
+                            gap: '8px'
                           }}>
-                            {/* Service Name */}
-                            <h5 className="card-title fw-semibold text-end mb-2" style={{ 
-                              color: '#484848',
+                            <h5 className="card-title fw-semibold text-center mb-0" style={{
+                              color:'#484848',
                               fontSize: '18px',
+                              lineHeight: '1.3',
                               overflow: 'hidden',
                               textOverflow: 'ellipsis',
                               display: '-webkit-box',
                               WebkitLineClamp: 2,
                               WebkitBoxOrient: 'vertical',
-                              minHeight: '50px'
+                              width: '100%'
                             }}>
                               {product.title_ar}
                             </h5>
                             
-                            {/* Price */}
-                            <div className="d-flex align-items-center justify-content-center mt-2" style={{ gap: '6px' }}>
-                              <span className="fw-bold" style={{ color: '#0171BD', fontSize: '22px', lineHeight: 1 }}>
+                            <div className="d-flex align-items-center justify-content-center" style={{ gap: '4px' }}>
+                              <span className="fw-bold" style={{ color: '#0171BD', fontSize: '22px', lineHeight: 1, whiteSpace: 'nowrap' }}>
                                 {product.price > 0 ? product.price : 'اتصل للسعر'}
                               </span>
                               {product.price > 0 && (
@@ -596,7 +651,7 @@ const ProductsPage = () => {
                                   viewBox="0 0 1124.14 1256.39"
                                   width="12"
                                   height="13"
-                                  style={{ display: 'inline-block', verticalAlign: 'middle', margin: '0 2px' }}
+                                  style={{ display: 'inline-block', verticalAlign: 'middle' }}
                                   aria-label="Saudi Riyal"
                                   title="Saudi Riyal"
                                 >
@@ -606,16 +661,16 @@ const ProductsPage = () => {
                               )}
                             </div>
                           </div>
-
-                          {/* Quick View Button */}
+                          
                           <button
                             type="button"
-                            className="product-quick-view-btn"
-                            aria-label="عرض سريع"
+                            className="quick-view-btn"
+                            aria-label="عرض التفاصيل"
                           >
-                            عرض سريع
+                            عرض التفاصيل
                           </button>
                         </div>
+                        </Link>
                       </div>
                     </div>
                   );
@@ -629,15 +684,15 @@ const ProductsPage = () => {
 
       <style>{`
         /* Product Card Hover Effects - نفس Services */
-        .product-offer-card { 
-          position: relative; 
+        .offer-card { 
+          position: relative;
+          transition: all 0.3s ease;
         }
-        
-        .product-offer-card .product-quick-view-btn {
+        .offer-card .quick-view-btn {
           position: absolute;
           left: 50%;
-          transform: translate(-50%, 100%);
-          bottom: 18%;
+          transform: translate(-50%, 50%);
+          top: 310px;
           width: 85%;
           height: 44px;
           background: #0171BD;
@@ -645,25 +700,24 @@ const ProductsPage = () => {
           border: none;
           border-radius: 10px;
           font-weight: 700;
-          transition: transform 0.35s ease, opacity 0.35s ease;
+          transition: all 0.35s ease;
           opacity: 0;
           box-shadow: 0 8px 20px rgba(0,0,0,0.08);
           z-index: 3;
           cursor: pointer;
         }
-        
-        .product-offer-card:hover .product-quick-view-btn { 
-          transform: translate(-50%, 0); 
-          opacity: 1; 
+        .offer-card:hover .quick-view-btn { 
+          transform: translate(-50%, -50%);
+          opacity: 1;
         }
-        
-        .product-offer-card .product-quick-view-btn:hover { 
-          filter: brightness(0.95); 
+        .offer-card .quick-view-btn:hover { 
+          filter: brightness(1.1);
+          transform: translate(-50%, -60%);
+          box-shadow: 0 12px 24px rgba(1, 113, 189, 0.3);
         }
-        
-        .product-offer-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        .offer-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
         /* Price Range Slider Styles */

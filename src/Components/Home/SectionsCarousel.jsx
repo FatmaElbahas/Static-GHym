@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import 'swiper/css';
@@ -56,63 +57,70 @@ const SectionImage = ({ src, alt }) => {
 };
 
 // Section Card Component
-const SectionCard = ({ title, image }) => {
+const SectionCard = ({ id, title, image }) => {
   return (
-    <div 
-      className="card border-0 shadow-sm h-100 sections-card" 
-      style={{ 
-        borderRadius: '15px', 
-        overflow: 'hidden', 
-        transition: 'transform 0.3s ease' 
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-5px)';
-        const textEl = e.currentTarget.querySelector('.sections-text');
-        const lineEl = e.currentTarget.querySelector('.sections-line');
-        if (textEl) textEl.style.color = '#0171BD';
-        if (lineEl) lineEl.style.backgroundColor = '#0171BD';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateY(0)';
-        const textEl = e.currentTarget.querySelector('.sections-text');
-        const lineEl = e.currentTarget.querySelector('.sections-line');
-        if (textEl) textEl.style.color = 'white';
-        if (lineEl) lineEl.style.backgroundColor = 'white';
-      }}
+    <Link 
+      to={`/products?salon=${id}`}
+      className="text-decoration-none"
+      style={{ display: 'block', height: '100%' }}
     >
-      <div className="position-relative">
-        <SectionImage src={image} alt={title} />
-        <div 
-          className="position-absolute bottom-0 start-0 end-0 p-3 sections-overlay" 
-          style={{ 
-            background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', 
-            paddingRight: '32px !important', 
-            paddingBottom: '28px !important' 
-          }}
-        >
+      <div 
+        className="card border-0 shadow-sm h-100 sections-card" 
+        style={{ 
+          borderRadius: '15px', 
+          overflow: 'hidden', 
+          transition: 'transform 0.3s ease',
+          cursor: 'pointer'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-5px)';
+          const textEl = e.currentTarget.querySelector('.sections-text');
+          const lineEl = e.currentTarget.querySelector('.sections-line');
+          if (textEl) textEl.style.color = '#0171BD';
+          if (lineEl) lineEl.style.backgroundColor = '#0171BD';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(0)';
+          const textEl = e.currentTarget.querySelector('.sections-text');
+          const lineEl = e.currentTarget.querySelector('.sections-line');
+          if (textEl) textEl.style.color = 'white';
+          if (lineEl) lineEl.style.backgroundColor = 'white';
+        }}
+      >
+        <div className="position-relative">
+          <SectionImage src={image} alt={title} />
           <div 
-            className="sections-text mb-0 fw-bold text-end" 
+            className="position-absolute bottom-0 start-0 end-0 p-3 sections-overlay" 
             style={{ 
-              fontSize: '22px', 
-              color: 'white', 
-              transition: 'color 0.3s ease' 
+              background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', 
+              paddingRight: '32px !important', 
+              paddingBottom: '28px !important' 
             }}
           >
             <div 
-              className="sections-line" 
+              className="sections-text mb-0 fw-bold text-end" 
               style={{ 
-                width: '35px', 
-                height: '2.5px', 
-                backgroundColor: 'white', 
-                margin: '0 0 8px auto', 
-                transition: 'background-color 0.3s ease' 
+                fontSize: '22px', 
+                color: 'white', 
+                transition: 'color 0.3s ease' 
               }}
-            ></div>
-            {title}
+            >
+              <div 
+                className="sections-line" 
+                style={{ 
+                  width: '35px', 
+                  height: '2.5px', 
+                  backgroundColor: 'white', 
+                  margin: '0 0 8px auto', 
+                  transition: 'background-color 0.3s ease' 
+                }}
+              ></div>
+              {title}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -146,7 +154,7 @@ const SectionsCarousel = () => {
         <div className="container" style={{ maxWidth: '90%' }}>
           <div className="mb-4 text-end" style={{ paddingRight: '10px' }}>
             <h2 className="m-0" style={{ color: '#484848', fontWeight: 800, fontSize: '34px' }}>
-              الأقسام
+              العيادات
             </h2>
           </div>
           <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '300px' }}>
@@ -177,7 +185,7 @@ const SectionsCarousel = () => {
       <div className="container" style={{ maxWidth: '90%' }}>
         <div className="mb-4 text-end" style={{ paddingRight: '10px' }}>
           <h2 className="m-0" style={{ color: '#484848', fontWeight: 800, fontSize: '34px' }}>
-            الأقسام
+            العيادات
           </h2>
         </div>
         
@@ -206,7 +214,7 @@ const SectionsCarousel = () => {
               
               return (
                 <SwiperSlide key={section.id}>
-                  <SectionCard title={section.title} image={section.image} />
+                  <SectionCard id={section.id} title={section.title} image={section.image} />
                 </SwiperSlide>
               );
             })}

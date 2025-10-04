@@ -8,7 +8,7 @@ import Dashboard from './Pages/Dashboard/Dashboard';
 import RegisterPage from './Pages/Auth/RegisterPage';
 import Login from './Pages/Auth/Login';
 import ProductsPage from './Pages/Products/ProductsPage';
-import NationalDay from './Pages/NationalDay/NationalDay';
+import ServiceDetails from './Pages/ServiceDetails/ServiceDetails';
 import PaymentMethods from './Pages/PaymentMethods/PaymentMethods';
 import Book from './Pages/Book/Book';
 
@@ -24,9 +24,8 @@ function RegisterApp() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/offers" element={<NationalDay />} />
-          <Route path="/national-day" element={<NationalDay />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/service/:serviceId" element={<ServiceDetails />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethods />} />
           <Route path="/book" element={<Book />} />

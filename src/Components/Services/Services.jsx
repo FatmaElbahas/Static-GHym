@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -78,92 +79,94 @@ export default function Services() {
 
               return (
                 <SwiperSlide key={service.id}>
-                  <div className="h-100">
-                    <div className="card w-100 border-0 offer-card" style={{ 
-                      maxWidth: '100%',
-                      borderRadius: '10px',
-                      boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                      background: 'white',
-                      height: '480px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      transition: 'all 0.3s ease'
-                    }}>
-                      <img
-                        src={serviceImage}
-                        alt={service.title_ar || 'خدمة'}
-                        className="img-fluid w-100 shadow d-block"
-                        style={{ 
-                          width: '100%', 
-                          height: '350px', 
-                          objectFit: 'cover', 
-                          marginTop: 0,
-                          backgroundColor: '#f8f9fa',
-                          flexShrink: 0
-                        }}
-                        loading="lazy"
-                        onError={(e) => { 
-                          e.currentTarget.style.display = 'none';
-                        }}
-                      />
-                      
-                      <div className="card-body" style={{ 
-                        paddingTop: '8px', 
-                        paddingBottom: '8px',
-                        paddingLeft: '12px',
-                        paddingRight: '12px',
-                        flex: 1,
+                  <Link to={`/service/${service.id}`} className="text-decoration-none h-100" style={{ display: 'block' }}>
+                    <div className="h-100">
+                      <div className="card w-100 border-0 offer-card" style={{ 
+                        maxWidth: '100%',
+                        borderRadius: '10px',
+                        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                        background: 'white',
+                        height: '480px',
                         display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        overflow: 'hidden',
-                        gap: '10px'
+                        flexDirection: 'column',
+                        transition: 'all 0.3s ease'
                       }}>
-                        <h5 className="card-title fw-semibold text-end mb-0" style={{
-                          color:'#484848',
-                          fontSize: '18px',
-                          lineHeight: '1.3',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          display: '-webkit-box',
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: 'vertical',
-                          flex: 1
-                        }}>
-                          {service.title_ar}
-                        </h5>
+                        <img
+                          src={serviceImage}
+                          alt={service.title_ar || 'خدمة'}
+                          className="img-fluid w-100 shadow d-block"
+                          style={{ 
+                            width: '100%', 
+                            height: '350px', 
+                            objectFit: 'cover', 
+                            marginTop: 0,
+                            backgroundColor: '#f8f9fa',
+                            flexShrink: 0
+                          }}
+                          loading="lazy"
+                          onError={(e) => { 
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
                         
-                        <div className="d-flex align-items-center" style={{ gap: '4px', flexShrink: 0 }}>
-                          <span className="fw-bold" style={{ color: '#0171BD', fontSize: '20px', lineHeight: 1, whiteSpace: 'nowrap' }}>
-                            {service.price > 0 ? service.price : 'اتصل للسعر'}
-                          </span>
-                          {service.price > 0 && (
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 1124.14 1256.39"
-                              width="11"
-                              height="12"
-                              style={{ display: 'inline-block', verticalAlign: 'middle' }}
-                              aria-label="Saudi Riyal"
-                              title="Saudi Riyal"
-                            >
-                              <path fill="#231f20" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"></path>
-                              <path fill="#231f20" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"></path>
-                            </svg>
-                          )}
+                        <div className="card-body" style={{ 
+                          paddingTop: '8px', 
+                          paddingBottom: '8px',
+                          paddingLeft: '12px',
+                          paddingRight: '12px',
+                          flex: 1,
+                          display: 'flex',
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          overflow: 'hidden',
+                          gap: '10px'
+                        }}>
+                          <h5 className="card-title fw-semibold text-end mb-0" style={{
+                            color:'#484848',
+                            fontSize: '18px',
+                            lineHeight: '1.3',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            flex: 1
+                          }}>
+                            {service.title_ar}
+                          </h5>
+                          
+                          <div className="d-flex align-items-center" style={{ gap: '4px', flexShrink: 0 }}>
+                            <span className="fw-bold" style={{ color: '#0171BD', fontSize: '20px', lineHeight: 1, whiteSpace: 'nowrap' }}>
+                              {service.price > 0 ? service.price : 'اتصل للسعر'}
+                            </span>
+                            {service.price > 0 && (
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 1124.14 1256.39"
+                                width="11"
+                                height="12"
+                                style={{ display: 'inline-block', verticalAlign: 'middle' }}
+                                aria-label="Saudi Riyal"
+                                title="Saudi Riyal"
+                              >
+                                <path fill="#231f20" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"></path>
+                                <path fill="#231f20" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"></path>
+                              </svg>
+                            )}
+                          </div>
                         </div>
+                        
+                        <button
+                          type="button"
+                          className="quick-view-btn"
+                          aria-label="عرض التفاصيل"
+                        >
+                          عرض التفاصيل
+                        </button>
                       </div>
-                      
-                      <button
-                        type="button"
-                        className="quick-view-btn"
-                        aria-label="عرض سريع"
-                      >
-                        عرض سريع
-                      </button>
                     </div>
-                  </div>
+                  </Link>
                 </SwiperSlide>
               );
             })}

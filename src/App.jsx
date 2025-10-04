@@ -8,7 +8,7 @@ import Dashboard from './Pages/Dashboard/Dashboard';
 import RegisterPage from './Pages/Auth/RegisterPage';
 import Login from './Pages/Auth/Login';
 import ProductsPage from './Pages/Products/ProductsPage';
-import NationalDay from './Pages/NationalDay/NationalDay';
+import ServiceDetails from './Pages/ServiceDetails/ServiceDetails';
 import AddProduct from './Pages/Products/AddProduct';
 import PaymentMethods from './Pages/PaymentMethods/PaymentMethods';
 import Book from './Pages/Book/Book';
@@ -23,7 +23,7 @@ function App() {
   const isLogin = location.pathname === '/login';
   const isRegister = location.pathname === '/register';
   const isAddProduct = location.pathname === '/add-product';
-  const isError404 = !['/', '/offers', '/national-day', '/products', '/add-product', '/contact', '/payment-methods', '/book', '/dashboard', '/register', '/login', '/logout'].includes(location.pathname);
+  const isError404 = !['/', '/products', '/service', '/add-product', '/contact', '/payment-methods', '/book', '/dashboard', '/register', '/login', '/logout'].includes(location.pathname) && !location.pathname.startsWith('/service/');
   
   const hideMainNavbar = isDashboard || isLogin || isRegister || isAddProduct || isError404;
   const hideFooter = isDashboard || isAddProduct || isError404;
@@ -74,9 +74,8 @@ function App() {
       <div className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/offers" element={<NationalDay />} />
-          <Route path="/national-day" element={<NationalDay />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/service/:serviceId" element={<ServiceDetails />} />
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethods />} />

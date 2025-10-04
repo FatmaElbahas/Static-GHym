@@ -282,7 +282,7 @@ function MainNavbar() {
 
             <hr style={{ margin: '0.8rem 0', borderColor: '#e3f2fd' }} />
 
-            {/* جميع المنتجات */}
+            {/* جميع الخدمات */}
             <NavLink
               to="/products"
               className="d-flex align-items-center gap-3 text-decoration-none"
@@ -305,7 +305,7 @@ function MainNavbar() {
               }}
             >
               <FontAwesomeIcon icon={faBoxOpen} style={{ fontSize: '20px', color: '#0171BD' }} />
-              <span>جميع المنتجات</span>
+              <span>جميع الخدمات</span>
             </NavLink>
 
             {/* جميع التصنيفات */}
@@ -332,134 +332,6 @@ function MainNavbar() {
             >
               <FontAwesomeIcon icon={faListAlt} style={{ fontSize: '20px', color: '#0171BD' }} />
               <span>جميع التصنيفات</span>
-            </div>
-
-            <hr style={{ margin: '0.8rem 0', borderColor: '#e3f2fd' }} />
-
-            {/* عروض اليوم الوطني 95 */}
-            <NavLink
-              to="/offers"
-              className="d-flex align-items-center gap-3 text-decoration-none"
-              style={{
-                borderRadius: '10px',
-                backgroundColor: '#f0f7fc',
-                color: '#2c3e50',
-                fontSize: '18px',
-                fontWeight: '500',
-                padding: '0.6rem 1rem',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#e3f2fd';
-                e.currentTarget.style.transform = 'translateX(-5px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#f0f7fc';
-                e.currentTarget.style.transform = 'translateX(0)';
-              }}
-            >
-              <FontAwesomeIcon icon={faTags} style={{ fontSize: '20px', color: '#0171BD' }} />
-              <span>عروض اليوم الوطني 95</span>
-            </NavLink>
-
-            {/* الجلدية */}
-            <div
-              className="d-flex align-items-center gap-3"
-              style={{
-                borderRadius: '8px',
-                backgroundColor: 'transparent',
-                color: '#6c757d',
-                fontSize: '16px',
-                fontWeight: '400',
-                padding: '0.5rem 1rem 0.5rem 2.5rem',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = '#0171BD';
-                e.currentTarget.style.paddingRight = '2rem';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = '#6c757d';
-                e.currentTarget.style.paddingRight = '2.5rem';
-              }}
-            >
-              <span style={{ color: '#0171BD', fontWeight: 'bold' }}>●</span>
-              <span>الجلدية</span>
-            </div>
-
-            {/* الأسنان */}
-            <div
-              className="d-flex align-items-center gap-3"
-              style={{
-                borderRadius: '8px',
-                backgroundColor: 'transparent',
-                color: '#6c757d',
-                fontSize: '16px',
-                fontWeight: '400',
-                padding: '0.5rem 1rem 0.5rem 2.5rem',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = '#0171BD';
-                e.currentTarget.style.paddingRight = '2rem';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = '#6c757d';
-                e.currentTarget.style.paddingRight = '2.5rem';
-              }}
-            >
-              <span style={{ color: '#0171BD', fontWeight: 'bold' }}>●</span>
-              <span>الأسنان</span>
-            </div>
-
-            {/* عروض ليزر الرجال */}
-            <div
-              className="d-flex align-items-center gap-3"
-              style={{
-                borderRadius: '8px',
-                backgroundColor: 'transparent',
-                color: '#6c757d',
-                fontSize: '16px',
-                fontWeight: '400',
-                padding: '0.5rem 1rem 0.5rem 2.5rem',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = '#0171BD';
-                e.currentTarget.style.paddingRight = '2rem';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = '#6c757d';
-                e.currentTarget.style.paddingRight = '2.5rem';
-              }}
-            >
-              <span style={{ color: '#0171BD', fontWeight: 'bold' }}>●</span>
-              <span>عروض ليزر الرجال</span>
-            </div>
-
-            {/* عروض ليزر النساء */}
-            <div
-              className="d-flex align-items-center gap-3"
-              style={{
-                borderRadius: '8px',
-                backgroundColor: 'transparent',
-                color: '#6c757d',
-                fontSize: '16px',
-                fontWeight: '400',
-                padding: '0.5rem 1rem 0.5rem 2.5rem',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = '#0171BD';
-                e.currentTarget.style.paddingRight = '2rem';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = '#6c757d';
-                e.currentTarget.style.paddingRight = '2.5rem';
-              }}
-            >
-              <span style={{ color: '#0171BD', fontWeight: 'bold' }}>●</span>
-              <span>عروض ليزر النساء</span>
             </div>
 
           </div>
@@ -939,20 +811,7 @@ function MainNavbar() {
               letterSpacing: '0.5px'
             }}
           >
-            جميع المنتجات
-          </NavLink>
-          <NavLink 
-            to="/offers" 
-            className="text-decoration-none" 
-            style={{ 
-              fontSize: '20px',
-              fontWeight: 'bolder',
-              color: '#4A4A4A',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-              letterSpacing: '0.5px'
-            }}
-          >
-            عروض اليوم الوطني 95
+            جميع الخدمات
           </NavLink>
           <NavLink 
             to="/book" 
