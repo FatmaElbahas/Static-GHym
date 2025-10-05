@@ -290,7 +290,11 @@ p {
 .navbar {
   transition: all 0.3s ease;
   padding: 0.6rem 0;
-  overflow: hidden !important;
+  width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 .navbar-brand img {
@@ -382,8 +386,8 @@ p {
 
 /* Navbar Layout */
 .navbar .container-fluid {
-  max-width: 1200px;
-  overflow-x: hidden !important;
+  max-width: none !important;
+  width: 100% !important;
 }
 
 .navbar-brand-section {
@@ -425,11 +429,11 @@ p {
   }
 }
 
-/* Navbar Layout - مطابق للصورة */
+/* Navbar Layout - Full Width */
 .navbar .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  overflow-x: hidden !important;
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
 }
 
 /* تطبيق خط IBM Plex Sans Arabic على النافبار */
@@ -647,10 +651,12 @@ p {
 /* أنماط النافبار الأساسية */
 .navbar {
   height: 90px !important;
-  padding: 0.5rem 1rem !important;
+  padding: 0.5rem 0 !important;
   background-color: white !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-  overflow: hidden !important;
+  width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
 }
 
 .navbar-brand img {
@@ -1298,16 +1304,13 @@ body .container-xxl {
   overflow-x: hidden !important;
   background-color: #ffffff !important;
 }
-/* استثناء: اجعل كونتينر النافبار بالحجم القديم */
-.navbar .container,
-.navbar .container-fluid,
-.navbar .container-lg,
-.navbar .container-md,
-.navbar .container-sm,
-.navbar .container-xl,
-.navbar .container-xxl { 
-  width: 80% !important;
-  overflow-x: hidden !important;
+/* Navbar full width - no container restrictions */
+.navbar {
+  width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 /* إلغاء container في hero section */

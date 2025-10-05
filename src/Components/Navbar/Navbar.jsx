@@ -533,10 +533,17 @@ function MainNavbar() {
       <nav className="navbar navbar-expand-lg navbar-light bg-white fixed-top" style={{ 
         boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
         padding: window.innerWidth <= 991 && window.innerWidth >= 769 ? '0.2rem 0' : 
-                 window.innerWidth <= 768 ? '0.3rem 0' : '0.5rem 0'
+window.innerWidth <= 768 ? '0.3rem 0' : '0.5rem 0',
+        width: '100%',
+        left: 0,
+        right: 0,
+        paddingLeft: 0,
+        paddingRight: 0
       }}>
-      <div className="mx-auto" style={{ width: '95%', maxWidth: 'none' }}>
-        <div className="d-flex justify-content-between align-items-center w-100">
+        <div className="d-flex justify-content-between align-items-center w-100" style={{
+          paddingLeft: '1rem',
+          paddingRight: '1rem'
+        }}>
           
           {/* على الموبايل: اللوجو على اليمين */}
           <div className="d-flex align-items-center">
@@ -702,7 +709,6 @@ function MainNavbar() {
             
           </div>
         </div>
-      </div>
     </nav>
 
     {/* شريط التصنيفات - مخفي على الموبايل */}
@@ -710,9 +716,13 @@ function MainNavbar() {
       padding: '0.8rem 0', 
       boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
       marginTop: '80px',
-      zIndex: 1000
+      zIndex: 1000,
+      width: '100%',
+      left: 0,
+      right: 0,
+      paddingLeft: '3rem',
+      paddingRight: '3rem'
     }}>
-      <div className="mx-auto" style={{ width: '94%', maxWidth: 'none' }}>
         <div className="d-flex py-3 align-items-center gap-4" style={{ 
           fontSize: '16px', 
           fontWeight: 'bolder',
@@ -773,7 +783,6 @@ function MainNavbar() {
             تواصل معنا
           </NavLink>
         </div>
-      </div>
     </div>
 
     </>
