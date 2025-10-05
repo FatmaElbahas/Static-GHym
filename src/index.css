@@ -517,7 +517,8 @@ p {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 0 1rem;
+    padding: 0;
+    margin: 0;
   }
   
   .navbar-links-section {
@@ -555,17 +556,17 @@ p {
 
 @media (max-width: 768px) {
   .navbar .container {
-    width: 95%;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    width: 100%;
+    padding: 0;
+    margin: 0;
   }
 }
 
 @media (max-width: 576px) {
   .navbar .container {
-    width: 98%;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    width: 100%;
+    padding: 0;
+    margin: 0;
   }
 }
 
@@ -773,10 +774,10 @@ p {
   
   .navbar-collapse {
     background-color: white !important;
-    border-radius: 12px !important;
+    border-radius: 0 !important;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
-    margin-top: 0.5rem !important;
-    padding: 1rem !important;
+    margin-top: 0 !important;
+    padding: 1rem 0.5rem !important;
     position: absolute !important;
     top: 100% !important;
     left: 0 !important;
@@ -849,7 +850,16 @@ p {
 @media (max-width: 767.98px) {
   .navbar {
     height: 65px !important;
-    padding: 0.3rem 0.8rem !important;
+    padding: 0.3rem 0 !important;
+    margin: 0 !important;
+    width: 100vw !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+  
+  .navbar > div {
+    padding-left: max(0.75rem, env(safe-area-inset-left)) !important;
+    padding-right: max(0.75rem, env(safe-area-inset-right)) !important;
   }
   
   .navbar-brand img {
@@ -873,17 +883,17 @@ p {
   
   .navbar-collapse {
     background-color: white !important;
-    border-radius: 12px !important;
+    border-radius: 0 !important;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
-    margin-top: 0.5rem !important;
-    padding: 1rem !important;
+    margin-top: 0 !important;
+    padding: 1rem 0.5rem !important;
     position: absolute !important;
     top: 100% !important;
-    left: 0.5rem !important;
+    left: 0 !important;
     overflow: hidden !important;
-    right: 0.5rem !important;
+    right: 0 !important;
     z-index: 1000 !important;
-    width: calc(100% - 1rem) !important;
+    width: 100% !important;
   }
   
   .navbar-toggler {
@@ -959,7 +969,11 @@ p {
 @media (max-width: 575.98px) {
   .navbar {
     height: 60px !important;
-    padding: 0.2rem 0.6rem !important;
+    padding: 0.2rem 0 !important;
+    margin: 0 !important;
+    width: 100vw !important;
+    left: 0 !important;
+    right: 0 !important;
   }
   
   .navbar-brand img {
@@ -983,17 +997,17 @@ p {
   
   .navbar-collapse {
     background-color: white !important;
-    border-radius: 12px !important;
+    border-radius: 0 !important;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
-    margin-top: 0.3rem !important;
-    padding: 0.8rem !important;
+    margin-top: 0 !important;
+    padding: 0.8rem 0.5rem !important;
     position: absolute !important;
     top: 100% !important;
-    left: 0.3rem !important;
+    left: 0 !important;
     overflow: hidden !important;
-    right: 0.3rem !important;
+    right: 0 !important;
     z-index: 1000 !important;
-    width: calc(100% - 0.6rem) !important;
+    width: 100% !important;
   }
   
   .navbar-toggler {

@@ -10,8 +10,19 @@ function MainNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showSubMenu, setShowSubMenu] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Handle screen resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // تحقق من حالة تسجيل الدخول
   useEffect(() => {
@@ -532,17 +543,17 @@ function MainNavbar() {
 
       <nav className="navbar navbar-expand-lg navbar-light bg-white fixed-top" style={{ 
         boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-        padding: window.innerWidth <= 991 && window.innerWidth >= 769 ? '0.2rem 0' : 
-window.innerWidth <= 768 ? '0.3rem 0' : '0.5rem 0',
+        padding: '0.5rem 0',
         width: '100%',
         left: 0,
         right: 0,
-        paddingLeft: 0,
-        paddingRight: 0
+        margin: 0
       }}>
-        <div className="d-flex justify-content-between align-items-center w-100" style={{
-          paddingLeft: '1rem',
-          paddingRight: '1rem'
+        <div className="d-flex justify-content-between align-items-center" style={{
+          paddingLeft: isMobile ? '0.75rem' : '1rem',
+          paddingRight: isMobile ? '0.75rem' : '1rem',
+          width: '100%',
+          margin: 0
         }}>
           
           {/* على الموبايل: اللوجو على اليمين */}
