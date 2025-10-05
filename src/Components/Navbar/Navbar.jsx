@@ -566,21 +566,16 @@ function MainNavbar() {
                 className="navbar-logo-img"
                 style={{ 
                   objectFit: "contain",
-                  width: window.innerWidth <= 480 ? '60px' : 
-                         window.innerWidth <= 576 ? '70px' : 
-                         window.innerWidth <= 768 ? '85px' :
+                  width: isMobile ? '70px' : 
                          window.innerWidth <= 991 ? '110px' :
                          window.innerWidth <= 1200 ? '150px' : '300px',
-                  height: window.innerWidth <= 480 ? '25px' : 
-                          window.innerWidth <= 576 ? '28px' : 
-                          window.innerWidth <= 768 ? '32px' :
+                  height: isMobile ? '28px' : 
                           window.innerWidth <= 991 ? '35px' :
                           window.innerWidth <= 1200 ? '50px' : '80px',
-                  maxWidth: window.innerWidth <= 480 ? '60px' : 
-                            window.innerWidth <= 576 ? '70px' : 
-                            window.innerWidth <= 768 ? '85px' :
+                  maxWidth: isMobile ? '70px' : 
                             window.innerWidth <= 991 ? '110px' :
-                            window.innerWidth <= 1200 ? '150px' : '250px'
+                            window.innerWidth <= 1200 ? '150px' : '250px',
+                  marginRight: isMobile ? '0.75rem' : '0'
                 }}
               />
             </NavLink>

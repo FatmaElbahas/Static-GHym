@@ -74,6 +74,13 @@ section {
   background-color: #ffffff;
 }
 
+/* Hide any shadow or overlay elements */
+div[class*="shadow-light"],
+div[class*="shadow"][class*="right"],
+div[data-v-] {
+  display: none !important;
+}
+
 /* Fix for iPhone dark background issue */
 @media only screen and (max-width: 430px) and (-webkit-min-device-pixel-ratio: 3) {
   html,
@@ -86,6 +93,17 @@ section {
   
   .navbar {
     background-color: #ffffff !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+  
+  .navbar * {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
   
   .hero-section,
