@@ -47,6 +47,16 @@ html {
   font-family: 'IBM Plex Sans Arabic', sans-serif;
   margin-top: 0px !important;
   padding-top: 0px !important;
+  background-color: #ffffff !important;
+}
+
+/* iPhone safe area support */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
 #root,
@@ -55,10 +65,33 @@ html {
   overflow-x: hidden !important;
   width: 100%;
   max-width: 100vw;
+  background-color: #ffffff !important;
+  min-height: 100vh;
 }
 
 section {
   overflow-x: hidden !important;
+  background-color: #ffffff;
+}
+
+/* Fix for iPhone dark background issue */
+@media only screen and (max-width: 430px) and (-webkit-min-device-pixel-ratio: 3) {
+  html,
+  body,
+  #root,
+  .App {
+    background-color: #ffffff !important;
+    min-height: 100vh !important;
+  }
+  
+  .navbar {
+    background-color: #ffffff !important;
+  }
+  
+  .hero-section,
+  .hero-background {
+    background-color: #f8f9fa !important;
+  }
 }
 
 /* Hide scrollbar on mobile but keep scrolling */
