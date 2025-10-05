@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import MainNavbar from './Components/Navbar/Navbar';
 import Home from './Pages/Home/Home';
@@ -16,6 +16,11 @@ function RegisterApp() {
   const location = useLocation();
   const isRegisterPage = location.pathname === '/register';
   const isDashboardPage = location.pathname === '/dashboard';
+
+  // Smooth scroll to top on route change
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
 
   return (
     <div className="App">

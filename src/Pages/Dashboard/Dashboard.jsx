@@ -28,6 +28,17 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  // Handle screen resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // التحقق من تسجيل الدخول
   useEffect(() => {
@@ -49,7 +60,7 @@ const Dashboard = () => {
         localStorage.removeItem('dashboardActiveTab');
       }
     };
-
+    
     checkAuth();
   }, [navigate]);
 
@@ -156,7 +167,10 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <div className="dashboard-body" style={{ marginTop: '80px', marginBottom: '50px' }}>
+      <div className="dashboard-body" style={{ 
+        marginTop: isMobile ? '65px' : '62px', 
+        marginBottom: isMobile ? '30px' : '40px' 
+      }}>
         <div className="container-fluid px-1 px-md-4" style={{ maxWidth: '100%' }}>
           <div className="row g-0">
             {/* Sidebar */}
@@ -186,7 +200,7 @@ const Dashboard = () => {
                       setSidebarOpen(false);
                     }}
                     style={{
-                      fontSize: window.innerWidth < 768 ? '14px' : '16px',
+                      fontSize: isMobile ? '14px' : '16px',
                       fontWeight: activeTab === item.id ? '600' : '500',
                       transition: 'all 0.3s ease'
                     }}
@@ -194,7 +208,7 @@ const Dashboard = () => {
                     <FontAwesomeIcon 
                       icon={item.icon} 
                       className={`me-3 ${activeTab === item.id ? 'text-white' : 'text-primary'}`}
-                      style={{ fontSize: window.innerWidth < 768 ? '16px' : '18px' }}
+                      style={{ fontSize: isMobile ? '16px' : '18px' }}
                     />
                     <span>{item.label}</span>
                   </button>

@@ -310,7 +310,15 @@ const DashboardHome = () => {
 
   // دالة فتح نافذة OTP
   const handleOTPVerification = (booking) => {
-    const bookingId = booking.booking_id || booking.id;
+    // Use numeric 'id' instead of string 'booking_id'
+    const bookingId = booking.id;
+    console.log('🔐 Opening OTP Modal from DashboardHome:', {
+      numeric_id: booking.id,
+      booking_id_string: booking.booking_id,
+      using_id: bookingId,
+      idType: typeof bookingId
+    });
+    
     if (bookingId) {
       setOtpModal({ isVisible: true, bookingId });
     }

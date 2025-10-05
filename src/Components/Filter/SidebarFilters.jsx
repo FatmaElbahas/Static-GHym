@@ -14,6 +14,7 @@ import {
   faRotateLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { useFilter } from "../../context/FilterContext";
+import SARIcon from "../SARIcon/SARIcon";
 
 export default function SidebarFilters() {
   const { filters, updateFilters, resetFilters, isFiltered, allData } = useFilter();
@@ -1455,7 +1456,7 @@ export default function SidebarFilters() {
         checked={filters.price_range === 'less_than_100'}
         onChange={() => handleChange('price_range', 'less_than_100')}
       />
-      <label htmlFor="price1" className="form-check-label mb-0">أقل من 100 ريال</label>
+      <label htmlFor="price1" className="form-check-label mb-0">أقل من 100 <SARIcon size="0.9em" /></label>
             </div>
             <div className="form-check d-flex align-items-center gap-5">
       <input 
@@ -1466,7 +1467,7 @@ export default function SidebarFilters() {
         checked={filters.price_range === '100_300'}
         onChange={() => handleChange('price_range', '100_300')}
       />
-      <label htmlFor="price2" className="form-check-label mb-0">100 - 300 ريال</label>
+      <label htmlFor="price2" className="form-check-label mb-0">100 - 300 <SARIcon size="0.9em" /></label>
             </div>
             <div className="form-check d-flex align-items-center gap-5">
       <input 
@@ -1477,7 +1478,7 @@ export default function SidebarFilters() {
         checked={filters.price_range === '300_500'}
         onChange={() => handleChange('price_range', '300_500')}
       />
-      <label htmlFor="price3" className="form-check-label mb-0">300 - 500 ريال</label>
+      <label htmlFor="price3" className="form-check-label mb-0">300 - 500 <SARIcon size="0.9em" /></label>
             </div>
             <div className="form-check d-flex align-items-center gap-5">
       <input 
@@ -1488,7 +1489,7 @@ export default function SidebarFilters() {
         checked={filters.price_range === 'more_than_500'}
         onChange={() => handleChange('price_range', 'more_than_500')}
       />
-      <label htmlFor="price4" className="form-check-label mb-0">أكثر من 500 ريال</label>
+      <label htmlFor="price4" className="form-check-label mb-0">أكثر من 500 <SARIcon size="0.9em" /></label>
             </div>
           </div>
         </div>

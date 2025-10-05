@@ -1,0 +1,246 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import useSalonsData from '../../hooks/useSalonsData';
+import placeholderImg from '../../assets/images/الجلديه.png';
+
+// Image component with loading state
+const SectionImage = ({ src, alt }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <div style={{ position: 'relative', width: '100%', height: '250px' }}>
+      {/* Placeholder - shown while loading or on error */}
+      {(!imageLoaded || imageError) && (
+        <img
+          src={placeholderImg}
+          alt="loading"
+          className="img-fluid w-100"
+          style={{
+            width: '100%',
+            height: '250px',
+            objectFit: 'contain',
+            backgroundColor: '#f8f9fa',
+            position: imageLoaded && !imageError ? 'absolute' : 'relative',
+            opacity: imageError ? 1 : 0.5
+          }}
+        />
+      )}
+      
+      {/* Actual image from API */}
+      <img
+        src={src}
+        alt={alt}
+        className="img-fluid w-100"
+        style={{
+          width: '100%',
+          height: '250px',
+          objectFit: 'cover',
+          display: imageLoaded && !imageError ? 'block' : 'none',
+          position: 'absolute',
+          top: 0,
+          left: 0
+        }}
+        loading="lazy"
+        onLoad={() => setImageLoaded(true)}
+        onError={() => {
+          setImageError(true);
+          setImageLoaded(true);
+        }}
+      />
+    </div>
+  );
+};
+
+// Section Card Component
+const SectionCard = ({ id, title, image }) => {
+  return (
+    <Link 
+      to={`/products?salon=${id}`}
+      className="text-decoration-none"
+      style={{ display: 'block', height: '100%' }}
+    >
+      <div 
+        className="card border-0 shadow-sm h-100 sections-card" 
+        style={{ 
+          borderRadius: '15px', 
+          overflow: 'hidden', 
+          transition: 'transform 0.3s ease',
+          cursor: 'pointer'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-5px)';
+          const textEl = e.currentTarget.querySelector('.sections-text');
+          const lineEl = e.currentTarget.querySelector('.sections-line');
+          if (textEl) textEl.style.color = '#0171BD';
+          if (lineEl) lineEl.style.backgroundColor = '#0171BD';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(0)';
+          const textEl = e.currentTarget.querySelector('.sections-text');
+          const lineEl = e.currentTarget.querySelector('.sections-line');
+          if (textEl) textEl.style.color = 'white';
+          if (lineEl) lineEl.style.backgroundColor = 'white';
+        }}
+      >
+        <div className="position-relative">
+          <SectionImage src={image} alt={title} />
+          <div 
+            className="position-absolute bottom-0 start-0 end-0 p-3 sections-overlay" 
+            style={{ 
+              background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', 
+              paddingRight: '32px !important', 
+              paddingBottom: '28px !important' 
+            }}
+          >
+            <div 
+              className="sections-text mb-0 fw-bold text-end" 
+              style={{ 
+                fontSize: '22px', 
+                color: 'white', 
+                transition: 'color 0.3s ease' 
+              }}
+            >
+              <div 
+                className="sections-line" 
+                style={{ 
+                  width: '35px', 
+                  height: '2.5px', 
+                  backgroundColor: 'white', 
+                  margin: '0 0 8px auto', 
+                  transition: 'background-color 0.3s ease' 
+                }}
+              ></div>
+              {title}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+const SectionsCarousel = () => {
+  const { data: apiSalons, loading, error } = useSalonsData();
+
+  // Use API data only
+  const sections = apiSalons && apiSalons.length > 0 
+    ? apiSalons.filter(salon => salon.status === 1).map(salon => ({
+        id: salon.id,
+        title: salon.salon_name,
+        // Use first image from images array, or owner_photo as fallback
+        image: salon.images && salon.images.length > 0 
+          ? salon.images[0].image 
+          : salon.owner_photo
+      }))
+    : [];
+
+  // Loading state
+  if (loading) {
+    return (
+      <section 
+        className="sections-section py-5" 
+        style={{ 
+          backgroundColor: '#F9F9F9', 
+          marginTop: '60px', 
+          paddingTop: '40px', 
+          paddingBottom: '40px' 
+        }}
+      >
+        <div className="container" style={{ maxWidth: '90%' }}>
+          <div className="mb-4 text-end" style={{ paddingRight: '10px' }}>
+            <h2 className="m-0" style={{ color: '#484848', fontWeight: 800, fontSize: '34px' }}>
+              العيادات
+            </h2>
+          </div>
+          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '300px' }}>
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">جاري التحميل...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // If no sections from API, don't show the section
+  if (!loading && sections.length === 0) {
+    return null;
+  }
+
+  return (
+    <section 
+      className="sections-section py-5" 
+      style={{ 
+        backgroundColor: '#F9F9F9', 
+        marginTop: '60px', 
+        paddingTop: '40px', 
+        paddingBottom: '40px' 
+      }}
+    >
+      <div className="container" style={{ maxWidth: '90%' }}>
+        <div className="mb-4 text-end" style={{ paddingRight: '10px' }}>
+          <h2 className="m-0" style={{ color: '#484848', fontWeight: 800, fontSize: '34px' }}>
+            العيادات
+          </h2>
+        </div>
+        
+        <div className="position-relative">
+          <Swiper
+            modules={[Autoplay, Navigation]}
+            spaceBetween={16}
+            slidesPerView={1}
+            loop={false}
+            autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+            navigation={{
+              nextEl: '.sections-next',
+              prevEl: '.sections-prev',
+            }}
+            breakpoints={{
+              0: { slidesPerView: 1 },
+              576: { slidesPerView: 2 },
+              768: { slidesPerView: 3 },
+              992: { slidesPerView: 4 }
+            }}
+            style={{ paddingBottom: '0px' }}
+          >
+            {sections.map((section) => {
+              // Skip sections without images
+              if (!section.image) return null;
+              
+              return (
+                <SwiperSlide key={section.id}>
+                  <SectionCard id={section.id} title={section.title} image={section.image} />
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+          
+          {/* Navigation Buttons */}
+          <button 
+            className="sections-prev position-absolute top-50 start-0 translate-middle-y" 
+            style={{
+              width: '50px',
+              height: '50px',
+              background: 'rgba(255, 255, 255, 0.9)',
+              border: 'none',
+              borderRadius: '50%',
+              zIndex: 10,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = 'rgba(255, 255, 255, 1)';
+              e.target.style.transform = 'translateY(-50%) scale(1.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = 'rgba(255, 255, 255, 0.9)';
+              e.target.style.transform = 'translateY(-50%) scale(1)';

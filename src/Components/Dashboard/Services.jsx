@@ -13,6 +13,7 @@ import {
   faMoneyBillWave,
   faSpinner
 } from '@fortawesome/free-solid-svg-icons';
+import SARIcon from '../SARIcon/SARIcon';
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -78,7 +79,8 @@ const Services = () => {
           name: service.title_ar || service.title || service.title_en,
           description: service.about_ar || service.about || service.about_en,
           icon: getServiceIcon(service.category_id),
-          price: `${service.price} ريال`,
+          price: service.price,
+          priceText: `${service.price}`,
           duration: `${service.service_time} دقيقة`,
           location: `عيادة ${service.salon_id || 'متخصصة'}`,
           rating: 4.5, // Default rating since not provided in API
@@ -220,14 +222,14 @@ const Services = () => {
                         {service.discount ? (
                           <>
                             <span className="text-decoration-line-through text-muted me-2">
-                              {service.originalPrice} ريال
+                              {service.originalPrice} <SARIcon />
                             </span>
                             <span className="text-success fw-bold">
-                              {service.price} (خصم {service.discount}%)
+                              {service.priceText} <SARIcon /> (خصم {service.discount}%)
                             </span>
                           </>
                         ) : (
-                          service.price
+                          <>{service.priceText} <SARIcon /></>
                         )}
                       </span>
                     </div>

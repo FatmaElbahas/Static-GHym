@@ -89,7 +89,7 @@ const MapSection = () => {
                 <div className="contact-details">
                   <h6 className="fw-bold mb-1" style={{ color: '#333', fontSize: '1.1rem' }}>البريد الإلكتروني</h6>
                   <a 
-                    href="mailto:info@blsmy-medical.com" 
+                    href="mailto:info@ghaym-medical.com" 
                     className="mb-0 text-decoration-none" 
                     style={{ 
                       color: '#0171BD', 
@@ -100,7 +100,7 @@ const MapSection = () => {
                     onMouseEnter={(e) => e.target.style.color = '#0171BD'}
                     onMouseLeave={(e) => e.target.style.color = '#0171BD'}
                   >
-                    info@blsmy-medical.com
+                    info@ghaym-medical.com
                   </a>
                 </div>
               </div>

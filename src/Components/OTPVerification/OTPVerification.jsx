@@ -99,6 +99,13 @@ const OTPVerification = ({ bookingId, onSuccess, onCancel, isVisible }) => {
       return;
     }
 
+    // Validate booking ID
+    if (!bookingId) {
+      setError('رقم الحجز غير صحيح');
+      console.error('❌ Invalid booking ID:', bookingId);
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
 
@@ -107,6 +114,12 @@ const OTPVerification = ({ bookingId, onSuccess, onCancel, isVisible }) => {
       if (!token) {
         throw new Error('يجب تسجيل الدخول أولاً');
       }
+
+      console.log('🔐 OTP Verification Request:', {
+        booking_id: bookingId,
+        completion_otp: otpToSubmit,
+        bookingIdType: typeof bookingId
+      });
 
       const response = await fetch(API_URL, {
         method: 'POST',
@@ -122,6 +135,11 @@ const OTPVerification = ({ bookingId, onSuccess, onCancel, isVisible }) => {
       });
 
       const result = await response.json();
+      console.log('🔐 OTP Verification Response:', {
+        status: response.status,
+        ok: response.ok,
+        result: result
+      });
 
       if (response.ok && result.status === 'success') {
         setSuccess(true);
@@ -129,7 +147,9 @@ const OTPVerification = ({ bookingId, onSuccess, onCancel, isVisible }) => {
           onSuccess && onSuccess(result);
         }, 2000);
       } else {
-        setError(result.message || 'رمز التحقق غير صحيح');
+        const errorMsg = result.message || 'رمز التحقق غير صحيح';
+        console.error('❌ OTP Verification Failed:', errorMsg);
+        setError(errorMsg);
         // Clear OTP on error
         setOtp(['', '', '', '', '', '']);
         inputRefs.current[0]?.focus();

@@ -14,6 +14,7 @@ import {
   faEye,
   faExclamationTriangle
 } from '@fortawesome/free-solid-svg-icons';
+import SARIcon from '../SARIcon/SARIcon';
 import './NewBooking.css';
 
 const NewBooking = () => {
@@ -111,7 +112,8 @@ const NewBooking = () => {
         const formatted = (salonData.services || []).map(s => ({
           id: s.id,
           name: s.title_ar || s.title || s.name || 'خدمة غير محددة',
-          price: `${s.price} ريال`,
+          price: s.price,
+          priceText: `${s.price}`,
           duration: `${s.service_time} دقيقة`
         }));
         setServices(formatted);
@@ -767,7 +769,7 @@ const NewBooking = () => {
                             <FontAwesomeIcon icon={faStethoscope} className="me-3" style={{ color: 'var(--color-main)', backgroundColor: 'transparent !important', background: 'none !important' }} />
                             <div>
                               <div className="fw-semibold text-nowrap" style={{fontSize: window.innerWidth < 768 ? '0.8rem' : '1rem'}}>{s.name}</div>
-                              <div className="text-muted small text-nowrap" style={{fontSize: window.innerWidth < 768 ? '0.7rem' : '0.875rem'}}>{s.price} • {s.duration}</div>
+                              <div className="text-muted small text-nowrap" style={{fontSize: window.innerWidth < 768 ? '0.7rem' : '0.875rem'}}>{s.priceText} <SARIcon size={window.innerWidth < 768 ? '0.7rem' : '0.875rem'} /> • {s.duration}</div>
                   </div>
                 </div>
                           <div className="form-check">

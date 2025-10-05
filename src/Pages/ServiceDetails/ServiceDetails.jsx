@@ -249,14 +249,29 @@ const ServiceDetails = () => {
   }
 
   // Get service image
+  console.log('=== Service Image Debug ===');
+  console.log('Salon data:', salon);
+  console.log('owner_photo:', salon?.owner_photo);
+  console.log('images:', salon?.images);
+  
   let serviceImage = 'https://placehold.co/800x400/f8f9fa/0171BD?text=No+Image';
   if (salon?.owner_photo) {
-    serviceImage = salon.owner_photo.startsWith('http') 
-      ? salon.owner_photo 
-      : `${IMAGE_BASE_PATH}/${salon.owner_photo}`;
+    const ownerPhoto = salon.owner_photo;
+    console.log('Using owner_photo:', ownerPhoto);
+    
+    if (ownerPhoto.startsWith('http://') || ownerPhoto.startsWith('https://')) {
+      serviceImage = ownerPhoto;
+    } else {
+      serviceImage = `${IMAGE_BASE_PATH}/${ownerPhoto}`;
+    }
+    console.log('Final serviceImage:', serviceImage);
   } else if (salon?.images && salon.images.length > 0) {
     const img = salon.images[0].image;
+    console.log('Using salon images:', img);
     serviceImage = img.startsWith('http') ? img : `${IMAGE_BASE_PATH}/${img}`;
+    console.log('Final serviceImage:', serviceImage);
+  } else {
+    console.log('No image found, using placeholder');
   }
 
   return (
@@ -356,8 +371,20 @@ const ServiceDetails = () => {
                     }}>
                       <FontAwesomeIcon icon={faMoneyBillWave} style={{ fontSize: '20px', color: '#0171BD', marginBottom: '4px' }} />
                       <div style={{ fontSize: '12px', color: '#6c757d', marginBottom: '2px' }}>السعر</div>
-                      <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#0171BD' }}>
-                        {service.price} <span style={{ fontSize: '14px' }}>ر.س</span>
+                      <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#0171BD', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
+                        {service.price}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 1124.14 1256.39"
+                          width="14"
+                          height="16"
+                          style={{ display: 'inline-block', verticalAlign: 'middle' }}
+                          aria-label="ريال سعودي"
+                          title="ريال سعودي"
+                        >
+                          <path fill="#0171BD" d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"></path>
+                          <path fill="#0171BD" d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"></path>
+                        </svg>
                       </div>
                     </div>
                   </div>

@@ -30,6 +30,9 @@ function App() {
 
   // Loading bar animation on route change
   useEffect(() => {
+    // Smooth scroll to top on route change
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
     setIsLoading(true);
     setProgress(0);
     

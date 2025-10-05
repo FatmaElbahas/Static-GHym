@@ -38,4 +38,3 @@ const useSalonsData = () => {
 };
 
 export default useSalonsData;
-

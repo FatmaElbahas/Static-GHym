@@ -86,7 +86,7 @@ export default function Services() {
                         borderRadius: '10px',
                         boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
                         background: 'white',
-                        height: '480px',
+                        height: '450px',
                         display: 'flex',
                         flexDirection: 'column',
                         transition: 'all 0.3s ease'
@@ -110,19 +110,19 @@ export default function Services() {
                         />
                         
                         <div className="card-body" style={{ 
-                          paddingTop: '8px', 
-                          paddingBottom: '8px',
+                          paddingTop: '12px', 
+                          paddingBottom: '12px',
                           paddingLeft: '12px',
                           paddingRight: '12px',
                           flex: 1,
                           display: 'flex',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
                           alignItems: 'center',
                           overflow: 'hidden',
-                          gap: '10px'
+                          gap: '8px'
                         }}>
-                          <h5 className="card-title fw-semibold text-end mb-0" style={{
+                          <h5 className="card-title fw-semibold text-center mb-0" style={{
                             color:'#484848',
                             fontSize: '18px',
                             lineHeight: '1.3',
@@ -131,21 +131,21 @@ export default function Services() {
                             display: '-webkit-box',
                             WebkitLineClamp: 2,
                             WebkitBoxOrient: 'vertical',
-                            flex: 1
+                            width: '100%'
                           }}>
                             {service.title_ar}
                           </h5>
                           
-                          <div className="d-flex align-items-center" style={{ gap: '4px', flexShrink: 0 }}>
-                            <span className="fw-bold" style={{ color: '#0171BD', fontSize: '20px', lineHeight: 1, whiteSpace: 'nowrap' }}>
+                          <div className="d-flex align-items-center justify-content-center" style={{ gap: '4px' }}>
+                            <span className="fw-bold" style={{ color: '#0171BD', fontSize: '22px', lineHeight: 1, whiteSpace: 'nowrap' }}>
                               {service.price > 0 ? service.price : 'اتصل للسعر'}
                             </span>
                             {service.price > 0 && (
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 1124.14 1256.39"
-                                width="11"
-                                height="12"
+                                width="12"
+                                height="13"
                                 style={{ display: 'inline-block', verticalAlign: 'middle' }}
                                 aria-label="Saudi Riyal"
                                 title="Saudi Riyal"

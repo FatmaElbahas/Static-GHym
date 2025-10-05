@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faEnvelope, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter, faInstagram, faTiktok, faSnapchat } from '@fortawesome/free-brands-svg-icons';
@@ -12,6 +13,17 @@ import bankTransferIcon from '../../assets/images/bankTransfer.png';
 import vatIcon from '../../assets/images/vat.svg';
 
 export default function Footer() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const socialIcons = [
     { icon: faInstagram, hoverColor: '#E1306C' },
     { icon: faTiktok, hoverColor: '#000000' },
@@ -23,10 +35,23 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="mt-4" style={{ backgroundColor: '#F9F9F9', width: '100%' }}>
-      <div className="py-5" style={{ width: '90%', margin: '0 auto' }}>
+    <footer style={{ 
+      backgroundColor: '#F9F9F9', 
+      width: '100%',
+      marginTop: isMobile ? '0' : '1.5rem'
+    }}>
+      <div style={{ 
+        width: '90%', 
+        margin: '0 auto',
+        paddingTop: isMobile ? '0.5rem' : '3rem',
+        paddingBottom: isMobile ? '0.5rem' : '3rem'
+      }}>
         <div className="foot1">
-          <div className="d-flex flex-wrap align-items-start justify-content-between gap-5 py-5">
+          <div className="d-flex flex-wrap align-items-start justify-content-between" style={{
+            paddingTop: isMobile ? '0.5rem' : '3rem',
+            paddingBottom: isMobile ? '0.5rem' : '3rem',
+            gap: isMobile ? '1rem' : '3rem'
+          }}>
             {/* أيقونات التواصل */}
             <div className="footer-social-icons mx-auto">
               {socialIcons.map((item, idx) => (
