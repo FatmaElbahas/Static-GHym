@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faTimes, faUser, faGlobe, faBoxOpen, faListAlt, faTags, faLink, faHome, faCalendarAlt, faEnvelope, faShieldAlt, faMapMarkedAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faUser, faBoxOpen, faListAlt, faHome, faCalendarAlt, faEnvelope, faShieldAlt, faMapMarkedAlt } from '@fortawesome/free-solid-svg-icons';
 import menuIcon from '../../assets/images/menu.png';
 
 const logo = "https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDAK.png";
@@ -9,9 +9,6 @@ const logo = "https://cdn.salla.sa/axjgg/fniOf3POWAeIz8DXX8oPcxjNgjUHvLeqHDdhtDA
 function MainNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showLocationModal, setShowLocationModal] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('عربي');
-  const [selectedCountry, setSelectedCountry] = useState('السعودية');
   const [showSubMenu, setShowSubMenu] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -422,41 +419,6 @@ function MainNavbar() {
                 روابط مهمة
               </h3>
 
-              {/* الشحن إلى */}
-              <div
-                className="d-flex align-items-center gap-3"
-                style={{
-                  borderRadius: '8px',
-                  backgroundColor: '#f8f9fa',
-                  color: '#4a4a4a',
-                  fontSize: '16px',
-                  fontWeight: '400',
-                  padding: '0.8rem 1rem',
-                  marginBottom: '1rem'
-                }}
-              >
-                <div style={{
-                  width: '30px',
-                  height: '30px',
-                  borderRadius: '50%',
-                  overflow: 'hidden',
-                  flexShrink: 0
-                }}>
-                  <img 
-                    src="https://flagcdn.com/w80/sa.png" 
-                    alt="السعودية"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                </div>
-                <div className="d-flex align-items-center justify-content-between" style={{ flex: 1 }}>
-                  <div className="d-flex flex-column">
-                    <span style={{ fontSize: '12px', color: '#6c757d' }}>الشحن إلى</span>
-                    <span style={{ fontSize: '16px', fontWeight: '500' }}>السعودية</span>
-                  </div>
-                  <FontAwesomeIcon icon={faGlobe} style={{ fontSize: '18px', color: '#6c757d' }} />
-                </div>
-              </div>
-
               {/* قائمة الروابط */}
               <div className="d-flex flex-column gap-1">
                 <NavLink
@@ -635,51 +597,8 @@ function MainNavbar() {
             </button>
           </div>
 
-          {/* القسم الأيمن: تسجيل الدخول + اللغة + الدولة */}
+          {/* القسم الأيمن: تسجيل الدخول */}
           <div className="d-flex align-items-center gap-2 gap-lg-3">
-            {/* الدولة - مخفي على الموبايل */}
-            <div className="d-flex align-items-center gap-2">
-            <button 
-              onClick={() => setShowLocationModal(true)}
-              className="btn btn-outline-secondary btn-sm d-none d-lg-flex align-items-center gap-1" 
-              style={{
-                fontSize: '22px',
-                padding: '0.3rem 0.8rem',
-                borderRadius: '20px',
-                backgroundColor: '#f8f9fa',
-                border: '1px solid #e9ecef',
-                color: '#000000',
-                fontWeight: '900'
-              }}
-            >
-              {selectedCountry}
-              <span style={{ fontSize: '0.7rem' }}>▼</span>
-            </button>
-            
-            {/* خط فاصل */}
-            <div className="d-none d-lg-block" style={{ width: '1px', height: '20px', backgroundColor: '#ddd' }}></div>
-            
-            {/* اللغة - مخفي على الموبايل */}
-            <button 
-              onClick={() => setShowLocationModal(true)}
-              className="btn btn-outline-secondary btn-sm d-none d-lg-block" 
-              style={{
-                fontSize: '22px',
-                padding: '0.3rem 0.8rem',
-                borderRadius: '20px',
-                backgroundColor: '#f8f9fa',
-                border: '1px solid #e9ecef',
-                color: '#000000',
-                fontWeight: '900'
-              }}
-            >
-              {selectedLanguage}
-            </button>
-              </div>
-            
-            {/* خط فاصل */}
-            <div className="d-none d-lg-block" style={{ width: '1px', height: '20px', backgroundColor: '#ddd' }}></div>
-            
             {/* لوحة التحكم أو تسجيل الدخول */}
             {isLoggedIn ? (
               <div className="d-none d-lg-flex align-items-center gap-2">
@@ -857,188 +776,6 @@ function MainNavbar() {
       </div>
     </div>
 
-    {/* Location & Language Modal */}
-    {showLocationModal && (
-      <>
-        {/* Backdrop */}
-        <div 
-          onClick={() => setShowLocationModal(false)}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 9998
-          }}
-        />
-        
-        {/* Modal */}
-        <div 
-          style={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: '#ffffff',
-            borderRadius: '20px',
-            padding: '3rem 2.5rem',
-            maxWidth: '600px',
-            width: '90%',
-            zIndex: 9999,
-            boxShadow: '0 10px 40px rgba(0,0,0,0.2)'
-          }}
-        >
-          {/* Close Button */}
-          <button
-            onClick={() => setShowLocationModal(false)}
-            style={{
-              position: 'absolute',
-              top: '20px',
-              left: '20px',
-              background: '#f0f0f0',
-              border: 'none',
-              borderRadius: '50%',
-              width: '40px',
-              height: '40px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              fontSize: '24px',
-              fontWeight: 'bold',
-              color: '#000',
-              transition: 'background 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#e0e0e0';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#f0f0f0';
-            }}
-          >
-            ×
-          </button>
-
-          {/* Content */}
-          <div className="row g-4" style={{ marginBottom: '2rem' }}>
-            {/* الشحن إلى */}
-            <div className="col-6">
-              <label style={{ 
-                display: 'block', 
-                marginBottom: '15px', 
-                fontWeight: '700',
-                fontSize: '20px',
-                color: '#000000',
-                textAlign: 'right'
-              }}>
-                الشحن إلى
-              </label>
-              <select 
-                value={selectedCountry}
-                onChange={(e) => setSelectedCountry(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '15px 20px',
-                  border: 'none',
-                  backgroundColor: '#e8e8e8',
-                  borderRadius: '10px',
-                  fontSize: '18px',
-                  color: '#000000',
-                  textAlign: 'right',
-                  cursor: 'pointer',
-                  appearance: 'none',
-                  backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000000\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e")',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'left 15px center',
-                  backgroundSize: '18px',
-                  paddingLeft: '45px',
-                  fontWeight: '500',
-                  outline: 'none'
-                }}
-              >
-                <option value="السعودية">السعودية</option>
-                <option value="الإمارات">الإمارات</option>
-                <option value="الكويت">الكويت</option>
-                <option value="قطر">قطر</option>
-                <option value="البحرين">البحرين</option>
-                <option value="عمان">عمان</option>
-              </select>
-            </div>
-
-            {/* اللغة */}
-            <div className="col-6">
-              <label style={{ 
-                display: 'block', 
-                marginBottom: '15px', 
-                fontWeight: '700',
-                fontSize: '20px',
-                color: '#000000',
-                textAlign: 'right'
-              }}>
-                اللغة
-              </label>
-              <select 
-                value={selectedLanguage}
-                onChange={(e) => setSelectedLanguage(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '15px 20px',
-                  border: 'none',
-                  backgroundColor: '#e8e8e8',
-                  borderRadius: '10px',
-                  fontSize: '18px',
-                  color: '#000000',
-                  textAlign: 'right',
-                  cursor: 'pointer',
-                  appearance: 'none',
-                  backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000000\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e")',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'left 15px center',
-                  backgroundSize: '18px',
-                  paddingLeft: '45px',
-                  fontWeight: '500',
-                  outline: 'none'
-                }}
-              >
-                <option value="عربي">عربي</option>
-                <option value="English">English</option>
-              </select>
-            </div>
-          </div>
-
-          {/* حفظ Button */}
-          <a
-            onClick={() => setShowLocationModal(false)}
-            style={{
-              width: '180px',
-              margin: '3rem auto 0',
-              display: 'block',
-              padding: '15px',
-              borderRadius: '10px',
-              border: '1px solid #e0e0e0',
-              backgroundColor: '#ffffff',
-              fontSize: '18px',
-              fontWeight: '600',
-              color: '#000',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              textAlign: 'center',
-              textDecoration: 'none'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#f5f5f5';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#ffffff';
-            }}
-          >
-            حفظ
-          </a>
-        </div>
-      </>
-    )}
     </>
   );
 }
