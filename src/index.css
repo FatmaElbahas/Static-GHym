@@ -67,11 +67,29 @@ html {
   max-width: 100vw;
   background-color: #ffffff !important;
   min-height: 100vh;
+  margin: 0 auto;
+}
+
+/* Center all sections */
+section,
+.container,
+.container-fluid {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 1400px;
 }
 
 section {
   overflow-x: hidden !important;
   background-color: #ffffff;
+  width: 100%;
+}
+
+/* Hero and Footer should be full width */
+.hero-section,
+.hero-background,
+footer {
+  max-width: 100vw !important;
 }
 
 /* Hide any shadow or overlay elements */
