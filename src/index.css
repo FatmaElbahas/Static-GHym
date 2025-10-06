@@ -37,6 +37,7 @@ body::before {
   max-width: 100% !important;
   margin: 0 !important;
   box-sizing: border-box !important;
+  z-index: 9999999 !important;
 }
 
 .navbar *,
