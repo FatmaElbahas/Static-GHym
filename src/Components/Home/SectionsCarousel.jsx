@@ -182,12 +182,12 @@ const SectionsCarousel = () => {
       style={{ 
         backgroundColor: '#F9F9F9', 
         marginTop: isMobile ? '30px' : '60px', 
-        paddingTop: isMobile ? '20px' : '40px', 
+        paddingTop: isMobile ? '15px' : '30px', 
         paddingBottom: isMobile ? '20px' : '40px' 
       }}
     >
       <div className="container" style={{ maxWidth: '90%' }}>
-        <div className="mb-3 text-center">
+        <div className="mb-4 text-center">
           <h2 className="m-0" style={{ color: '#484848', fontWeight: 800, fontSize: isMobile ? '24px' : '34px' }}>
             العيادات
           </h2>

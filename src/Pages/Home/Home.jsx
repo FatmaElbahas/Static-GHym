@@ -42,6 +42,7 @@ export default function Home() {
         
         .home-page {
           position: relative;
+          overflow-x: hidden !important;
         }
         
         .home-page .hero-section {
