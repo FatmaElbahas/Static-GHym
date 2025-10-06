@@ -547,14 +547,17 @@ function MainNavbar() {
         width: '100%',
         left: 0,
         right: 0,
-        margin: 0
+        margin: 0,
+        transform: 'translateZ(0)',
+        WebkitTransform: 'translateZ(0)'
       }}>
         <div className="d-flex justify-content-between align-items-center" style={{
           width: '100%',
           maxWidth: isMobile ? '100%' : '1400px',
           margin: isMobile ? '0' : '0 auto',
-          paddingLeft: isMobile ? '1rem' : '1rem',
-          paddingRight: isMobile ? '1rem' : '1rem'
+          paddingLeft: isMobile ? '0.75rem' : '1rem',
+          paddingRight: isMobile ? '0.75rem' : '1rem',
+          boxSizing: 'border-box'
         }}>
           
           {/* على الموبايل: اللوجو على اليمين */}

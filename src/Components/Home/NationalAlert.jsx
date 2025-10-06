@@ -15,10 +15,20 @@ const NationalAlert = ({ showAlert, onClose }) => {
         color: 'white',
         zIndex: 1050,
         padding: '8px 10px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+        width: '100%',
+        margin: 0,
+        boxSizing: 'border-box'
       }}
     >
-      <div className="container d-flex justify-content-between align-items-center" style={{ gap: '10px' }}>
+      <div className="d-flex justify-content-between align-items-center" style={{ 
+        gap: '10px',
+        width: '100%',
+        maxWidth: '100%',
+        margin: 0,
+        padding: '0 0.75rem',
+        boxSizing: 'border-box'
+      }}>
         <span style={{ fontSize: '14px', fontWeight: '500', flex: 1, textAlign: 'center' }}>
           🎉 احتفالاً باليوم الوطني السعودي 95 - خصومات حصرية على جميع خدماتنا!
         </span>
