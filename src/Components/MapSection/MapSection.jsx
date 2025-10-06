@@ -159,21 +159,61 @@ const MapSection = () => {
 
           {/* عمود الخريطة */}
           <div className="col-12 col-lg-7" ref={mapRef}>
-            <div className="position-relative" style={{ 
+            <div className="position-relative map-container" style={{ 
               borderRadius: isMobile ? 15 : 20, 
               overflow: 'hidden', 
               boxShadow: '0 20px 40px rgba(15,23,42,0.12), 0 6px 14px rgba(15,23,42,0.06)', 
               minHeight: isMobile ? '350px' : '500px',
-              marginTop: isMobile ? '20px' : '0'
+              marginTop: isMobile ? '20px' : '0',
+              touchAction: isMobile ? 'pan-y' : 'auto'
             }}>
               <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(1200px 1200px at 100% 0%, rgba(3,143,173,0.06), transparent 60%)' }} />
+              {/* Overlay للسماح بالـ scroll على الموبايل */}
+              {isMobile && (
+                <div 
+                  style={{ 
+                    position: 'absolute', 
+                    top: 0, 
+                    left: 0, 
+                    right: 0, 
+                    bottom: 0, 
+                    zIndex: 1,
+                    pointerEvents: 'auto',
+                    cursor: 'pointer'
+                  }}
+                  onClick={(e) => {
+                    // عند النقر، نخلي الخريطة interactive
+                    e.currentTarget.style.pointerEvents = 'none';
+                    setTimeout(() => {
+                      if (e.currentTarget) e.currentTarget.style.pointerEvents = 'auto';
+                    }, 3000);
+                  }}
+                >
+                  <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    backgroundColor: 'rgba(1, 113, 189, 0.9)',
+                    color: 'white',
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '8px',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    pointerEvents: 'none',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                  }}>
+                    اضغط لعرض الخريطة
+                  </div>
+                </div>
+              )}
               {isMapVisible ? (
                 <iframe
                   title="Riyadh Location Map"
                   src={mapSrc}
                   width="100%"
                   height={isMobile ? '350' : '500'}
-                  style={{ border: 0, display: 'block' }}
+                  style={{ border: 0, display: 'block', pointerEvents: isMobile ? 'none' : 'auto' }}
                   allowFullScreen=""
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"

@@ -244,6 +244,8 @@ const Login = () => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
+                validateOnChange={false}
+                validateOnBlur={true}
               >
                 {({ isSubmitting, status, setFieldValue, setStatus }) => (
                   <Form>

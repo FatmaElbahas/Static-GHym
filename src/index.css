@@ -641,25 +641,40 @@ p {
 @media (max-width: 576px) {
   /* Footer Mobile - Reduce top margin */
   footer {
-    margin-top: 0rem !important;
+    margin-top: 1rem !important;
   }
   
-  /* Footer Payment Icons - Mobile - 6 per row */
+  .footer-social-icons {
+    gap: 8px !important;
+  }
+  
+  .footer-social-icon-box {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+  }
+  
+  .footer-icon {
+    font-size: 16px !important;
+  }
+  
+  /* Footer Payment Icons - Mobile - 4 per row */
   .footer-payment-icons {
     display: grid !important;
-    grid-template-columns: repeat(6, 1fr) !important;
+    grid-template-columns: repeat(4, 1fr) !important;
     gap: 8px !important;
+    margin-top: 1rem !important;
   }
   
   .footer-payment-icon-box {
     width: 100% !important;
     aspect-ratio: 1 !important;
-    max-width: 45px !important;
+    max-width: 55px !important;
   }
   
   .footer-payment-img {
-    width: 32px !important;
-    height: 32px !important;
+    width: 36px !important;
+    height: 36px !important;
   }
   
   .navbar-logo-img {
@@ -2217,20 +2232,35 @@ position: absolute;
 @media (max-width: 480px) {
   /* Footer Mobile - Reduce top margin */
   footer {
-    margin-top: 0rem !important;
+    margin-top: 1rem !important;
   }
   
-  /* Footer Payment Icons - Mobile - 6 per row */
+  .footer-social-icons {
+    gap: 6px !important;
+  }
+  
+  .footer-social-icon-box {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+  }
+  
+  .footer-icon {
+    font-size: 15px !important;
+  }
+  
+  /* Footer Payment Icons - Mobile - 4 per row */
   .footer-payment-icons {
     display: grid !important;
-    grid-template-columns: repeat(6, 1fr) !important;
-    gap: 6px !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px !important;
+    margin-top: 1rem !important;
   }
   
   .footer-payment-icon-box {
     width: 100% !important;
     aspect-ratio: 1 !important;
-    max-width: 40px !important;
+    max-width: 50px !important;
   }
   
   .footer-payment-img {
@@ -6012,13 +6042,12 @@ width: 10%;
   .footer-social-icons {
     display: flex !important;
     flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
     align-items: center !important;
-    overflow-x: auto !important;
-    gap: 8px !important;
-    padding-bottom: 8px !important;
-    padding-right: 1rem !important;
+    gap: 10px !important;
+    padding-bottom: 0 !important;
+    padding-right: 0 !important;
     width: 100% !important;
     min-width: auto !important;
     max-width: 100% !important;
@@ -6027,13 +6056,13 @@ width: 10%;
   .footer-social-icon-box {
     display: flex !important;
     flex-shrink: 0 !important;
-    width: 38px !important;
-    height: 38px !important;
-    min-width: 38px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
   }
   
   .footer-icon {
-    font-size: 16px !important;
+    font-size: 18px !important;
   }
   
   /* Footer Mobile - Reduce top margin */
@@ -6041,14 +6070,16 @@ width: 10%;
     margin-top: 0rem !important;
   }
   
-  /* Footer Payment Icons - Mobile - 6 per row */
+  /* Footer Payment Icons - Mobile - 4 per row */
   .footer-payment-icons {
     display: grid !important;
-    grid-template-columns: repeat(6, 1fr) !important;
-    gap: 8px !important;
-    padding-right: 1rem !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 10px !important;
+    padding-right: 0 !important;
     width: 100% !important;
-    margin-top: 1rem !important;
+    max-width: 100% !important;
+    margin-top: 1.5rem !important;
+    justify-items: center !important;
   }
   
   .footer-payment-icon-box {
@@ -6056,14 +6087,14 @@ width: 10%;
     flex-shrink: 0 !important;
     width: 100% !important;
     aspect-ratio: 1 !important;
-    max-width: 45px !important;
+    max-width: 60px !important;
     height: auto !important;
-    border-radius: 22px !important;
+    border-radius: 10px !important;
   }
   
   .footer-payment-img {
-    width: 32px !important;
-    height: 32px !important;
+    width: 40px !important;
+    height: 40px !important;
   }
   
   /* Footer Bottom Section - Mobile */

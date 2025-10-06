@@ -376,6 +376,8 @@ const RegisterPage = () => {
                   initialValues={initialValues}
                   validationSchema={validationSchema}
                   onSubmit={handleSubmit}
+                  validateOnChange={false}
+                  validateOnBlur={true}
                 >
                   {({ isSubmitting, status, setFieldValue, setStatus }) => (
                     <Form className="py-3">
