@@ -102,11 +102,14 @@ html, body, #root {
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  overflow-y: scroll !important;
+  -webkit-overflow-scrolling: touch !important;
   font-family: 'IBM Plex Sans Arabic', sans-serif;
   margin-top: 0px !important;
   padding-top: 0px !important;
   background-color: #ffffff !important;
+  height: auto !important;
 }
 
 /* iPhone safe area support - Disabled to prevent spacing issues */
@@ -1730,8 +1733,11 @@ body {
     background-color: #ffffff !important;
     color: #4a4a4a !important;
     overflow-x: hidden !important;
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
     width: 100vw !important;
     max-width: 100% !important;
+    height: auto !important;
 }
 
 a {
@@ -6423,7 +6429,9 @@ width: 10%;
   }
 }
 body {
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  overflow-y: scroll !important;
+  -webkit-overflow-scrolling: touch !important;
   font-family: 'IBM Plex Sans Arabic', sans-serif;
   color: #4a4a4a;
   margin-top: 90px !important;
@@ -6434,6 +6442,7 @@ body {
   background-color: #ffffff !important;
   width: 100% !important;
   max-width: 100% !important;
+  height: auto !important;
 }
 
 /* Reduce body margin-top on larger screens */
