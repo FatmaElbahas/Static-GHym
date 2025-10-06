@@ -72,7 +72,6 @@ const validationSchema = Yup.object({
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const [showAlert, setShowAlert] = React.useState(true);
 
   // القيم الافتراضية للنموذج
   const initialValues = {
@@ -319,44 +318,8 @@ const RegisterPage = () => {
         }
       `}</style>
       
-      {/* Alert */}
-      {showAlert && (
-        <div 
-          className="alert alert-warning mb-0 text-center national-day-alert" 
-          style={{ 
-            position: 'fixed', 
-            top: 0, 
-            left: 0, 
-            right: 0, 
-            zIndex: 1001,
-            borderRadius: 0,
-            padding: '0.5rem 0.75rem',
-            fontSize: '13px'
-          }}
-        >
-          <div className="container d-flex justify-content-between align-items-center">
-            <span style={{ fontSize: '13px' }}>⚠️ هذا تنبيه مهم - يرجى قراءته قبل المتابعة</span>
-            <button
-              type="button"
-              onClick={() => setShowAlert(false)}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                fontSize: '18px',
-                cursor: 'pointer',
-                color: '#856404',
-                padding: 0,
-                lineHeight: 1
-              }}
-            >
-              ×
-            </button>
-          </div>
-        </div>
-      )}
-      
       {/* Register Navbar */}
-      <nav className="bg-white shadow-sm register-navbar" style={{ padding: '0.7rem 0', marginTop: 0, position: 'fixed', top: showAlert ? '42px' : 0, left: 0, right: 0, zIndex: 1000, transition: 'top 0.3s ease' }}>
+      <nav className="bg-white shadow-sm register-navbar" style={{ padding: '0.7rem 0', marginTop: 0, position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000 }}>
         <div className="container">
           <div className="d-flex justify-content-between align-items-center">
             {/* Back Arrow */}
@@ -392,7 +355,7 @@ const RegisterPage = () => {
         </div>
       </nav>
 
-    <div style={{ backgroundColor: '#f8f9fa', minHeight: '100vh', display: 'flex', alignItems: 'center', paddingTop: showAlert ? '8rem' : '6rem', paddingBottom: '2rem', transition: 'padding-top 0.3s ease' }}>
+    <div style={{ backgroundColor: '#f8f9fa', minHeight: '100vh', display: 'flex', alignItems: 'center', paddingTop: '6rem', paddingBottom: '2rem' }}>
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-12 col-md-10 col-lg-6">
