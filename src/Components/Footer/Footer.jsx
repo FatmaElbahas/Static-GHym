@@ -38,22 +38,22 @@ export default function Footer() {
     <footer style={{ 
       backgroundColor: '#F9F9F9', 
       width: '100%',
-      marginTop: isMobile ? '0' : '1.5rem'
+      marginTop: isMobile ? '1.5rem' : '1.5rem'
     }}>
       <div style={{ 
-        width: '90%', 
+        width: isMobile ? '90%' : '90%', 
         margin: '0 auto',
-        paddingTop: isMobile ? '0.5rem' : '3rem',
-        paddingBottom: isMobile ? '0.5rem' : '3rem'
+        paddingTop: isMobile ? '1.5rem' : '3rem',
+        paddingBottom: isMobile ? '1.5rem' : '3rem'
       }}>
         <div className="foot1">
           <div className="d-flex flex-wrap align-items-start justify-content-between" style={{
-            paddingTop: isMobile ? '0.5rem' : '3rem',
-            paddingBottom: isMobile ? '0.5rem' : '3rem',
-            gap: isMobile ? '1rem' : '3rem'
+            paddingTop: isMobile ? '1rem' : '3rem',
+            paddingBottom: isMobile ? '1rem' : '3rem',
+            gap: isMobile ? '1.5rem' : '3rem'
           }}>
             {/* أيقونات التواصل */}
-            <div className="footer-social-icons mx-auto">
+            <div className="footer-social-icons" style={{ width: '100%' }}>
               {socialIcons.map((item, idx) => (
                 <div 
                   key={idx} 
@@ -80,7 +80,7 @@ export default function Footer() {
             </div>
 
             {/* روابط مهمة */}
-            <div className="flex-grow-1 footer-links-section" style={{ minWidth: '260px' }}>
+            <div className="flex-grow-1 footer-links-section" style={{ minWidth: isMobile ? '100%' : '260px', width: '100%' }}>
               <div className="d-none d-lg-block">
                 <h2 className="mb-3" style={{ color: '#484848', fontSize: '30px', fontWeight: '500' }}>روابط مهمة</h2>
                 <ul className="list-unstyled m-0" style={{ color: '#484848', lineHeight: 2, paddingRight: 0 }}>
@@ -92,7 +92,7 @@ export default function Footer() {
               </div>
 
               {/* شعارات وسائل الدفع */}
-              <div className="footer-payment-icons mx-auto">
+              <div className="footer-payment-icons" style={{ width: '100%' }}>
                 {[
                   { src: applePayIcon, alt: 'Apple Pay' },
                   { src: madaIcon, alt: 'Mada' },
