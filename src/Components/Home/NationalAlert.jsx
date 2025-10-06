@@ -4,23 +4,40 @@ const NationalAlert = ({ showAlert, onClose }) => {
   if (!showAlert) return null;
 
   return (
-    <div 
-      className="home-national-alert" 
-      style={{ 
-        position: 'fixed', 
-        top: 0, 
-        left: 0, 
-        right: 0, 
-        backgroundColor: '#215931',
-        color: 'white',
-        zIndex: 1050,
-        padding: '8px 10px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-        width: '100%',
-        margin: 0,
-        boxSizing: 'border-box'
-      }}
-    >
+    <>
+      {/* Empty white div above alert - smart fix */}
+      <div 
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '22px',
+          backgroundColor: '#ffffff',
+          zIndex: 9999998,
+          width: '100%',
+          margin: 0,
+          boxSizing: 'border-box'
+        }}
+      />
+      
+      <div 
+        className="home-national-alert" 
+        style={{ 
+          position: 'fixed', 
+          top: '22px', 
+          left: 0, 
+          right: 0, 
+          backgroundColor: '#215931',
+          color: 'white',
+          zIndex: 1050,
+          padding: '8px 10px',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          width: '100%',
+          margin: 0,
+          boxSizing: 'border-box'
+        }}
+      >
       <div className="d-flex justify-content-between align-items-center" style={{ 
         gap: '10px',
         width: '100%',
@@ -64,6 +81,7 @@ const NationalAlert = ({ showAlert, onClose }) => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 
