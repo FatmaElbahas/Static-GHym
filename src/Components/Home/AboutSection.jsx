@@ -49,33 +49,37 @@ const AboutSection = () => {
         paddingBottom: '20px' 
       }}
     >
-      <div className="container">
+      <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 15px' }}>
         <div className="d-flex flex-column align-items-center justify-content-between"> 
           <h2 
             className='text-center' 
             style={{
               color: '#4A4A4A', 
-              fontSize: isMobile ? '1.5rem' : '35px'
+              fontSize: isMobile ? '1.1rem' : '35px',
+              maxWidth: '100%'
             }}
           >
             مجمع غيم الطبي
           </h2>
           
           <p style={{
-            fontSize: isMobile ? '0.85rem' : '1rem',
-            marginTop: '0.5rem'
+            fontSize: isMobile ? '0.75rem' : '1rem',
+            marginTop: '0.5rem',
+            lineHeight: '1.5',
+            maxWidth: '800px',
+            textAlign: 'center'
           }}>
             {aboutText}
           </p>
           
-          <div className="d-flex align-items-center justify-content-center gap-4 mt-3" aria-label="روابط التواصل الاجتماعي">
+          <div className="d-flex align-items-center justify-content-center gap-3 mt-3" aria-label="روابط التواصل الاجتماعي">
             <a href="#" aria-label="TikTok" className="text-decoration-none" style={{color:'#4A4A4A'}}>
               <FontAwesomeIcon 
                 icon={faTiktok} 
                 style={{ 
-                  fontSize: isMobile ? '24px' : '34px', 
-                  width: isMobile ? '26px' : '36px', 
-                  height: isMobile ? '26px' : '36px' 
+                  fontSize: isMobile ? '20px' : '34px', 
+                  width: isMobile ? '22px' : '36px', 
+                  height: isMobile ? '22px' : '36px' 
                 }} 
               />
             </a>
@@ -83,9 +87,9 @@ const AboutSection = () => {
               <FontAwesomeIcon 
                 icon={faTwitter} 
                 style={{ 
-                  fontSize: isMobile ? '24px' : '34px', 
-                  width: isMobile ? '26px' : '36px', 
-                  height: isMobile ? '26px' : '36px' 
+                  fontSize: isMobile ? '20px' : '34px', 
+                  width: isMobile ? '22px' : '36px', 
+                  height: isMobile ? '22px' : '36px' 
                 }} 
               />
             </a>
@@ -93,9 +97,9 @@ const AboutSection = () => {
               <FontAwesomeIcon 
                 icon={faSnapchatGhost} 
                 style={{ 
-                  fontSize: isMobile ? '24px' : '34px', 
-                  width: isMobile ? '26px' : '36px', 
-                  height: isMobile ? '26px' : '36px' 
+                  fontSize: isMobile ? '20px' : '34px', 
+                  width: isMobile ? '22px' : '36px', 
+                  height: isMobile ? '22px' : '36px' 
                 }} 
               />
             </a>
@@ -103,9 +107,9 @@ const AboutSection = () => {
               <FontAwesomeIcon 
                 icon={faInstagram} 
                 style={{ 
-                  fontSize: isMobile ? '24px' : '34px', 
-                  width: isMobile ? '26px' : '36px', 
-                  height: isMobile ? '26px' : '36px' 
+                  fontSize: isMobile ? '20px' : '34px', 
+                  width: isMobile ? '22px' : '36px', 
+                  height: isMobile ? '22px' : '36px' 
                 }} 
               />
             </a>

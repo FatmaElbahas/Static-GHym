@@ -550,8 +550,7 @@ function MainNavbar() {
         margin: 0
       }}>
         <div className="d-flex justify-content-between align-items-center mx-auto" style={{
-          paddingLeft: isMobile ? '0' : '1rem',
-          paddingRight: isMobile ? '0' : '1rem',
+         
           width: '100%',
           maxWidth: '1400px'
         }}>
@@ -575,14 +574,14 @@ function MainNavbar() {
                   maxWidth: isMobile ? '70px' : 
                             window.innerWidth <= 991 ? '110px' :
                             window.innerWidth <= 1200 ? '150px' : '250px',
-                  marginRight: isMobile ? '0.75rem' : '0'
+                  marginRight: isMobile ? '0' : '0'
                 }}
               />
             </NavLink>
           </div>
           
           {/* على الموبايل: Burger Menu على اليسار */}
-          <div className="d-flex align-items-center" style={{ marginLeft: '-15rem' }}>
+          <div className="d-flex align-items-center">
             {/* Burger Menu - يظهر فقط على الموبايل */}
             <button
               className="burger-btn d-lg-none"
