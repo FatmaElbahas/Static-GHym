@@ -192,20 +192,58 @@ section {
   
   .navbar-brand,
   .navbar-logo-link {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .navbar-logo-img {
+    margin: 0 !important;
+    display: block !important;
   }
   
   .burger-btn {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+    margin: 0 !important;
+    padding: 0.5rem !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .burger-btn img {
+    display: block !important;
+    width: 28px !important;
+    height: 28px !important;
   }
   
   .navbar .mx-auto {
     margin-left: 0 !important;
     margin-right: 0 !important;
+  }
+  
+  /* Ensure proper spacing between logo and menu on mobile */
+  .navbar .d-flex.justify-content-between > div:first-child {
+    flex: 0 0 auto !important;
+  }
+  
+  .navbar .d-flex.justify-content-between > div:last-child {
+    flex: 0 0 auto !important;
+  }
+  
+  /* Force burger menu container to show on mobile */
+  .navbar .d-flex.d-lg-none {
+    display: flex !important;
+    visibility: visible !important;
+  }
+}
+
+/* Force show burger menu on all small screens */
+@media (max-width: 991px) {
+  .burger-btn {
+    display: flex !important;
+  }
+  
+  .navbar .d-lg-none {
+    display: flex !important;
   }
 }
 

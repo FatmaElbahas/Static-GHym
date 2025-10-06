@@ -551,71 +551,166 @@ function MainNavbar() {
         transform: 'translateZ(0)',
         WebkitTransform: 'translateZ(0)'
       }}>
-        <div className="d-flex justify-content-between align-items-center" style={{
+        <div className="d-flex align-items-center" style={{
           width: '100%',
           maxWidth: isMobile ? '100%' : '1400px',
           margin: isMobile ? '0' : '0 auto',
-          paddingLeft: isMobile ? '0.75rem' : '1rem',
-          paddingRight: isMobile ? '0.75rem' : '1rem',
-          boxSizing: 'border-box'
+          paddingLeft: isMobile ? '1rem' : '1rem',
+          paddingRight: isMobile ? '1rem' : '1rem',
+          boxSizing: 'border-box',
+          justifyContent: isMobile ? 'space-between' : 'space-between',
+          position: 'relative'
         }}>
           
           {/* على الموبايل: اللوجو على اليمين */}
-          <div className="d-flex align-items-center">
-            {/* الشعار */}
-            <NavLink to="/" className="navbar-brand navbar-logo-link">
-              <img
-                src={logo}
-                alt="Logo"
-                className="navbar-logo-img"
-                style={{ 
-                  objectFit: "contain",
-                  width: isMobile ? '70px' : 
-                         window.innerWidth <= 991 ? '110px' :
-                         window.innerWidth <= 1200 ? '150px' : '300px',
-                  height: isMobile ? '28px' : 
-                          window.innerWidth <= 991 ? '35px' :
-                          window.innerWidth <= 1200 ? '50px' : '80px',
-                  maxWidth: isMobile ? '70px' : 
-                            window.innerWidth <= 991 ? '110px' :
-                            window.innerWidth <= 1200 ? '150px' : '250px',
-                  marginRight: isMobile ? '0' : '0'
-                }}
-              />
-            </NavLink>
-          </div>
+          {isMobile ? (
+            <div className="d-flex align-items-center">
+              {/* الشعار */}
+              <NavLink to="/" className="navbar-brand navbar-logo-link" style={{ margin: 0, padding: 0 }}>
+                <img
+                  src={logo}
+                  alt="Logo"
+                  className="navbar-logo-img"
+                  style={{ 
+                    objectFit: "contain",
+                    width: '70px',
+                    height: '28px',
+                    maxWidth: '70px',
+                    margin: 0,
+                    display: 'block'
+                  }}
+                />
+              </NavLink>
+            </div>
+          ) : (
+            // على الشاشات الكبيرة: اللوجو
+            <div className="d-flex align-items-center">
+              <NavLink to="/" className="navbar-brand navbar-logo-link" style={{ margin: 0, padding: 0 }}>
+                <img
+                  src={logo}
+                  alt="Logo"
+                  className="navbar-logo-img"
+                  style={{ 
+                    objectFit: "contain",
+                    width: window.innerWidth <= 991 ? '110px' :
+                           window.innerWidth <= 1200 ? '150px' : '300px',
+                    height: window.innerWidth <= 991 ? '35px' :
+                            window.innerWidth <= 1200 ? '50px' : '80px',
+                    maxWidth: window.innerWidth <= 991 ? '110px' :
+                              window.innerWidth <= 1200 ? '150px' : '250px',
+                    margin: 0,
+                    display: 'block'
+                  }}
+                />
+              </NavLink>
+            </div>
+          )}
           
-          {/* على الموبايل: Burger Menu على اليسار */}
-          <div className="d-flex align-items-center">
-            {/* Burger Menu - يظهر فقط على الموبايل */}
-            <button
-              className="burger-btn d-lg-none"
-              onClick={toggleSidebar}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                padding: '0.5rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-              aria-label="Toggle Menu"
-            >
-              <img 
-                src={menuIcon} 
-                alt="Menu" 
-                style={{ 
-                  width: '28px', 
-                  height: '28px',
-                  objectFit: 'contain'
-                }} 
-              />
-            </button>
-          </div>
+          {/* على الموبايل: Burger Menu في النص */}
+          {isMobile && (
+            <div style={{
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <button
+                className="burger-btn"
+                onClick={toggleSidebar}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '0.5rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: 0,
+                  minWidth: '44px',
+                  minHeight: '44px'
+                }}
+                aria-label="Toggle Menu"
+              >
+                <img 
+                  src={menuIcon} 
+                  alt="Menu" 
+                  style={{ 
+                    width: '28px', 
+                    height: '28px',
+                    objectFit: 'contain',
+                    display: 'block'
+                  }} 
+                />
+              </button>
+            </div>
+          )}
+          
+          {/* على الموبايل: أيقونة User على الشمال */}
+          {isMobile && (
+            <div className="d-flex align-items-center">
+              {/* أيقونة تسجيل دخول/خروج */}
+              {isLoggedIn ? (
+                <button
+                  onClick={handleLogout}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: 0,
+                    minWidth: '40px',
+                    minHeight: '40px'
+                  }}
+                  title="تسجيل الخروج"
+                  aria-label="Logout"
+                >
+                  <FontAwesomeIcon 
+                    icon={faSignOutAlt} 
+                    style={{ 
+                      fontSize: '20px', 
+                      color: '#0171BD',
+                      transform: 'scaleX(-1)'
+                    }} 
+                  />
+                </button>
+              ) : (
+                <NavLink 
+                  to="/login"
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: 0,
+                    minWidth: '40px',
+                    minHeight: '40px',
+                    textDecoration: 'none'
+                  }}
+                  title="تسجيل الدخول"
+                  aria-label="Login"
+                >
+                  <FontAwesomeIcon 
+                    icon={faUser} 
+                    style={{ 
+                      fontSize: '20px', 
+                      color: '#0171BD'
+                    }} 
+                  />
+                </NavLink>
+              )}
+            </div>
+          )}
 
           {/* القسم الأيمن: تسجيل الدخول */}
-          <div className="d-flex align-items-center gap-2 gap-lg-3">
+          <div className="d-none d-lg-flex align-items-center gap-2 gap-lg-3">
             {/* لوحة التحكم أو تسجيل الدخول */}
             {isLoggedIn ? (
               <div className="d-none d-lg-flex align-items-center gap-2">
