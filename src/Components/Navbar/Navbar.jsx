@@ -549,10 +549,12 @@ function MainNavbar() {
         right: 0,
         margin: 0
       }}>
-        <div className="d-flex justify-content-between align-items-center mx-auto" style={{
-         
+        <div className="d-flex justify-content-between align-items-center" style={{
           width: '100%',
-          maxWidth: '1400px'
+          maxWidth: isMobile ? '100%' : '1400px',
+          margin: isMobile ? '0' : '0 auto',
+          paddingLeft: isMobile ? '1rem' : '1rem',
+          paddingRight: isMobile ? '1rem' : '1rem'
         }}>
           
           {/* على الموبايل: اللوجو على اليمين */}
