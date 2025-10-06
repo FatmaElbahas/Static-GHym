@@ -545,7 +545,8 @@ function MainNavbar() {
         right: 0,
         margin: 0,
         transform: 'translateZ(0)',
-        WebkitTransform: 'translateZ(0)'
+        WebkitTransform: 'translateZ(0)',
+        zIndex: 9999999
       }}>
         <div className="d-flex align-items-center" style={{
           width: '100%',
