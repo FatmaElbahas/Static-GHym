@@ -361,8 +361,19 @@ footer {
 /* Hide any shadow or overlay elements */
 div[class*="shadow-light"],
 div[class*="shadow"][class*="right"],
-div[data-v-] {
+div[data-v-],
+[data-v-],
+.wrapper[data-v-],
+.search-bar[data-v-],
+.url-tooltip[data-v-] {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  z-index: -9999 !important;
 }
 
 /* Fix for iPhone dark background issue */
@@ -447,7 +458,7 @@ div[data-v-] {
 
 @media (max-width: 576px) {
   body {
-    margin-top: 30px !important;
+    margin-top: 0px !important;
     padding-top: 0px !important;
   }
   
@@ -2592,7 +2603,7 @@ width: 10%;
 /* Optimized Hero margin-top for Mobile */
 @media (max-width: 768px) {
   .hero-section {
-    margin-top: 20px !important;
+    margin-top: 0px !important;
     height: 25vh !important;
   }
 }
@@ -2619,7 +2630,7 @@ width: 10%;
 
 @media (max-width: 480px) {
   .hero-section {
-    margin-top: 10px !important;
+    margin-top: 0px !important;
     height: 18vh !important;
   }
   
@@ -5805,7 +5816,7 @@ width: 10%;
 @media (max-width: 768px) {
   .hero-section {
     height: 30vh !important;
-    margin-top: 20px !important;
+    margin-top: 0px !important;
     padding: 0 !important;
   }
   
@@ -5828,7 +5839,7 @@ width: 10%;
 @media (max-width: 576px) {
   .hero-section {
     height: 20vh !important;
-    margin-top: 15px !important;
+    margin-top: 0px !important;
     padding: 0 !important;
   }
   
@@ -5851,7 +5862,7 @@ width: 10%;
 @media (max-width: 480px) {
   .hero-section {
     height: 18vh !important;
-    margin-top: 10px !important;
+    margin-top: 0px !important;
     padding: 0 !important;
   }
   
