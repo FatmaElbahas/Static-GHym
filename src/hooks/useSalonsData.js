@@ -1,13 +1,25 @@
 import { useState, useEffect } from 'react';
 
-// Custom hook to fetch salons/sections data from API
+// Cache for salon data
+let cachedData = null;
+let cacheTime = null;
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+// Custom hook to fetch salons/sections data from API with caching
 const useSalonsData = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(cachedData || []);
+  const [loading, setLoading] = useState(!cachedData);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchSalonsData = async () => {
+      // Check if we have fresh cached data
+      if (cachedData && cacheTime && Date.now() - cacheTime < CACHE_DURATION) {
+        setData(cachedData);
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
         const response = await fetch('https://enqlygo.com/api/salons');
@@ -19,6 +31,8 @@ const useSalonsData = () => {
         const result = await response.json();
         
         if (result.status === 'success' && result.data) {
+          cachedData = result.data;
+          cacheTime = Date.now();
           setData(result.data);
         } else {
           throw new Error('Invalid response format');

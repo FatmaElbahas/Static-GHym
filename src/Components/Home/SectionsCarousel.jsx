@@ -58,6 +58,8 @@ const SectionImage = ({ src, alt }) => {
 
 // Section Card Component
 const SectionCard = ({ id, title, image }) => {
+  const isMobile = window.innerWidth <= 768;
+  
   return (
     <Link 
       to={`/products?salon=${id}`}
@@ -67,7 +69,7 @@ const SectionCard = ({ id, title, image }) => {
       <div 
         className="card border-0 shadow-sm h-100 sections-card" 
         style={{ 
-          borderRadius: '15px', 
+          borderRadius: isMobile ? '12px' : '15px', 
           overflow: 'hidden', 
           transition: 'transform 0.3s ease',
           cursor: 'pointer'
@@ -90,17 +92,18 @@ const SectionCard = ({ id, title, image }) => {
         <div className="position-relative">
           <SectionImage src={image} alt={title} />
           <div 
-            className="position-absolute bottom-0 start-0 end-0 p-3 sections-overlay" 
+            className="position-absolute bottom-0 start-0 end-0 sections-overlay" 
             style={{ 
               background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', 
-              paddingRight: '32px !important', 
-              paddingBottom: '28px !important' 
+              padding: isMobile ? '0.5rem' : '1rem',
+              paddingRight: isMobile ? '16px !important' : '32px !important', 
+              paddingBottom: isMobile ? '12px !important' : '28px !important' 
             }}
           >
             <div 
               className="sections-text mb-0 fw-bold text-end" 
               style={{ 
-                fontSize: '22px', 
+                fontSize: isMobile ? '16px' : '22px', 
                 color: 'white', 
                 transition: 'color 0.3s ease' 
               }}
@@ -108,10 +111,10 @@ const SectionCard = ({ id, title, image }) => {
               <div 
                 className="sections-line" 
                 style={{ 
-                  width: '35px', 
-                  height: '2.5px', 
+                  width: isMobile ? '25px' : '35px', 
+                  height: isMobile ? '2px' : '2.5px', 
                   backgroundColor: 'white', 
-                  margin: '0 0 8px auto', 
+                  margin: isMobile ? '0 0 4px auto' : '0 0 8px auto', 
                   transition: 'background-color 0.3s ease' 
                 }}
               ></div>
@@ -126,6 +129,7 @@ const SectionCard = ({ id, title, image }) => {
 
 const SectionsCarousel = () => {
   const { data: apiSalons, loading, error } = useSalonsData();
+  const isMobile = window.innerWidth <= 768;
 
   // Use API data only
   const sections = apiSalons && apiSalons.length > 0 
@@ -143,21 +147,21 @@ const SectionsCarousel = () => {
   if (loading) {
     return (
       <section 
-        className="sections-section py-5" 
+        className="sections-section" 
         style={{ 
           backgroundColor: '#F9F9F9', 
-          marginTop: '60px', 
-          paddingTop: '40px', 
-          paddingBottom: '40px' 
+          marginTop: isMobile ? '30px' : '60px', 
+          paddingTop: isMobile ? '20px' : '40px', 
+          paddingBottom: isMobile ? '20px' : '40px' 
         }}
       >
         <div className="container" style={{ maxWidth: '90%' }}>
-          <div className="mb-4 text-end" style={{ paddingRight: '10px' }}>
-            <h2 className="m-0" style={{ color: '#484848', fontWeight: 800, fontSize: '34px' }}>
+          <div className="mb-3 text-center">
+            <h2 className="m-0" style={{ color: '#484848', fontWeight: 800, fontSize: isMobile ? '24px' : '34px' }}>
               العيادات
             </h2>
           </div>
-          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '300px' }}>
+          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: isMobile ? '200px' : '300px' }}>
             <div className="spinner-border text-primary" role="status">
               <span className="visually-hidden">جاري التحميل...</span>
             </div>
@@ -174,17 +178,17 @@ const SectionsCarousel = () => {
 
   return (
     <section 
-      className="sections-section py-5" 
+      className="sections-section" 
       style={{ 
         backgroundColor: '#F9F9F9', 
-        marginTop: '60px', 
-        paddingTop: '40px', 
-        paddingBottom: '40px' 
+        marginTop: isMobile ? '30px' : '60px', 
+        paddingTop: isMobile ? '20px' : '40px', 
+        paddingBottom: isMobile ? '20px' : '40px' 
       }}
     >
       <div className="container" style={{ maxWidth: '90%' }}>
-        <div className="mb-4 text-end" style={{ paddingRight: '10px' }}>
-          <h2 className="m-0" style={{ color: '#484848', fontWeight: 800, fontSize: '34px' }}>
+        <div className="mb-3 text-center">
+          <h2 className="m-0" style={{ color: '#484848', fontWeight: 800, fontSize: isMobile ? '24px' : '34px' }}>
             العيادات
           </h2>
         </div>
@@ -192,7 +196,7 @@ const SectionsCarousel = () => {
         <div className="position-relative">
           <Swiper
             modules={[Autoplay, Navigation]}
-            spaceBetween={16}
+            spaceBetween={isMobile ? 12 : 16}
             slidesPerView={1}
             loop={false}
             autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
@@ -201,12 +205,12 @@ const SectionsCarousel = () => {
               prevEl: '.sections-prev',
             }}
             breakpoints={{
-              0: { slidesPerView: 1 },
-              576: { slidesPerView: 2 },
-              768: { slidesPerView: 3 },
-              992: { slidesPerView: 4 }
+              0: { slidesPerView: 1.2, spaceBetween: 12, centeredSlides: false },
+              576: { slidesPerView: 2, spaceBetween: 14 },
+              768: { slidesPerView: 3, spaceBetween: 16 },
+              992: { slidesPerView: 4, spaceBetween: 16 }
             }}
-            style={{ paddingBottom: '0px' }}
+            style={{ paddingBottom: '0px', paddingLeft: isMobile ? '5%' : '0', paddingRight: isMobile ? '5%' : '0' }}
           >
             {sections.map((section) => {
               // Skip sections without images
@@ -224,8 +228,8 @@ const SectionsCarousel = () => {
           <button 
             className="sections-prev position-absolute top-50 start-0 translate-middle-y" 
             style={{
-              width: '50px',
-              height: '50px',
+              width: isMobile ? '40px' : '50px',
+              height: isMobile ? '40px' : '50px',
               background: 'rgba(255, 255, 255, 0.9)',
               border: 'none',
               borderRadius: '50%',
@@ -251,9 +255,9 @@ const SectionsCarousel = () => {
               aria-hidden="true"
               style={{
                 backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23666'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e\")",
-                width: '30px',
-                height: '30px',
-                backgroundSize: '30px 30px',
+                width: isMobile ? '20px' : '30px',
+                height: isMobile ? '20px' : '30px',
+                backgroundSize: isMobile ? '20px 20px' : '30px 30px',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center'
               }}
@@ -263,8 +267,8 @@ const SectionsCarousel = () => {
           <button 
             className="sections-next position-absolute top-50 end-0 translate-middle-y" 
             style={{
-              width: '50px',
-              height: '50px',
+              width: isMobile ? '40px' : '50px',
+              height: isMobile ? '40px' : '50px',
               background: 'rgba(255, 255, 255, 0.9)',
               border: 'none',
               borderRadius: '50%',
@@ -290,9 +294,9 @@ const SectionsCarousel = () => {
               aria-hidden="true"
               style={{
                 backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23666'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e\")",
-                width: '30px',
-                height: '30px',
-                backgroundSize: '30px 30px',
+                width: isMobile ? '20px' : '30px',
+                height: isMobile ? '20px' : '30px',
+                backgroundSize: isMobile ? '20px 20px' : '30px 30px',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center'
               }}

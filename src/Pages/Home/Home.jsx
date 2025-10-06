@@ -41,7 +41,6 @@ export default function Home() {
         }
         
         .home-page {
-          overflow-x: hidden;
           position: relative;
         }
         
