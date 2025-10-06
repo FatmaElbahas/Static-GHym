@@ -282,7 +282,7 @@ function MainNavbar() {
                 color: '#2c3e50',
                 fontSize: '18px',
                 fontWeight: '500',
-                padding: '0.6rem 1rem',
+                padding: '1rem 1rem',
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
