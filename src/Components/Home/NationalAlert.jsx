@@ -14,7 +14,7 @@ const NationalAlert = ({ showAlert, onClose }) => {
           right: 0, 
           backgroundColor: '#215931',
           color: 'white',
-          zIndex: 1050,
+          zIndex: 9999999999,
           padding: '8px 10px',
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
           width: '100%',

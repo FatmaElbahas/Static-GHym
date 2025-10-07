@@ -96,7 +96,7 @@ function MainNavbar() {
       right: 0,
       bottom: 0,
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      zIndex: 9998,
+      zIndex: 9999999996,
       opacity: isOpen ? 1 : 0,
       visibility: isOpen ? 'visible' : 'hidden',
       transition: 'opacity 0.3s ease, visibility 0.3s ease'
@@ -110,7 +110,7 @@ function MainNavbar() {
       height: '100vh',
       backgroundColor: '#ffffff',
       background: 'linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%)',
-      zIndex: 9999,
+      zIndex: 9999999995,
       overflowY: 'auto',
       transition: 'right 0.3s ease',
       boxShadow: '-4px 0 20px rgba(1, 113, 189, 0.1)',
@@ -367,7 +367,7 @@ function MainNavbar() {
               right: 0,
               bottom: 0,
               backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              zIndex: 10000,
+              zIndex: 9999999994,
               opacity: 1,
               visibility: 'visible'
             }} 
@@ -385,7 +385,7 @@ function MainNavbar() {
               height: '100vh',
               backgroundColor: '#ffffff',
               background: 'linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%)',
-              zIndex: 10001,
+              zIndex: 9999999993,
               overflowY: 'auto',
               transition: 'right 0.3s ease',
               boxShadow: '-4px 0 20px rgba(1, 113, 189, 0.1)',
@@ -539,14 +539,14 @@ function MainNavbar() {
 
       <nav className="navbar navbar-expand-lg navbar-light bg-white fixed-top" style={{ 
         boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-        padding: '0.5rem 0',
+        padding: isMobile ? '1rem 0' : '0.5rem 0',
         width: '100%',
         left: 0,
         right: 0,
         margin: 0,
         transform: 'translateZ(0)',
         WebkitTransform: 'translateZ(0)',
-        zIndex: 9999999
+        zIndex: 9999999998
       }}>
         <div className="d-flex align-items-center" style={{
           width: '100%',
@@ -818,7 +818,7 @@ function MainNavbar() {
       padding: '1.5rem 0', 
       boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
       marginTop: '46px',
-      zIndex: 1000,
+      zIndex: 9999999997,
       width: '100%',
       left: 0,
       right: 0,
