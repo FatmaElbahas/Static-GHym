@@ -46,7 +46,7 @@ const NationalAlert = ({ showAlert, onClose }) => {
             fontSize: '20px',
             lineHeight: '1',
             padding: '0',
-            display: 'flex',
+            display: (window.innerWidth <= 768) ? 'none' : 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             fontWeight: 'bold',
