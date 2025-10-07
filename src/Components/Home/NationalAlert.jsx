@@ -31,7 +31,7 @@ const NationalAlert = ({ showAlert, onClose }) => {
         boxSizing: 'border-box'
       }}>
         <span style={{ fontSize: '14px', fontWeight: '500', flex: 1, textAlign: 'center' }}>
-          🎉 احتفالاً باليوم الوطني السعودي 95 - خصومات حصرية على جميع خدماتنا!
+          {(window.innerWidth > 768 ? '🎉 ' : '') + 'احتفالاً باليوم الوطني السعودي 95 - خصومات حصرية على جميع خدماتنا!'}
         </span>
         <button
           onClick={onClose}
@@ -46,7 +46,7 @@ const NationalAlert = ({ showAlert, onClose }) => {
             fontSize: '20px',
             lineHeight: '1',
             padding: '0',
-            display: (window.innerWidth <= 768) ? 'none' : 'flex',
+            display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             fontWeight: 'bold',
