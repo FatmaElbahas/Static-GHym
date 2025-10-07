@@ -13,6 +13,7 @@ import SectionsCarousel from '../../Components/Home/SectionsCarousel';
 export default function Home() {
   const location = useLocation();
   const [showAlert, setShowAlert] = useState(true);
+  const [mobileOffset, setMobileOffset] = useState(0);
 
   // Handle smooth scrolling to sections
   useEffect(() => {
@@ -27,14 +28,34 @@ export default function Home() {
     }
   }, [location]);
 
+  // Calculate dynamic offset for mobile: alert + navbar heights
+  useEffect(() => {
+    const calcOffset = () => {
+      if (window.innerWidth <= 768) {
+        const alertEl = document.querySelector('.home-national-alert');
+        const navbarEl = document.querySelector('.navbar');
+        const alertH = alertEl ? alertEl.offsetHeight : 0;
+        const navH = navbarEl ? navbarEl.offsetHeight : 0;
+        setMobileOffset(alertH + navH);
+      } else {
+        setMobileOffset(0);
+      }
+    };
+
+    calcOffset();
+    window.addEventListener('resize', calcOffset);
+    const t = setInterval(calcOffset, 300); // recalc shortly after alert mount
+    return () => {
+      window.removeEventListener('resize', calcOffset);
+      clearInterval(t);
+    };
+  }, [showAlert]);
+
   return (
     <>
       {/* Dynamic styles for navbar and sections positioning */}
       <style>{`
-        .navbar, nav, .fixed-top {
-          top: ${showAlert ? '46px' : '0'} !important;
-          transition: top 0.3s ease !important;
-        }
+        .navbar, nav, .fixed-top { transition: top 0.3s ease !important; }
         body {
           padding-top: 0 !important;
           transition: padding-top 0.3s ease !important;
@@ -65,25 +86,10 @@ export default function Home() {
           }
         }
         
-        @media (max-width: 991.98px) {
-          .navbar, nav, .fixed-top {
-            top: ${showAlert ? '40px' : '0'} !important;
-          }
-          body {
-            padding-top: 0 !important;
-          }
-        }
-        
         @media (max-width: 767.98px) {
-          .navbar, nav, .fixed-top {
-            top: ${showAlert ? '34px' : '0'} !important;
-          }
-          body {
-            padding-top: 0 !important;
-          }
-          .home-page .hero-section {
-            margin-top: ${showAlert ? '34px' : '0'} !important;
-          }
+          .navbar, nav, .fixed-top { top: 0 !important; }
+          .home-page { padding-top: ${mobileOffset}px !important; }
+          .home-page .hero-section { margin-top: 0 !important; }
           
           .booking-card {
             max-width: 95% !important;
