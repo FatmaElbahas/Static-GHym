@@ -13,7 +13,7 @@ const NationalAlert = ({ showAlert, onClose }) => {
           left: 0, 
           right: 0, 
           backgroundColor: (window.innerWidth <= 768) ? '#ffffff' : '#215931',
-          color: (window.innerWidth <= 768) ? '#000000' : 'white',
+          color: (window.innerWidth <= 768) ? '#ffffff' : 'white',
           zIndex: (window.innerWidth <= 768) ? 9999999997 : 1050,
           padding: '8px 10px',
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
@@ -37,7 +37,7 @@ const NationalAlert = ({ showAlert, onClose }) => {
           onClick={onClose}
           style={{
             background: 'white',
-            color: '#215931',
+            color: (window.innerWidth <= 768) ? '#ffffff' : '#215931',
             border: '2px solid white',
             borderRadius: '50%',
             width: '28px',
