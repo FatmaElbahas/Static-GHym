@@ -96,7 +96,7 @@ function MainNavbar() {
       right: 0,
       bottom: 0,
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      zIndex: 9999999996,
+      zIndex: isMobile ? 9999999996 : 10000,
       opacity: isOpen ? 1 : 0,
       visibility: isOpen ? 'visible' : 'hidden',
       transition: 'opacity 0.3s ease, visibility 0.3s ease'
@@ -110,13 +110,13 @@ function MainNavbar() {
       height: '100vh',
       backgroundColor: '#ffffff',
       background: 'linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%)',
-      zIndex: 9999999995,
+      zIndex: isMobile ? 9999999995 : 10001,
       overflowY: 'auto',
       transition: 'right 0.3s ease',
       boxShadow: '-4px 0 20px rgba(1, 113, 189, 0.1)',
       borderLeft: '3px solid #0171BD'
     }
-  }), [isOpen]);
+  }), [isOpen, isMobile]);
 
   return (
     <>
@@ -546,7 +546,7 @@ function MainNavbar() {
         margin: 0,
         transform: 'translateZ(0)',
         WebkitTransform: 'translateZ(0)',
-        zIndex: 9999999998
+        zIndex: isMobile ? 9999999998 : 1020
       }}>
         <div className="d-flex align-items-center" style={{
           width: '100%',
@@ -818,7 +818,7 @@ function MainNavbar() {
       padding: '1.5rem 0', 
       boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
       marginTop: '46px',
-      zIndex: 9999999997,
+      zIndex: 1010,
       width: '100%',
       left: 0,
       right: 0,
