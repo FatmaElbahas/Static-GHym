@@ -552,7 +552,7 @@ function MainNavbar() {
           width: '100%',
           maxWidth: isMobile ? '100%' : '1400px',
           margin: isMobile ? '0' : '0 auto',
-          paddingLeft: isMobile ? '1rem' : '1rem',
+          paddingLeft: isMobile ? '0' : '1rem',
           paddingRight: isMobile ? '1rem' : '1rem',
           boxSizing: 'border-box',
           justifyContent: isMobile ? 'space-between' : 'space-between',
@@ -607,8 +607,8 @@ function MainNavbar() {
           {isMobile && (
             <div style={{
               position: 'absolute',
-              left: '50%',
-              transform: 'translateX(-50%)',
+              left: '0.75rem',
+              transform: 'none',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -646,7 +646,7 @@ function MainNavbar() {
           
           {/* على الموبايل: أيقونة User على الشمال */}
           {isMobile && (
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center" style={{ position: 'absolute', left: '4.25rem' }}>
               {/* أيقونة تسجيل دخول/خروج */}
               {isLoggedIn ? (
                 <button
