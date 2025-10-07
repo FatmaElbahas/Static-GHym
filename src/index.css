@@ -10,6 +10,11 @@
   display: none !important;
 }
 
+/* Hide simulator mobile header if injected by preview tools */
+header.header-component {
+  display: none !important;
+}
+
 /* Reset for root elements to prevent spacing issues on mobile */
 html, body, #root {
   margin: 0 !important;
