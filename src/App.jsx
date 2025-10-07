@@ -13,6 +13,7 @@ import AddProduct from './Pages/Products/AddProduct';
 import PaymentMethods from './Pages/PaymentMethods/PaymentMethods';
 import Book from './Pages/Book/Book';
 import Error404 from './Pages/Error404/Error404';
+import AboutUs from './Pages/AboutUs/AboutUs';
 
 function App() {
   const location = useLocation();
@@ -23,7 +24,7 @@ function App() {
   const isLogin = location.pathname === '/login';
   const isRegister = location.pathname === '/register';
   const isAddProduct = location.pathname === '/add-product';
-  const isError404 = !['/', '/products', '/service', '/add-product', '/contact', '/payment-methods', '/book', '/dashboard', '/register', '/login', '/logout'].includes(location.pathname) && !location.pathname.startsWith('/service/');
+  const isError404 = !['/', '/products', '/service', '/add-product', '/contact', '/payment-methods', '/book', '/dashboard', '/register', '/login', '/logout', '/about'].includes(location.pathname) && !location.pathname.startsWith('/service/');
   
   const hideMainNavbar = isDashboard || isLogin || isRegister || isAddProduct || isError404;
   const hideFooter = isDashboard || isAddProduct || isError404;
@@ -86,6 +87,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/about" element={<AboutUs />} />
           <Route path="/logout" element={<Home />} />
           <Route path="*" element={<Error404 />} />
         </Routes>

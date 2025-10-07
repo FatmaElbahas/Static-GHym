@@ -272,6 +272,32 @@ function MainNavbar() {
               <span>حجز موعد</span>
             </NavLink>
 
+            {/* من نحن */}
+            <NavLink
+              to="/about"
+              className="d-flex align-items-center gap-3 text-decoration-none"
+              style={{
+                borderRadius: '10px',
+                backgroundColor: '#f0f7fc',
+                color: '#2c3e50',
+                fontSize: '18px',
+                fontWeight: '500',
+                padding: '0.6rem 1rem',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#e3f2fd';
+                e.currentTarget.style.transform = 'translateX(-5px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#f0f7fc';
+                e.currentTarget.style.transform = 'translateX(0)';
+              }}
+            >
+              <FontAwesomeIcon icon={faUser} style={{ fontSize: '20px', color: '#0171BD' }} />
+              <span>من نحن</span>
+            </NavLink>
+
             {/* تواصل معنا */}
             <NavLink
               to="/contact"
@@ -297,8 +323,6 @@ function MainNavbar() {
               <FontAwesomeIcon icon={faEnvelope} style={{ fontSize: '20px', color: '#0171BD' }} />
               <span>تواصل معنا</span>
             </NavLink>
-
-            <hr style={{ margin: '0.8rem 0', borderColor: '#e3f2fd' }} />
 
             {/* جميع الخدمات */}
             <NavLink
@@ -834,13 +858,17 @@ function MainNavbar() {
         }}>
           <NavLink 
             to="/" 
-            className="text-decoration-none" 
+            className="text-decoration-none d-flex align-items-center justify-content-center" 
             style={{ 
+              display: 'inline-flex',
+              alignItems: 'center',
               fontSize: '20px',
               fontWeight: 'bolder',
               color: '#4A4A4A',
               textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-              letterSpacing: '0.5px'
+              letterSpacing: '0.5px',
+              marginRight: '2rem',
+              marginTop: '4px'
             }}
           >
             الصفحة الرئيسية
@@ -860,6 +888,23 @@ function MainNavbar() {
           </NavLink>
           <NavLink 
             to="/book" 
+            className="text-decoration-none d-flex align-items-center justify-content-center" 
+            style={{ 
+              display: 'inline-flex',
+              alignItems: 'center',
+              fontSize: '20px',
+              fontWeight: 'bolder',
+              color: '#4A4A4A',
+              textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+              letterSpacing: '0.5px',
+              marginRight: '2rem',
+              marginTop: '4px'
+            }}
+          >
+            حجز موعد
+          </NavLink>
+          <NavLink 
+            to="/about" 
             className="text-decoration-none" 
             style={{ 
               fontSize: '20px',
@@ -869,7 +914,7 @@ function MainNavbar() {
               letterSpacing: '0.5px'
             }}
           >
-            حجز موعد
+            من نحن
           </NavLink>
           <NavLink 
             to="/contact" 
