@@ -282,7 +282,7 @@ function MainNavbar() {
                 color: '#2c3e50',
                 fontSize: '18px',
                 fontWeight: '500',
-                padding: '1rem 1rem',
+                padding: '3rem 1rem',
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
@@ -815,9 +815,9 @@ function MainNavbar() {
 
     {/* شريط التصنيفات - مخفي على الموبايل */}
     <div className="bg-white border-top fixed-top d-none d-lg-block" style={{ 
-      padding: '0.8rem 0', 
+      padding: '1.5rem 0', 
       boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-      marginTop: '80px',
+      marginTop: '46px',
       zIndex: 1000,
       width: '100%',
       left: 0,
