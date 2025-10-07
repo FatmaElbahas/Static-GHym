@@ -5,23 +5,6 @@ const NationalAlert = ({ showAlert, onClose }) => {
 
   return (
     <>
-      {/* Empty white div above alert - mobile only */}
-      <div 
-        className="d-block d-lg-none"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '22px',
-          backgroundColor: '#ffffff',
-          zIndex: 999999999,
-          width: '100%',
-          margin: 0,
-          boxSizing: 'border-box'
-        }}
-      />
-      
       <div 
         className="home-national-alert" 
         style={{ 
@@ -35,7 +18,7 @@ const NationalAlert = ({ showAlert, onClose }) => {
           padding: '8px 10px',
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
           width: '100%',
-          marginBottom: '22px',
+          margin: 0,
           boxSizing: 'border-box'
         }}
       >
@@ -82,14 +65,6 @@ const NationalAlert = ({ showAlert, onClose }) => {
         </button>
       </div>
     </div>
-    
-    <style>{`
-      @media (max-width: 991px) {
-        .home-national-alert {
-          top: 22px !important;
-        }
-      }
-    `}</style>
     </>
   );
 };
